@@ -67,6 +67,16 @@ namespace huqiang.UI
                     return components[i];
             return null;
         }
+        public T GetComponent<T>()where T:DataConversion
+        {
+            for (int i = 0; i < components.Count; i++)
+            {
+                T t = components[i] as T;
+                if (t != null)
+                    return t;
+            }
+            return null;
+        }
         public FakeStruct Model;
         public unsafe static FakeStruct FindChild(FakeStruct fake,string name)
         {

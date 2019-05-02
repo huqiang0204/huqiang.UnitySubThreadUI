@@ -74,6 +74,7 @@ namespace huqiang
             Scale.ScreenCurrentWidth = Screen.width;
             Scale.ScreenCurrentHeight= Screen.height;
             UserAction.DispatchEvent();
+            Keyboard.DispatchEvent();
             mission.AddSubMission(SubThread,null);
             ThreadPool.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
