@@ -108,16 +108,12 @@ namespace huqiang.UIComposite
             return null;
         }
         public Vector2 ItemOffset = Vector2.zero;
-        protected ScrollItem[] Buff;
-        int buffPoint = 0;
         protected int max_count;
         public List<ScrollItem> Items=new List<ScrollItem>();
-        ScrollItem[] TmpPool;
-        int tmpPoint = 0;
+        List<ScrollItem> Buffer=new List<ScrollItem>();
+        List<ScrollItem> Recycler = new List<ScrollItem>();
         public ScrollContent()
         {
-            TmpPool = new ScrollItem[32];
-            Buff = new ScrollItem[32];
         }
         /// <summary>
         /// 当无法使用跨域反射时，使用此委托进行间接反射
@@ -142,11 +138,12 @@ namespace huqiang.UIComposite
         }
         protected ScrollItem CreateItem()
         {
-            if (buffPoint > 0)
+            if (Recycler.Count> 0)
             {
-                buffPoint--;
-                var it = Buff[buffPoint];
+                var it = Recycler[0];
                 it.target.activeSelf = true;
+                it.index = -1;
+                Recycler.RemoveAt(0);
                 return it;
             }
             object obj = null;
@@ -163,23 +160,6 @@ namespace huqiang.UIComposite
                 Reflection(a, a.target);
             return a;
         }
-        protected void RecycleItem(ScrollItem[] items)
-        {
-            for (int i = 0; i < items.Length; i++)
-            {
-                var it = items[i];
-                if (buffPoint < 512)
-                {
-                    Buff[buffPoint] = it;
-                    buffPoint++;
-                    it.target.activeSelf = false;
-                }
-                else
-                {
-                    ModelManagerUI.RecycleElement(it.target);
-                }
-            }
-        }
         public virtual void Order(float os, bool force = false)
         {
         }
@@ -190,37 +170,29 @@ namespace huqiang.UIComposite
                 var g = Items[i];
                 ModelManagerUI.RecycleElement(g.target);
             }
-            for (int i = 0; i < buffPoint; i++)
+            for (int i = 0; i < Recycler.Count; i++)
             {
-                var g = Buff[i];
+                var g = Recycler[i];
                 ModelManagerUI.RecycleElement(g.target);
             }
-            buffPoint = 0;
+            Items.Clear();
+            Recycler.Clear();
         }
         protected void PushItems()
         {
-            int c = Items.Count;
-            tmpPoint = c;
-            int top = c - 1;
-            for (int i = 0; i < c; i++)
-            {
-                if (Items[i] != null)
-                {
-                    Items[i].target.activeSelf = false;
-                    TmpPool[top] = Items[i];
-                }
-                top--;
-            }
+            for (int i = 0; i < Items.Count; i++)
+                Items[i].target.activeSelf = false;
+            Buffer.AddRange(Items);
+            Items.Clear();
         }
         protected ScrollItem PopItem(int index)
         {
-            for (int i = 0; i < tmpPoint; i++)
+            for(int i=0;i<Buffer.Count;i++)
             {
-                var t = TmpPool[i];
-                if (index == t.index)
+                var t = Buffer[i];
+                if(t.index==index)
                 {
-                    tmpPoint--;
-                    TmpPool[i] = TmpPool[tmpPoint];
+                    Buffer.RemoveAt(i);
                     t.target.activeSelf = true;
                     return t;
                 }
@@ -263,28 +235,26 @@ namespace huqiang.UIComposite
         }
         protected void RecycleRemain()
         {
-            for(int i=0;i<tmpPoint;i++)
-            {
-                RecycleItem(TmpPool[i]);
-            }
-            tmpPoint = 0;
+            for (int i = 0; i < Buffer.Count; i++)
+               Buffer[i].target.activeSelf = false;
+            Recycler.AddRange(Buffer);
+            Buffer.Clear();
         }
         protected void RecycleItem(ScrollItem it)
         {
             //Items.RemoveAt(index);
             it.target.activeSelf = false;
-            if (buffPoint < 512)
-            {
-                it.index = -1;
-                Buff[buffPoint] = it;
-                buffPoint++;
-            }
-            else
-            {
-                ModelManagerUI.RecycleElement(it.target);
-            }
+            Recycler.Add(it);
             if (ItemRecycle != null)
                 ItemRecycle(it);
+        }
+        protected void RecycleItem(ScrollItem[] items)
+        {
+            Recycler.AddRange(items);
+            for (int i = 0; i < items.Length; i++)
+            {
+                items[i].target.activeSelf = false;
+            }
         }
     }
 }

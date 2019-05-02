@@ -38,6 +38,7 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
         }
         static RectTransform UIRoot;
+        static ThreadMission mission;
         public static void Initial(Transform uiRoot)
         {
             Initial();
@@ -63,6 +64,7 @@ namespace huqiang
             var buff = new GameObject("buffer", typeof(Canvas));
             buff.SetActive(false);
             ModelManagerUI.CycleBuffer = buff.transform;
+            mission = new ThreadMission();
         }
         public static float AllTime;
         static int a = 0;
@@ -73,7 +75,7 @@ namespace huqiang
             //AnimationManage.Manage.Update();
             //UserAction.DispatchEvent();
             UserAction.DispatchEvent();
-            ThreadPool.AddMission(SubThread,null);
+            mission.AddSubMission(SubThread,null);
             ThreadPool.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
             a++;
@@ -117,6 +119,7 @@ namespace huqiang
             EventCallBack.ClearEvent();
             ThreadPool.Dispose();
             RecordManager.ReleaseAll();
+            mission.Dispose();
         }
     }
 }

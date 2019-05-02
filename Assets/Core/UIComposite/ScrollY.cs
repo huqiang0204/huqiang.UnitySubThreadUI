@@ -253,7 +253,6 @@ namespace huqiang.UIComposite
             }
        
             PushItems();//将未被回收的数据压入缓冲区
-            Items.Clear();
             int index = sr;
             float oy = 0;
             for (int i=0;i<e;i++)
