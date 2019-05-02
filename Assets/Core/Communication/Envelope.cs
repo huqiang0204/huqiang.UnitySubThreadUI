@@ -445,5 +445,31 @@ namespace huqiang
             }
             return null;
         }
+        public static bool SetChecked(Int32[] checks, int part)
+        {
+            int c = part / 32;
+            int r = part % 32;
+            int o = 1 << r;
+            int v = checks[c];
+            if ((v & o) > 0)
+                return false;
+            v |= o;
+            checks[c] = v;
+            return true;
+        }
+        public static void CopyToBuff(byte[] buff, byte[] src, int start, EnvelopeHead head, int FragmentSize)
+        {
+            int index = head.CurPart * FragmentSize;
+            int len = (int)head.PartLen;
+            int all = buff.Length;
+            for (int i = 0; i < len; i++)
+            {
+                if (index >= all)
+                    break;
+                buff[index] = src[start];
+                index++;
+                start++;
+            }
+        }
     }
 }

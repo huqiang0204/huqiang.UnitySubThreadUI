@@ -47,5 +47,11 @@ namespace huqiang.Data
             }
             return null;
         }
+        public void Clear()
+        {
+            start = end;
+            for (int i = 0; i < mlen; i++)
+                buffer[i] = null;
+        }
     }
 }

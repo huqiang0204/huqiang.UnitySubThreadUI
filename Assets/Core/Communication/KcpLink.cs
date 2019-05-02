@@ -8,55 +8,59 @@ namespace huqiang
 {
     public class KcpLink
     {
-        protected KcpServer kcp;
+        internal KcpListener kcp;
+        public int buffIndex;
         public int Index;
-        public KcpLink(KcpServer listener)
-        {
-            kcp = listener;
-        }
-        public Int32 id;
+        public Int64 id;
         public Int32 ip;
         public Int32 port;
         public string uniId;
         public IPEndPoint endpPoint;
         public KcpEnvelope envelope = new KcpEnvelope();
-        public long time;
+     
         public QueueBuffer<byte[]> metaData = new QueueBuffer<byte[]>();
         /// <summary>
         /// 5秒
         /// </summary>
-        public static long TimeOut = 50000000;
+        public static long TimeOut = 50000000;//5*1000*10000
+        /// <summary>
+        /// 第一次连接时间
+        /// </summary>
+        public long ConnectTime;
+        /// <summary>
+        /// 最后一次接收到数据的时间
+        /// </summary>
         protected long lastTime;
         internal bool _connect;
         public bool Connected { get { return _connect; } }
-        public void Recive(long time)
+        public void Recive(long now)
         {
             int c = metaData.Count;
             byte[][] tmp = new byte[c][];
-            for (int i = 0; i < c; i++)
-                tmp[i] = metaData.Dequeue();
+            lock (metaData)
+                for (int i = 0; i < c; i++)
+                    tmp[i] = metaData.Dequeue();
             if (c == 0)
             {
-                if (time - lastTime > TimeOut)
+                if (now - lastTime > TimeOut)
                 {
                     envelope.Clear();
                     Disconnect();
-                    _connect = false;
                 }
             }
             else {
-                lastTime = time;
+                lastTime = now;
                 if (!_connect)
                     ConnectionOK();
                 _connect = true;
             }
             for (int i = 0; i < c; i++)
             {
-                var list = envelope.Unpack(tmp[i], tmp[i].Length);
+                var list = envelope.Unpack(tmp[i], tmp[i].Length,now);
                 try
                 {
-                    if(list!=null)
-                    for (int j = 0; j < list.Count; j++)
+                    if (list != null)
+                        for (int j = 0; j < list.Count; j++)
                     {
                         var dat = list[j];
                         Dispatch(dat.data, dat.type);
@@ -66,14 +70,14 @@ namespace huqiang
                 {
                 }
             }
-            var ss= envelope.GetFailedData(time);
+            var ss= envelope.GetFailedData(now);//获取超时未反馈的数据
             if(ss!=null)
                 for(int i=0;i<ss.Length;i++)
-                    kcp.soc.Send(ss[i],ss[i].Length,endpPoint);
+                    kcp.soc.Send(ss[i],ss[i].Length,endpPoint);//重新发送超时的数据
             ss = envelope.ValidateData.ToArray();
-            envelope.ValidateData.Clear();
+            envelope.ValidateData.Clear();//获取接收成功的数据
             for (int i = 0; i < ss.Length; i++)
-                kcp.soc.Send(ss[i], ss[i].Length, endpPoint);
+                kcp.soc.Send(ss[i], ss[i].Length, endpPoint);//通知对方接收数据成功
         }
         public void Send(byte[] data, byte type)
         {
@@ -81,8 +85,12 @@ namespace huqiang
             for (int i = 0; i < ss.Length; i++)
                 kcp.soc.Send(ss[i], ss[i].Length,endpPoint);
         }
+        public virtual void Connect()
+        {
+        }
         public virtual void Disconnect()
         {
+            kcp.RemoveLink(this);
         }
         public virtual void ConnectionOK()
         {
@@ -92,6 +100,15 @@ namespace huqiang
         }
         public virtual void Dispose()
         {
+        }
+        public void Redirect(int ciP,int cport)
+        {
+            endpPoint.Address = new IPAddress(ciP.ToBytes());
+            endpPoint.Port = cport;
+            ip = ciP;
+            port = cport;
+            envelope.Clear();
+            metaData.Clear();
         }
     }
 }

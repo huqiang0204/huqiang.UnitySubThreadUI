@@ -1,145 +1,144 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 
 namespace huqiang
 {
-    public class KcpServer:KcpListener
+    public class KcpServer<T>:KcpListener where T:KcpLink,new()
     {
         public static int SingleCount = 2048;
-        public static Func<KcpServer, KcpLink> CreateLink = (o) => { return new KcpLink(o); };
-        public static KcpServer Instance;
-        Thread[] threads;
-        KcpLink[] links;
+        public LinkBuffer<T>[] linkBuff;
         int maxLink;
-        int tCount;
+        int tCount=0;
         public Int32 allLink;
-        public KcpServer(int port = 0, int remote = 0, int threadCount = 8) : base(port, remote)
+        public KcpServer(int port = 0, int remote = 0) :base(port,remote)
         {
             Instance = this;
+        }
+        public void Run(int threadCount = 8,int threadbuff = 2048)
+        {
             tCount = threadCount;
-            allLink = threadCount * SingleCount;
-            links = new KcpLink[threadCount * SingleCount];
-            threads = new Thread[threadCount];
-            for (int i = 0; i < threadCount; i++)
+            if(tCount>0)
             {
-                threads[i] = new Thread(Run);
-                threads[i].Start(i);
+                linkBuff = new KcpThread<T>[threadCount];
+                for (int i = 0; i < threadCount; i++)
+                    linkBuff[i] = new KcpThread<T>(threadbuff);
             }
-        }
-        public void Send(byte[] dat, IPEndPoint ip)
-        {
-            soc.Send(dat, dat.Length, ip);
-        }
-        void SendAll(byte[][] dat)
-        {
-            lock (links)
+            else
             {
-                for (int i = 0; i < maxLink; i++)
-                {
-                    var link = links[i];
-                    if (link != null)
-                        for (int j = 0; j < dat.Length; j++)
-                            soc.Send(dat[j], dat[j].Length, link.endpPoint);
-                }
+                tCount = 1;
+                linkBuff = new LinkBuffer<T>[1];
+                linkBuff[0] = new LinkBuffer<T>();
             }
-        }
-        void SendAll(byte[] dat)
-        {
-            lock (links)
-            {
-                for (int i = 0; i < maxLink; i++)
-                {
-                    var link = links[i];
-                    if (link != null)
-                        soc.Send(dat, dat.Length, link.endpPoint);
-                }
-            }
-        }
-        void Run(object index)
-        {
-            int os = (int)index;
-            while (running)
-            {
-                var now = DateTime.Now;
-                long a = now.Ticks;
-                int s = os;
-                for (int i = 0; i < SingleCount; i++)
-                {
-                    var c = links[s];
-                    if (c != null)
-                    {
-                        c.Recive(a);
-                    }
-                    s += tCount;
-                }
-                long t = DateTime.Now.Ticks;
-                t -= a;
-                t /= 10000;
-                if (t < 10)
-                    Thread.Sleep(10 - (int)t);
-            }
+            Start();
         }
         public void Close()
         {
             soc.Close();
         }
-        public static Func<KcpServer, KcpLink> CreateModle = (k) => { return new KcpLink(k); };
         //设置用户的udp对象用于发送消息
-        public KcpLink CreateNewLink(IPEndPoint ep)
+        public T FindOrCreateLink(IPEndPoint ep)
         {
-            var ip = ep.Address.GetAddressBytes();
-            int id = 0;
+            var b = ep.Address.GetAddressBytes();
+            int ip = 0;
             unsafe
             {
-                fixed (byte* bp = &ip[0])
-                    id = *(Int32*)bp;
+                fixed (byte* bp = &b[0])
+                    ip = *(Int32*)bp;
             }
-            int min = maxLink;
-            for (int i = maxLink; i >= 0; i--)
+            var link = FindLink(ip);
+            if (link == null)
             {
-                var lin = links[i];
-                if (lin != null)
+                link = new T();
+                link.envelope = new KcpEnvelope();
+                link.kcp = this;
+                link.ConnectTime = DateTime.Now.Ticks;
+                link._connect = true;
+                int s = 0;
+                int c = linkBuff[0].Count;
+                for (int i = 1; i < tCount; i++)
                 {
-                    if (id == lin.ip)
+                    if (c > linkBuff[i].Count)
                     {
-                        if (ep.Port == lin.port)
-                        {
-                            links[i].time = DateTime.Now.Ticks;
-                            return links[i];
-                        }
+                        s = i;
+                        c = linkBuff[i].Count;
                     }
                 }
-                else min = i;
-
+                link.buffIndex = s;
+                linkBuff[s].Add(link);
             }
-            KcpLink link = CreateModle(this);
-            link.ip = id;
-            link.port = ep.Port;
-            link.endpPoint = ep;
-            link.envelope = new KcpEnvelope();
-            link.time = DateTime.Now.Ticks;
-            link.Index = min;
-            link._connect = true;
-            links[min]=link;
             return link;
         }
-        public override void Dispatch(byte[] dat, IPEndPoint endPoint)
+        public override void Dispatch(byte[] dat, IPEndPoint ep)
         {
-            var link = CreateNewLink(endPoint);
-            link.metaData.Enqueue(dat);
+            var link = FindOrCreateLink(ep);
+            if(link!=null)
+            {
+                link.metaData.Enqueue(dat);
+            }
         }
-        public void RemoveLink(KcpLink link)
+        public override void RemoveLink(KcpLink link)
         {
-            links[link.Index] = null;
+            linkBuff[link.buffIndex].Delete(link);
+            maxLink--;
         }
         public override void Dispose()
         {
             base.Dispose();
+            soc.Close();
             Instance = null;
+            for (int i = 0; i < tCount; i++)
+                linkBuff[i].running = false;
+        }
+        public T FindLink(Int64 id)
+        {
+            for (int i = 0; i < tCount; i++)
+            {
+                var l = linkBuff[i].Find(id);
+                if (l != null)
+                    return l;
+            }
+            return null;
+        }
+        public T FindLink(int ip)
+        {
+            for (int i = 0; i < tCount; i++)
+            {
+                var l = linkBuff[i].Find(ip);
+                if (l != null)
+                    return l;
+            }
+            return null;
+        }
+        ThreadTimer timer;
+        static byte[] Heart = new byte[1];
+        public void OpenHeart()
+        {
+            if(timer==null)
+            {
+                timer = new ThreadTimer(1000);
+                timer.Tick = (o,e) => {
+                    try
+                    {
+                        var dat = envelope.Pack(Heart, EnvelopeType.Mate);
+                        for(int i=0;i<tCount;i++)
+                        {
+                            linkBuff[i].SendAll(this, dat);
+                        }
+                    }
+                    catch
+                    {
+                    }
+                };
+            }
+        }
+        public void CloseHeart()
+        {
+            if(timer!=null)
+            {
+                timer.Dispose();
+                timer = null;
+            }
         }
     }
 }

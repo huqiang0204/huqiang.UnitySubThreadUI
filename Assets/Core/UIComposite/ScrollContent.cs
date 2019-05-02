@@ -223,7 +223,6 @@ namespace huqiang.UIComposite
                 }
             }
             var it = CreateItem();
-            Items.Add(it);
             return it;
         }
         protected void RecycleInside(int down, int top)

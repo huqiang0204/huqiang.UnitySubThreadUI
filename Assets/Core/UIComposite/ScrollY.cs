@@ -88,6 +88,7 @@ namespace huqiang.UIComposite
                 var item = model.FindChild("Item");
                 if(item!=null)
                 {
+                    item.activeSelf = false;
                     ItemMod = item.Model;
                     ItemSize = item.data.sizeDelta;
                 }
@@ -252,6 +253,7 @@ namespace huqiang.UIComposite
             }
        
             PushItems();//将未被回收的数据压入缓冲区
+            Items.Clear();
             int index = sr;
             float oy = 0;
             for (int i=0;i<e;i++)
@@ -276,6 +278,7 @@ namespace huqiang.UIComposite
             float ox = (index%Column) * ItemSize.x + ItemSize.x * 0.5f + ItemOffset.x - Size.x * 0.5f;
             var a = PopItem(index);
             a.target.data.localPosition = new Vector3(ox, dy, 0);
+            Items.Add(a);
             if (a.index < 0 | force)
             {
                 var dat = GetData(index);
