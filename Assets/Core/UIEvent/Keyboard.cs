@@ -91,7 +91,7 @@ namespace huqiang.UIEvent
         public static bool active { get; set; }
         public static bool canGetSelection { get; private set; }
         public static TouchScreenKeyboard.Status status { get; private set; }
-        public static bool GetKeyKey(KeyCode key)
+        public static bool GetKey(KeyCode key)
         {
             if (KeyDowns.Contains(key))
                 return true;

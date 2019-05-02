@@ -42,7 +42,7 @@ namespace huqiang.UI
                 TextElement.fonts.Add(Font.CreateDynamicFontFromOSFont("Arial", 16));
             return fonts[0];
         }
-        Text Context;
+        public Text Context;
         public TextData data;
         string fontName;
         string mtext;

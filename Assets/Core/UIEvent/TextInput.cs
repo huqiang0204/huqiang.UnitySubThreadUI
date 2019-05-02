@@ -254,22 +254,8 @@ namespace huqiang.UIEvent
             if (input.ReadOnly)
                 return;
             InputEvent = input;
-            if (Application.platform == RuntimePlatform.Android |
-                Application.platform == RuntimePlatform.IPhonePlayer |
-                Application.platform == RuntimePlatform.WSAPlayerARM |
-                Application.platform == RuntimePlatform.WSAPlayerX64 |
-                Application.platform == RuntimePlatform.WSAPlayerX86)
-            {
-                IsTouchKeyboard = true;
-                if (InputEvent.contentType == ContentType.Password)
-                    m_touch = TouchScreenKeyboard.Open("", InputEvent.touchType, true, InputEvent.multiLine, true);
-                else
-                    m_touch = TouchScreenKeyboard.Open("", InputEvent.touchType, true, InputEvent.multiLine);
-                m_touch.text = input.emojiString.FullString;
-            }
-            else IsTouchKeyboard = false;
-            //InputCaret.SetParent(input.Target);
-            Input.imeCompositionMode = IMECompositionMode.On;
+            bool pass = InputEvent.contentType == ContentType.Password ? true : false;
+            Keyboard.OnInput(input.emojiString.FullString, InputEvent.touchType,InputEvent.multiLine,pass,input.CharacterLimit);
         }
         static void OnClick(EventCallBack eventCall, UserAction action)
         {
@@ -388,200 +374,45 @@ namespace huqiang.UIEvent
             //InputCaret.CaretStyle = 1;
             //InputCaret.ChangeCaret(SelectVertex,SelectTriAngle);
         }
-        internal static void Dispatch()
-        {
-            if (InputEvent != null)
-            {
-                if (!InputEvent.ReadOnly)
-                    if (!InputEvent.Pressed)
-                    {
-                        if (IsTouchKeyboard)
-                        {
-                            //InputCaret.CaretStyle = 0;
-                            var str = m_touch.text;
-                            InputEvent.ApplyText(str);
-                            if (m_touch.status==TouchScreenKeyboard.Status.Done)
-                            {
-                                if (InputEvent.OnSubmit != null)
-                                    InputEvent.OnSubmit(InputEvent);
-                                InputEvent = null;
-                                //InputCaret.UpdateCaret();
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            var state = KeyPressed();
-                            if (state == EditState.Continue)
-                            {
-                                string str = Input.inputString;
-                                if (str != null & str != "")
-                                {
-#if UNITY_EDITOR||UNITY_STANDALONE_WIN
-                                    var tmp = IME.CurrentCompStr();
-                                    InputEvent.InputNewString(tmp);
-#else
-                                    InputEvent.InputNewString(str);
-#endif
-                                }
-                            }
-                            else if (state == EditState.Finish)
-                            {
-                                if (InputEvent.OnSubmit != null)
-                                    InputEvent.OnSubmit(InputEvent);
-                                InputEvent = null;
-                                //InputCaret.CaretStyle = 0;
-                                return;
-                            }
-                            else if (state == EditState.NewLine)
-                            {
-                                InputEvent.InputNewString("\n");
-                                if (InputEvent.OnValueChanged != null)
-                                    InputEvent.OnValueChanged(InputEvent);
-                                return;
-                            }
-                        }
-                    }
-            }
-            //InputCaret.UpdateCaret();
-        }
-        enum EditState
-        {
-            Done,
-            Continue,
-            NewLine,
-            Finish
-        }
+        bool openKeyboard;
+        bool closeKeyboard;
+        TextInfo textInfo = new TextInfo();
         /// <summary>
-        /// 每秒5次
+        /// MainThread
         /// </summary>
-        static float KeySpeed = 0.22f;
-        static float MaxSpeed = 0.03f;
-        static float KeyPressTime;
-        static EditState KeyPressed()
+        void Apply()
         {
-            KeyPressTime -= Time.deltaTime;
-            if (Input.GetKey(KeyCode.Backspace))
+            if (Context == null)
+                return;
+            if (openKeyboard)
             {
-                if (KeyPressTime <= 0)
+                bool pass = InputEvent.contentType == ContentType.Password ? true : false;
+                Keyboard.OnInput(emojiString.FullString, InputEvent.touchType, InputEvent.multiLine, pass, CharacterLimit);
+            }else if(closeKeyboard)
+            {
+                Keyboard.EndInput();
+            }
+            TextElement txt = TextCom;
+            if (txt == null)
+            {
+                txt = TextCom = Context.GetComponent<TextElement>();
+            }
+            if (txt == null)
+                return;
+            if (txt.text!=InputString)
+            {
+                if(!txt.IsChanged)
                 {
-                    if (InputEvent != null)
-                    {
-                        //if(InputEvent.DeleteLeft())
-                        //{
-                        //    InputEvent.RefreshText();
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
-                    }
-                    KeySpeed *= 0.8f;
-                    if (KeySpeed < MaxSpeed)
-                        KeySpeed = MaxSpeed;
-                    KeyPressTime = KeySpeed;
+                    var g = txt.Context.cachedTextGenerator;
+                    if (textInfo == null)
+                        textInfo = new TextInfo();
+                    textInfo.vertex = g.verts;
+                    textInfo.lines = g.lines;
+                    textInfo.characterCount = g.characterCount;
+                    textInfo.visibleCount = g.characterCountVisible;
                 }
-                return EditState.Done;
+                TextCom.text = InputString;
             }
-            if (Input.GetKey(KeyCode.Delete))
-            {
-                if (KeyPressTime <= 0)
-                {
-                    if (InputEvent != null)
-                    {
-                        //if (InputEvent.DeleteRight())
-                        //{
-                        //    InputEvent.RefreshText();
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
-                    }
-                    KeySpeed *= 0.5f;
-                    if (KeySpeed < MaxSpeed)
-                        KeySpeed = MaxSpeed;
-                    KeyPressTime = KeySpeed;
-                }
-                return EditState.Done;
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                if (KeyPressTime <= 0)
-                {
-                    if (InputEvent != null)
-                    {
-                        //if(InputEvent.MoveLeft())
-                        //{
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
-                    }
-                    KeySpeed *= 0.5f;
-                    if (KeySpeed < MaxSpeed)
-                        KeySpeed = MaxSpeed;
-                    KeyPressTime = KeySpeed;
-                }
-                return EditState.Done;
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                if (KeyPressTime <= 0)
-                {
-                    if (InputEvent != null)
-                    {
-                        //if(InputEvent.MoveRight())
-                        //{
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
-                    }
-                    KeySpeed *= 0.5f;
-                    if (KeySpeed < MaxSpeed)
-                        KeySpeed = MaxSpeed;
-                    KeyPressTime = KeySpeed;
-                }
-                return EditState.Done;
-            }
-            KeySpeed = 0.3f;
-            if (Input.GetKeyDown(KeyCode.Home))
-            {
-                InputEvent.ChangePoint(0);
-                return EditState.Done;
-            }
-            if (Input.GetKeyDown(KeyCode.End))
-            {
-                InputEvent.ChangePoint(InputEvent.emojiString.Length);
-                return EditState.Done;
-            }
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                if (Input.GetKey(KeyCode.LeftControl) | Input.GetKey(KeyCode.RightControl))
-                {
-                    if (InputEvent != null)
-                    {
-                        //InputEvent.startSelect= 0;
-                        //InputEvent.endSelect= InputEvent.emojiString.Length;
-                        InputEvent.Selected();
-                    }
-                    return EditState.Done;
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.Return) | Input.GetKeyDown(KeyCode.KeypadEnter))
-            {
-                if (InputEvent.lineType != LineType.MultiLineNewline)
-                {
-                    return EditState.Finish;
-                }
-                else return EditState.NewLine;
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                return EditState.Finish;
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (InputEvent != null)
-                {
-                    //InputEvent.InsertString(" ");
-                    //InputEvent.RefreshText();
-                    //InputEvent.ChangePoint(InputEvent.startSelect);
-                }
-                return EditState.Done;
-            }
-            return EditState.Continue;
         }
     }
 }
