@@ -204,8 +204,11 @@ namespace huqiang.UIComposite
             int top = c - 1;
             for (int i = 0; i < c; i++)
             {
-                Items[i].target.activeSelf = false;
-                TmpPool[top] = Items[i];
+                if (Items[i] != null)
+                {
+                    Items[i].target.activeSelf = false;
+                    TmpPool[top] = Items[i];
+                }
                 top--;
             }
         }
@@ -234,7 +237,8 @@ namespace huqiang.UIComposite
                 int index = Items[c].index;
                 if (index >= down & index <= top)
                 {
-                    RecycleItem(it, c);
+                    RecycleItem(it);
+                    Items.RemoveAt(c);
                 }
             }
         }
@@ -252,13 +256,22 @@ namespace huqiang.UIComposite
                 int index = Items[c].index;
                 if (index < down | index > top)
                 {
-                    RecycleItem(it, c);
+                    RecycleItem(it);
+                    Items.RemoveAt(c);
                 }
             }
         }
-        protected void RecycleItem(ScrollItem it, int index)
+        protected void RecycleRemain()
         {
-            Items.RemoveAt(index);
+            for(int i=0;i<tmpPoint;i++)
+            {
+                RecycleItem(TmpPool[i]);
+            }
+            tmpPoint = 0;
+        }
+        protected void RecycleItem(ScrollItem it)
+        {
+            //Items.RemoveAt(index);
             it.target.activeSelf = false;
             if (buffPoint < 512)
             {

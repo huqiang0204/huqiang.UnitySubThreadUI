@@ -65,6 +65,7 @@ namespace huqiang
             ModelManagerUI.CycleBuffer = buff.transform;
         }
         public static float AllTime;
+        static int a = 0;
         public static void Update()
         {
             Scale.ScreenCurrentWidth = Screen.width;
@@ -75,7 +76,13 @@ namespace huqiang
             ThreadPool.AddMission(SubThread,null);
             ThreadPool.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
-            Page.Root.Apply();
+            a++;
+            if(a>1)
+            {
+                a = 0;
+                Page.Root.Apply();
+            }
+           
 
             //Resize();
             AllTime += Time.deltaTime;

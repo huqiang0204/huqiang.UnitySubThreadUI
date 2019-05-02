@@ -266,6 +266,7 @@ namespace huqiang.UIComposite
                     oy = ActualSize.y;
                 }
             }
+            RecycleRemain();
         }
         void UpdateItem(int index,float oy,bool force)
         {
