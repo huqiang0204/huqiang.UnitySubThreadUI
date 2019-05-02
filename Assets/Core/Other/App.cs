@@ -67,26 +67,22 @@ namespace huqiang
             mission = new ThreadMission();
         }
         public static float AllTime;
-        static int a = 0;
+        public static float FrameTime = 33;
+        static float time;
         public static void Update()
         {
             Scale.ScreenCurrentWidth = Screen.width;
             Scale.ScreenCurrentHeight= Screen.height;
-            //AnimationManage.Manage.Update();
-            //UserAction.DispatchEvent();
             UserAction.DispatchEvent();
             mission.AddSubMission(SubThread,null);
             ThreadPool.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
-            a++;
-            if(a>1)
+            time += UserAction.TimeSlice;
+            if(time>=FrameTime)
             {
-                a = 0;
-                Page.Root.Apply();
+                time -= FrameTime;
+                Page.Root.Apply();//更新UI
             }
-           
-
-            //Resize();
             AllTime += Time.deltaTime;
             //DownloadManager.UpdateMission();
         }
