@@ -50,6 +50,7 @@ namespace huqiang.UIEvent
             u.Context = element;
             element.baseEvent = u;
             events.Add(u);
+            u.Initial();
             return u;
         }
         public static object RegEvent(ModelElement element,Type type)
@@ -64,7 +65,9 @@ namespace huqiang.UIEvent
             }
             EventCallBack u = Activator.CreateInstance(type) as EventCallBack;
             u.Context = element;
+            element.baseEvent = u;
             events.Add(u);
+            u.Initial();
             return u;
         }
         public static void RegEvent<T>(T t)where T: EventCallBack
@@ -510,6 +513,9 @@ namespace huqiang.UIEvent
         public virtual void Reset()
         {
             Reset(this);
+        }
+        protected virtual void Initial()
+        {
         }
         static void Reset(EventCallBack eventCall)
         {

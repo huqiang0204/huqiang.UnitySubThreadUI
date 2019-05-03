@@ -17,6 +17,7 @@ namespace huqiang.UIEvent
         public static string CorrectionInput;
         public static string TouchString;
         public static string CorrectionTouch;
+        public static bool InputChanged;
         static TouchScreenKeyboard m_touch;
         static bool _touch = false;
         public static void DispatchEvent()
@@ -48,6 +49,9 @@ namespace huqiang.UIEvent
                 if (Input.GetKeyUp(key))
                     KeyUps.Add(key);
             }
+            if (InputString != Input.inputString)
+                InputChanged = true;
+            else InputChanged = false;
             InputString = Input.inputString;
             if(_touch)
             {
@@ -64,6 +68,13 @@ namespace huqiang.UIEvent
                     }
                     active = m_touch.active;
                 }
+            }
+        }
+        public static void SetValidationString(string str)
+        {
+            if(str!=InputString)
+            {
+
             }
         }
         public static void OnInput(string str, TouchScreenKeyboardType type,bool multiLine,bool passward,int limit)

@@ -23,6 +23,7 @@ namespace huqiang.UIEvent
         static float KeySpeed = 0.22f;
         static float MaxSpeed = 0.03f;
         static float KeyPressTime;
+        static TextInput InputEvent;
         static EditState KeyPressed()
         {
             KeyPressTime -= Time.deltaTime;
@@ -70,10 +71,7 @@ namespace huqiang.UIEvent
                 {
                     if (InputEvent != null)
                     {
-                        //if(InputEvent.MoveLeft())
-                        //{
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
+                        InputEvent.SetSelectPoint(-1);
                     }
                     KeySpeed *= 0.5f;
                     if (KeySpeed < MaxSpeed)
@@ -88,10 +86,7 @@ namespace huqiang.UIEvent
                 {
                     if (InputEvent != null)
                     {
-                        //if(InputEvent.MoveRight())
-                        //{
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
+                        InputEvent.SetSelectPoint(1);
                     }
                     KeySpeed *= 0.5f;
                     if (KeySpeed < MaxSpeed)
@@ -103,12 +98,12 @@ namespace huqiang.UIEvent
             KeySpeed = 0.3f;
             if (Keyboard.GetKeyDown(KeyCode.Home))
             {
-                InputEvent.ChangePoint(0);
+                InputEvent.SetSelectPoint(0);
                 return EditState.Done;
             }
             if (Keyboard.GetKeyDown(KeyCode.End))
             {
-                InputEvent.ChangePoint(InputEvent.emojiString.Length);
+                InputEvent.SetSelectPoint(10000000);
                 return EditState.Done;
             }
             if (Keyboard.GetKeyDown(KeyCode.A))
@@ -117,8 +112,8 @@ namespace huqiang.UIEvent
                 {
                     if (InputEvent != null)
                     {
-                        //InputEvent.startSelect = 0;
-                        //InputEvent.endSelect = InputEvent.emojiString.Length;
+                        InputEvent.textInfo.startSelect = 0;
+                        InputEvent.textInfo.endSelect = InputEvent.textInfo.text.Length;
                         InputEvent.Selected();
                     }
                     return EditState.Done;
@@ -150,60 +145,25 @@ namespace huqiang.UIEvent
         }
         internal static void Dispatch()
         {
+            if(InputEvent!=null)
+            {
+                InputEvent.Apply();
+            }
+            InputCaret.UpdateCaret();
+        }
+        internal static void SubDispatch()
+        {
             if (InputEvent != null)
             {
                 if (!InputEvent.ReadOnly)
                     if (!InputEvent.Pressed)
                     {
-                        if (IsTouchKeyboard)
+                        if (Keyboard.InputChanged)
                         {
-                            //InputCaret.CaretStyle = 0;
-                            var str = m_touch.text;
-                            InputEvent.ApplyText(str);
-                            if (m_touch.status == TouchScreenKeyboard.Status.Done)
-                            {
-                                if (InputEvent.OnSubmit != null)
-                                    InputEvent.OnSubmit(InputEvent);
-                                InputEvent = null;
-                                //InputCaret.UpdateCaret();
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            var state = KeyPressed();
-                            if (state == EditState.Continue)
-                            {
-                                string str = Input.inputString;
-                                if (str != null & str != "")
-                                {
-#if UNITY_EDITOR||UNITY_STANDALONE_WIN
-                                    var tmp = IME.CurrentCompStr();
-                                    InputEvent.InputNewString(tmp);
-#else
-                                    InputEvent.InputNewString(str);
-#endif
-                                }
-                            }
-                            else if (state == EditState.Finish)
-                            {
-                                if (InputEvent.OnSubmit != null)
-                                    InputEvent.OnSubmit(InputEvent);
-                                InputEvent = null;
-                                //InputCaret.CaretStyle = 0;
-                                return;
-                            }
-                            else if (state == EditState.NewLine)
-                            {
-                                InputEvent.InputNewString("\n");
-                                if (InputEvent.OnValueChanged != null)
-                                    InputEvent.OnValueChanged(InputEvent);
-                                return;
-                            }
+                           Keyboard.SetValidationString(InputEvent.OnInputChanged(Keyboard.InputString));
                         }
                     }
             }
-            //InputCaret.UpdateCaret();
         }
         public static bool GetIndexPoint(TextInfo info, int index, ref Vector3 point)
         {
@@ -238,16 +198,17 @@ namespace huqiang.UIEvent
             }
             return true;
         }
-
-        public static int GetPressIndex(Text text, EventCallBack callBack, ref Vector3 point, UserAction action)
+        public static int GetPressIndex(TextInfo info, EventCallBack callBack, ref Vector3 point, UserAction action)
         {
-            if (text == null)
-                return -1;
-            if (text.text == "" | text.text == null)
-                return -1;
-            float fs = text.fontSize;
-            IList<UILineInfo> lines = text.cachedTextGenerator.lines;
-            IList<UIVertex> vertex = text.cachedTextGenerator.verts;
+            if (info == null)
+                return 0;
+            if (info.text == "" | info.text == null)
+                return 0;
+            float fs = info.fontSize;
+            IList<UILineInfo> lines = info.lines;
+            if (lines == null)
+                return 0;
+            IList<UIVertex> verts = info.vertex;
             var pos = callBack.GlobalPosition;
             var scale = callBack.GlobalScale;
             for (int i = 0; i < lines.Count; i++)
@@ -260,38 +221,38 @@ namespace huqiang.UIEvent
                 if (down < action.CanPosition.y)
                 {
                     int index = lines[i].startCharIdx;
-                    int end = text.text.Length - index;
+                    int end = info.text.Length - index;
                     if (i < lines.Count - 1)
                         end = lines[i + 1].startCharIdx - index;
                     int p = index * 4;
                     for (int j = 0; j < end; j++)
                     {
-                        float x = vertex[p + 2].position.x;
+                        float x = verts[p + 2].position.x;
                         x *= scale.x;
                         x += pos.x;
                         if (x > action.CanPosition.x)
                         {
-                            point.x = vertex[p].position.x;
+                            point.x = verts[p].position.x;
                             point.y = top - high * 0.5f;
                             point.z = high;
                             return index;
                         }
                         index++;
                         p += 4;
-                        if (p + 2 >= vertex.Count)
+                        if (p + 2 >= verts.Count)
                             break;
                     }
-                    if (index == text.text.Length)
+                    if (index == info.text.Length)
                     {
                         float it = lines[lines.Count - 1].topY;
                         float ih = lines[lines.Count - 1].height;
-                        point.x = vertex[vertex.Count - 2].position.x;
+                        point.x = verts[verts.Count - 2].position.x;
                         point.y = it - ih * 0.5f;
                         point.z = ih;
                     }
                     else
                     {
-                        point.x = vertex[p - 4].position.x;
+                        point.x = verts[p - 4].position.x;
                         point.y = top - high * 0.5f;
                         point.z = high;
                     }
@@ -300,10 +261,10 @@ namespace huqiang.UIEvent
             }
             float t = lines[lines.Count - 1].topY;
             float h = lines[lines.Count - 1].height;
-            point.x = vertex[vertex.Count - 1].position.x;
+            point.x = verts[verts.Count - 1].position.x;
             point.y = t - h * 0.5f;
             point.z = h;
-            return text.cachedTextGenerator.characterCountVisible;
+            return info.visibleCount;
         }
         static Vector2 GetLineRect(IList<UIVertex> vertex, int start, int end)
         {
@@ -332,15 +293,19 @@ namespace huqiang.UIEvent
             if (info == null)
                 return;
             IList<UILineInfo> lines = info.lines;
+            if (lines == null)
+                return;
             IList<UIVertex> vertex = info.vertex;
+            if (vertex == null)
+                return;
             float top = 0;
             float down = 0;
             int end = info.characterCount;
             int max = lines.Count;
             int se = max - 1;
-            var vert = info.vert;
-            var color = info.color;
-            var tri = info.tri;
+            var vert = info.selectVertex;
+            var color = info.areaColor;
+            var tri = info.selectTri;
             for (int i = 0; i < lines.Count; i++)
             {
                 int start = lines[i].startCharIdx;
@@ -352,7 +317,7 @@ namespace huqiang.UIEvent
                 {
                     end = info.visibleCount;
                 }
-                int state = CommonArea(info.startIndex, info.endIndex, ref start, ref end);
+                int state = CommonArea(info.startSelect, info.endSelect, ref start, ref end);
                 if (state == 2)
                 {
                     break;
@@ -390,18 +355,235 @@ namespace huqiang.UIEvent
                 }
             }
         }
+        static readonly char[] Separators = { ' ', '.', ',', '\t', '\r', '\n' };
+        const string EmailCharacters = "!#$%&'*+-/=?^_`{|}~";
+        static char Validate(CharacterValidation validat, string text, int pos, char ch)
+        {
+            if (validat == CharacterValidation.None)
+                return ch;
+            if (validat == CharacterValidation.Integer)
+            {
+                if (ch == '-')
+                {
+                    if (text == "")
+                        return ch;
+                    if (text.Length > 0)
+                        return (char)0;
+                }
+                if (ch < '0' | ch > '9')
+                    return (char)0;
+                return ch;
+            }
+            else if (validat == CharacterValidation.Decimal)
+            {
+                if (ch >= '0' && ch <= '9')
+                {
+                    if (ch == '.')
+                        if (text.IndexOf('.') < 0)
+                            return ch;
+                    return (char)0;
+                }
+                return ch;
+            }
+            else if (validat == CharacterValidation.Alphanumeric)
+            {
+                // All alphanumeric characters
+                if (ch >= 'A' && ch <= 'Z') return ch;
+                if (ch >= 'a' && ch <= 'z') return ch;
+                if (ch >= '0' && ch <= '9') return ch;
+            }
+            else if (validat == CharacterValidation.numberAndName)
+            {
+                if (char.IsLetter(ch))
+                {
+                    // Character following a space should be in uppercase.
+                    if (char.IsLower(ch) && ((pos == 0) || (text[pos - 1] == ' ')))
+                    {
+                        return char.ToUpper(ch);
+                    }
 
+                    // Character not following a space or an apostrophe should be in lowercase.
+                    if (char.IsUpper(ch) && (pos > 0) && (text[pos - 1] != ' ') && (text[pos - 1] != '\''))
+                    {
+                        return char.ToLower(ch);
+                    }
+
+                    return ch;
+                }
+
+                if (ch == '\'')
+                {
+                    // Don't allow more than one apostrophe
+                    if (!text.Contains("'"))
+                        // Don't allow consecutive spaces and apostrophes.
+                        if (!(((pos > 0) && ((text[pos - 1] == ' ') || (text[pos - 1] == '\''))) ||
+                              ((pos < text.Length) && ((text[pos] == ' ') || (text[pos] == '\'')))))
+                            return ch;
+                }
+
+                if (ch == ' ')
+                {
+                    // Don't allow consecutive spaces and apostrophes.
+                    if (!(((pos > 0) && ((text[pos - 1] == ' ') || (text[pos - 1] == '\''))) ||
+                          ((pos < text.Length) && ((text[pos] == ' ') || (text[pos] == '\'')))))
+                        return ch;
+                }
+                if (ch >= '0' && ch <= '9') return ch;
+            }
+            else if (validat == CharacterValidation.Name)
+            {
+                if (char.IsLetter(ch))
+                {
+                    // Character following a space should be in uppercase.
+                    if (char.IsLower(ch) && ((pos == 0) || (text[pos - 1] == ' ')))
+                    {
+                        return char.ToUpper(ch);
+                    }
+
+                    // Character not following a space or an apostrophe should be in lowercase.
+                    if (char.IsUpper(ch) && (pos > 0) && (text[pos - 1] != ' ') && (text[pos - 1] != '\''))
+                    {
+                        return char.ToLower(ch);
+                    }
+
+                    return ch;
+                }
+
+                if (ch == '\'')
+                {
+                    // Don't allow more than one apostrophe
+                    if (!text.Contains("'"))
+                        // Don't allow consecutive spaces and apostrophes.
+                        if (!(((pos > 0) && ((text[pos - 1] == ' ') || (text[pos - 1] == '\''))) ||
+                              ((pos < text.Length) && ((text[pos] == ' ') || (text[pos] == '\'')))))
+                            return ch;
+                }
+
+                if (ch == ' ')
+                {
+                    // Don't allow consecutive spaces and apostrophes.
+                    if (!(((pos > 0) && ((text[pos - 1] == ' ') || (text[pos - 1] == '\''))) ||
+                          ((pos < text.Length) && ((text[pos] == ' ') || (text[pos] == '\'')))))
+                        return ch;
+                }
+            }
+            else if (validat == CharacterValidation.EmailAddress)
+            {
+
+                if (ch >= 'A' && ch <= 'Z') return ch;
+                if (ch >= 'a' && ch <= 'z') return ch;
+                if (ch >= '0' && ch <= '9') return ch;
+                if (ch == '@' && text.IndexOf('@') == -1) return ch;
+                if (EmailCharacters.IndexOf(ch) != -1) return ch;
+                if (ch == '.')
+                {
+                    char lastChar = (text.Length > 0) ? text[Mathf.Clamp(pos, 0, text.Length - 1)] : ' ';
+                    char nextChar = (text.Length > 0) ? text[Mathf.Clamp(pos + 1, 0, text.Length - 1)] : '\n';
+                    if (lastChar != '.' && nextChar != '.')
+                        return ch;
+                }
+            }
+            return (char)0;
+        }
+        /// <summary>
+        /// 删除当前被选中区域的文字
+        /// </summary>
+        /// <returns></returns>
+        static bool DeleteSelected(TextInfo info)
+        {
+            if (info.endSelect < 0)
+                return false;
+            int s = info.startSelect;
+            int e = info.endSelect;
+            if (e < s)
+            {
+                int a = s;
+                s = e;
+                e = a;
+            }
+            if (s < 0)
+                return false;
+            info.buffer.Remove(s,e-s);
+            info.text = info.buffer.ToString();
+            info.endSelect = -1;
+            info.startSelect = s;
+            info.CaretStyle = 1;
+            return true;
+        }
+        static void ChangePoint(TextInfo info)
+        {
+            int index = info.startSelect;
+            if (index < 0)
+                index = 0;
+            var text = info.text;
+            if (text == null)
+                index = 0;
+            else if (index > text.Length)
+                index =text.Length;
+            Vector3 Point = Vector3.zero;
+            var o = GetIndexPoint(info, index, ref Point);
+            var vert = info.selectVertex;
+            var tri = info.selectTri;
+            vert.Clear();
+            tri.Clear();
+            if (o)
+            {
+                float left = Point.x - 0.5f;
+                float right = Point.x + 0.5f;
+                float h = Point.z;
+                h *= 0.4f;
+                float top = Point.y + h;
+                float down = Point.y - h;
+                var v = new UIVertex();
+                v.position.x = left;
+                v.position.y = down;
+                v.color = info.caretColor;
+                vert.Add(v);
+                v.position.x = left;
+                v.position.y = top;
+                v.color = info.caretColor;
+                vert.Add(v);
+                v.position.x = right;
+                v.position.y = down;
+                v.color = info.caretColor;
+                vert.Add(v);
+                v.position.x = right;
+                v.position.y = top;
+                v.color = info.caretColor;
+                vert.Add(v);
+            }
+            else
+            {
+                var v = new UIVertex();
+                vert.Add(v);
+                vert.Add(v);
+                vert.Add(v);
+                vert.Add(v);
+            }
+            tri.Add(0);
+            tri.Add(1);
+            tri.Add(2);
+            tri.Add(2);
+            tri.Add(1);
+            tri.Add(3);
+        }
     }
     public class TextInfo
     {
+        public StringBuilder buffer = new StringBuilder();
+        public string text;
+        public float fontSize;
         public IList<UILineInfo> lines;
         public IList<UIVertex> vertex;
         public int characterCount;
         public int visibleCount;
-        public int startIndex;
-        public int endIndex;
-        public List<UIVertex> vert;
-        public List<int> tri;
+        public int startSelect;
+        public int endSelect;
+        public List<UIVertex> selectVertex=new List<UIVertex>();
+        public List<int> selectTri=new List<int>();
         public Color color;
+        public int CaretStyle;
+        public Color caretColor = new Color(1, 1, 1, 0.8f);
+        public Color areaColor = new Color(0.65882f, 0.8078f, 1, 0.4f);
     }
 }

@@ -1,21 +1,24 @@
 ﻿using huqiang.Data;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
 namespace huqiang
 {
-    class Mission
+
+    public class ThreadMission
     {
-        public Action<object> action;
-        public object data;
-    }
-    class ThreadMission
-    {
-        public QueueBuffer<Mission> SubMission;
-        public QueueBuffer<Mission> MainMission;
+        class Mission
+        {
+            public Action<object> action;
+            public object data;
+            public Action<object> waitAction;
+        }
+        QueueBuffer<Mission> SubMission;
+        QueueBuffer<Mission> MainMission;
         Thread thread;
-        public int Id;
+        public int Id { get; private set; }
         AutoResetEvent are;
         bool run;
         public ThreadMission()
@@ -27,6 +30,7 @@ namespace huqiang
             run = true;
             thread.Start();
             Id = thread.ManagedThreadId;
+            threads.Add(this);
         }
         void Run()
         {
@@ -37,7 +41,15 @@ namespace huqiang
                     var m = SubMission.Dequeue();
                     if (m == null)
                         are.WaitOne(1);
-                    else m.action(m.data);
+                    else {
+                        m.action(m.data);
+                        if (m.waitAction != null)
+                        {
+                            m.action = m.waitAction;
+                            m.waitAction = null;
+                            MainMission.Enqueue(m);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -48,50 +60,39 @@ namespace huqiang
             }
             are.Dispose();
         }
-        public void AddSubMission(Action<object> action, object dat)
+        public void AddSubMission(Action<object> action, object dat,Action<object> wait = null)
         {
             Mission mission = new Mission();
             mission.action = action;
             mission.data = dat;
+            mission.waitAction = wait;
             SubMission.Enqueue(mission);
         }
-        public void AddMainMission(Action<object> action, object dat)
+        public void AddMainMission(Action<object> action, object dat, Action<object> wait = null)
         {
             Mission mission = new Mission();
             mission.action = action;
             mission.data = dat;
+            mission.waitAction = wait;
             MainMission.Enqueue(mission);
         }
         public void Dispose()
         {
             run = false;
         }
-    }
-    public class ThreadPool
-    {
-        static ThreadMission[] threads;
-        static int size;
-        public static void Initial(int buffsize = 4)
-        {
-            if (threads != null)
-                Dispose();
-            size = buffsize;
-            threads = new ThreadMission[size];
-            for (int i = 0; i < buffsize; i++)
-                threads[i] = new ThreadMission();
-        }
+        static List<ThreadMission>threads=new List<ThreadMission>();
         static int point;
-        public static void AddMission(Action<object> action, object dat,int index=-1)
+        public static void AddMission(Action<object> action, object dat, int index, Action<object> wait = null)
         {
             if (threads == null)
             {
                 return;
             }
-            if(index<0|index>=size)
+            if (index < 0 | index >= threads.Count)
             {
                 threads[point].AddSubMission(action, dat);
                 point++;
-                if (point >= size)
+                if (point >= threads.Count)
                     point = 0;
             }
             else
@@ -99,37 +100,40 @@ namespace huqiang
                 threads[index].AddSubMission(action, dat);
             }
         }
-        public static void InvokeToMain(Action<object> action, object dat)
+        public static void InvokeToMain(Action<object> action, object dat, Action<object> wait=null)
         {
             var id = Thread.CurrentThread.ManagedThreadId;
-            for(int i=0;i<size;i++)
+            for (int i = 0; i < threads.Count; i++)
             {
-                if(threads[i].Id==id)
+                if (threads[i].Id == id)
                 {
-                    threads[i].AddMainMission(action,dat);
+                    threads[i].AddMainMission(action, dat, wait);
                     break;
                 }
             }
         }
         public static void ExtcuteMain()
         {
-             for(int i=0;i<size;i++)
+            for (int i = 0; i < threads.Count; i++)
             {
-                for(int j=0;j<2048;j++)
+                for (int j = 0; j < 2048; j++)
                 {
                     var m = threads[i].MainMission.Dequeue();
                     if (m == null)
                         break;
-                    else m.action(m.data);
+                    else {
+                        m.action(m.data);
+                        if (m.waitAction != null)
+                            threads[i].AddMainMission(m.waitAction,m.data);
+                    }
                 }
             }
         }
-        public static void Dispose()
+        public static void DisposeAll()
         {
-            if (threads == null)
-                return;
-            for (int i = 0; i < threads.Length; i++)
+            for (int i = 0; i < threads.Count; i++)
                 threads[i].Dispose();
+            threads.Clear();
         }
     }
 }

@@ -11,7 +11,6 @@ namespace huqiang
     {
         static void Initial()
         {
-            ThreadPool.Initial();
             EmojiText.Emoji = UnityEngine.Resources.Load<Texture2D>("emoji");
             if(Application.platform == RuntimePlatform.Android |Application.platform==RuntimePlatform.IPhonePlayer)
             {
@@ -76,7 +75,7 @@ namespace huqiang
             UserAction.DispatchEvent();
             Keyboard.DispatchEvent();
             mission.AddSubMission(SubThread,null);
-            ThreadPool.ExtcuteMain();
+            ThreadMission.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
             time += UserAction.TimeSlice;
             if(time>=FrameTime)
@@ -114,9 +113,8 @@ namespace huqiang
         public static void Dispose()
         {
             EventCallBack.ClearEvent();
-            ThreadPool.Dispose();
+            ThreadMission.DisposeAll();
             RecordManager.ReleaseAll();
-            mission.Dispose();
         }
     }
 }

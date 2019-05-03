@@ -1,6 +1,7 @@
 ﻿using huqiang.UI;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UGUI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,12 +48,13 @@ namespace huqiang.UIEvent
             Custom
         }
 
-        EmojiString emojiString =new EmojiString("");
         string m_TipString = "";
-        public string InputString { get { return emojiString.FullString; }
+        public string InputString { get { return textInfo.text; }
             set {
-                emojiString.FullString = value;
-                UpdateText();
+                value = ValidateString(value);
+                textInfo.buffer.Clear();
+                textInfo.buffer.Append(value);
+                textInfo.text = value;
             } }
         public string TipString
         {
@@ -60,19 +62,13 @@ namespace huqiang.UIEvent
             set
             {
                 m_TipString = value;
-                var str = emojiString.FullString;
-                if (str == null | str == "")
-                    UpdateText();
             }
         }
         public bool ReadOnly;
         Color textColor=Color.black;
         Color m_tipColor = new Color(0, 0, 0, 0.8f);
         public Color TipColor { get { return m_tipColor; } set { m_tipColor = value;} }
-        public Color CaretColor = new Color(1, 1, 1, 0.8f);
         public Color SelectionColor = new Color(0.65882f, 0.8078f, 1, 0.4f);
-        public List<UIVertex> SelectVertex { get; private set; }
-        public List<int> SelectTriAngle { get; private set; }
         public Func<TextInput, int, char, char> ValidateChar;
         public Action<TextInput> OnValueChanged;
         public Action<TextInput, UserAction> OnSelectChanged;
@@ -181,10 +177,12 @@ namespace huqiang.UIEvent
         public int CharacterLimit = 0;
         public TextInput()
         {
-            SelectVertex = new List<UIVertex>();
-            SelectTriAngle = new List<int>();
             Click = OnClick;
             LostFocus = OnLostFocus;
+        }
+        protected override void Initial()
+        {
+            TextCom = Context.GetComponent<TextElement>();
         }
         public TextElement TextCom { get; private set; }
         Vector3 Point;
@@ -192,10 +190,10 @@ namespace huqiang.UIEvent
         {
             if (TextCom != null)
             {
-               //startSelect = GetPressIndex(TextCom, this, ref Point, action);
+                textInfo.startSelect = GetPressIndex(textInfo, this, ref Point, action);
+                OnEdit(this);
             }
             base.OnMouseDown(action);
-            UpdateText();
         }
         protected override void OnDrag(UserAction action)
         {
@@ -206,16 +204,17 @@ namespace huqiang.UIEvent
                     {
                         if (action.Motion != Vector2.zero)
                         {
-                            //InputCaret.CaretStyle = 2;
-                            //Vector3 p = Vector3.zero;
-                            //int end = endSelect;
-                            //endSelect=GetPressIndex(TextCom, this, ref p, action);
-                            //if (end != endSelect)
-                            //{
-                            //    Selected();
-                            //    if (OnSelectChanged != null)
-                            //        OnSelectChanged(this, action);
-                            //}
+                            textInfo.CaretStyle = 2;
+                            Vector3 p = Vector3.zero;
+                            int end = textInfo.endSelect;
+                            textInfo.endSelect = GetPressIndex(textInfo, this, ref p, action);
+                            if (end !=textInfo.endSelect)
+                            {
+                                Selected();
+                                if (OnSelectChanged != null)
+                                    OnSelectChanged(this, action);
+                                selectChanged = true;
+                            }
                         }
                     }
                     else
@@ -241,42 +240,69 @@ namespace huqiang.UIEvent
                 if (x < ClickArea)
                     return;
             }
-            if (emojiString.FullString == "")
-                return;
             var p = Vector3.zero;
-            //endSelect= GetPressIndex(TextCom, this, ref p, action);
+            textInfo.endSelect= GetPressIndex(textInfo, this, ref p, action);
             Selected();
             if (OnSelectEnd != null)
                 OnSelectEnd(this, action);
+            selectChanged = true;
+        }
+        string ValidateString(string input)
+        {
+            if (CharacterLimit > 0)
+                if (input.Length > CharacterLimit)
+                    input = input.Substring(0,CharacterLimit);
+            if (characterValidation == CharacterValidation.None)
+                return input;
+            StringBuilder sb = new StringBuilder();
+            for(int i=0;i<input.Length;i++)
+            {
+                if (Validate(characterValidation, sb.ToString(), i, input[i]) != 0)
+                    sb.Append(input[i]);
+            }
+            return sb.ToString();
+        }
+        string OnInputChanged(string input)
+        {
+            if (input == "")
+                return "";
+            if (CharacterLimit > 0)
+                if (InputString != null)
+                    if (InputString.Length + input.Length > CharacterLimit)
+                    {
+                        int len = CharacterLimit - InputString.Length;
+                        if (len <= 0)
+                            return "";
+                        input = input.Substring(0, len);
+                    }
+            if (Validate(characterValidation, textInfo.text, textInfo.startSelect, input[0]) == 0)
+                return "";
+            if (ValidateChar != null)
+                if (ValidateChar(this, textInfo.startSelect, input[0]) == 0)
+                    return "";
+            DeleteSelected(textInfo);
+            textInfo.buffer.Insert(textInfo.startSelect,input);
+            textInfo.startSelect += input.Length;
+            if (OnValueChanged != null)
+                OnValueChanged(this);
+            textInfo.text = textInfo.buffer.ToString();
+            TextCom.text = textInfo.text;
+            return input;
         }
         static void OnEdit(TextInput input)
         {
             if (input.ReadOnly)
                 return;
             InputEvent = input;
-            bool pass = InputEvent.contentType == ContentType.Password ? true : false;
-            Keyboard.OnInput(input.emojiString.FullString, InputEvent.touchType,InputEvent.multiLine,pass,input.CharacterLimit);
         }
         static void OnClick(EventCallBack eventCall, UserAction action)
         {
             TextInput input = eventCall as TextInput;
             if (input == null)
                 return;
-            //input.TextCom.color = input.textColor;
-            //if (input.contentType == ContentType.Password)
-            //{
-            //    input.TextCom.text = new string('*', input.emojiString.Length);
-            //}
-            //else
-            //{
-            //    input.TextCom.text = input.emojiString.FullString;
-            //}
-            //InputEvent = input;
-            //InputEvent.startSelect=GetPressIndex(input.TextCom, eventCall, ref input.Point, action);
-            //input.ChangePoint(InputEvent.startSelect);
-            //InputEvent.endSelect = -1;
-            //InputCaret.CaretStyle = 1;
-            OnEdit(input);
+            InputEvent = input;
+            input.openKeyboard = true;
+            input.selectChanged = true;
         }
         static void OnLostFocus(EventCallBack eventCall, UserAction action)
         {
@@ -288,7 +314,7 @@ namespace huqiang.UIEvent
                 InputEvent = null;
                 //InputCaret.CaretStyle = 0;
             }
-            text.UpdateText();
+            text.closeKeyboard = true;
         }
         public static void SetCurrentInput(TextInput input, UserAction action)
         {
@@ -306,76 +332,18 @@ namespace huqiang.UIEvent
         }
         void Selected()
         {
-            SelectVertex.Clear();
-            SelectTriAngle.Clear();
-            //GetChoiceArea(TextCom, SelectVertex, SelectTriAngle, SelectionColor,startSelect,endSelect);
-            //InputCaret.ChangeCaret(SelectVertex,SelectTriAngle);
-            //InputCaret.Active();
-            //InputCaret.CaretStyle = 2;
-        }
-        void UpdateText()
-        {
-            if (TextCom == null)
-                return;
-            string str = emojiString.FullString;
-            if (str == null | str == "")
-            {
-                //TextCom.color = m_tipColor;
-                TextCom.text = m_TipString;
-            }
-            else
-            {
-                //TextCom.color = textColor;
-                if (contentType == ContentType.Password)
-                {
-                    TextCom.text = new string('*',emojiString.FilterString.Length);
-                }
-                else
-                {
-                    TextCom.text = emojiString.FullString;
-                }
-            }
-        }
-
-        static TextInput InputEvent;
-        static TouchScreenKeyboard m_touch;
-        static bool IsTouchKeyboard;
-        internal void InputNewString(string con)
-        {
-            if (CharacterLimit > 0)
-                if (emojiString != null)
-                    if (emojiString.Length + con.Length > CharacterLimit)
-                    {
-                        int len = CharacterLimit - emojiString.Length;
-                        if (len <= 0)
-                            return;
-                        con = con.Substring(0, len);
-                    }
-            //InsertString(con);
-            RefreshText();
-            //ChangePoint(startSelect);
-        }
-        void ApplyText(string text)
-        {
-            emojiString.FullString = text;
-            UpdateText();
-            //ChangePoint(startSelect);
+            textInfo.selectVertex.Clear();
+            textInfo.selectTri.Clear();
+            textInfo.CaretStyle = 2;
+            GetChoiceArea(textInfo);
         }
         void RefreshText()
         {
-            UpdateText();
-        }
-        public void ChangePoint(int index)
-        {
-            if (TextCom != null)
-            {
-                //GetCaretPoint(TextCom, SelectVertex,SelectTriAngle,startSelect,CaretColor);
-            }
-            //InputCaret.CaretStyle = 1;
-            //InputCaret.ChangeCaret(SelectVertex,SelectTriAngle);
+           
         }
         bool openKeyboard;
         bool closeKeyboard;
+        bool selectChanged;
         TextInfo textInfo = new TextInfo();
         /// <summary>
         /// MainThread
@@ -387,10 +355,18 @@ namespace huqiang.UIEvent
             if (openKeyboard)
             {
                 bool pass = InputEvent.contentType == ContentType.Password ? true : false;
-                Keyboard.OnInput(emojiString.FullString, InputEvent.touchType, InputEvent.multiLine, pass, CharacterLimit);
+                Keyboard.OnInput(textInfo.text, InputEvent.touchType, InputEvent.multiLine, pass, CharacterLimit);
+                openKeyboard = false;
+                InputCaret.SetParent(Context.Context);
             }else if(closeKeyboard)
             {
                 Keyboard.EndInput();
+                closeKeyboard = false;
+            }
+            if(selectChanged)
+            {
+                selectChanged = false;
+                InputCaret.ChangeCaret(textInfo);
             }
             TextElement txt = TextCom;
             if (txt == null)
@@ -404,14 +380,52 @@ namespace huqiang.UIEvent
                 if(!txt.IsChanged)
                 {
                     var g = txt.Context.cachedTextGenerator;
-                    if (textInfo == null)
-                        textInfo = new TextInfo();
                     textInfo.vertex = g.verts;
                     textInfo.lines = g.lines;
                     textInfo.characterCount = g.characterCount;
                     textInfo.visibleCount = g.characterCountVisible;
                 }
                 TextCom.text = InputString;
+            }
+        }
+        void SetSelectPoint(int index)
+        {
+            if (index != 0)
+            {
+                index += textInfo.startSelect;
+                if (index < 0)
+                    index = 0;
+                if (index > textInfo.text.Length)
+                    index = textInfo.text.Length;
+            }
+            textInfo.startSelect = index;
+            textInfo.endSelect = -1;
+            textInfo.CaretStyle = 1;
+            ChangePoint(textInfo);
+        }
+        void Delete(int dir)
+        {
+            if(dir<0)
+            {
+                int index = textInfo.startSelect;
+                if(index>0)
+                {
+                    index--;
+                    textInfo.buffer.Remove(index,1);
+                    textInfo.startSelect = index;
+                    textInfo.text = textInfo.buffer.ToString();
+                    ChangePoint(textInfo);
+                }
+           
+            }
+            else
+            {
+                int index = textInfo.startSelect;
+                if(index<textInfo.buffer.Length)
+                {
+                    textInfo.buffer.Remove(index, 1);
+                    textInfo.text = textInfo.buffer.ToString();
+                }
             }
         }
     }

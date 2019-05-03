@@ -14,6 +14,7 @@ public class LoadingPage : Page
         public ModelElement friend;
         public ModelElement Right;
         public ScrollY FriendsRanking;
+        public TextInput toptext;
     }
     ModelElement txt;
     System.Random ran;

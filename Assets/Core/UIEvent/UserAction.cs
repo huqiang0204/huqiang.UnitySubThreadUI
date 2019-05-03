@@ -255,7 +255,12 @@ namespace huqiang.UIEvent
 #endif
                 }
             }
+            TextInput.SubDispatch();
+            //GestureEvent.Dispatch(new List<UserInput>(inputs));
         }
+        /// <summary>
+        /// 子线程
+        /// </summary>
         void Dispatch()
         {
             Need = false;
@@ -430,8 +435,7 @@ namespace huqiang.UIEvent
             {
                 DispatchWin();
             }
-            //TextInputEvent.Dispatch();
-            //GestureEvent.Dispatch(new List<UserInput>(inputs));
+            TextInput.Dispatch();
         }
         public static void ClearAll()
         {

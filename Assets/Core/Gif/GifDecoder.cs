@@ -284,14 +284,14 @@ public class GifDecoder
         m.dat = dat;
         m.tag = tag;
         m.CallBack = callback;
-        ThreadPool.AddMission(Decode, m);
+        ThreadMission.AddMission(Decode, m, 1);
     }
 
     static  void Decode(object mis)
     {
         Mission m = mis as Mission;
         m.gifdata = parseGifData(m.dat);
-        ThreadPool.InvokeToMain(DataToTexture,m);
+        ThreadMission.InvokeToMain(DataToTexture,m);
     }
     static void DataToTexture(object mis)
     {
