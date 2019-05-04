@@ -1,10 +1,4 @@
-﻿using huqiang.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UGUI;
+﻿using UGUI;
 using UnityEngine;
 
 namespace huqiang.UIEvent
@@ -42,8 +36,9 @@ namespace huqiang.UIEvent
                 m_Caret.triangle = info.selectTri;
                 m_Caret.Refresh();
                 time = 0;
-                CaretStyle = info.CaretStyle;
+                m_Caret.gameObject.SetActive(true);
             }
+            CaretStyle = info.CaretStyle;
         }
         public static int CaretStyle;
         public static void UpdateCaret()

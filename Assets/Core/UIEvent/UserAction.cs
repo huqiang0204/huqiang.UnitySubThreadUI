@@ -435,7 +435,7 @@ namespace huqiang.UIEvent
             {
                 DispatchWin();
             }
-            TextInput.Dispatch();
+            InputCaret.UpdateCaret();
         }
         public static void ClearAll()
         {

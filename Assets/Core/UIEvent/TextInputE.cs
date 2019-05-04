@@ -20,24 +20,20 @@ namespace huqiang.UIEvent
         /// <summary>
         /// 每秒5次
         /// </summary>
-        static float KeySpeed = 0.22f;
-        static float MaxSpeed = 0.03f;
+        static float KeySpeed = 220;
+        static float MaxSpeed = 30;
         static float KeyPressTime;
         static TextInput InputEvent;
         static EditState KeyPressed()
         {
-            KeyPressTime -= Time.deltaTime;
+            KeyPressTime -= UserAction.TimeSlice;
             if (Keyboard.GetKey(KeyCode.Backspace))
             {
                 if (KeyPressTime <= 0)
                 {
                     if (InputEvent != null)
                     {
-                        //if(InputEvent.DeleteLeft())
-                        //{
-                        //    InputEvent.RefreshText();
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
+                        InputEvent.Delete(-1);
                     }
                     KeySpeed *= 0.8f;
                     if (KeySpeed < MaxSpeed)
@@ -52,13 +48,9 @@ namespace huqiang.UIEvent
                 {
                     if (InputEvent != null)
                     {
-                        //if (InputEvent.DeleteRight())
-                        //{
-                        //    InputEvent.RefreshText();
-                        //    InputEvent.ChangePoint(InputEvent.startSelect);
-                        //}
+                        InputEvent.Delete(1);
                     }
-                    KeySpeed *= 0.5f;
+                    KeySpeed *= 0.7f;
                     if (KeySpeed < MaxSpeed)
                         KeySpeed = MaxSpeed;
                     KeyPressTime = KeySpeed;
@@ -73,7 +65,7 @@ namespace huqiang.UIEvent
                     {
                         InputEvent.SetSelectPoint(-1);
                     }
-                    KeySpeed *= 0.5f;
+                    KeySpeed *= 0.7f;
                     if (KeySpeed < MaxSpeed)
                         KeySpeed = MaxSpeed;
                     KeyPressTime = KeySpeed;
@@ -88,14 +80,14 @@ namespace huqiang.UIEvent
                     {
                         InputEvent.SetSelectPoint(1);
                     }
-                    KeySpeed *= 0.5f;
+                    KeySpeed *= 0.7f;
                     if (KeySpeed < MaxSpeed)
                         KeySpeed = MaxSpeed;
                     KeyPressTime = KeySpeed;
                 }
                 return EditState.Done;
             }
-            KeySpeed = 0.3f;
+            KeySpeed = 220f;
             if (Keyboard.GetKeyDown(KeyCode.Home))
             {
                 InputEvent.SetSelectPoint(0);
@@ -131,25 +123,7 @@ namespace huqiang.UIEvent
             {
                 return EditState.Finish;
             }
-            if (Keyboard.GetKeyDown(KeyCode.Space))
-            {
-                if (InputEvent != null)
-                {
-                    //InputEvent.InsertString(" ");
-                    //InputEvent.RefreshText();
-                    //InputEvent.ChangePoint(InputEvent.startSelect);
-                }
-                return EditState.Done;
-            }
             return EditState.Continue;
-        }
-        internal static void Dispatch()
-        {
-            if(InputEvent!=null)
-            {
-                InputEvent.Apply();
-            }
-            InputCaret.UpdateCaret();
         }
         internal static void SubDispatch()
         {
@@ -158,10 +132,13 @@ namespace huqiang.UIEvent
                 if (!InputEvent.ReadOnly)
                     if (!InputEvent.Pressed)
                     {
-                        if (Keyboard.InputChanged)
-                        {
-                           Keyboard.SetValidationString(InputEvent.OnInputChanged(Keyboard.InputString));
-                        }
+                        if (KeyPressed() == EditState.Continue)
+                            if (Keyboard.InputChanged)
+                            {
+                                if (Keyboard.InputString == "")
+                                    return;
+                                InputEvent.OnInputChanged(Keyboard.InputString);
+                            }
                     }
             }
         }
@@ -169,23 +146,28 @@ namespace huqiang.UIEvent
         {
             ///仅可见区域的顶点 0=左上1=右上2=右下3=左下
             IList<UIVertex> vertex = info.vertex;
+            if (vertex == null)
+                return false;
             ///仅可见区域的行数
             IList<UILineInfo> lines = info.lines;
             float top = lines[lines.Count - 1].topY;
             float high = lines[lines.Count - 1].height;
             for (int i = 0; i < lines.Count; i++)
             {
-                if (lines[i].startCharIdx > index)
+                int a = lines[i].startCharIdx;
+                if ( a >= index)
                 {
-                    top = lines[i - 1].topY;
-                    high = lines[i - 1].height;
+                    if(i>0)
+                    {
+                        top = lines[i - 1].topY;
+                        high = lines[i - 1].height;
+                    }
                     break;
                 }
             }
-            int max = vertex.Count;
             index *= 4;
-            if (index >= max)
-                index = max - 3;
+            if (info.startDock == 1)
+                index -= 2;
             point.x = vertex[index].position.x;
             float y = vertex[index].position.y;
             float down = top - high;
@@ -198,8 +180,66 @@ namespace huqiang.UIEvent
             }
             return true;
         }
-        public static int GetPressIndex(TextInfo info, EventCallBack callBack, ref Vector3 point, UserAction action)
+        static void ChangePoint(TextInfo info)
         {
+            int index = info.startSelect;
+            if (index < 0)
+                index = 0;
+            var text = info.text;
+            if (text == null)
+                index = 0;
+            else if (index > text.Length)
+                index = text.Length;
+            Vector3 Point = Vector3.zero;
+            var o = GetIndexPoint(info, index, ref Point);
+            var vert = info.selectVertex;
+            var tri = info.selectTri;
+            vert.Clear();
+            tri.Clear();
+            if (o)
+            {
+                float left = Point.x - 0.5f;
+                float right = Point.x + 0.5f;
+                float h = Point.z;
+                h *= 0.4f;
+                float top = Point.y + h;
+                float down = Point.y - h;
+                var v = new UIVertex();
+                v.position.x = left;
+                v.position.y = down;
+                v.color = info.caretColor;
+                vert.Add(v);
+                v.position.x = left;
+                v.position.y = top;
+                v.color = info.caretColor;
+                vert.Add(v);
+                v.position.x = right;
+                v.position.y = down;
+                v.color = info.caretColor;
+                vert.Add(v);
+                v.position.x = right;
+                v.position.y = top;
+                v.color = info.caretColor;
+                vert.Add(v);
+            }
+            else
+            {
+                var v = new UIVertex();
+                vert.Add(v);
+                vert.Add(v);
+                vert.Add(v);
+                vert.Add(v);
+            }
+            tri.Add(0);
+            tri.Add(1);
+            tri.Add(2);
+            tri.Add(2);
+            tri.Add(1);
+            tri.Add(3);
+        }
+        public static int GetPressIndex(TextInfo info, EventCallBack callBack, UserAction action,ref int dock)
+        {
+            dock = 0;
             if (info == null)
                 return 0;
             if (info.text == "" | info.text == null)
@@ -208,70 +248,79 @@ namespace huqiang.UIEvent
             IList<UILineInfo> lines = info.lines;
             if (lines == null)
                 return 0;
+     
             IList<UIVertex> verts = info.vertex;
+            float lx = verts[0].position.x;
+            float ty = verts[0].position.y;
+            float dy = verts[verts.Count - 1].position.y;
+
             var pos = callBack.GlobalPosition;
             var scale = callBack.GlobalScale;
-            for (int i = 0; i < lines.Count; i++)
+            float mx = action.CanPosition.x - pos.x;
+            mx *= scale.x;
+            float my = action.CanPosition.y - pos.y;
+            my *= scale.y;
+            int r = 0;//行
+            if(my<ty)
             {
-                float top = lines[i].topY;
-                float high = lines[i].height;
-                float down = top - high;
-                down *= scale.y;
-                down += pos.y;
-                if (down < action.CanPosition.y)
+                if(my<dy)
                 {
-                    int index = lines[i].startCharIdx;
-                    int end = info.text.Length - index;
-                    if (i < lines.Count - 1)
-                        end = lines[i + 1].startCharIdx - index;
-                    int p = index * 4;
-                    for (int j = 0; j < end; j++)
+                    r = lines.Count - 1;
+                }
+                else
+                {
+                    for (int i = lines.Count-1; i >=0 ; i--)
                     {
-                        float x = verts[p + 2].position.x;
-                        x *= scale.x;
-                        x += pos.x;
-                        if (x > action.CanPosition.x)
+                        if (my < lines[i].topY)
                         {
-                            point.x = verts[p].position.x;
-                            point.y = top - high * 0.5f;
-                            point.z = high;
-                            return index;
-                        }
-                        index++;
-                        p += 4;
-                        if (p + 2 >= verts.Count)
+                            r = i;
                             break;
+                        }
                     }
-                    if (index == info.text.Length)
-                    {
-                        float it = lines[lines.Count - 1].topY;
-                        float ih = lines[lines.Count - 1].height;
-                        point.x = verts[verts.Count - 2].position.x;
-                        point.y = it - ih * 0.5f;
-                        point.z = ih;
-                    }
-                    else
-                    {
-                        point.x = verts[p - 4].position.x;
-                        point.y = top - high * 0.5f;
-                        point.z = high;
-                    }
-                    return index;
                 }
             }
-            float t = lines[lines.Count - 1].topY;
-            float h = lines[lines.Count - 1].height;
-            point.x = verts[verts.Count - 1].position.x;
-            point.y = t - h * 0.5f;
-            point.z = h;
-            return info.visibleCount;
+            if (mx > lx)
+            {
+                int s = lines[r].startCharIdx;
+                int index = s * 4;
+                int end = verts.Count - index;
+
+                float ox = verts[index].position.x;
+                for (int i = 0; i < end; i += 4)
+                {
+                    float tx = verts[index].position.x;
+                    if (tx < ox | tx > mx)
+                    {
+                        index -= 4;
+                        goto lable;
+                    }
+                    ox = tx;
+                    index += 4;
+                }
+                return info.visibleCount;
+            lable:;
+                float ax = verts[index].position.x;
+                float bx = verts[index + 2].position.x;
+                float cx = ax + (bx - ax) * 0.5f;
+                index /= 4;
+                if (mx > cx)
+                {
+                    index++;
+                    dock = 1;
+                }
+                return index;
+            }
+            else return lines[r].startCharIdx;
         }
-        static Vector2 GetLineRect(IList<UIVertex> vertex, int start, int end)
+
+        static Vector2 GetLineRect(IList<UIVertex> vertex, int start, int end,bool warp)
         {
             if (vertex.Count == 0)
                 return Vector2.zero;
             int s = start * 4;
-            int e = end * 4 + 2;
+            int e = end * 4;
+            if (warp)
+                e += 2;
             if (e > vertex.Count)
                 e = vertex.Count - 1;
             return new Vector2(vertex[s].position.x, vertex[e].position.x);
@@ -306,6 +355,14 @@ namespace huqiang.UIEvent
             var vert = info.selectVertex;
             var color = info.areaColor;
             var tri = info.selectTri;
+            int s = info.startSelect;
+            int e = info.endSelect;
+            if(e<s)
+            {
+                int t = s;
+                s = e;
+                e = t;
+            }
             for (int i = 0; i < lines.Count; i++)
             {
                 int start = lines[i].startCharIdx;
@@ -317,7 +374,7 @@ namespace huqiang.UIEvent
                 {
                     end = info.visibleCount;
                 }
-                int state = CommonArea(info.startSelect, info.endSelect, ref start, ref end);
+                int state = CommonArea(s, e, ref start, ref end);
                 if (state == 2)
                 {
                     break;
@@ -327,7 +384,8 @@ namespace huqiang.UIEvent
                 {
                     top = lines[i].topY;
                     down = top - lines[i].height;
-                    var w = GetLineRect(vertex, start, end);
+                    bool warp = end < e ? true : false;
+                    var w = GetLineRect(vertex, start, end,warp);
                     int st = vert.Count;
                     var v = new UIVertex();
                     v.position.x = w.x;
@@ -503,69 +561,14 @@ namespace huqiang.UIEvent
             }
             if (s < 0)
                 return false;
+            if (s == e)
+                e++;
             info.buffer.Remove(s,e-s);
             info.text = info.buffer.ToString();
             info.endSelect = -1;
             info.startSelect = s;
             info.CaretStyle = 1;
             return true;
-        }
-        static void ChangePoint(TextInfo info)
-        {
-            int index = info.startSelect;
-            if (index < 0)
-                index = 0;
-            var text = info.text;
-            if (text == null)
-                index = 0;
-            else if (index > text.Length)
-                index =text.Length;
-            Vector3 Point = Vector3.zero;
-            var o = GetIndexPoint(info, index, ref Point);
-            var vert = info.selectVertex;
-            var tri = info.selectTri;
-            vert.Clear();
-            tri.Clear();
-            if (o)
-            {
-                float left = Point.x - 0.5f;
-                float right = Point.x + 0.5f;
-                float h = Point.z;
-                h *= 0.4f;
-                float top = Point.y + h;
-                float down = Point.y - h;
-                var v = new UIVertex();
-                v.position.x = left;
-                v.position.y = down;
-                v.color = info.caretColor;
-                vert.Add(v);
-                v.position.x = left;
-                v.position.y = top;
-                v.color = info.caretColor;
-                vert.Add(v);
-                v.position.x = right;
-                v.position.y = down;
-                v.color = info.caretColor;
-                vert.Add(v);
-                v.position.x = right;
-                v.position.y = top;
-                v.color = info.caretColor;
-                vert.Add(v);
-            }
-            else
-            {
-                var v = new UIVertex();
-                vert.Add(v);
-                vert.Add(v);
-                vert.Add(v);
-                vert.Add(v);
-            }
-            tri.Add(0);
-            tri.Add(1);
-            tri.Add(2);
-            tri.Add(2);
-            tri.Add(1);
-            tri.Add(3);
         }
     }
     public class TextInfo
@@ -578,7 +581,9 @@ namespace huqiang.UIEvent
         public int characterCount;
         public int visibleCount;
         public int startSelect;
+        public int startDock;
         public int endSelect;
+        public int endDock;
         public List<UIVertex> selectVertex=new List<UIVertex>();
         public List<int> selectTri=new List<int>();
         public Color color;

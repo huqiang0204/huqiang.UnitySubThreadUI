@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace huqiang
 {
-
     public class ThreadMission
     {
         class Mission
@@ -14,6 +13,7 @@ namespace huqiang
             public Action<object> action;
             public object data;
             public Action<object> waitAction;
+            public int Id;
         }
         QueueBuffer<Mission> SubMission;
         QueueBuffer<Mission> MainMission;
@@ -43,12 +43,26 @@ namespace huqiang
                         are.WaitOne(1);
                     else {
                         m.action(m.data);
-                        if (m.waitAction != null)
+                        if (m.waitAction != null)//如果有等待的任务
                         {
+                            if(m.Id==MainID)//交给主线程
+                            {
+                                m.action = m.waitAction;
+                                m.waitAction = null;
+                                MainMission.Enqueue(m);
+                                goto label;
+                            }
+                            for (int i = 0; i < threads.Count; i++)
+                                if (m.Id == threads[i].Id)
+                                {
+                                    threads[i].AddMainMission(m.waitAction, m.data);//任务交给源线程
+                                    goto label;
+                                }
                             m.action = m.waitAction;
                             m.waitAction = null;
-                            MainMission.Enqueue(m);
+                            MainMission.Enqueue(m);//否则交给主线程
                         }
+                    label:;
                     }
                 }
                 catch (Exception ex)
@@ -66,6 +80,7 @@ namespace huqiang
             mission.action = action;
             mission.data = dat;
             mission.waitAction = wait;
+            mission.Id = Thread.CurrentThread.ManagedThreadId;
             SubMission.Enqueue(mission);
         }
         public void AddMainMission(Action<object> action, object dat, Action<object> wait = null)
@@ -80,7 +95,7 @@ namespace huqiang
         {
             run = false;
         }
-        static List<ThreadMission>threads=new List<ThreadMission>();
+        static List<ThreadMission>threads = new List<ThreadMission>();
         static int point;
         public static void AddMission(Action<object> action, object dat, int index, Action<object> wait = null)
         {
@@ -124,7 +139,7 @@ namespace huqiang
                     else {
                         m.action(m.data);
                         if (m.waitAction != null)
-                            threads[i].AddMainMission(m.waitAction,m.data);
+                            threads[i].AddSubMission(m.waitAction,m.data);
                     }
                 }
             }
@@ -134,6 +149,11 @@ namespace huqiang
             for (int i = 0; i < threads.Count; i++)
                 threads[i].Dispose();
             threads.Clear();
+        }
+        static int MainID;
+        public static void SetMianId()
+        {
+            MainID = Thread.CurrentThread.ManagedThreadId;
         }
     }
 }

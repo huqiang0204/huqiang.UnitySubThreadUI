@@ -40,6 +40,7 @@ namespace huqiang
         static ThreadMission mission;
         public static void Initial(Transform uiRoot)
         {
+            ThreadMission.SetMianId();
             Initial();
             InitialUI();
             if (uiRoot == null)

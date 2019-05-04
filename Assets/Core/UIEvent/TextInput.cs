@@ -185,18 +185,22 @@ namespace huqiang.UIEvent
             TextCom = Context.GetComponent<TextElement>();
         }
         public TextElement TextCom { get; private set; }
-        Vector3 Point;
         public override void OnMouseDown(UserAction action)
         {
             if (TextCom != null)
             {
-                textInfo.startSelect = GetPressIndex(textInfo, this, ref Point, action);
+                textInfo.startSelect = GetPressIndex(textInfo, this, action,ref textInfo.startDock);
                 OnEdit(this);
             }
             base.OnMouseDown(action);
         }
+        int a = 0;
         protected override void OnDrag(UserAction action)
         {
+            a++;
+            if (a < 2)
+                return;
+            a = 0;
             if (Pressed)
                 if (TextCom != null)
                 {
@@ -205,22 +209,15 @@ namespace huqiang.UIEvent
                         if (action.Motion != Vector2.zero)
                         {
                             textInfo.CaretStyle = 2;
-                            Vector3 p = Vector3.zero;
                             int end = textInfo.endSelect;
-                            textInfo.endSelect = GetPressIndex(textInfo, this, ref p, action);
+                            textInfo.endSelect = GetPressIndex(textInfo, this,  action,ref textInfo.endDock);
                             if (end !=textInfo.endSelect)
                             {
                                 Selected();
                                 if (OnSelectChanged != null)
                                     OnSelectChanged(this, action);
-                                selectChanged = true;
+                                ThreadMission.InvokeToMain((o)=> { InputCaret.ChangeCaret(textInfo); },null);
                             }
-                        }
-                    }
-                    else
-                    {
-                        if (action.Motion != Vector2.zero)
-                        {
                         }
                     }
                 }
@@ -240,12 +237,11 @@ namespace huqiang.UIEvent
                 if (x < ClickArea)
                     return;
             }
-            var p = Vector3.zero;
-            textInfo.endSelect= GetPressIndex(textInfo, this, ref p, action);
+            textInfo.endSelect= GetPressIndex(textInfo, this,action,ref textInfo.endDock);
             Selected();
             if (OnSelectEnd != null)
                 OnSelectEnd(this, action);
-            selectChanged = true;
+            ThreadMission.InvokeToMain((o) => { InputCaret.ChangeCaret(textInfo); }, null);
         }
         string ValidateString(string input)
         {
@@ -287,24 +283,29 @@ namespace huqiang.UIEvent
                 OnValueChanged(this);
             textInfo.text = textInfo.buffer.ToString();
             TextCom.text = textInfo.text;
+            textInfo.CaretStyle = 1;
+            ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
             return input;
         }
-        static void OnEdit(TextInput input)
-        {
-            if (input.ReadOnly)
-                return;
-            InputEvent = input;
-        }
-        static void OnClick(EventCallBack eventCall, UserAction action)
+
+        void OnClick(EventCallBack eventCall, UserAction action)
         {
             TextInput input = eventCall as TextInput;
             if (input == null)
                 return;
             InputEvent = input;
-            input.openKeyboard = true;
-            input.selectChanged = true;
+            textInfo.startSelect = GetPressIndex(textInfo, this, action,ref textInfo.startDock);
+            textInfo.endSelect = -1;
+            textInfo.CaretStyle = 1;
+            ChangePoint(textInfo);
+            ThreadMission.InvokeToMain((o) => {
+                bool pass = InputEvent.contentType == ContentType.Password ? true : false;
+                Keyboard.OnInput(textInfo.text, InputEvent.touchType, InputEvent.multiLine, pass, CharacterLimit);
+                InputCaret.SetParent(Context.Context);
+                InputCaret.ChangeCaret(textInfo);
+            },null);
         }
-        static void OnLostFocus(EventCallBack eventCall, UserAction action)
+        void OnLostFocus(EventCallBack eventCall, UserAction action)
         {
             TextInput text = eventCall as TextInput;
             if (text == InputEvent)
@@ -312,9 +313,8 @@ namespace huqiang.UIEvent
                 if (InputEvent.OnSubmit != null)
                     InputEvent.OnSubmit(InputEvent);
                 InputEvent = null;
-                //InputCaret.CaretStyle = 0;
             }
-            text.closeKeyboard = true;
+            ThreadMission.InvokeToMain((o)=> { Keyboard.EndInput(); },null);
         }
         public static void SetCurrentInput(TextInput input, UserAction action)
         {
@@ -323,12 +323,15 @@ namespace huqiang.UIEvent
             if (InputEvent == input)
                 return;
             if (InputEvent != null)
-                OnLostFocus(InputEvent, action);
+               InputEvent.LostFocus(InputEvent, action);
             InputEvent = input;
-            //InputEvent.startSelect= GetPressIndex(input.TextCom, input, ref input.Point, action);
-            //InputEvent.endSelect=-1;
-            //InputCaret.CaretStyle = 1;
             OnEdit(input);
+        }
+        static void OnEdit(TextInput input)
+        {
+            if (input.ReadOnly)
+                return;
+            InputEvent = input;
         }
         void Selected()
         {
@@ -337,57 +340,7 @@ namespace huqiang.UIEvent
             textInfo.CaretStyle = 2;
             GetChoiceArea(textInfo);
         }
-        void RefreshText()
-        {
-           
-        }
-        bool openKeyboard;
-        bool closeKeyboard;
-        bool selectChanged;
         TextInfo textInfo = new TextInfo();
-        /// <summary>
-        /// MainThread
-        /// </summary>
-        void Apply()
-        {
-            if (Context == null)
-                return;
-            if (openKeyboard)
-            {
-                bool pass = InputEvent.contentType == ContentType.Password ? true : false;
-                Keyboard.OnInput(textInfo.text, InputEvent.touchType, InputEvent.multiLine, pass, CharacterLimit);
-                openKeyboard = false;
-                InputCaret.SetParent(Context.Context);
-            }else if(closeKeyboard)
-            {
-                Keyboard.EndInput();
-                closeKeyboard = false;
-            }
-            if(selectChanged)
-            {
-                selectChanged = false;
-                InputCaret.ChangeCaret(textInfo);
-            }
-            TextElement txt = TextCom;
-            if (txt == null)
-            {
-                txt = TextCom = Context.GetComponent<TextElement>();
-            }
-            if (txt == null)
-                return;
-            if (txt.text!=InputString)
-            {
-                if(!txt.IsChanged)
-                {
-                    var g = txt.Context.cachedTextGenerator;
-                    textInfo.vertex = g.verts;
-                    textInfo.lines = g.lines;
-                    textInfo.characterCount = g.characterCount;
-                    textInfo.visibleCount = g.characterCountVisible;
-                }
-                TextCom.text = InputString;
-            }
-        }
         void SetSelectPoint(int index)
         {
             if (index != 0)
@@ -402,10 +355,13 @@ namespace huqiang.UIEvent
             textInfo.endSelect = -1;
             textInfo.CaretStyle = 1;
             ChangePoint(textInfo);
+            ThreadMission.InvokeToMain((o) => { InputCaret.ChangeCaret(textInfo); }, null);
         }
         void Delete(int dir)
         {
-            if(dir<0)
+            if (DeleteSelected(textInfo))
+                goto label;
+            if (dir<0)
             {
                 int index = textInfo.startSelect;
                 if(index>0)
@@ -413,10 +369,7 @@ namespace huqiang.UIEvent
                     index--;
                     textInfo.buffer.Remove(index,1);
                     textInfo.startSelect = index;
-                    textInfo.text = textInfo.buffer.ToString();
-                    ChangePoint(textInfo);
                 }
-           
             }
             else
             {
@@ -424,9 +377,35 @@ namespace huqiang.UIEvent
                 if(index<textInfo.buffer.Length)
                 {
                     textInfo.buffer.Remove(index, 1);
-                    textInfo.text = textInfo.buffer.ToString();
                 }
             }
+            label:;
+            textInfo.text = textInfo.buffer.ToString();
+            textInfo.CaretStyle = 1;
+            ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
+        }
+        void TextChanged(object obj)
+        {
+            var te = TextCom;
+            if (te.Context != null)
+            {
+                var text = te.Context;
+                text.text = textInfo.text;
+                TextCom.text = text.text;
+                text.Apply();
+                var g = te.Context.cachedTextGenerator;
+                textInfo.vertex = g.verts;
+                textInfo.lines = g.lines;
+                textInfo.characterCount = g.characterCount;
+                textInfo.visibleCount = g.characterCountVisible;
+            }
+        }
+        void ChangeApplyed(object obj)
+        {
+            ChangePoint(textInfo);
+            ThreadMission.InvokeToMain((o) => {
+                InputCaret.ChangeCaret(textInfo);
+            }, null);
         }
     }
 }

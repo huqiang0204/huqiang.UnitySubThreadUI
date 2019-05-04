@@ -70,13 +70,6 @@ namespace huqiang.UIEvent
                 }
             }
         }
-        public static void SetValidationString(string str)
-        {
-            if(str!=InputString)
-            {
-
-            }
-        }
         public static void OnInput(string str, TouchScreenKeyboardType type,bool multiLine,bool passward,int limit)
         {
             if(_touch)
