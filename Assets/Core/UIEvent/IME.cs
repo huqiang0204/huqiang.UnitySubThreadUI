@@ -51,16 +51,12 @@ namespace huqiang
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool EnumWindows(EnumThreadWindowsCallback callback, IntPtr extraData);
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowThreadProcessId(HandleRef handle, out int processId);
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern IntPtr GetWindow(HandleRef hWnd, int uCmd);
-
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern bool IsWindowVisible(HandleRef hWnd);
-
         [DllImport("imm32.dll")]
         public static extern IntPtr ImmGetContext(IntPtr hWnd);
         [DllImport("Imm32.dll")]
@@ -76,8 +72,6 @@ namespace huqiang
         private const int GCS_RESULTSTR = 0x0800;
 
         static IntPtr hIMC= IntPtr.Zero;
-
-
         public static string CurrentCompStr()
         {
             int readType = GCS_RESULTSTR;
