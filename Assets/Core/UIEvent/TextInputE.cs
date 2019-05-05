@@ -133,12 +133,18 @@ namespace huqiang.UIEvent
                     if (!InputEvent.Pressed)
                     {
                         if (KeyPressed() == EditState.Continue)
+                        {
                             if (Keyboard.InputChanged)
                             {
                                 if (Keyboard.InputString == "")
                                     return;
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+                                InputEvent.OnInputChanged(IME.CurrentCompStr());
+#else
                                 InputEvent.OnInputChanged(Keyboard.InputString);
+#endif
                             }
+                        }
                     }
             }
         }

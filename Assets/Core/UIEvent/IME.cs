@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UIEvent;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -80,27 +81,21 @@ namespace huqiang
         public static string CurrentCompStr()
         {
             int readType = GCS_RESULTSTR;
-
             try
             {
-                if (Input.inputString != "")
+                if (Keyboard.InputString != "")
                 {
                     int strLen = ImmGetCompositionStringW(hIMC, readType, null, 0);
-
                     if (strLen > 0)
                     {
-
                         byte[] buffer = new byte[strLen];
-
                         ImmGetCompositionStringW(hIMC, readType, buffer, strLen);
-
                         return Encoding.Unicode.GetString(buffer, 0, strLen);
-
                     }
                 }
-                    return string.Empty;
-
-            }catch (Exception ex)
+                return string.Empty;
+            }
+            catch (Exception ex)
             {
                 UnityEngine.Debug.Log(ex.StackTrace);
                 return "";
@@ -108,7 +103,7 @@ namespace huqiang
         }
         public static void Initial()
         {
-             var pro=Process.GetCurrentProcess();
+             var pro = Process.GetCurrentProcess();
              new IME().GetMainWindowHandle(pro.Id);
              hIMC = ImmGetContext(mainWindowHandle);
         }
