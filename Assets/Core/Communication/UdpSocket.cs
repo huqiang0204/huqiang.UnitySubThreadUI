@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -16,7 +17,7 @@ namespace huqiang
         public bool Packaging = false;
         bool running;
         bool auto;
-        Queue<SocData> queue;
+        QueueBuffer<SocData> queue;
         public UdpSocket(int port, IPEndPoint remote, bool subThread = true, PackType type = PackType.Total, int es = 262144)
         {
            
@@ -38,7 +39,7 @@ namespace huqiang
                 thread = new Thread(Run);
                 thread.Start();
             }
-            queue = new Queue<SocData>();
+            queue = new QueueBuffer<SocData>();
         }
     
         void Run()
@@ -83,8 +84,7 @@ namespace huqiang
                 soc.data = data;
                 soc.tag = tag;
                 soc.obj = endPoint;
-                lock (queue)
-                    queue.Enqueue(soc);
+                queue.Enqueue(soc);
             }
         }
         public Action<byte[], byte, IPEndPoint> MainDispatch;
@@ -96,10 +96,10 @@ namespace huqiang
                 SocData soc;
                 for (int i = 0; i < c; i++)
                 {
-                    lock (queue)
-                        soc = queue.Dequeue();
-                    if (MainDispatch != null)
-                        MainDispatch(soc.data, soc.tag, soc.obj as IPEndPoint);
+                    soc = queue.Dequeue();
+                    if (soc != null)
+                        if (MainDispatch != null)
+                            MainDispatch(soc.data, soc.tag, soc.obj as IPEndPoint);
                 }
             }
         }
