@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.Data;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -20,7 +21,7 @@ namespace huqiang
         private Socket client = null;
         public bool isConnection { get { if (client == null) return false; return client.Connected; } }
         IPEndPoint iep;
-        Queue<SocData> queue;
+        QueueBuffer<SocData> queue;
         public TcpSocket(int bs = 262144,PackType type = PackType.All,int es = 262144)
         {
             buffer = new byte[bs];
@@ -30,7 +31,7 @@ namespace huqiang
                 envelope = new TcpEnvelope(es);
                 envelope.type = type;
             }
-            queue = new Queue<SocData>();
+            queue = new QueueBuffer<SocData>();
         }
         byte[] buffer;
         bool reConnect=false;
@@ -139,8 +140,7 @@ namespace huqiang
                     {
                         SocData soc = new SocData();
                         soc.data = tmp;
-                        lock (queue)
-                            queue.Enqueue(soc);
+                        queue.Enqueue(soc);
                     }
                 }
             }
@@ -172,8 +172,7 @@ namespace huqiang
                 soc.data = data;
                 soc.tag =tag;
                 soc.obj = obj;
-                lock (queue)
-                    queue.Enqueue(soc);
+                queue.Enqueue(soc);
             }
         }
         unsafe int GetLenth(byte[] buff, int index)
@@ -233,10 +232,10 @@ namespace huqiang
                 SocData soc;
                 for (int i = 0; i < c; i++)
                 {
-                    lock (queue)
-                        soc = queue.Dequeue();
-                    if (a_Dispatch != null)
-                        a_Dispatch(soc.data, soc.tag, soc.obj);
+                    soc = queue.Dequeue();
+                    if (soc != null)
+                        if (a_Dispatch != null)
+                            a_Dispatch(soc.data, soc.tag, soc.obj);
                 }
             }
         }

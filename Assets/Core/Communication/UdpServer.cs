@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.Data;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -21,7 +22,7 @@ namespace huqiang
         UdpClient soc;
         Thread thread;
         int remotePort;
-        Queue<SocData> queue;
+        QueueBuffer<SocData> queue;
         public bool Packaging = true;
         bool running;
         bool auto;
@@ -37,7 +38,7 @@ namespace huqiang
         /// <param name="subThread"></param>
         public UdpServer(int port, int remote, bool subThread = true, PackType type = PackType.Total)
         {
-            queue = new Queue<SocData>();
+            queue = new QueueBuffer<SocData>(4096);
             packType = type;
             remotePort = remote;
             //udp服务器端口绑定
@@ -170,8 +171,7 @@ namespace huqiang
                 soc.data = data;
                 soc.tag = tag;
                 soc.obj = iP;
-                lock (queue)
-                    queue.Enqueue(soc);
+                queue.Enqueue(soc);
             }
 
         }
@@ -184,10 +184,10 @@ namespace huqiang
                 SocData soc;
                 for (int i = 0; i < c; i++)
                 {
-                    lock (queue)
-                        soc = queue.Dequeue();
-                    if (MainDispatch != null)
-                        MainDispatch(soc.data, soc.tag, soc.obj as UdpLink);
+                    soc = queue.Dequeue();
+                    if (soc != null)
+                        if (MainDispatch != null)
+                            MainDispatch(soc.data, soc.tag, soc.obj as UdpLink);
                 }
             }
             ClearUnusedLink();
