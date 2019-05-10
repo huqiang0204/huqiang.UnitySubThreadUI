@@ -12,7 +12,7 @@ namespace huqiang
         /// </summary>
         static MathH()
         {
-            anglebuff = huqiang.Resources.Properties.Resources.sin9000;
+            anglebuff = huqiang.Resources.Assets.Sin9000;
             unsafe
             {
                 fixed (byte* bp = &anglebuff[0])

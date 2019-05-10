@@ -262,6 +262,7 @@ public class AssetBundleCreate : Editor {
             }
             fake.SetData(i, fs);
         }
+        db.fakeStruct = fake;
         byte[] data = db.ToBytes();
         File.WriteAllBytes(savepath, data);
         Debug.Log("emoji info create done");

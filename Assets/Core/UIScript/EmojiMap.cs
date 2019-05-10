@@ -59,6 +59,10 @@ namespace UGUI
             }
         }
         static CharInfo[] charInfos;
+        static EmojiMap()
+        {
+            Initial(huqiang.Resources.Assets.EmojiInfo);
+        }
         public static void Initial(byte[] data)
         {
             var db = new DataBuffer(data);
@@ -71,8 +75,8 @@ namespace UGUI
                 {
                     CharInfo info = new CharInfo();
                     info.len = fs[0];
-                    info.dat = db.GetArray<char>(1);
-                    info.uVs = db.GetArray<CharUV>(2);
+                    info.dat = db.GetArray<char>(fs[1]);
+                    info.uVs = db.GetArray<CharUV>(fs[2]);
                     charInfos[i] = info;
                 }
             }
