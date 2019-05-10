@@ -288,17 +288,16 @@ namespace huqiang
             }
             return buf;
         }
-        public static void Apply(this Text text)
+        public static void Populate(this Text text,string str)
         {
             Vector2 extents = text.rectTransform.rect.size;
-            var settings = text.GetGenerationSettings(extents );
+            var settings = text.GetGenerationSettings(extents);
             float t = settings.fontSize;
             settings.fontSize = (int)t;
             t = settings.resizeTextMinSize;
             settings.resizeTextMinSize = (int)t;
             t = settings.resizeTextMaxSize;
             settings.resizeTextMaxSize = (int)t;
-            string str = text.text;
             text.cachedTextGenerator.PopulateWithErrors(str, settings, text.gameObject);
         }
     }

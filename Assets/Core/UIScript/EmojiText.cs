@@ -19,7 +19,11 @@ namespace UGUI
             material = new Material(shader);
         }
         public Action<EmojiText, VertexHelper> OnPopulate;
-        List<EmojiInfo> list = new List<EmojiInfo>();
+        EmojiString emojiString = new EmojiString();
+        public override string text {
+            get { return emojiString.FullString; }
+            set { emojiString.FullString = value; }
+        }
         readonly UIVertex[] m_TempVerts = new UIVertex[4];
         static UIVertex[] CreateEmojiMesh(IList<UIVertex> verts,  List<EmojiInfo> emoji, float fontSize, float unitsPerPixel,Vector2 roundingOffset)
         {
@@ -76,7 +80,7 @@ namespace UGUI
             }
             return buf;
         }
-        public static List<UIVertex> CreateEmojiMesh(Text text,  List<EmojiInfo> emojis)
+        public static List<UIVertex> CreateEmojiMesh(Text text, EmojiString emoji)
         {
             float s = Screen.dpi / NormalDpi;
             Vector2 extents = text.rectTransform.rect.size;
@@ -91,11 +95,9 @@ namespace UGUI
             t = settings.resizeTextMaxSize;
             t *= s;
             settings.resizeTextMaxSize = (int)t;
-            var txt = text.text;
-            if (txt != null & txt != "")
+            string str = emoji.FilterString;
+            if (str != null & str != "")
             {
-                string str = EmojiMap.CheckEmoji(txt, emojis);
-
                 text.cachedTextGenerator.PopulateWithErrors(str, settings, text.gameObject);
 
                 IList<UIVertex> verts = text.cachedTextGenerator.verts;
@@ -103,7 +105,7 @@ namespace UGUI
                 float unitsPerPixel = 1 / text.pixelsPerUnit / s;
                 Vector2 roundingOffset = new Vector2(verts[0].position.x / s, verts[0].position.y / s) * unitsPerPixel;
                 roundingOffset = text.PixelAdjustPoint(roundingOffset) - roundingOffset;
-                var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emojis, text.fontSize, unitsPerPixel, roundingOffset);
+                var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emoji.emojis, text.fontSize, unitsPerPixel, roundingOffset);
 
                 if (vs != null)
                 {
@@ -137,14 +139,14 @@ namespace UGUI
             }
             return tri;
         }
+
         protected override void OnPopulateMesh(VertexHelper vertex)
         {
             if (font == null)
                 return;
             m_DisableFontTextureRebuiltCallback = true;
-            list.Clear();
             vertex.Clear();
-            var vert = CreateEmojiMesh(this,list);
+            var vert = CreateEmojiMesh(this,emojiString);
             if(vert!=null)
             {
                 var tri = CreateTri(vert.Count);

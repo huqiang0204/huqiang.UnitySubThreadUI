@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UGUI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -570,7 +571,6 @@ namespace huqiang.UIEvent
             if (s == e)
                 e++;
             info.buffer.Remove(s,e-s);
-            info.text = info.buffer.ToString();
             info.endSelect = -1;
             info.startSelect = s;
             info.CaretStyle = 1;
@@ -579,7 +579,8 @@ namespace huqiang.UIEvent
     }
     public class TextInfo
     {
-        public StringBuilder buffer = new StringBuilder();
+        //public StringBuilder buffer = new StringBuilder();
+        public EmojiString buffer = new EmojiString();
         public string text;
         public float fontSize;
         public IList<UILineInfo> lines;

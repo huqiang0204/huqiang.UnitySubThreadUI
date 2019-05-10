@@ -52,8 +52,7 @@ namespace huqiang.UIEvent
         public string InputString { get { return textInfo.text; }
             set {
                 value = ValidateString(value);
-                textInfo.buffer.Clear();
-                textInfo.buffer.Append(value);
+                textInfo.buffer.FullString = value;
                 textInfo.text = value;
             } }
         public string TipString
@@ -262,29 +261,31 @@ namespace huqiang.UIEvent
         {
             if (input == "")
                 return "";
-            var list = new List<EmojiInfo>();
-            input = EmojiMap.CheckEmoji(input,list);
-       
+            EmojiString es = new EmojiString(input);
+            string str = textInfo.buffer.FilterString;
             if (CharacterLimit > 0)
-                if (InputString != null)
-                    if (InputString.Length + input.Length > CharacterLimit)
-                    {
-                        int len = CharacterLimit - InputString.Length;
-                        if (len <= 0)
-                            return "";
-                        input = input.Substring(0, len);
-                    }
-            if (Validate(characterValidation, textInfo.text, textInfo.startSelect, input[0]) == 0)
+            {
+                string fs = es.FilterString;
+                if (fs.Length + str.Length > CharacterLimit)
+                {
+                    int len = CharacterLimit - str.Length;
+                    if (len <= 0)
+                        return "";
+                    es.Remove(fs.Length - len, len);
+                }
+            }
+            str = es.FullString;
+            if (Validate(characterValidation, textInfo.text, textInfo.startSelect, str[0]) == 0)
                 return "";
             if (ValidateChar != null)
-                if (ValidateChar(this, textInfo.startSelect, input[0]) == 0)
+                if (ValidateChar(this, textInfo.startSelect, str[0]) == 0)
                     return "";
             DeleteSelected(textInfo);
-            textInfo.buffer.Insert(textInfo.startSelect,input);
-            textInfo.startSelect += input.Length;
+            textInfo.buffer.Insert(textInfo.startSelect,str);
+            textInfo.startSelect += es.FilterString.Length;
             if (OnValueChanged != null)
                 OnValueChanged(this);
-            textInfo.text = textInfo.buffer.ToString();
+            textInfo.text = textInfo.buffer.FullString;
             TextCom.text = textInfo.text;
             textInfo.CaretStyle = 1;
             ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
@@ -383,7 +384,7 @@ namespace huqiang.UIEvent
                 }
             }
             label:;
-            textInfo.text = textInfo.buffer.ToString();
+            textInfo.text = textInfo.buffer.FullString;
             textInfo.CaretStyle = 1;
             ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
         }
@@ -394,8 +395,9 @@ namespace huqiang.UIEvent
             {
                 var text = te.Context;
                 text.text = textInfo.text;
-                TextCom.text = text.text;
-                text.Apply();
+                TextCom.text = textInfo.text;
+                string str = textInfo.buffer.FilterString;
+                text.Populate(str);
                 var g = te.Context.cachedTextGenerator;
                 textInfo.vertex = g.verts;
                 textInfo.lines = g.lines;

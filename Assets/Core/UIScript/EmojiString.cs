@@ -9,71 +9,69 @@ namespace UGUI
     {
         string m_str="";
         string f_str = "";
+        /// <summary>
+        /// 过滤表情符后的字符串
+        /// </summary>
         public string FilterString { get { return m_str; } }
-        public List<EmojiInfo> emojis;
+        /// <summary>
+        /// 表情符信息
+        /// </summary>
+        public List<EmojiInfo> emojis=new List<EmojiInfo>();
+        StringBuilder builder=new StringBuilder();
+        /// <summary>
+        /// 完整字符串
+        /// </summary>
         public string FullString { get { return f_str; }
             set {
                 f_str = value;
                 emojis.Clear();
-                m_str= EmojiMap.CheckEmoji(f_str, emojis);
+                m_str = EmojiMap.CheckEmoji(f_str, emojis);
+                builder.Clear();
+                builder.Append(m_str);
             } }
         public int Length { get { return m_str.Length; } }
         public EmojiString()
         {
-            emojis = new List<EmojiInfo>();
         }
         public EmojiString(string str)
         {
-            emojis = new List<EmojiInfo>();
             m_str = EmojiMap.CheckEmoji(str,emojis);
+            builder.Append(m_str);
+            f_str = str;
         }
-        void RemoveEmoji(int start,int end)
+        public void Remove(int index,int count = 1)
         {
-            int c = emojis.Count-1;
-            for(;c>=0;c--)
-            {
-                var e = emojis[c];
-                if(e.pos==start)
-                {
-                    emojis.RemoveAt(c);
-                    continue;
-                }
-                if(e.pos>start&e.pos<end)
-                {
-                    emojis.RemoveAt(c);
-                    continue;
-                }
-            }
-        }
-        public void RemoveAt(int index,int count=1)
-        {
-            if (index + count > m_str.Length)
-                count = m_str.Length - index;
+            if (index + count > builder.Length)
+                count = builder.Length - index;
             if (count < 1)
                 return;
             int start = index;
             int end = index + count;
-            RemoveEmoji(start, end);
-            m_str = m_str.Remove(index,count);
+            emojis.RemoveAll((o) => { return o.pos >= start & o.pos <= end; });
+            for (int i = 0; i < emojis.Count; i++)
+            {
+                if (emojis[i].pos > index)
+                    emojis[i].pos -= count;
+            }
+            builder.Remove(index,count);
+            m_str = builder.ToString();
             f_str = EmojiMap.EmojiToFullString(m_str,emojis);
         }
         public void Insert(int index, string str)
         {
+            if (str == "")
+                return;
             if (index > m_str.Length)
                 index = m_str.Length;
-            int offset = 0;
-            for(int i=0;i<emojis.Count;i++)
-            {
-                var e = emojis[i];
-                if (index > e.pos)
-                    offset += e.chr.Length;
-            }
-            emojis.Clear();
-            int os = index + offset;
-            if (os > f_str.Length)
-                os = f_str.Length;
-            f_str = f_str.Insert(os,str);
-            m_str = EmojiMap.CheckEmoji(f_str,emojis);
+            List<EmojiInfo> list = new List<EmojiInfo>();
+            string tmp = EmojiMap.CheckEmoji(str, list);
+            for (int i = 0; i < list.Count; i++)
+                list[i].pos += index;
+            builder.Insert(index,tmp);
+            emojis.AddRange(list);
+            emojis.Sort((a, b) => { return a.pos > b.pos ? 1 : -1; });
+            m_str = builder.ToString();
+            f_str = EmojiMap.EmojiToFullString(m_str, emojis);
         }
     }
 }
