@@ -262,6 +262,9 @@ namespace huqiang.UIEvent
         {
             if (input == "")
                 return "";
+            var list = new List<EmojiInfo>();
+            input = EmojiMap.CheckEmoji(input,list);
+       
             if (CharacterLimit > 0)
                 if (InputString != null)
                     if (InputString.Length + input.Length > CharacterLimit)

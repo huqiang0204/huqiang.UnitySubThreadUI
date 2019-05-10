@@ -32,7 +32,7 @@ namespace UGUI
             public int len;
             public char[] dat;
             public CharUV[] uVs;
-            public bool Find(char[] vs,int index, ref  CharUV uv)
+            public bool Find(char[] vs,int index, Vector2[] uv)
             {
                 if (dat == null)
                     return false;
@@ -48,10 +48,10 @@ namespace UGUI
                         t++;
                         s++;
                     }
-                    uv.uv0 = uVs[i].uv0;
-                    uv.uv1 = uVs[i].uv1;
-                    uv.uv2 = uVs[i].uv2;
-                    uv.uv3 = uVs[i].uv3;
+                    uv[0] = uVs[i].uv0;
+                    uv[1] = uVs[i].uv1;
+                    uv[2] = uVs[i].uv2;
+                    uv[3] = uVs[i].uv3;
                     return true;
                 label:;
                 }
@@ -91,28 +91,12 @@ namespace UGUI
                 var ci = charInfos[i];
                 if(ci!=null)
                 {
-                    if(ci.Find(buff,index,ref cv))
+                    if(ci.Find(buff,index,uv))
                     {
                         return i + 1;
                     }
                 }
             }
-            return 0;
-        }
-        /// <summary>
-        /// 先前查询Emoji
-        /// </summary>
-        /// <param name="buff"></param>
-        /// <param name="index"></param>
-        /// <param name="uv"></param>
-        /// <returns></returns>
-        public static unsafe int FindEmojiForward(char[] buff, int index, Vector2[] uv)
-        {
-            if (buff == null)
-                return 0;
-            int len = 7;
-            if (index < len)
-                len = index;
             return 0;
         }
 

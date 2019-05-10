@@ -236,7 +236,7 @@ public class AssetBundleCreate : Editor {
                     if(sp!=null)
                     {
                         int len = AddSpriteInfo(sp);
-                        var dat = tmp[len].dat;
+                        var dat = tmp[len-1].dat;
                         char* cp = (char*)bp;
                         for (int j = 0; j < len; j++)
                         {
@@ -244,7 +244,7 @@ public class AssetBundleCreate : Editor {
                             cp++;
                         }
                         CalculUV(sp.rect, sp.texture.width, sp.texture.height, ref uv);
-                        tmp[len].uvs.Add(uv);
+                        tmp[len-1].uvs.Add(uv);
                     }
                 }
             }
@@ -253,12 +253,13 @@ public class AssetBundleCreate : Editor {
         FakeStruct fake = new FakeStruct(db, 7);
         for (int i = 0; i < 7; i++)
         {
+            var t = tmp[i];
             FakeStruct fs = new FakeStruct(db, 3);
-            fs[0] = tmp[i].len;
+            fs[0] = t.len;
             if (tmp[i].dat.Count > 0)
             {
-                fs[1] = db.AddArray<char>(tmp[i].dat.ToArray());
-                fs[2] = db.AddArray<CharUV>(tmp[i].uvs.ToArray());
+                fs[1] = db.AddArray<char>(t.dat.ToArray());
+                fs[2] = db.AddArray<CharUV>(t.uvs.ToArray());
             }
             fake.SetData(i, fs);
         }
