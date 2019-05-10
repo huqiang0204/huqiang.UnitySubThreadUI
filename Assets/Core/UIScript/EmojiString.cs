@@ -73,5 +73,18 @@ namespace UGUI
             m_str = builder.ToString();
             f_str = EmojiMap.EmojiToFullString(m_str, emojis);
         }
+        public void Insert(int index, EmojiString emoji)
+        {
+            if (index > m_str.Length)
+                index = m_str.Length;
+            var list = emoji.emojis;
+            for (int i = 0; i < list.Count; i++)
+                list[i].pos += index;
+            builder.Insert(index, emoji.FilterString);
+            emojis.AddRange(list);
+            emojis.Sort((a, b) => { return a.pos > b.pos ? 1 : -1; });
+            m_str = builder.ToString();
+            f_str = EmojiMap.EmojiToFullString(m_str, emojis);
+        }
     }
 }

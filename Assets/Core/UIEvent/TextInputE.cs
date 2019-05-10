@@ -140,7 +140,10 @@ namespace huqiang.UIEvent
                                 if (Keyboard.InputString == "")
                                     return;
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-                                InputEvent.OnInputChanged(IME.CurrentCompStr());
+                                if (Keyboard.Nokey())
+                                    InputEvent.OnInputChanged(IME.CurrentCompStr());
+                                else
+                                    InputEvent.OnInputChanged(Keyboard.InputString);
 #else
                                 InputEvent.OnInputChanged(Keyboard.InputString);
 #endif

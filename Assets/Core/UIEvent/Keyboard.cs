@@ -20,6 +20,7 @@ namespace huqiang.UIEvent
         public static bool InputChanged;
         static TouchScreenKeyboard m_touch;
         static bool _touch = false;
+        public static IMECompositionMode iME;
         public static void DispatchEvent()
         {
             if (keys == null)
@@ -69,6 +70,7 @@ namespace huqiang.UIEvent
                     active = m_touch.active;
                 }
             }
+            iME = Input.imeCompositionMode;
         }
         public static void OnInput(string str, TouchScreenKeyboardType type,bool multiLine,bool passward,int limit)
         {
@@ -106,6 +108,16 @@ namespace huqiang.UIEvent
             if (KeyPress.Contains(key))
                 return true;
             return false;
+        }
+        public static bool Nokey()
+        {
+            if (KeyPress.Count > 0)
+                return false;
+            if (KeyDowns.Count > 0)
+                return false;
+            if (KeyUps.Count > 0)
+                return false;
+            return true;
         }
         public static bool GetKeyUp(KeyCode key)
         {

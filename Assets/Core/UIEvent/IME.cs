@@ -63,6 +63,8 @@ namespace huqiang
         public static extern bool ImmReleaseContext(IntPtr hWnd, IntPtr hIMC);
         [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
         private static extern int ImmGetCompositionStringW(IntPtr hIMC, int dwIndex, byte[] lpBuf, int dwBufLen);
+        [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
+        private static extern int ImmSetCompositionStringW(IntPtr himc, int dwIndex, IntPtr lpComp, int dw, int lpRead, int dw2);
 
         private const int GCS_COMPSTR = 8;
         private const int WM_IME_SETCONTEXT = 0x0281;
@@ -70,6 +72,21 @@ namespace huqiang
         private const int WM_CHAR = 0x0102;
         private const int WM_IME_COMPOSITION = 0x010F;
         private const int GCS_RESULTSTR = 0x0800;
+        const int SCS_SETRECONVERTSTRING = 0x00010000;
+        const int SCS_QUERYRECONVERTSTRING = 0x00020000;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECONVERTSTRING
+        {
+            public uint dwSize;
+            public uint dwVersion;
+            public uint dwStrLen;
+            public uint dwStrOffset;
+            public uint dwCompStrLen;
+            public uint dwCompStrOffset;
+            public uint dwTargetStrLen;
+            public uint dwTargetStrOffset;
+        }
 
         static IntPtr hIMC= IntPtr.Zero;
         public static string CurrentCompStr()
@@ -84,7 +101,8 @@ namespace huqiang
                     {
                         byte[] buffer = new byte[strLen];
                         ImmGetCompositionStringW(hIMC, readType, buffer, strLen);
-                        return Encoding.Unicode.GetString(buffer, 0, strLen);
+                        string str = Encoding.Unicode.GetString(buffer, 0, strLen);
+                        return str;
                     }
                 }
                 return string.Empty;
@@ -95,11 +113,42 @@ namespace huqiang
                 return "";
             }
         }
+        static void SetIMEString(string str)
+        {
+            unsafe
+            {
+                uint len = 0;
+                RECONVERTSTRING* reconv = (RECONVERTSTRING*)Marshal.AllocHGlobal(
+                  sizeof(RECONVERTSTRING) + Encoding.Unicode.GetByteCount(str) + 1);
+
+                char* paragraph = (char*)((byte*)reconv + sizeof(RECONVERTSTRING));
+
+                reconv->dwSize
+                  = (uint)sizeof(RECONVERTSTRING) + (uint)Encoding.Unicode.GetByteCount(str) + 1;
+                reconv->dwVersion = 0;
+                reconv->dwStrLen = (uint)str.Length;
+                reconv->dwStrOffset = (uint)sizeof(RECONVERTSTRING);
+
+                reconv->dwCompStrLen = 0;
+                reconv->dwCompStrOffset = len * sizeof(char);
+
+                reconv->dwTargetStrLen = 0;
+                reconv->dwTargetStrOffset = len * sizeof(char);
+
+                for (int i = 0; i < str.Length; i++)
+                {
+                    paragraph[i] = str[i];
+                }
+                ImmSetCompositionStringW(hIMC, SCS_SETRECONVERTSTRING, (IntPtr)reconv,
+      sizeof(RECONVERTSTRING) + Encoding.Unicode.GetByteCount(str) + 1, 0, 0);
+            }
+           
+        }
         public static void Initial()
         {
              var pro = Process.GetCurrentProcess();
              new IME().GetMainWindowHandle(pro.Id);
-             hIMC = ImmGetContext(mainWindowHandle);
+            hIMC = ImmGetContext(mainWindowHandle);
         }
         public static void Dispose()
         {

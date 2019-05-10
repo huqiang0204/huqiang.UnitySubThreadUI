@@ -281,7 +281,7 @@ namespace huqiang.UIEvent
                 if (ValidateChar(this, textInfo.startSelect, str[0]) == 0)
                     return "";
             DeleteSelected(textInfo);
-            textInfo.buffer.Insert(textInfo.startSelect,str);
+            textInfo.buffer.Insert(textInfo.startSelect,es);
             textInfo.startSelect += es.FilterString.Length;
             if (OnValueChanged != null)
                 OnValueChanged(this);
