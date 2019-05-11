@@ -9,20 +9,16 @@ namespace UGUI
 {
     public class EmojiText:Text
     {
-        public static Shader shader;
-        public static Texture Emoji;
         public static float NormalDpi = 96;
-        protected override void Awake()
-        {
-            if (shader == null)
-                shader = Shader.Find("Custom/UIEmoji");
-            material = new Material(shader);
-        }
         public Action<EmojiText, VertexHelper> OnPopulate;
         EmojiString emojiString = new EmojiString();
         public override string text {
             get { return emojiString.FullString; }
-            set { emojiString.FullString = value; }
+            set {
+                m_Text=
+                emojiString.FullString = value;
+                SetVerticesDirty();
+            }
         }
         readonly UIVertex[] m_TempVerts = new UIVertex[4];
         static UIVertex[] CreateEmojiMesh(IList<UIVertex> verts,  List<EmojiInfo> emoji, float fontSize, float unitsPerPixel,Vector2 roundingOffset)
@@ -101,11 +97,12 @@ namespace UGUI
                 text.cachedTextGenerator.PopulateWithErrors(str, settings, text.gameObject);
 
                 IList<UIVertex> verts = text.cachedTextGenerator.verts;
-
+                if (verts.Count == 0)
+                    return null;
                 float unitsPerPixel = 1 / text.pixelsPerUnit / s;
                 Vector2 roundingOffset = new Vector2(verts[0].position.x / s, verts[0].position.y / s) * unitsPerPixel;
                 roundingOffset = text.PixelAdjustPoint(roundingOffset) - roundingOffset;
-                var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emoji.emojis, text.fontSize, unitsPerPixel, roundingOffset);
+                var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emoji.emojis, text.fontSize*s, unitsPerPixel, roundingOffset);
 
                 if (vs != null)
                 {
@@ -146,6 +143,8 @@ namespace UGUI
                 return;
             m_DisableFontTextureRebuiltCallback = true;
             vertex.Clear();
+            if (m_Text != emojiString.FullString)
+                emojiString.FullString = m_Text;
             var vert = CreateEmojiMesh(this,emojiString);
             if(vert!=null)
             {

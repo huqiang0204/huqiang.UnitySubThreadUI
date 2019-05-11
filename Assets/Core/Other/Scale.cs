@@ -484,7 +484,8 @@ public class Scale
         return h *  LayoutWidth/ ScreenWidth;
     }
     public static float NormalDpi = 96;
-    public static float ScreenScale { get { float dpi = Screen.dpi; return dpi / NormalDpi; } }
+    public static float ScreenDpi = Screen.dpi;
+    public static float ScreenScale { get { return ScreenDpi / NormalDpi; } }
     public static Vector2 ScreenSize { get {
             float dpi = Screen.dpi;
             float s =  NormalDpi/dpi;

@@ -155,14 +155,14 @@ namespace huqiang.UIEvent
         public static bool GetIndexPoint(TextInfo info, int index, ref Vector3 point)
         {
             ///仅可见区域的顶点 0=左上1=右上2=右下3=左下
-            IList<UIVertex> vertex = info.vertex;
+            UIVertex[] vertex = info.vertex;
             if (vertex == null)
                 return false;
             ///仅可见区域的行数
-            IList<UILineInfo> lines = info.lines;
-            float top = lines[lines.Count - 1].topY;
-            float high = lines[lines.Count - 1].height;
-            for (int i = 0; i < lines.Count; i++)
+            UILineInfo[] lines = info.lines;
+            float top = lines[lines.Length - 1].topY;
+            float high = lines[lines.Length- 1].height;
+            for (int i = 0; i < lines.Length; i++)
             {
                 int a = lines[i].startCharIdx;
                 if ( a >= index)
@@ -178,6 +178,8 @@ namespace huqiang.UIEvent
             index *= 4;
             if (info.startDock == 1)
                 index -= 2;
+            if (index >= vertex.Length)
+                index -= 4;
             point.x = vertex[index].position.x;
             float y = vertex[index].position.y;
             float down = top - high;
@@ -195,8 +197,8 @@ namespace huqiang.UIEvent
             int index = info.startSelect;
             if (index < 0)
                 index = 0;
-            var text = info.text;
-            if (text == null)
+            var text = info.buffer.FilterString;
+            if (text == null&text=="")
                 index = 0;
             else if (index > text.Length)
                 index = text.Length;
@@ -254,7 +256,6 @@ namespace huqiang.UIEvent
                 return 0;
             if (info.text == "" | info.text == null)
                 return 0;
-            float fs = info.fontSize;
             IList<UILineInfo> lines = info.lines;
             if (lines == null)
                 return 0;
@@ -331,7 +332,9 @@ namespace huqiang.UIEvent
             int e = end * 4;
             if (warp)
                 e += 2;
-            if (e > vertex.Count)
+            if (s >= vertex.Count)
+                s = vertex.Count - 1;
+            if (e >= vertex.Count)
                 e = vertex.Count - 1;
             return new Vector2(vertex[s].position.x, vertex[e].position.x);
         }
@@ -579,6 +582,13 @@ namespace huqiang.UIEvent
             info.CaretStyle = 1;
             return true;
         }
+        static void Populate(Text text, string str)
+        {
+            Vector2 extents = text.rectTransform.rect.size;
+            var settings = text.GetGenerationSettings(extents);
+            //settings.fontSize = 1;
+            text.cachedTextGenerator.PopulateWithErrors(str, settings, text.gameObject);
+        }
     }
     public class TextInfo
     {
@@ -586,8 +596,8 @@ namespace huqiang.UIEvent
         public EmojiString buffer = new EmojiString();
         public string text;
         public float fontSize;
-        public IList<UILineInfo> lines;
-        public IList<UIVertex> vertex;
+        public UILineInfo[] lines;
+        public UIVertex[] vertex;
         public int characterCount;
         public int visibleCount;
         public int startSelect;

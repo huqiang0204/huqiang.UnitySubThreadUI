@@ -4,6 +4,7 @@ using System.IO;
 using UGUI;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CustomEditor(typeof(ElementCreate), true)]
 [CanEditMultipleObjects]
@@ -67,6 +68,7 @@ public class ElementEditor : Editor
             dc = Application.dataPath + "/AssetsBundle/";
         }
         dc += Assetname;
+        InitialUI();
         ModelManagerUI.SavePrefab(gameObject, dc);
         Debug.Log("create done path:"+dc);
     }
@@ -78,6 +80,7 @@ public class ElementEditor : Editor
                 if (CloneName != "")
                 {
                     LoadBundle();
+                    InitialUI();
                     ModelManagerUI.LoadModels(ui, "assTest");
                     EditorModelManager.LoadToGame(CloneName, null, root, "");
                 }
@@ -88,10 +91,22 @@ public class ElementEditor : Editor
         if (ui != null)
         {
             LoadBundle();
+            InitialUI();
             var all = ModelManagerUI.LoadModels(ui, "assTest");
             ModelElement element = new ModelElement();
             element.Load(all.models.Model);
             element.Apply();
         }
+    }
+    static void InitialUI()
+    {
+        ModelManagerUI.RegComponent(new ComponentType<RectTransform, ModelElement>(ModelElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<EmojiText, EmojiElement>(TextElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<Text, TextElement>(TextElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<CustomRawImage, RawImageElement>(RawImageElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<RawImage, RawImageElement>(RawImageElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
     }
 }

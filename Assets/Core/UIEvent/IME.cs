@@ -94,16 +94,13 @@ namespace huqiang
             int readType = GCS_RESULTSTR;
             try
             {
-                if (Keyboard.InputString != "")
+                int strLen = ImmGetCompositionStringW(hIMC, readType, null, 0);
+                if (strLen > 0)
                 {
-                    int strLen = ImmGetCompositionStringW(hIMC, readType, null, 0);
-                    if (strLen > 0)
-                    {
-                        byte[] buffer = new byte[strLen];
-                        ImmGetCompositionStringW(hIMC, readType, buffer, strLen);
-                        string str = Encoding.Unicode.GetString(buffer, 0, strLen);
-                        return str;
-                    }
+                    byte[] buffer = new byte[strLen];
+                    ImmGetCompositionStringW(hIMC, readType, buffer, strLen);
+                    string str = Encoding.Unicode.GetString(buffer, 0, strLen);
+                    return str;
                 }
                 return string.Empty;
             }

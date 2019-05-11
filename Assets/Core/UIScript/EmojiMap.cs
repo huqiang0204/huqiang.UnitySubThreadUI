@@ -103,6 +103,8 @@ namespace UGUI
         public const char emSpace = '\u2001';
         public static string CheckEmoji(string str, List<EmojiInfo> list)
         {
+            if (str == ""|str==null)
+                return str;
             StringBuilder sb = new StringBuilder();
             char[] cc = str.ToCharArray();
             int i = 0;

@@ -8,30 +8,17 @@ public class LoadingPage : Page
 {
     class View
     {
-        public ModelElement LeftUp;
-        public ModelElement Center;
-        public ModelElement List;
-        public ModelElement friend;
-        public ModelElement Right;
-        public ScrollY FriendsRanking;
-        public TextInput toptext;
+        public TextInput Text;
     }
     ModelElement txt;
     System.Random ran;
     public override void Initial(ModelElement parent, object dat = null)
     {
-        model = ModelManagerUI.FindModel("baseUI", "RankingList");
+        model = ModelManagerUI.FindModel("baseUI", "lobby");
         base.Initial(parent, dat);
         model.SetParent(parent);
         var view =  model.ComponentReflection<View>();
-        view.LeftUp.activeSelf= false;
-        view.Right.activeSelf = false;
-        view.friend.activeSelf = false;
-        List<string> data = new List<string>();
-        for (int i = 0; i < 100; i++)
-            data.Add("sdfsdfsdf" + i);
-        view.FriendsRanking.BindingData = data;
-        view.FriendsRanking.Refresh();
+
         //ran = new System.Random();
         //txt.baseEvent.Click = (o, e) =>
         //{

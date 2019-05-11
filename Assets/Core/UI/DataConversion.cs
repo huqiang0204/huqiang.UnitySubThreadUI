@@ -9,7 +9,11 @@ namespace huqiang.UI
         public GameObject Main;
         public virtual void Load(FakeStruct fake) { }
         public virtual void LoadToObject(Component game) { }
-        public bool IsChanged;
+        public bool IsChanged = true;
         public virtual void Apply() { IsChanged = false; }
+        public override string ToString()
+        {
+            return type;
+        }
     }
 }

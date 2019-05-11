@@ -397,10 +397,16 @@ namespace huqiang.UIEvent
                 text.text = textInfo.text;
                 TextCom.text = textInfo.text;
                 string str = textInfo.buffer.FilterString;
-                text.Populate(str);
-                var g = te.Context.cachedTextGenerator;
-                textInfo.vertex = g.verts;
-                textInfo.lines = g.lines;
+                Populate(text, str);
+                var g = text.cachedTextGenerator;
+                UIVertex[] vert = new UIVertex[g.verts.Count];
+                for (int i = 0; i < vert.Length; i++)
+                    vert[i] = g.verts[i];
+                textInfo.vertex = vert;
+                UILineInfo[] us = new UILineInfo[g.lines.Count];
+                for (int i = 0; i < us.Length; i++)
+                    us[i] = g.lines[i];
+                textInfo.lines = us;
                 textInfo.characterCount = g.characterCount;
                 textInfo.visibleCount = g.characterCountVisible;
             }

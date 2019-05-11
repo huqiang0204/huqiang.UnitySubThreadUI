@@ -44,8 +44,8 @@ namespace huqiang.UI
         }
         public Text Context;
         public TextData data;
-        string fontName;
-        string mtext;
+        protected string fontName;
+        protected string mtext;
         public string text { set {
                 if (mtext != null)
                     IsChanged = true;
@@ -113,13 +113,37 @@ namespace huqiang.UI
             if (txt.font != null)
                data->font = buffer.AddData(txt.font.name);
             if (txt.material != null)
-                data->shader = buffer.AddData(txt.material.shader.name);
+               data->shader = buffer.AddData(txt.material.shader.name);
             return fake;
         }
         public override void Apply()
         {
+            if (shader != null)
+                if (material == null)
+                    material = new Material(Shader.Find(shader));
             Update();
             LoadToObject(Context, ref data, this);
+            IsChanged = false;
+        }
+    }
+    public class EmojiElement:TextElement
+    {
+        public static Texture Emoji;
+        static Shader es;
+        public override void Apply()
+        {
+            if (es == null)
+                es = Shader.Find("Custom/UIEmoji");
+            if (Emoji == null)
+                Emoji = UnityEngine.Resources.Load<Texture2D>("emoji");
+            if (material == null)
+            {
+                material = new Material(es);
+                material.SetTexture("_emoji", Emoji);
+            }
+            Update();
+            LoadToObject(Context, ref data, this);
+            IsChanged = false;
         }
     }
 }

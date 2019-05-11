@@ -28,9 +28,9 @@ namespace huqiang.UI
         {
             if (point >= 63)
                 return;
-            var name = context.name;
+            var name = context.comName;
             for (int i = 0; i < point; i++)
-                if (types[i].name == name)
+                if (types[i].comName == name)
                 {
                     types[i] = context;
                     return;
@@ -40,9 +40,10 @@ namespace huqiang.UI
         }
         public static Int64 GetTypeIndex(Component com)
         {
+            string name = com.GetType().Name;
             for (int i = 0; i < point; i++)
             {
-                if (types[i].Compare(com))
+                if (types[i].comName==name)
                 {
                     Int64 a = 1 << i;
                     return a;
@@ -68,18 +69,21 @@ namespace huqiang.UI
         {
             if (type < 0 | type >= point)
                 return null;
-            return types[type].Create() as DataConversion;
+            return types[type].Create();
         }
         public static FakeStruct LoadFromObject(Component com, DataBuffer buffer, ref Int16 type)
         {
+            string name = com.GetType().Name;
             for (int i = 0; i < point; i++)
-                if (types[i].Compare(com))
+            {
+                if (types[i].comName==name)
                 {
                     type = (Int16)i;
                     if (types[i].Load != null)
                         return types[i].Load(com, buffer);
                     return null;
                 }
+            }
             return null;
         }
         /// <summary>
@@ -337,14 +341,10 @@ namespace huqiang.UI
     {
         public Type type;
         public Func<Component, DataBuffer, FakeStruct> Load;
-        public string name;
+        public string comName;
         public Type dcType;
         public string dcName;
-        public virtual bool Compare(object obj)
-        {
-            return false;
-        }
-        public virtual object Create()
+        public virtual DataConversion Create()
         {
             return null;
         }
@@ -355,15 +355,11 @@ namespace huqiang.UI
         {
             Load = load;
             type = typeof(T);
-            name = type.Name;
+            comName = type.Name;
             dcType= typeof(U);
             dcName = dcType.Name;
         }
-        public override bool Compare(object obj)
-        {
-            return obj is T;
-        }
-        public override object Create()
+        public override DataConversion Create()
         {
             U u= new U();
             u.type = dcName;
