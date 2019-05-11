@@ -314,7 +314,7 @@ namespace huqiang.UIEvent
                 float bx = verts[index + 2].position.x;
                 float cx = ax + (bx - ax) * 0.5f;
                 index /= 4;
-                if (mx > cx)
+                if (mx > cx)//靠右
                 {
                     index++;
                     dock = 1;

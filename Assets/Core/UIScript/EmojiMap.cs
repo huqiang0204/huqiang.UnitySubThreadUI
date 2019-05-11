@@ -39,7 +39,7 @@ namespace UGUI
                 int c = dat.Length / len;
                 for (int i = 0; i < c; i++)
                 {
-                    int s = i;
+                    int s = i*len;
                     int t = index;
                     for (int j = 0; j < len; j++)
                     {
@@ -100,7 +100,7 @@ namespace UGUI
             return 0;
         }
 
-        public const char emSpace = '\u2001';
+        public const char emSpace ='@' ;//'\u2001';
         public static string CheckEmoji(string str, List<EmojiInfo> list)
         {
             if (str == ""|str==null)
@@ -171,59 +171,6 @@ namespace UGUI
                 }
             }
             return sb.ToString();
-        }
-        public static void CreateEmojiMesh(Text txt, List<EmojiInfo> list,List<UIVertex> EmojiVertices, List<int> EmojiTri)
-        {
-            float s = txt.fontSize;
-            if (list != null)
-            {
-                int c = list.Count;
-                EmojiVertices.Clear();
-                EmojiTri.Clear();
-                TextGenerator textGen = txt.cachedTextGenerator;
-                var vs = textGen.verts;
-                UIVertex vertex = new UIVertex();
-                int start = 0;
-                for (int j = 0; j < c; j++)
-                {
-                    int i = list[j].pos;
-                    i *= 4;
-                    if (i >= vs.Count)
-                        break;
-                    float x = vs[i].position.x;
-                    float u = vs[i].position.y - 2f;
-                    float r = vs[i + 1].position.x;
-                    r = (r - x) * s * 0.5f + x;
-                    float y = vs[i + 3].position.y - 2f;
-                    u = (u - y) * s * 0.5f + y;
-                    vertex.position.x = x;
-                    vertex.position.y = u;
-                    vertex.uv0 = list[j].uv[0];
-                    EmojiVertices.Add(vertex);
-                    i++;
-                    vertex.position.x = r;
-                    vertex.position.y = u;
-                    vertex.uv0 = list[j].uv[1];
-                    EmojiVertices.Add(vertex);
-                    i++;
-                    vertex.position.x = r;
-                    vertex.position.y = y;
-                    vertex.uv0 = list[j].uv[2];
-                    EmojiVertices.Add(vertex);
-                    i++;
-                    vertex.position.x = x;
-                    vertex.position.y = y;
-                    vertex.uv0 = list[j].uv[3];
-                    EmojiVertices.Add(vertex);
-                    EmojiTri.Add(start);
-                    EmojiTri.Add(start + 1);
-                    EmojiTri.Add(start + 2);
-                    EmojiTri.Add(start + 2);
-                    EmojiTri.Add(start + 3);
-                    EmojiTri.Add(start + 0);
-                    start += 4;
-                }
-            }
         }
     }
 }
