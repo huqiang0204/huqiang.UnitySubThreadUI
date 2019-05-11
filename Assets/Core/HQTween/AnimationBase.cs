@@ -1,36 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace huqiang
 {
     /// <summary>
-    /// 线性变化值，参数范围为0-1
+    /// 动画接口
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="ratio"></param>
-    /// <returns></returns>
-    public delegate float LinearTransformation(AnimatBase sender, float ratio);
-    /// <summary>
-    /// 动画管理类，将所有动画添加至此类，进行统一更新
-    /// </summary>
-    public class AnimationManage
+    public interface AnimatInterface
     {
-        static AnimationManage am;
-        static int Frames =0;
-        /// <summary>
-        /// 返回此类的唯一实例
-        /// </summary>
-        public static AnimationManage Manage { get { if (am == null) am = new AnimationManage(); return am; } }
+        void Update(float time);
+    }
+    class ToDoEvent
+    {
+        public float time;
+        public string key;
+        public Action<object> DoEvent;
+        public object parameter;
+        public int level;
+    }
+    public class AnimationBase
+    {
+        static int Frames = 0;
         //public void Add
         List<AnimatInterface> Actions;
         /// <summary>
         /// 获取当前对象池中对象的数量
         /// </summary>
         public int Count { get { return Actions.Count; } }
-        AnimationManage()
+        public AnimationBase()
         {
             Actions = new List<AnimatInterface>();
             droc = new List<AnimatInterface>();
@@ -46,14 +47,13 @@ namespace huqiang
             Frames++;
             float timeslice = Time.deltaTime * 1000;
             var tmp = Actions.ToArray();
-            for (int i=0; i<tmp.Length; i++)
+            for (int i = 0; i < tmp.Length; i++)
             {
                 if (tmp[i] != null)
                     tmp[i].Update(timeslice);
             }
             DoEvent(timeslice);
             DoFrameEvent();
-            //LeanTween.update();
         }
         /// <summary>
         /// 添加一个新动画，重复添加会造成多倍运行
@@ -116,7 +116,7 @@ namespace huqiang
                 var t = frame_events[i];
                 if (t != null)
                 {
-                    t.level --;
+                    t.level--;
                     if (t.level <= 0)
                     {
                         if (t.DoEvent != null)
@@ -191,6 +191,17 @@ namespace huqiang
                 }
             return false;
         }
+        public void RemoveEvent(string key)
+        {
+            for (int i = 0; i < key_events.Count; i++)
+            {
+                if (key_events[i].key == key)
+                {
+                    key_events.RemoveAt(i);
+                    return;
+                }
+            }
+        }
         /// <summary>
         /// 清除所有事件
         /// </summary>
@@ -203,8 +214,8 @@ namespace huqiang
         List<AnimatInterface> droc;
         public void DontReleaseOnClear(AnimatInterface animat)
         {
-            if(!droc.Contains(animat))
-            droc.Add(animat);
+            if (!droc.Contains(animat))
+                droc.Add(animat);
         }
         public T FindAni<T>(Func<T, bool> equl) where T : class, AnimatInterface
         {
@@ -222,118 +233,6 @@ namespace huqiang
                 }
             }
             return null;
-        }
-    }
-    /// <summary>
-    /// 动画接口
-    /// </summary>
-    public interface AnimatInterface
-    {
-        void Update(float time);
-    }
-    /// <summary>
-    /// 定时器
-    /// </summary>
-    public class Timer : AnimatBase, AnimatInterface
-    {
-        public Action<Timer> PlayStart;
-        public Action<Timer> PlayOver;
-        public void Update(float timeslice)
-        {
-            if (playing)
-            {
-                if (Delay > 0)
-                {
-                    Delay -= timeslice;
-                    if (Delay <= 0)
-                    {
-                        if (PlayStart != null)
-                            PlayStart(this);
-                        c_time += Delay;
-                    }
-                }
-                else
-                {
-                    c_time -= timeslice;
-                    if (c_time <= 0)
-                    {
-                        if (!Loop)
-                            playing = false;
-                        else c_time += m_time;
-                        if (PlayOver != null)
-                        {
-                            PlayOver(this);
-                        }
-                    }
-                }
-            }
-        }
-        public Timer()
-        {
-            AnimationManage.Manage.AddAnimat(this);
-        }
-        public void Dispose()
-        {
-            AnimationManage.Manage.ReleaseAnimat(this);
-        }
-    }
-    class ToDoEvent
-    {
-        public float time;
-        public string key;
-        public Action<object> DoEvent;
-        public object parameter;
-        public int level;
-    }
-    /// <summary>
-    /// 排队执行函数,如果上一个函数未执行,则会等待该函数执行完毕
-    /// </summary>
-    public class DoWaitQueue : AnimatInterface
-    {
-        void AnimatInterface.Update(float time)
-        {
-            if (time_events == null)
-                return;
-            if (time_events.Count > 0)
-            {
-                var t = time_events[0];
-                t.time -= time;
-                label:;
-                if (t.time <= 0)
-                {
-                    time_events.RemoveAt(0);
-                    if (time_events.Count > 0)
-                    {
-                        var a = t.time;
-                        t = time_events[0];
-                        t.time += a;
-                        if (t.DoEvent != null)
-                            t.DoEvent(t.parameter);
-                        goto label;
-                    }
-                }
-            }
-        }
-        List<ToDoEvent> time_events;
-        public DoWaitQueue()
-        {
-            time_events = new List<ToDoEvent>();
-            AnimationManage.Manage.AddAnimat(this);
-        }
-        public void DoWait(float time, Action<object> action, object parameter)
-        {
-            if (time_events.Count == 0)
-                if (action != null)
-                    action(parameter);
-            ToDoEvent to = new ToDoEvent();
-            to.time = time;
-            to.DoEvent = action;
-            to.parameter = parameter;
-            time_events.Add(to);
-        }
-        public void Dispose()
-        {
-            AnimationManage.Manage.ReleaseAnimat(this);
         }
     }
 }

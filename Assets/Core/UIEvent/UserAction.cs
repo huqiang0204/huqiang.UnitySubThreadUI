@@ -256,7 +256,7 @@ namespace huqiang.UIEvent
                 }
             }
             TextInput.SubDispatch();
-            //GestureEvent.Dispatch(new List<UserInput>(inputs));
+            GestureEvent.Dispatch(new List<UserAction>(inputs));
         }
         /// <summary>
         /// 子线程

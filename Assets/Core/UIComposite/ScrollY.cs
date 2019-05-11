@@ -52,8 +52,6 @@ namespace huqiang.UIComposite
                 Order();
             }
         }
-        //public float OffsetStart;
-        //public float OffsetEnd;
         public bool ItemDockCenter;
         public int PreDockindex { get; private set; }
         public Vector2 ContentSize { get; private set; }
