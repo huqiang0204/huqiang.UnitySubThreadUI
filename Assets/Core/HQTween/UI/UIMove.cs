@@ -64,7 +64,6 @@ namespace huqiang
             if (AutoHide)
             {
                 Target.activeSelf = false;
-                Target.IsChanged = true;
             }
             UIAnimation.Manage.ReleaseAnimat(this);
         }

@@ -45,6 +45,8 @@ namespace huqiang.UI
         public string textureName;
         string mSprite;
         bool msChanged;
+        Sprite _sprite;
+        public Sprite sprite { set { _sprite = value;IsChanged = true; } }
         public string spriteName {
             get { return mSprite; }
             set { mSprite = value;

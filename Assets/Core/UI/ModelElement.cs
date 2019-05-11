@@ -118,6 +118,7 @@ namespace huqiang.UI
                         if (dc != null)
                         {
                             dc.Load(fs);
+                            dc.model = this;
                             components.Add(dc);
                         }
                     }
