@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
 using UnityEngine;
-using huqiang;
-using System.Runtime.InteropServices;
-using UnityEngine.UI;
 using huqiang.Data;
-using System.Threading;
 
 namespace UGUI
 {
