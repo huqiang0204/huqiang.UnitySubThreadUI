@@ -79,7 +79,6 @@ namespace UGUI
         {
             if (index >= buff.Length)
                 return 0;
-            CharUV cv = new CharUV();
             for(int i=6;i>=0;i--)
             {
                 var ci = charInfos[i];
