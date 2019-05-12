@@ -82,12 +82,11 @@ namespace HotFix
             _app.DelegateManager.RegisterMethodDelegate<ScrollX>();
             _app.DelegateManager.RegisterMethodDelegate<ScrollX, Vector2>();
             _app.DelegateManager.RegisterMethodDelegate<DragContent, Vector2>();
+            _app.DelegateManager.RegisterFunctionDelegate<GridScroll>();
+            _app.DelegateManager.RegisterFunctionDelegate<GridScroll, Vector2>();
             //_app.DelegateManager.RegisterMethodDelegate<ScrollExC, Vector2>();
             //_app.DelegateManager.RegisterMethodDelegate<ScrollExY, Vector2>();
-            //_app.DelegateManager.RegisterFunctionDelegate<GridScroll>();
-            // _app.DelegateManager.RegisterFunctionDelegate<GridScroll, Vector2>();
             // _app.DelegateManager.RegisterFunctionDelegate<DropdownEx, object>();
-
         }
         public void RuntimeUpdate(float time)
         {
