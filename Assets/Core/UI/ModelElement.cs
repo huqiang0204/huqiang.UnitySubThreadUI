@@ -43,6 +43,15 @@ namespace huqiang.UI
     }
     public class ModelElement:DataConversion
     {
+        public static ModelElement CreateNew(string name)
+        {
+           var mod =  new UI.ModelElement();
+            mod.name = name;
+            mod.data.localScale = Vector3.one;
+            mod.data.anchorMax = mod.data.anchorMin =
+            mod.data.pivot = new Vector2(0.5f, 0.5f);
+            return mod;
+        }
         public RectTransform Context;
         public int regIndex;
         public ElementData data;

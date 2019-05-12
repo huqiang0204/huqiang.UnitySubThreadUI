@@ -42,25 +42,31 @@ namespace huqiang
             ThreadMission.SetMianId();
             Initial();
             InitialUI();
-            if (uiRoot == null)
+            UIRoot = uiRoot as RectTransform;
+            if (UIRoot == null)
             {
-                uiRoot = new GameObject("UI", typeof(Canvas)).transform;
-                uiRoot.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-                UIRoot = new GameObject("uiRoot", typeof(RectTransform)).transform as RectTransform;
-              
+                UIRoot = new GameObject("UI", typeof(Canvas)).transform as RectTransform;
+                UIRoot.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
             }
-            var mod = UIPage.Root = new UI.ModelElement();
-            mod.name = "uiRoot";
-            mod.data.localScale = Vector3.one;
-            mod.data.anchorMax=mod.data.anchorMin=
-            mod.data.pivot = new Vector2(0.5f,0.5f);
-            UIPage.Root.activeSelf = true;
-            UIPage.Root.Context = new GameObject("uiRoot",typeof(RectTransform)).transform as RectTransform;
-            UIPage.Root.Context.SetParent(uiRoot);
-            UIPage.Root.Context.localPosition = Vector3.zero;
-            UIPage.Root.Context.localScale = Vector3.one;
-            EventCallBack.InsertRoot(UIPage.Root);
-            var buff = new GameObject("buffer", typeof(Canvas));
+       
+            var root = ModelElement.CreateNew("Root");
+            root.Context = new GameObject("Root",typeof(RectTransform)).transform as RectTransform;
+            root.Context.SetParent(UIRoot);
+            root.Context.localPosition = Vector3.zero;
+            root.Context.sizeDelta = new Vector2(Screen.width,Screen.height);
+            var page = ModelElement.CreateNew("page");
+            page.Context = new GameObject("page", typeof(RectTransform)).transform as RectTransform;
+            page.Context.SetParent(root.Context);
+            page.SetParent(root);
+            var notify = ModelElement.CreateNew("notify");
+            notify.Context = new GameObject("notify", typeof(RectTransform)).transform as RectTransform;
+            notify.SetParent(root);
+            notify.Context.SetParent(root.Context);
+
+            UIPage.Root = page;
+            EventCallBack.InsertRoot(root);
+            var buff = new GameObject("buffer", typeof(RectTransform));
+            buff.transform.SetParent(UIRoot);
             buff.SetActive(false);
             ModelManagerUI.CycleBuffer = buff.transform;
             mission = new ThreadMission();
