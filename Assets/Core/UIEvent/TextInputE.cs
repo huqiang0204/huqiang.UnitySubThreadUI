@@ -198,7 +198,7 @@ namespace huqiang.UIEvent
             if (index < 0)
                 index = 0;
             var text = info.buffer.FilterString;
-            if (text == null&text=="")
+            if (text == null|text=="")
                 index = 0;
             else if (index > text.Length)
                 index = text.Length;

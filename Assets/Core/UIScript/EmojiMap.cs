@@ -148,7 +148,10 @@ namespace UGUI
                         sb.Append(emSpace);
                         pos++;
                     }
-                    else i++;
+                    else {
+                        i++;
+                        sb.Append(c);
+                    }
                 }
             }
             return sb.ToString();

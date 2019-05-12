@@ -55,17 +55,20 @@ namespace huqiang
             root.Context.SetParent(UIRoot);
             root.Context.localPosition = Vector3.zero;
             root.Context.sizeDelta = new Vector2(Screen.width,Screen.height);
+            EventCallBack.InsertRoot(root);
+
             var page = ModelElement.CreateNew("page");
             page.Context = new GameObject("page", typeof(RectTransform)).transform as RectTransform;
             page.Context.SetParent(root.Context);
             page.SetParent(root);
+            UIPage.Root = page;
             var notify = ModelElement.CreateNew("notify");
             notify.Context = new GameObject("notify", typeof(RectTransform)).transform as RectTransform;
             notify.SetParent(root);
             notify.Context.SetParent(root.Context);
-
-            UIPage.Root = page;
-            EventCallBack.InsertRoot(root);
+            UINotify.Root = notify;
+            
+          
             var buff = new GameObject("buffer", typeof(RectTransform));
             buff.transform.SetParent(UIRoot);
             buff.SetActive(false);

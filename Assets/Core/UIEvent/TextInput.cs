@@ -54,6 +54,7 @@ namespace huqiang.UIEvent
                 value = ValidateString(value);
                 textInfo.buffer.FullString = value;
                 textInfo.text = value;
+                SetShowText();
             } }
         public string TipString
         {
@@ -61,6 +62,20 @@ namespace huqiang.UIEvent
             set
             {
                 m_TipString = value;
+                SetShowText();
+            }
+        }
+        void SetShowText()
+        {
+            if (textInfo.text == ""|textInfo.text==null)
+            {
+                TextCom.text = m_TipString;
+                TextCom.data.color = TipColor;
+            }
+            else
+            {
+                TextCom.text = textInfo.text;
+                TextCom.data.color = textColor;
             }
         }
         public bool ReadOnly;
@@ -181,7 +196,9 @@ namespace huqiang.UIEvent
         }
         protected override void Initial()
         {
-            TextCom = Context.GetComponent<TextElement>();
+            var txt= TextCom = Context.GetComponent<TextElement>();
+            InputString = txt.text;
+            textColor = txt.data.color;
         }
         public TextElement TextCom { get; private set; }
         public override void OnMouseDown(UserAction action)
@@ -189,7 +206,7 @@ namespace huqiang.UIEvent
             if (TextCom != null)
             {
                 textInfo.startSelect = GetPressIndex(textInfo, this, action,ref textInfo.startDock);
-                OnEdit(this);
+                Editing = true;
             }
             base.OnMouseDown(action);
         }
@@ -286,7 +303,7 @@ namespace huqiang.UIEvent
             if (OnValueChanged != null)
                 OnValueChanged(this);
             textInfo.text = textInfo.buffer.FullString;
-            TextCom.text = textInfo.text;
+            SetShowText();
             textInfo.CaretStyle = 1;
             ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
             return input;
@@ -309,6 +326,7 @@ namespace huqiang.UIEvent
                 InputCaret.ChangeCaret(textInfo);
             },null);
         }
+        public bool Editing;
         void OnLostFocus(EventCallBack eventCall, UserAction action)
         {
             TextInput text = eventCall as TextInput;
@@ -318,6 +336,8 @@ namespace huqiang.UIEvent
                     InputEvent.OnSubmit(InputEvent);
                 InputEvent = null;
             }
+            Editing = false;
+            SetShowText();
             ThreadMission.InvokeToMain((o)=> { Keyboard.EndInput(); },null);
         }
         public static void SetCurrentInput(TextInput input, UserAction action)
@@ -329,14 +349,9 @@ namespace huqiang.UIEvent
             if (InputEvent != null)
                InputEvent.LostFocus(InputEvent, action);
             InputEvent = input;
-            OnEdit(input);
+            InputEvent.Editing = true;
         }
-        static void OnEdit(TextInput input)
-        {
-            if (input.ReadOnly)
-                return;
-            InputEvent = input;
-        }
+
         void Selected()
         {
             textInfo.selectVertex.Clear();
@@ -395,7 +410,7 @@ namespace huqiang.UIEvent
             {
                 var text = te.Context;
                 text.text = textInfo.text;
-                TextCom.text = textInfo.text;
+                SetShowText();
                 string str = textInfo.buffer.FilterString;
                 Populate(text, str);
                 var g = text.cachedTextGenerator;

@@ -18,7 +18,8 @@ public class LoadingPage : UIPage
         base.Initial(parent, dat);
         model.SetParent(parent);
         var view =  model.ComponentReflection<View>();
-
+        view.Text.TipColor = Color.red;
+        view.Text.TipString = "请输入";
         //ran = new System.Random();
         //txt.baseEvent.Click = (o, e) =>
         //{

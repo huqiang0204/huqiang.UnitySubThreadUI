@@ -23,11 +23,21 @@ namespace UGUI
         /// </summary>
         public string FullString { get { return f_str; }
             set {
-                f_str = value;
-                emojis.Clear();
-                m_str = EmojiMap.CheckEmoji(f_str, emojis);
-                builder.Clear();
-                builder.Append(m_str);
+                if (value == null)
+                {
+                    f_str = "";
+                    m_str = "";
+                    emojis.Clear();
+                    builder.Clear();
+                }
+                else
+                {
+                    f_str = value;
+                    emojis.Clear();
+                    m_str = EmojiMap.CheckEmoji(f_str, emojis);
+                    builder.Clear();
+                    builder.Append(m_str);
+                }
             } }
         public int Length { get { return m_str.Length; } }
         public EmojiString()
