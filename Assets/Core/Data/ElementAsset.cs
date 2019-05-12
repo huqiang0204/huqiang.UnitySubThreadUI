@@ -105,5 +105,61 @@ namespace huqiang.Data
             }
             return sprites;
         }
+        public static Sprite[][] FindSprites(string bundle, string tname, string[][] names)
+        {
+            var bun = FindBundle(bundle);
+            if (bun == null)
+                return null;
+            var sp = bun.LoadAssetWithSubAssets<Sprite>(tname);
+            if (sp == null)
+                return null;
+            if (names == null)
+                return null;
+            int len = names.Length;
+            Sprite[][] sprites = new Sprite[len][];
+            for(int k=0;k<len;k++)
+            {
+                var t = names[k];
+                if(t!=null)
+                {
+                    Sprite[] ss = new Sprite[t.Length];
+                    sprites[k] = ss;
+                    for (int i = 0; i < ss.Length; i++)
+                    {
+                        var s = t[i];
+                        for (int j = 0; j < len; j++)
+                        {
+                            if (s== sp[j].name)
+                            {
+                                ss[i] = sp[j];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return sprites;
+        }
+        public static void FindSpriteAsync(string bundle, string tname, string name, Action<Sprite> callBack)
+        {
+            Sprite result=null;
+            ThreadMission.InvokeToMain(
+                (o)=> { result = FindSprite(bundle,tname,name); },null,
+                (e)=> {if(callBack!=null) callBack(result); });
+        }
+        public static void FindSpritesAsync(string bundle, string tname, string[] names,Action<Sprite[]> callBack)
+        {
+            Sprite[] result = null;
+            ThreadMission.InvokeToMain(
+                (o) => { result = FindSprites(bundle, tname, names); }, null,
+                (e) => { if (callBack != null) callBack(result); });
+        }
+        public static void FindSpritesAsync(string bundle, string tname, string[][] names, Action<Sprite[][]> callBack)
+        {
+            Sprite[][] result = null;
+            ThreadMission.InvokeToMain(
+                (o) => { result = FindSprites(bundle, tname, names); }, null,
+                (e) => { if (callBack != null) callBack(result); });
+        }
     }
 }

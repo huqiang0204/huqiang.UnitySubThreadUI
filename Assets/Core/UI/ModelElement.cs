@@ -45,7 +45,7 @@ namespace huqiang.UI
     {
         public static ModelElement CreateNew(string name)
         {
-           var mod =  new UI.ModelElement();
+           var mod =  new ModelElement();
             mod.name = name;
             mod.data.localScale = Vector3.one;
             mod.data.anchorMax = mod.data.anchorMin =
