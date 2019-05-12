@@ -70,9 +70,9 @@ namespace huqiang.UIEvent
         public Color SelectionColor = new Color(0.65882f, 0.8078f, 1, 0.4f);
         public Func<TextInput, int, char, char> ValidateChar;
         public Action<TextInput> OnValueChanged;
+        public Action<TextInput> OnSubmit;
         public Action<TextInput, UserAction> OnSelectChanged;
         public Action<TextInput, UserAction> OnSelectEnd;
-        public Action<TextInput> OnSubmit;
         public InputType inputType = InputType.Standard;
         public LineType lineType = LineType.MultiLineNewline;
         ContentType m_ctpye;
