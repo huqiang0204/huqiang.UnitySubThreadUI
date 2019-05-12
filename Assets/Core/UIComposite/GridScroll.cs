@@ -11,148 +11,15 @@ using UnityEngine;
 
 namespace huqiang.UIComposite
 {
-    public class GridScroll:ModelInital
+    public class GridScroll:ScrollContent
     {
         public GridScroll()
         {
-            Items = new List<ScrollItem>();
-            Buff = new List<ScrollItem>();
         }
-        /// <summary>
-        /// 滚动方式
-        /// </summary>
-        public ScrollType scrollType;
         ModelElement model;
-        /// <summary>
-        /// Item的ui模型
-        /// </summary>
-        public ModelElement ItemMod
-        {
-            set
-            {
-                model = value;
-                var c = Items.Count;
-                if (c > 0)
-                {
-                    //for (int i = 0; i < Items.Count; i++)
-                    //    ModelManagerUI.RecycleGameObject(Items[i].target);
-                    Items.Clear();
-                }
-                c = Buff.Count;
-                if (c > 0)
-                {
-                    //for (int i = 0; i < Items.Count; i++)
-                    //    ModelManagerUI.RecycleGameObject(Buff[i].target);
-                    Buff.Clear();
-                }
-            }
-            get { return model; }
-        }
-        /// <summary>
-        /// 视口组件
-        /// </summary>
-        public ModelElement View;
-        IList dataList;
-        Array array;
-        FakeArray fakeStruct;
-        /// <summary>
-        /// 数据绑定类型包含 IList,Array,FakeArray
-        /// </summary>
-        public object BindingData
-        {
-            get
-            {
-                if (dataList != null)
-                    return dataList;
-                if (array != null)
-                    return array;
-                return fakeStruct;
-            }
-            set
-            {
-                if (value is IList)
-                {
-                    dataList = value as IList;
-                    array = null;
-                    fakeStruct = null;
-                }
-                else if (value is Array)
-                {
-                    dataList = null;
-                    array = value as Array;
-                    fakeStruct = null;
-                }
-                else if (value is FakeArray)
-                {
-                    dataList = null;
-                    array = null;
-                    fakeStruct = value as FakeArray;
-                }
-            }
-        }
-        int DataLenth()
-        {
-            if (dataList != null)
-                return dataList.Count;
-            if (array != null)
-                return array.Length;
-            if (fakeStruct != null)
-                return fakeStruct.Length;
-            return 0;
-        }
-        object GetData(int index)
-        {
-            if (dataList != null)
-                return dataList[index];
-            if (array != null)
-                return array.GetValue(index);
-            return null;
-        }
-        /// <summary>
-        /// 所有激活的条目
-        /// </summary>
-        public List<ScrollItem> Items;
-        List<ScrollItem> Buff;
-        /// <summary>
-        /// 每项条目的尺寸
-        /// </summary>
-        public Vector2 ItemSize;
-        /// <summary>
-        /// 要生成的条目类结构
-        /// </summary>
-        public Type ItemObject = typeof(ModelElement);
+
         public int Column = 1;
         public int Row = 0;
-        /// <summary>
-        /// 如果使用热更新,无法使用反射,使用此委托,在热更新中进行反射
-        /// </summary>
-        public Action<ScrollItem, GameObject> Reflection;
-        ScrollItem CreateItem()
-        {
-            object obj = null;
-            if (ItemObject != typeof(GameObject))
-                obj = Activator.CreateInstance(ItemObject);
-            //GameObject g = ModelManagerUI.LoadToGame(model, obj, null, "");
-            //var t = g.transform;
-           // t.SetParent(View);
-            //t.localPosition = new Vector3(10000, 10000);
-            //t.localScale = Vector3.one;
-            //t.localEulerAngles = Vector3.zero;
-            ScrollItem a = new ScrollItem();
-            //a.target = g;
-            a.obj = obj;
-            //if (Reflection != null)
-            //    Reflection(a, a.target);
-            return a;
-        }
-        /// <summary>
-        /// scrollView的尺寸
-        /// </summary>
-        public Vector2 Size;
-        /// <summary>
-        /// Content的尺寸,由计算后所得
-        /// </summary>
-        public Vector2 ActualSize;
         /// <summary>
         /// 当前滚动的位置
         /// </summary>
@@ -171,41 +38,34 @@ namespace huqiang.UIComposite
         public Action<GridScroll> ScrollEnd;
         void Calcul()
         {
-            Size = View.data.sizeDelta;
+            Size = ScrollView.data.sizeDelta;
             if (BindingData == null)
             {
                 Row = 0;
                 return;
             }
-            int c = DataLenth();
+            int c = DataLength;
             Row = c / Column;
             if (c % Column > 0)
                 Row++;
-            ActualSize.x = Column * ItemSize.x;
-            ActualSize.y = Row * ItemSize.y;
+            ActualSize = new Vector2(Column * ItemSize.x, Row * ItemSize.y);
         }
         public override void Initial(ModelElement model)
         {
-            View = model;
+            base.Initial(model);
             eventCall = EventCallBack.RegEvent<EventCallBack>(model);
             eventCall.Drag = (o, e, s) => { Scrolling(o, s); };
             eventCall.DragEnd = (o, e, s) => { Scrolling(o, s); };
             eventCall.Scrolling = Scrolling;
             eventCall.ForceEvent = true;
-            Size = View.data.sizeDelta;
+            Size = ScrollView.data.sizeDelta;
             eventCall.CutRect = true;
             eventCall.ScrollEndX = OnScrollEndX;
             eventCall.ScrollEndY = OnScrollEndY;
-            if (model != null)
-            {
-                ItemMod = model.FindChild("Item");
-                if (ItemMod != null)
-                    ItemSize = ItemMod.data.sizeDelta;
-            }
         }
         void Scrolling(EventCallBack back, Vector2 v)
         {
-            if (View == null)
+            if (ScrollView == null)
                 return;
             if (BindingData == null)
                 return;
@@ -269,8 +129,7 @@ namespace huqiang.UIComposite
                 if (y < down | y > top)
                 {
                     Items.RemoveAt(c);
-                    it.target.activeSelf = false;
-                    Buff.Add(it);
+                    RecycleItem(it);
                     if (ItemRecycle != null)
                         ItemRecycle(it);
                 }
@@ -281,8 +140,7 @@ namespace huqiang.UIComposite
                     if (x < left | x > right)
                     {
                         Items.RemoveAt(c);
-                        it.target.activeSelf = false;
-                        Buff.Add(it);
+                        RecycleItem(it);
                         if (ItemRecycle != null)
                             ItemRecycle(it);
                     }
@@ -293,7 +151,7 @@ namespace huqiang.UIComposite
         {
             int index = row * Column + colStart;
             int len = colEnd - colStart;
-            int cou = DataLenth();
+            int cou = DataLength;
             for (int i = 0; i < len; i++)
             {
                 if (index >= cou)
@@ -302,14 +160,6 @@ namespace huqiang.UIComposite
                 index++;
             }
         }
-        /// <summary>
-        /// 更新当前激活的条目
-        /// </summary>
-        public Action<object, object, int> ItemUpdate;
-        /// <summary>
-        /// 回收当前隐藏的条目
-        /// </summary>
-        public Action<ScrollItem> ItemRecycle;
         void UpdateItem(int index, bool force)
         {
             for (int i = 0; i < Items.Count; i++)
@@ -324,17 +174,7 @@ namespace huqiang.UIComposite
                     return;
                 }
             }
-            ScrollItem it;
-            if (Buff.Count > 0)
-            {
-                it = Buff[0];
-                it.target.activeSelf = true;
-                Buff.RemoveAt(0);
-            }
-            else
-            {
-                it = CreateItem();
-            }
+            var it = CreateItem();
             Items.Add(it);
             it.index = index;
             it.datacontext = GetData(index);//dataList[index];

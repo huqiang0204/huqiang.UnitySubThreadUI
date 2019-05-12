@@ -37,6 +37,7 @@ namespace huqiang
         }
         static RectTransform UIRoot;
         static ThreadMission mission;
+        static ModelElement root;
         public static void Initial(Transform uiRoot)
         {
             ThreadMission.SetMianId();
@@ -49,7 +50,7 @@ namespace huqiang
                 UIRoot.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
             }
        
-            var root = ModelElement.CreateNew("Root");
+            root = ModelElement.CreateNew("Root");
             root.Context = new GameObject("Root",typeof(RectTransform)).transform as RectTransform;
             root.Context.SetParent(UIRoot);
             root.Context.localPosition = Vector3.zero;
@@ -87,7 +88,7 @@ namespace huqiang
             if(time>=FrameTime)
             {
                 time -= FrameTime;
-                UIPage.Root.Apply();//更新UI
+                root.Apply();//更新UI
             }
             AllTime += Time.deltaTime;
             //DownloadManager.UpdateMission();
@@ -97,6 +98,7 @@ namespace huqiang
             UserAction.SubDispatch();
             Resize();
             UIPage.Refresh(UserAction.TimeSlice);
+            UINotify.Refresh(UserAction.TimeSlice);
         }
         static void Resize()
         {
@@ -106,10 +108,15 @@ namespace huqiang
             {
                 Scale.ScreenWidth = w;
                 Scale.ScreenHeight = h;
-                UIPage.Root.data.sizeDelta = new Vector2(w, h);
+                Vector2 v = new Vector2(w, h);
+                UIPage.Root.data.sizeDelta = v;
                 UIPage.Root.IsChanged = true;
                 if (UIPage.CurrentPage != null)
                     UIPage.CurrentPage.ReSize();
+                UINotify.Root.data.sizeDelta = v;
+                UINotify.Root.IsChanged = true;
+                if (UINotify.CurrentPage != null)
+                    UINotify.CurrentPage.ReSize();
             }
         }
         public static void Dispose()

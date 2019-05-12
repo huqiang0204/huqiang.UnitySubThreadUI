@@ -29,16 +29,24 @@ namespace huqiang.UIComposite
             set
             {
                 model = value;
-                //var c = Items.Count;
-                //if (c > 0)
-                //{
-                //    for (int i = 0; i < Items.Count; i++)
-                //        ModelManagerUI.RecycleGameObject(Items[i].target);
-                //    Items.Clear();
-                //}
+                var c = Items.Count;
+                if (c > 0)
+                {
+                    for (int i = 0; i < Items.Count; i++)
+                        ModelManagerUI.RecycleElement(Items[i].target);
+                    Items.Clear();
+                }
+                c = Recycler.Count;
+                if(c>0)
+                {
+                    for (int i = 0; i < Recycler.Count; i++)
+                        ModelManagerUI.RecycleElement(Recycler[i].target);
+                    Recycler.Clear();
+                }
             }
             get { return model; }
         }
+        public ModelElement[] ItemMods;
         public Action<object, object, int> ItemUpdate;
         IList dataList;
         Array array;
@@ -126,6 +134,30 @@ namespace huqiang.UIComposite
         public override void Initial(ModelElement model)
         {
             ScrollView = model;
+            var child = model.child;
+            int c = child.Count;
+            if(c>0)
+            {
+                ItemMods = child.ToArray();
+                child.Clear();
+                for (int i = 0; i < ItemMods.Length; i++)
+                {
+                    ItemMods[i].activeSelf = false;
+                }
+                ItemMod = ItemMods[0].ModData;
+                ItemSize = ItemMods[0].data.sizeDelta;
+            }
+        }
+        public void SetMod(int index)
+        {
+            if (ItemMods == null)
+                return;
+            if (index < 0)
+                index = 0;
+            if (index >= ItemMods.Length)
+                index = ItemMods.Length - 1;
+            ItemMod = ItemMods[index].ModData;
+            ItemSize = ItemMods[index].data.sizeDelta;
         }
         public virtual void Refresh(float x = 0, float y = 0)
         {
@@ -242,7 +274,6 @@ namespace huqiang.UIComposite
         }
         protected void RecycleItem(ScrollItem it)
         {
-            //Items.RemoveAt(index);
             it.target.activeSelf = false;
             Recycler.Add(it);
             if (ItemRecycle != null)

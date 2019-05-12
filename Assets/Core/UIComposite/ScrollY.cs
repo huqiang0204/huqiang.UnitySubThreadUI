@@ -61,7 +61,7 @@ namespace huqiang.UIComposite
 
         public override void Initial(ModelElement model)
         {
-            ScrollView =model;
+            base.Initial(model);
             eventCall = EventCallBack.RegEvent<EventCallBack>(model);
             eventCall.Drag = Draging;
             eventCall.DragEnd = (o, e, s) =>
@@ -81,16 +81,6 @@ namespace huqiang.UIComposite
             eventCall.AutoColor = false;
             Size = ScrollView.data.sizeDelta;
             eventCall.CutRect = true;
-            if (model != null)
-            {
-                var item = model.FindChild("Item");
-                if(item!=null)
-                {
-                    item.activeSelf = false;
-                    ItemMod = item.Model;
-                    ItemSize = item.data.sizeDelta;
-                }
-            }
         }
         public Action<ScrollY, Vector2> Scroll;
         public Action<ScrollY> ScrollStart;

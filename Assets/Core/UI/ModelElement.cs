@@ -86,7 +86,7 @@ namespace huqiang.UI
             }
             return null;
         }
-        public FakeStruct Model;
+        public FakeStruct ModData;
         public unsafe static FakeStruct FindChild(FakeStruct fake,string name)
         {
             var data = (ElementData*)fake.ip;
@@ -148,7 +148,7 @@ namespace huqiang.UI
                 }
             name = buff.GetData(data.name) as string;
             tag = buff.GetData(data.tag) as string;
-            Model = fake;
+            ModData = fake;
         }
         public override void LoadToObject(Component com)
         {
