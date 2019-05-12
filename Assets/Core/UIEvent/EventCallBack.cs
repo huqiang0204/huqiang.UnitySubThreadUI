@@ -91,7 +91,7 @@ namespace huqiang.UIEvent
                 return;
             if (events.Count == 0)
                 return;
-            var root = Page.Root;
+            var root = UIPage.Root;
             if (root != null)
                 DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
             //if (Roots != null)

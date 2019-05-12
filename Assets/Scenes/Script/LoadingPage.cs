@@ -4,7 +4,7 @@ using huqiang.UIEvent;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoadingPage : Page
+public class LoadingPage : UIPage
 {
     class View
     {

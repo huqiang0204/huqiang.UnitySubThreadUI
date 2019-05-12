@@ -453,6 +453,11 @@ namespace huqiang.UI
                     IsChanged = false;
                     LoadToObject(Context, ref data, this);
                 }
+                if(mIndex>-1)
+                {
+                    Context.SetSiblingIndex(mIndex);
+                    mIndex = -1;
+                }
                 for (int i = 0; i < components.Count; i++)
                     if (components[i] != null)
                         if (components[i].IsChanged)
@@ -478,6 +483,18 @@ namespace huqiang.UI
             for (int i = 0; i < all.Length; i++)
                 all[i].field.SetValue(t, all[i].Value);
             return t;
+        }
+        int mIndex =-1;
+        public void SetSiblingIndex(int index)
+        {
+            mIndex = index;
+        }
+        public int GetSiblingIndex()
+        {
+            var p = parent;
+            if (p == null)
+                return -1;
+            return p.child.IndexOf(this);
         }
     }
 }

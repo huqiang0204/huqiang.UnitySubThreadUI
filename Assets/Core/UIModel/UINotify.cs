@@ -1,36 +1,21 @@
-﻿using huqiang;
+﻿using huqiang.UI;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using huqiang.UI;
-using huqiang.UIEvent;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class UIPage : UIBase
+public class UINotify : UIBase
 {
-    class PageInfo
-    {
-        public Type Pagetype;
-        public object DataContext;
-        public Type PopType;
-        public object PopData;
-    }
-    static Stack<PageInfo> pages = new Stack<PageInfo>();
-    public static Type typePop = typeof(PopWindow);
-    public static void ClearStack()
-    {
-        pages.Clear();
-    }
     public static ModelElement Root { get; set; }
-    public static UIPage CurrentPage { get; private set; }
-    public static void LoadPage<T>(object dat = null) where T : UIPage, new()
+    public static UINotify CurrentPage { get; private set; }
+    public static void LoadPage<T>(object dat = null) where T : UINotify, new()
     {
         if (CurrentPage is T)
         {
             CurrentPage.Show(dat);
             return;
         }
-        EventCallBack.ClearEvent();
-        UIAnimation.Manage.ReleaseAll();
         if (CurrentPage != null)
         {
             CurrentPage.Save();
@@ -40,42 +25,6 @@ public class UIPage : UIBase
         t.Initial(Root, dat);
         t.ReSize();
         CurrentPage = t;
-    }
-    public static void LoadPage(Type type, object dat = null)
-    {
-        if (typeof(UIPage).IsAssignableFrom(type))
-        {
-            if (CurrentPage != null)
-                if (CurrentPage.GetType() == type)
-                {
-                    CurrentPage.Show(dat);
-                    return;
-                }
-            EventCallBack.ClearEvent();
-            UIAnimation.Manage.ReleaseAll();
-            if (CurrentPage != null)
-                CurrentPage.Dispose();
-            var t = Activator.CreateInstance(type) as UIPage;
-            CurrentPage = t;
-            t.Initial(Root, dat);
-            t.ReSize();
-            t.Recovery();
-        }
-    }
-    public static void Back()
-    {
-        if (pages.Count > 0)
-        {
-            var page = pages.Pop();
-            if (page != null)
-            {
-                LoadPage(page.Pagetype, page.DataContext);
-                if (page.PopType != null)
-                {
-                    CurrentPage.PopUpWindow(page.PopType, page.PopData);
-                }
-            }
-        }
     }
     public static void UpdateData(string cmd, object obj)
     {
@@ -88,7 +37,7 @@ public class UIPage : UIBase
             CurrentPage.Update(time);
     }
 
-    public UIPage()
+    public UINotify()
     {
         pops = new List<PopWindow>();
     }
@@ -134,7 +83,7 @@ public class UIPage : UIBase
         currentPop = null;
     }
     List<PopWindow> pops;
-    protected T ShowPopWindow<T>(object obj = null, huqiang.UI.ModelElement parent = null) where T : PopWindow, new()
+    protected T ShowPopWindow<T>(object obj = null, ModelElement parent = null) where T : PopWindow, new()
     {
         if (currentPop != null)
         { currentPop.Hide(); currentPop = null; }
@@ -228,23 +177,6 @@ public class UIPage : UIBase
                 return pops[i] as T;
             }
         return null;
-    }
-    public override void Save()
-    {
-        if (pops != null)
-            for (int i = 0; i < pops.Count; i++)
-                if (pops[i] != currentPop)
-                    pops[i].Save();
-        PageInfo page = new PageInfo();
-        page.Pagetype = GetType();
-        if (currentPop != null)
-            if (currentPop.model.activeSelf)
-            {
-                page.PopType = currentPop.GetType();
-                page.PopData = currentPop.DataContext;
-            }
-        page.DataContext = DataContext;
-        pages.Push(page);
     }
     public override void Update(float time)
     {

@@ -49,17 +49,17 @@ namespace huqiang
                 UIRoot = new GameObject("uiRoot", typeof(RectTransform)).transform as RectTransform;
               
             }
-            var mod = Page.Root = new UI.ModelElement();
+            var mod = UIPage.Root = new UI.ModelElement();
             mod.name = "uiRoot";
             mod.data.localScale = Vector3.one;
             mod.data.anchorMax=mod.data.anchorMin=
             mod.data.pivot = new Vector2(0.5f,0.5f);
-            Page.Root.activeSelf = true;
-            Page.Root.Context = new GameObject("uiRoot",typeof(RectTransform)).transform as RectTransform;
-            Page.Root.Context.SetParent(uiRoot);
-            Page.Root.Context.localPosition = Vector3.zero;
-            Page.Root.Context.localScale = Vector3.one;
-            EventCallBack.InsertRoot(Page.Root);
+            UIPage.Root.activeSelf = true;
+            UIPage.Root.Context = new GameObject("uiRoot",typeof(RectTransform)).transform as RectTransform;
+            UIPage.Root.Context.SetParent(uiRoot);
+            UIPage.Root.Context.localPosition = Vector3.zero;
+            UIPage.Root.Context.localScale = Vector3.one;
+            EventCallBack.InsertRoot(UIPage.Root);
             var buff = new GameObject("buffer", typeof(Canvas));
             buff.SetActive(false);
             ModelManagerUI.CycleBuffer = buff.transform;
@@ -81,7 +81,7 @@ namespace huqiang
             if(time>=FrameTime)
             {
                 time -= FrameTime;
-                Page.Root.Apply();//更新UI
+                UIPage.Root.Apply();//更新UI
             }
             AllTime += Time.deltaTime;
             //DownloadManager.UpdateMission();
@@ -90,7 +90,7 @@ namespace huqiang
         {
             UserAction.SubDispatch();
             Resize();
-            Page.Refresh(UserAction.TimeSlice);
+            UIPage.Refresh(UserAction.TimeSlice);
         }
         static void Resize()
         {
@@ -100,10 +100,10 @@ namespace huqiang
             {
                 Scale.ScreenWidth = w;
                 Scale.ScreenHeight = h;
-                Page.Root.data.sizeDelta = new Vector2(w, h);
-                Page.Root.IsChanged = true;
-                if (Page.CurrentPage != null)
-                    Page.CurrentPage.ReSize();
+                UIPage.Root.data.sizeDelta = new Vector2(w, h);
+                UIPage.Root.IsChanged = true;
+                if (UIPage.CurrentPage != null)
+                    UIPage.CurrentPage.ReSize();
             }
         }
         public static void Dispose()

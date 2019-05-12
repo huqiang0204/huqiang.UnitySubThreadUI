@@ -12,7 +12,7 @@ public class MainScript : MonoBehaviour
     {
         App.Initial(transform as RectTransform);
         ModelManagerUI.LoadModels(baseUI.bytes, "baseUI");
-        Page.LoadPage<LoadingPage>();
+        UIPage.LoadPage<LoadingPage>();
     }
 
     // Update is called once per frame
