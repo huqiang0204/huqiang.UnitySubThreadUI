@@ -93,6 +93,7 @@ namespace huqiang
                 time -= FrameTime;
                 root.Apply();//更新UI
             }
+            AnimationManage.Manage.Update();
             AllTime += Time.deltaTime;
             //DownloadManager.UpdateMission();
         }
@@ -102,6 +103,7 @@ namespace huqiang
             Resize();
             UIPage.Refresh(UserAction.TimeSlice);
             UINotify.Refresh(UserAction.TimeSlice);
+            UIAnimation.Manage.Update();
         }
         static void Resize()
         {

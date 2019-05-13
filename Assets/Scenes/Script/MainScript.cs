@@ -1,4 +1,5 @@
 ﻿using huqiang;
+using huqiang.Data;
 using huqiang.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,12 @@ public class MainScript : MonoBehaviour
     {
         App.Initial(transform as RectTransform);
         ModelManagerUI.LoadModels(baseUI.bytes, "baseUI");
-        UIPage.LoadPage<LoadingPage>();
+       
+        //ElementAsset.LoadAssetsAsync("picture.unity3d").PlayOver = (o, e) =>
+        //{
+        //    UIPage.LoadPage<LoadingPage>();
+        //    // ShowPopWindow<PropKeyWin>();
+        //};
     }
 
     // Update is called once per frame

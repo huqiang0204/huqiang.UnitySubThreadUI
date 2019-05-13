@@ -55,6 +55,7 @@ namespace huqiang.UI
         public unsafe override void Load(FakeStruct fake)
         {
             data = *(ImageData*)fake.ip;
+            color = data.color;
             shader= fake.buffer.GetData(data.shader) as string;
             assetName = fake.buffer.GetData(data.assetName) as string;
             textureName = fake.buffer.GetData(data.textureName) as string;
@@ -82,7 +83,7 @@ namespace huqiang.UI
             a.preserveAspect = dat.preserveAspect;
             a.type = dat.type;
             a.raycastTarget = false;
-            a.color = dat.color;
+            a.color = image.color;
             a.material = image.material;
             if (image.msChanged)
             {

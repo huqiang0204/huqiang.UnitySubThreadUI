@@ -41,7 +41,7 @@ namespace huqiang.UIEvent
             for (int i = 0; i < events.Count; i++)
             {
                 var eve = events[i];
-                if(!eve.Forbid)
+                if(!eve.forbid)
                 eve.Analysis();
             }
                 

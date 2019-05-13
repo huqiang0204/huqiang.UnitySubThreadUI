@@ -6,20 +6,19 @@ using UnityEngine;
 
 public class LoadingPage : UIPage
 {
-    class View
-    {
-        public TextInput Text;
-    }
     ModelElement txt;
     System.Random ran;
     public override void Initial(ModelElement parent, object dat = null)
     {
-        model = ModelManagerUI.FindModel("baseUI", "lobby");
-        base.Initial(parent, dat);
-        model.SetParent(parent);
-        var view =  model.ComponentReflection<View>();
-        view.Text.TipColor = Color.red;
-        view.Text.TipString = "请输入";
+        //model = ModelManagerUI.FindModel("baseUI", "RankingListWindow");
+        //base.Initial(parent, dat);
+        //model.SetParent(parent);
+        //var view =  model.ComponentReflection<View>();
+        //List<string> list = new List<string>();
+        //for (int i = 0; i < 1000; i++)
+        //    list.Add(i.ToString());
+        //view.FriendsRanking.BindingData = list;
+        //view.FriendsRanking.Refresh();
         //ran = new System.Random();
         //txt.baseEvent.Click = (o, e) =>
         //{

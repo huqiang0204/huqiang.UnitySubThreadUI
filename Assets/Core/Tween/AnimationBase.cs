@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UIEvent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,7 +46,7 @@ namespace huqiang
         public void Update()
         {
             Frames++;
-            float timeslice = Time.deltaTime * 1000;
+            float timeslice = UserAction.TimeSlice;
             var tmp = Actions.ToArray();
             for (int i = 0; i < tmp.Length; i++)
             {

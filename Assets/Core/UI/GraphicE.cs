@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace huqiang.UI
 {
-    public class GraphicE:DataConversion
+    public class GraphicE : DataConversion
     {
         struct FloatValue
         {
@@ -27,6 +27,8 @@ namespace huqiang.UI
             public string t2dName;
         }
         protected Material material;
+        protected Color _color;
+        public Color color { get { return _color; } set { _color = value;IsChanged = true; } }
         string mShader;
         bool shderChanged;
         protected string shader { get { return mShader;  } set { shderChanged = mShader == value ? false : true; mShader = value; } }

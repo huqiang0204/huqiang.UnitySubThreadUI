@@ -48,6 +48,9 @@ namespace huqiang.UIEvent
             }
             T u = new T();
             u.Context = element;
+            u.graphic = element.GetComponent<GraphicE>();
+            if (u.graphic != null)
+                u.g_color = u.graphic.color;
             element.baseEvent = u;
             events.Add(u);
             u.Initial();
@@ -65,6 +68,9 @@ namespace huqiang.UIEvent
             }
             EventCallBack u = Activator.CreateInstance(type) as EventCallBack;
             u.Context = element;
+            u.graphic = element.GetComponent<GraphicE>();
+            if (u.graphic != null)
+                u.g_color = u.graphic.color;
             element.baseEvent = u;
             events.Add(u);
             u.Initial();
@@ -138,7 +144,7 @@ namespace huqiang.UIEvent
                     }
                 }
             }
-            else if (callBack.Forbid)
+            else if (callBack.forbid)
             {
                 var child = ui.child;
                 for (int i = child.Count - 1; i >= 0; i--)
@@ -196,7 +202,7 @@ namespace huqiang.UIEvent
                         {
                             if (callBack.ForceEvent)
                             {
-                                if (!callBack.Forbid)
+                                if (!callBack.forbid)
                                     break;
                             }
                             return true;
@@ -235,7 +241,7 @@ namespace huqiang.UIEvent
         {
             for (int i = 0; i < events.Count; i++)
                 if (events[i] != null)
-                    if (!events[i].Forbid)
+                    if (!events[i].forbid)
                         if (!events[i].Pressed)
                             DuringSlide(events[i]);
         }
@@ -283,6 +289,7 @@ namespace huqiang.UIEvent
                     back.ScrollEndY(back);
         }
         public ModelElement Context;
+        public GraphicE graphic;
         Vector2 mVelocity;
         public float VelocityX { get { return mVelocity.x; } set { maxVelocity.x = mVelocity.x = value; RefreshRateX(); } }
         public float VelocityY { get { return mVelocity.y; } set { maxVelocity.y = mVelocity.y = value; RefreshRateY(); } }
@@ -339,7 +346,7 @@ namespace huqiang.UIEvent
         public long entryTime { get; protected set; }
         public long stayTime { get; protected set; }
         public bool Pressed { get; internal set; }
-        public bool Forbid;
+        public bool forbid;
         public bool CutRect = false;
         /// <summary>
         /// 强制事件不被子组件拦截
@@ -410,6 +417,19 @@ namespace huqiang.UIEvent
             Pressed = true;
             pressTime = action.EventTicks;
             RawPosition = action.CanPosition;
+            if (AutoColor)
+            {
+                var g =Context.GetComponent<GraphicE>();
+                if (graphic != null)
+                {
+                    Color a = Color.white;
+                    a.r = g_color.r * 0.8f;
+                    a.g = g_color.g * 0.8f;
+                    a.b = g_color.b * 0.8f;
+                    a.a = g_color.a;
+                    graphic.color = a;
+                }
+            }
             if (PointerDown != null)
                 PointerDown(this, action);
             entry = true;
@@ -420,6 +440,12 @@ namespace huqiang.UIEvent
         {
             Pressed = false;
             entry = false;
+            if (AutoColor)
+            {
+                if (graphic != null)
+                    if (!forbid)
+                        graphic.color = g_color;
+            }
             if (PointerUp != null)
                 PointerUp(this, action);
             long r = DateTime.Now.Ticks - pressTime;
@@ -467,6 +493,12 @@ namespace huqiang.UIEvent
         internal virtual void OnMouseLeave(UserAction action)
         {
             entry = false;
+            if (AutoColor)
+            {
+                if (graphic != null)
+                    if (!forbid)
+                        graphic.color = g_color;
+            }
             if (PointerLeave != null)
                 PointerLeave(this, action);
         }
@@ -529,7 +561,7 @@ namespace huqiang.UIEvent
             eventCall.DragEnd = null;
             eventCall.Scrolling = null;
             eventCall.AutoColor = true;
-            eventCall.Forbid = false;
+            eventCall.forbid = false;
             eventCall.mVelocity = Vector2.zero;
             eventCall.maxVelocity = Vector2.zero;
             eventCall.CutRect = false;

@@ -54,6 +54,7 @@ namespace huqiang.UI
         public unsafe override void Load(FakeStruct fake)
         {
             data = *(TextData*)fake.ip;
+            color = data.color;
             shader = fake.buffer.GetData(data.shader) as string;
             text= fake.buffer.GetData(data.text) as string;
             fontName = fake.buffer.GetData(data.font) as string;
@@ -82,9 +83,8 @@ namespace huqiang.UI
             a.resizeTextMinSize = dat.resizeTextMinSize;
             a.supportRichText = dat.supportRichText;
             a.verticalOverflow = dat.verticalOverflow;
-            a.color = dat.color;
+            a.color = image.color;
             a.raycastTarget = false;
-            a.color = dat.color;
             a.material = image.material;
             a.font = FindFont(image.fontName);
             a.text = image.text;

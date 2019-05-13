@@ -159,6 +159,7 @@ namespace huqiang.UIComposite
         }
         public override void Refresh(float x = 0, float y = 0)
         {
+            m_point = y;
             Size = ScrollView.data.sizeDelta;
             ActualSize = Vector2.zero;
             if (DataLength == 0)

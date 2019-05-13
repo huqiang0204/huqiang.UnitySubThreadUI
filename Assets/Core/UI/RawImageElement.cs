@@ -25,6 +25,7 @@ namespace huqiang.UI
         public unsafe override void Load(FakeStruct fake)
         {
             data = *(RawImageData*)fake.ip;
+            color = data.color;
             shader = fake.buffer.GetData(data.shader) as string;
             assetName = fake.buffer.GetData(data.assetName) as string;
             textureName = fake.buffer.GetData(data.textureName) as string;
@@ -39,7 +40,7 @@ namespace huqiang.UI
             if (a == null)
                 return;
             a.uvRect = dat.uvRect;
-            a.color = dat.color;
+            a.color = image.color;
             a.raycastTarget = false;
             if (image.shader != "Default UI Material")
                 a.material = new Material(Shader.Find(image.shader));
