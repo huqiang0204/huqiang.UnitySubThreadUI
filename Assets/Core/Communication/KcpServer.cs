@@ -84,7 +84,6 @@ namespace huqiang
         public override void Dispose()
         {
             base.Dispose();
-            soc.Close();
             Instance = null;
             for (int i = 0; i < tCount; i++)
                 linkBuff[i].running = false;
