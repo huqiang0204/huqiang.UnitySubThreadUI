@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-
+using UnityEngine;
 
 namespace huqiang
 {
@@ -23,7 +23,7 @@ namespace huqiang
         /// <summary>
         /// 默认的派发消息
         /// </summary>
-        public Action<TcpLinker, byte[]> DispatchMessage = (o, e) => { Console.WriteLine("new message"); };
+        public Action<TcpLinker, byte[]> DispatchMessage = (o, e) => { };
         /// <summary>
         /// 单例服务器实例
         /// </summary>

@@ -3,6 +3,7 @@ using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Net;
+using UnityEngine;
 
 namespace huqiang
 {
@@ -56,7 +57,7 @@ namespace huqiang
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Debug.Log(ex.StackTrace);
                 return -1;
             }
             return 0;
@@ -77,7 +78,7 @@ namespace huqiang
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Debug.Log(ex.StackTrace);
                 return -1;
             }
             return 0;

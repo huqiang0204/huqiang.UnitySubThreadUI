@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace huqiang
 {
+#if UNITY_STANDALONE_WIN ||UNITY_EDITOR
     public class IME
     {
         private  static bool haveMainWindow = false;
@@ -152,4 +153,5 @@ namespace huqiang
             ImmReleaseContext(mainWindowHandle, hIMC);
         }
     }
+#endif
 }

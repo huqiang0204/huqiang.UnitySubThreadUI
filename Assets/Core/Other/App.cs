@@ -19,10 +19,9 @@ namespace huqiang
             {
                 UserAction.inputType = UserAction.InputType.Blend;
             }
-            if (Application.platform == RuntimePlatform.WindowsEditor | Application.platform == RuntimePlatform.WindowsPlayer)
-            {
-                IME.Initial();
-            }
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+            IME.Initial();
+#endif     
         }
         static void InitialUI()
         {

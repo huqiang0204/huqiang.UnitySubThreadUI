@@ -10,7 +10,7 @@ namespace huqiang
 {
     public class UdpSocket
     {
-        UdpClient soc;
+        Socket soc;
         Thread thread;
         TcpEnvelope envelope;
         IPEndPoint endPoint;
@@ -23,8 +23,10 @@ namespace huqiang
            
             endPoint = remote;
             //Links = new Linker[thread * 1024];
-            soc = new UdpClient(port);
-            soc.Client.ReceiveTimeout = 1000;
+            IPEndPoint ip = new IPEndPoint(IPAddress.Any, port);
+            soc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp); //new UdpClient(_port);//new IPEndPoint(IPAddress.Parse(ip),
+            soc.Bind(ip);
+            soc.ReceiveTimeout = 1000;
 
             if (type != PackType.None)
             {
@@ -44,30 +46,36 @@ namespace huqiang
     
         void Run()
         {
+            byte[] buffer = new byte[65536];
             while (running)
             {
                 try
                 {
-                    byte[] data = soc.Receive(ref endPoint);//接收数据报
-                    if (Packaging)
+                    EndPoint end = endPoint;
+                    int len = soc.ReceiveFrom(buffer, ref end);//接收数据报
+                    if (len > 0)
                     {
-                        var dat= envelope.Unpack(data, data.Length);
-                        if (dat != null)
+                        byte[] dat = new byte[len];
+                        for (int i = 0; i < len; i++)
+                            dat[i] = buffer[i];
+                        if (Packaging)
                         {
-                            for (int i = 0; i < dat.Count; i++)
+                            var data = envelope.Unpack(dat, len);
+                            for (int i = 0; i < data.Count; i++)
                             {
-                                var item = dat[i];
+                                var item = data[i];
                                 EnvelopeCallback(item.data, item.type);
                             }
                         }
-                    }
-                    else
-                    {
-                        EnvelopeCallback(data, 0);
+                        else
+                        {
+                            EnvelopeCallback(dat, 0);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
+                    
                 }
             }
         }
@@ -117,9 +125,9 @@ namespace huqiang
                     var buf = envelope.Pack(dat, tag);
                     if (buf != null)
                         for (int i = 0; i < buf.Length; i++)
-                            soc.Send(buf[i], buf[i].Length, point);
+                            soc.SendTo(buf[i],  point);
                 }
-                else soc.Send(dat, dat.Length, point);
+                else soc.SendTo(dat, point);
                 return true;
             }
             catch (Exception ex)
@@ -135,9 +143,9 @@ namespace huqiang
                 var buf = envelope.Pack(dat, tag);
                 if (buf != null)
                     for (int i = 0; i < buf.Length; i++)
-                        soc.Send(buf[i], buf[i].Length, ip);
+                        soc.SendTo(buf[i], ip);
             }
-            else soc.Send(dat, dat.Length,ip);
+            else soc.SendTo(dat, ip);
             endPoint.Address = IPAddress.Any;
         }
         public void Redirect(IPAddress address)

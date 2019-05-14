@@ -10,7 +10,7 @@ namespace huqiang
     public class KcpListener
     {
         public static KcpListener Instance;
-        public UdpClient soc;
+        public Socket soc;
         Thread thread;
         protected bool running;
         int remotePort;
@@ -26,8 +26,9 @@ namespace huqiang
         {
             if (_port == 0)
                 _port = FreePort.FindNextAvailableUDPPort(10000);
-            soc = new UdpClient(_port);//new IPEndPoint(IPAddress.Parse(ip),
-
+            IPEndPoint ip = new IPEndPoint(IPAddress.Any, _port);
+            soc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp); //new UdpClient(_port);//new IPEndPoint(IPAddress.Parse(ip),
+            soc.Bind(ip);
             running = true;
             if (thread == null)
             {
@@ -38,13 +39,21 @@ namespace huqiang
         }
         void Run()
         {
+            byte[] buffer = new byte[65536];
+            IPEndPoint ip = new IPEndPoint(IPAddress.Any, 0);
             while (running)
             {
                 try
                 {
-                    IPEndPoint ip = new IPEndPoint(IPAddress.Any, remotePort);
-                    byte[] dat = soc.Receive(ref ip);//接收数据报
-                    Dispatch(dat,ip);
+                    EndPoint end = ip;
+                    int len = soc.ReceiveFrom(buffer, ref end);//接收数据报
+                    if (len > 0)
+                    {
+                        byte[] dat = new byte[len];
+                        for (int i = 0; i < len; i++)
+                            dat[i] = buffer[i];
+                        Dispatch(dat, end as IPEndPoint);
+                    }
                 }
                 catch 
                 {
@@ -64,11 +73,11 @@ namespace huqiang
         {
             var ss = envelope.Pack(data, type);
             for (int i = 0; i < ss.Length; i++)
-                soc.Send(ss[i], ss[i].Length, ip);
+                soc.SendTo(ss[i],  ip);
         }
         public void Send(byte[] data, IPEndPoint ip)
         {
-            soc.Send(data, data.Length, ip);
+            soc.SendTo(data,  ip);
         }
         public virtual void RemoveLink(KcpLink link)
         {

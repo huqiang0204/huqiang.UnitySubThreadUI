@@ -1,8 +1,5 @@
 ﻿using huqiang;
-using huqiang.Data;
 using huqiang.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScript : MonoBehaviour

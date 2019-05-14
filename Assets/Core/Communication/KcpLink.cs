@@ -73,17 +73,17 @@ namespace huqiang
             var ss= envelope.GetFailedData(now);//获取超时未反馈的数据
             if(ss!=null)
                 for(int i=0;i<ss.Length;i++)
-                    kcp.soc.Send(ss[i],ss[i].Length,endpPoint);//重新发送超时的数据
+                    kcp.soc.SendTo(ss[i],endpPoint);//重新发送超时的数据
             ss = envelope.ValidateData.ToArray();
             envelope.ValidateData.Clear();//获取接收成功的数据
             for (int i = 0; i < ss.Length; i++)
-                kcp.soc.Send(ss[i], ss[i].Length, endpPoint);//通知对方接收数据成功
+                kcp.soc.SendTo(ss[i], endpPoint);//通知对方接收数据成功
         }
         public void Send(byte[] data, byte type)
         {
             var ss = envelope.Pack(data, type);
             for (int i = 0; i < ss.Length; i++)
-                kcp.soc.Send(ss[i], ss[i].Length,endpPoint);
+                kcp.soc.SendTo(ss[i], endpPoint);
         }
         public virtual void Connect()
         {
