@@ -20,7 +20,6 @@ namespace huqiang
         QueueBuffer<SocData> queue;
         public UdpSocket(int port, IPEndPoint remote, bool subThread = true, PackType type = PackType.Total, int es = 262144)
         {
-           
             endPoint = remote;
             //Links = new Linker[thread * 1024];
             IPEndPoint ip = new IPEndPoint(IPAddress.Any, port);
