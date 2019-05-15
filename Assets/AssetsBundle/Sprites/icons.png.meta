@@ -1,0 +1,4898 @@
+fileFormatVersion: 2
+guid: 976bc3d6b0309c34ea5ab78e8caa5a31
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: icons
+    21300002: Basic-Elements-Circle
+    21300004: Basic-Elements-Line
+    21300006: Basic-Elements-Rectangle-Rounded
+    21300008: Buttons-Circles-Outline-PNG-White-Circle-Outline
+    21300010: Buttons-Rounded-Filled-PNG-WhiteButton-Rounded
+    21300012: Buttons-Rounded-Outline-PNG-WhiteButton-Rounded-Outline
+    21300014: Buttons-SoftRounded-Filled-PNG-White-Button
+    21300016: Buttons-SoftRounded-Outline-PNG-White-Button-Outline
+    21300018: Buttons-Square-Filled-PNG-WhiteButton-Square-filled
+    21300020: Buttons-Square-Outline-PNG-WhiteButton-Square-Outline
+    21300022: Checkboxes-Checkboxes_PNG-Checkbox-Black-Skin
+    21300024: Checkboxes-Checkboxes_PNG-Checkbox-Light-Skin
+    21300026: Icons-Demo-Small-Avatars-Rounded-Background-Circle
+    21300028: Icons-Demo-Small-Avatars-Rounded-Boy_1
+    21300030: Icons-Demo-Small-Avatars-Rounded-Boy_2
+    21300032: Icons-Demo-Small-Avatars-Rounded-Boy_3
+    21300034: Icons-Demo-Small-Avatars-Rounded-Boy_4
+    21300036: Icons-Demo-Small-Avatars-Rounded-Girl_1
+    21300038: Icons-Demo-Small-Avatars-Rounded-Girl_2
+    21300040: Icons-Demo-Small-Avatars-Rounded-Girl_3
+    21300042: Icons-Demo-Small-Avatars-Rounded-Girl_4
+    21300044: Icons-Demo-Small-Avatars-Rounded-Girl_5
+    21300046: Icons-Demo-Small-BasicElements-Small-Box-Small
+    21300048: Icons-Demo-Small-BasicElements-Small-Circle-Outline-Small
+    21300050: Icons-Demo-Small-BasicElements-Small-Circle-Small
+    21300052: Icons-Demo-Small-Chat-Popup-Add-User-Icon-Small
+    21300054: Icons-Demo-Small-Chat-Popup-Chat-Icon-Small
+    21300056: Icons-Demo-Small-Chat-Popup-Clip-Icon-Small
+    21300058: Icons-Demo-Small-Chat-Popup-Dot-Small
+    21300060: Icons-Demo-Small-Chat-Popup-Fear-Smiley_Small
+    21300062: Icons-Demo-Small-Chat-Popup-Lens-Icon-Small
+    21300064: Icons-Demo-Small-Chat-Popup-Mail-Icon-Small
+    21300066: Icons-Demo-Small-Chat-Popup-Menu-Icon-Small
+    21300068: Icons-Demo-Small-Chat-Popup-Smiley-Icon-Small
+    21300070: Icons-Demo-Small-Chat-Popup-Trash-Icon-Small
+    21300072: Icons-Demo-Small-Chat-Popup-User-Delete-Icon-Small
+    21300074: Icons-Demo-Small-Chat-Popup-Writing-Icon-Small
+    21300076: Icons-Demo-Small-Close-Icon-Small
+    21300078: Icons-Demo-Small-CoinsShop-Popup-Chest-Icon-Small
+    21300080: Icons-Demo-Small-CoinsShop-Popup-Coin-Icon-Small
+    21300082: Icons-Demo-Small-CoinsShop-Popup-CoinMini-Icon-Small
+    21300084: Icons-Demo-Small-CoinsShop-Popup-Coins-Sack-Icon-Small
+    21300086: Icons-Demo-Small-CoinsShop-Popup-Coinsx1-Icon-Small
+    21300088: Icons-Demo-Small-CoinsShop-Popup-Coinsx1Big-Icon-Small
+    21300090: Icons-Demo-Small-CoinsShop-Popup-Coinsx3-Icon-Small
+    21300092: Icons-Demo-Small-CoinsShop-Popup-Gift-Icon-Small
+    21300094: Icons-Demo-Small-CoinsShop-Popup-Text-Deal-Icon-Small
+    21300096: Icons-Demo-Small-CoinsShop-Popup-Text-New-Icon-Small
+    21300098: Icons-Demo-Small-CoinsShop-Popup-Text-Sale-Icon-Small
+    21300100: Icons-Demo-Small-DemoScene-Abilities-Bomb-Icon-Small
+    21300102: Icons-Demo-Small-DemoScene-Abilities-Cross-Icon-Small
+    21300104: Icons-Demo-Small-DemoScene-Abilities-Demon-Icon-Small
+    21300106: Icons-Demo-Small-DemoScene-Abilities-Gun-Icon-Small
+    21300108: Icons-Demo-Small-DemoScene-Abilities-Knight-Icon-Small
+    21300110: Icons-Demo-Small-DemoScene-Abilities-Plus-Icon-Small
+    21300112: Icons-Demo-Small-DemoScene-Abilities-Potion-Icon-Small
+    21300114: Icons-Demo-Small-DemoScene-Abilities-Shield-Icon-Small
+    21300116: Icons-Demo-Small-DemoScene-Abilities-Skull-Icon-Small
+    21300118: Icons-Demo-Small-DemoScene-Abilities-Sword-Icon-Small
+    21300120: Icons-Demo-Small-DemoScene-Icons-Top-Arrow-Icon-Small
+    21300122: Icons-Demo-Small-DemoScene-Icons-Top-Avatar-DarkSkin-Small
+    21300124: Icons-Demo-Small-DemoScene-Icons-Top-Avatar2-DarkSkin-Big
+    21300126: Icons-Demo-Small-DemoScene-Icons-Top-Avatar2-DarkSkin-Small
+    21300128: Icons-Demo-Small-DemoScene-Icons-Top-Chat-Icon-Small
+    21300130: Icons-Demo-Small-DemoScene-Icons-Top-Chest-Icon-Small
+    21300132: Icons-Demo-Small-DemoScene-Icons-Top-Coins-Icon-Small
+    21300134: Icons-Demo-Small-DemoScene-Icons-Top-Cup-Icon-Small
+    21300136: Icons-Demo-Small-DemoScene-Icons-Top-Diamond-Icon-Small
+    21300138: Icons-Demo-Small-DemoScene-Icons-Top-Exit-Icon-Small
+    21300140: Icons-Demo-Small-DemoScene-Icons-Top-Heart-Icon-Small
+    21300142: Icons-Demo-Small-DemoScene-Icons-Top-Level-Icon-Small
+    21300144: Icons-Demo-Small-DemoScene-Icons-Top-Mail-Icon-Small
+    21300146: Icons-Demo-Small-DemoScene-Icons-Top-Mail-Outline-Icon-Small
+    21300148: Icons-Demo-Small-DemoScene-Icons-Top-Missions-Icon-Small
+    21300150: Icons-Demo-Small-DemoScene-Icons-Top-Settings-Icon-Small
+    21300152: Icons-Demo-Small-DemoScene-Icons-Top-Shopping-Cart-Icon-Small
+    21300154: Icons-Demo-Small-GemsPopup-Chest-Icon-Small
+    21300156: Icons-Demo-Small-GemsPopup-Diamond-Icon-Small
+    21300158: Icons-Demo-Small-GemsPopup-Diamond-Outline-Icon-Small
+    21300160: Icons-Demo-Small-HomeScene-Info-Icon-Small
+    21300162: Icons-Demo-Small-HomeScene-Multiuser-Icon-Small
+    21300164: Icons-Demo-Small-HomeScene-Stats-Icon-Small
+    21300166: Icons-Demo-Small-HomeScene-User-Icon-Small
+    21300168: Icons-Demo-Small-HomeScene-Video-Icon-Small
+    21300170: Icons-Demo-Small-InfoPopup-Head-Icon-Small
+    21300172: Icons-Demo-Small-InfoPopup-Headphones-Icon-Small
+    21300174: Icons-Demo-Small-InventoryPopup-Ability-Icon-Small
+    21300176: Icons-Demo-Small-InventoryPopup-Aim-Icon-Small
+    21300178: Icons-Demo-Small-InventoryPopup-Amulet-Icon-Small
+    21300180: Icons-Demo-Small-InventoryPopup-Apple-Icon-Small
+    21300182: Icons-Demo-Small-InventoryPopup-Arm-Muscles-Icon-Small
+    21300184: Icons-Demo-Small-InventoryPopup-Axe-Icon-Small
+    21300186: Icons-Demo-Small-InventoryPopup-Body-Icon-Small
+    21300188: Icons-Demo-Small-InventoryPopup-Bolt-Icon-Small
+    21300190: Icons-Demo-Small-InventoryPopup-Bomb-Icon-Small
+    21300192: Icons-Demo-Small-InventoryPopup-Bunny-Icon-Small
+    21300194: Icons-Demo-Small-InventoryPopup-Canon-Icon-Small
+    21300196: Icons-Demo-Small-InventoryPopup-Coffee-Icon-Small
+    21300198: Icons-Demo-Small-InventoryPopup-Compass-Icon-Small
+    21300200: Icons-Demo-Small-InventoryPopup-CookingPot-Icon-Small
+    21300202: Icons-Demo-Small-InventoryPopup-Cross-Icon-Small
+    21300204: Icons-Demo-Small-InventoryPopup-Demon-Icon-Small
+    21300206: Icons-Demo-Small-InventoryPopup-Fight-Axe-Scythe-Icon-Small
+    21300208: Icons-Demo-Small-InventoryPopup-Fight-Icon-Small
+    21300210: Icons-Demo-Small-InventoryPopup-Fight_Axe-Icon-Small
+    21300212: Icons-Demo-Small-InventoryPopup-Fire-Icon-Small
+    21300214: Icons-Demo-Small-InventoryPopup-Freeze-Icon-Small
+    21300216: Icons-Demo-Small-InventoryPopup-Gangster-Icon-Small
+    21300218: Icons-Demo-Small-InventoryPopup-Gun-Icon-Small
+    21300220: Icons-Demo-Small-InventoryPopup-Hammer-Icon-Small
+    21300222: Icons-Demo-Small-InventoryPopup-Hourglass-Icon-Small
+    21300224: Icons-Demo-Small-InventoryPopup-Key-Icon-Small
+    21300226: Icons-Demo-Small-InventoryPopup-Knights-Hat-Icon
+    21300228: Icons-Demo-Small-InventoryPopup-Leaves-Icon-Small
+    21300230: Icons-Demo-Small-InventoryPopup-Libra-Icon-Small
+    21300232: Icons-Demo-Small-InventoryPopup-Lifebelt-Icon-Small
+    21300234: Icons-Demo-Small-InventoryPopup-Magic-Stick-Icon-Small
+    21300236: Icons-Demo-Small-InventoryPopup-Map-Icon-Small
+    21300238: Icons-Demo-Small-InventoryPopup-Pinned-Notices-Icon-Small
+    21300240: Icons-Demo-Small-InventoryPopup-Potion-Half-Small
+    21300242: Icons-Demo-Small-InventoryPopup-Potion-Leaves-Icon-Small
+    21300244: Icons-Demo-Small-InventoryPopup-Potion-Poison-Icon-Small
+    21300246: Icons-Demo-Small-InventoryPopup-Rain-Icon-Small
+    21300248: Icons-Demo-Small-InventoryPopup-Rest-Icon-Small
+    21300250: Icons-Demo-Small-InventoryPopup-Rink-Magic-Icon-Small
+    21300252: Icons-Demo-Small-InventoryPopup-Scythe-Icon-Small
+    21300254: Icons-Demo-Small-InventoryPopup-Scythe-Icon_2-Small
+    21300256: Icons-Demo-Small-InventoryPopup-Share-Icon-Small
+    21300258: Icons-Demo-Small-InventoryPopup-Shield-Icon-Small
+    21300260: Icons-Demo-Small-InventoryPopup-Skull-Icon-Small
+    21300262: Icons-Demo-Small-InventoryPopup-Spaceship-Icon
+    21300264: Icons-Demo-Small-InventoryPopup-Speed-Icon-Small
+    21300266: Icons-Demo-Small-InventoryPopup-Spell-Icon-Small
+    21300268: Icons-Demo-Small-InventoryPopup-Strength-Icon-Small
+    21300270: Icons-Demo-Small-InventoryPopup-Sun-Icon-Small
+    21300272: Icons-Demo-Small-InventoryPopup-Sword-Icon-Small
+    21300274: Icons-Demo-Small-InventoryPopup-Target-Icon-Small
+    21300276: Icons-Demo-Small-InventoryPopup-Timer-Icon-Small
+    21300278: Icons-Demo-Small-InventoryPopup-Ufo-Icon-Small
+    21300280: Icons-Demo-Small-InventoryPopup-Velocity-Icon-Small
+    21300282: Icons-Demo-Small-InventoryPopup-Viking-Head-Icon-Small
+    21300284: Icons-Demo-Small-InventoryPopup-Water-Icon-Small
+    21300286: Icons-Demo-Small-InventoryPopup-Weapon-Axe-Icon_2-Small
+    21300288: Icons-Demo-Small-InventoryPopup-Wing-Icon-Small
+    21300290: Icons-Demo-Small-InventoryPopup-Witch-Hat-Icon
+    21300292: Icons-Demo-Small-InventoryPopup-Zombie-Icon-Small
+    21300294: Icons-Demo-Small-ItemPopup-Clock
+    21300296: Icons-Demo-Small-ItemPopup-Menu-Icon-Small
+    21300298: Icons-Demo-Small-ItemPopup-Skull
+    21300300: Icons-Demo-Small-ItemPopup-Star
+    21300302: Icons-Demo-Small-LeaderboardPopup-Angel-Icon-Small
+    21300304: Icons-Demo-Small-LeaderboardPopup-Arrow-Down-Icon-Small
+    21300306: Icons-Demo-Small-LeaderboardPopup-Arrow-Up-Icon-Small
+    21300308: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-1-Small
+    21300310: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-2-Small
+    21300312: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-3-Small
+    21300314: Icons-Demo-Small-LeaderboardPopup-Challenge-Icon-Small
+    21300316: Icons-Demo-Small-LeaderboardPopup-Crown-Icon-Small
+    21300318: Icons-Demo-Small-LeaderboardPopup-Cup-Circle-Icon-Small
+    21300320: Icons-Demo-Small-LeaderboardPopup-Cup
+    21300322: Icons-Demo-Small-LeaderboardPopup-Speak-Icon-Small
+    21300324: Icons-Demo-Small-LeaderboardPopup-Time-Icon
+    21300326: Icons-Demo-Small-LeaderboardPopup-User-Outline-Icon-Small
+    21300328: Icons-Demo-Small-LevelPopup-Crown-Icon-Small
+    21300330: Icons-Demo-Small-LevelPopup-Lock-Icon-Small
+    21300332: Icons-Demo-Small-LevelPopup-Missions-Icon-Small
+    21300334: Icons-Demo-Small-LevelPopup-Multiplayer-Icon-Small
+    21300336: Icons-Demo-Small-LevelUpPopup-Unlock-Icon-Small
+    21300338: Icons-Demo-Small-LivesShopPopup-Diamond-Icon-Small
+    21300340: Icons-Demo-Small-LivesShopPopup-Diamond-Plus-Icon-Small
+    21300342: Icons-Demo-Small-LoginRegisterPopup-Lock-Icon-Small
+    21300344: Icons-Demo-Small-LoginRegisterPopup-Mail-Icon-Small
+    21300346: Icons-Demo-Small-LoginRegisterPopup-User-Icon-Small
+    21300348: Icons-Demo-Small-LoginRegisterPopup-User-Plus-Icon-Small
+    21300350: Icons-Demo-Small-LosePopup-Grave-Icon-Small
+    21300352: Icons-Demo-Small-LosePopup-Level-Icon-Small
+    21300354: Icons-Demo-Small-LosePopup-Repeat-Icon-Small
+    21300356: Icons-Demo-Small-LosePopup-Time-Icon-Small
+    21300358: Icons-Demo-Small-LosePopup-WitchHat-Icon-Small
+    21300360: Icons-Demo-Small-Messages-Popup-New-Icon-Small
+    21300362: Icons-Demo-Small-Messages-Popup-New-Icon-Small_2
+    21300364: Icons-Demo-Small-MissionsPopup-Coin-Icon-Small
+    21300366: Icons-Demo-Small-MissionsPopup-Diamond-Icon-Small
+    21300368: Icons-Demo-Small-MissionsPopup-Heart-Outline-icon-Small
+    21300370: Icons-Demo-Small-ProfilePopup-Dot
+    21300372: Icons-Demo-Small-ProfilePopup-Gender-Female-Icon-Small
+    21300374: Icons-Demo-Small-ProfilePopup-Gender-Male-Icon-Small
+    21300376: Icons-Demo-Small-WinPopup-Magic-Stick-Icon-Small
+    21300378: Icons-Demo-Small-WinPopup-Next-Icon-Small
+    21300380: Icons-Demo-Small-WinPopup-Skull-Icon-Small
+    21300382: Icons-HighResolution-Compass-Icon-PNG-Arrow
+    21300384: Icons-HighResolution-Compass-Icon-PNG-Background
+    21300386: Icons-HighResolution-Compass-Icon-PNG-Compass-Icon-Full
+    21300388: Icons-HighResolution-Compass-Icon-PNG-Text
+    21300390: Lists-White-Basic-List-Background
+    21300392: Popups-BorderRound-Background
+    21300394: Popups-BorderRound-Border
+    21300396: Popups-BorderSoftRound-Background
+    21300398: Popups-BorderSoftRound-Border
+    21300400: Popups-BorderSquare-Background
+    21300402: Popups-BorderSquare-Border
+    21300404: Popups-Dark-Square-SquareBackground
+    21300406: Popups-Dark-Square-SquareTopBar
+    21300408: Popups-Light-SoftRounded-PNG-Fade-Gradient-Top
+    21300410: Popups-Light-SoftRounded-PNG-LightBlue-Popup-Top
+    21300412: Popups-Light-SoftRounded-PNG-White-Popup-Top
+    21300414: Popups-Light-Square-SquareBackground
+    21300416: Popups-Light-Square-SquareTopBar
+    21300418: Popups-Popup-Close-Icon
+    21300420: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Black
+    21300422: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Blue
+    21300424: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Blue_2
+    21300426: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueDark
+    21300428: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueLight
+    21300430: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueMoreDark
+    21300432: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Green
+    21300434: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Orange
+    21300436: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Pink
+    21300438: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-PinkDark
+    21300440: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Purple
+    21300442: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Red
+    21300444: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Turquoise
+    21300446: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-White
+    21300448: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Yellow
+    21300450: Progress-Bars-Squares-Progress-Bar-White
+    21300452: Radiobuttons-Radiobuttons_PNG-Radiobutton-Dark-Skin
+    21300454: Radiobuttons-Radiobuttons_PNG-Radiobutton-Light-Skin
+    21300456: Tooltips-White-Tooltip-Arrow
+    21300458: Tooltips-White-Tooltip-Background
+  externalObjects: {}
+  serializedVersion: 9
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Basic-Elements-Circle
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 171
+        width: 401
+        height: 401
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4a5ceffa014545418483d730801a752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic-Elements-Line
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 1636
+        width: 400
+        height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f7fc3ad7394bd438be3c9c444e2c2e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic-Elements-Rectangle-Rounded
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1275
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32ad58e25a8b5324a9b8738e00434e56
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons-Circles-Outline-PNG-White-Circle-Outline
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 703
+        width: 570
+        height: 570
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81250653584a41246b5a4d2a2fc026b2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons-Rounded-Filled-PNG-WhiteButton-Rounded
+      rect:
+        serializedVersion: 2
+        x: 1705
+        y: 1963
+        width: 293
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03cb30289c2e4804988d23d0a71b3ed6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons-Rounded-Outline-PNG-WhiteButton-Rounded-Outline
+      rect:
+        serializedVersion: 2
+        x: 1705
+        y: 1877
+        width: 293
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a5bd05b267b8214fb592cfa475c1d77
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons-SoftRounded-Filled-PNG-White-Button
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 601
+        width: 348
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7a6c039c947e6c42b1ea865d94b2985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons-SoftRounded-Outline-PNG-White-Button-Outline
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 601
+        width: 348
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f560ce68192d8428648ca7462bddaa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons-Square-Filled-PNG-WhiteButton-Square-filled
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 830
+        width: 348
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c410eef980471f949af26ff089d8ceb0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Buttons-Square-Outline-PNG-WhiteButton-Square-Outline
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 728
+        width: 348
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba373ca7d29713408aa03185ac10668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Checkboxes-Checkboxes_PNG-Checkbox-Black-Skin
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 174
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ba49ce573e1cc646b8e078fcf329102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Checkboxes-Checkboxes_PNG-Checkbox-Light-Skin
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 174
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e2e525fe4fab6e45819da071a072f57
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Background-Circle
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1761
+        width: 110
+        height: 114
+      alignment: 9
+      pivot: {x: 0.49545455, y: 0.50438595}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 248477647a5827640a66a2249602d517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Boy_1
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 1478
+        width: 89
+        height: 110
+      alignment: 9
+      pivot: {x: 0.51123595, y: 0.50454545}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7ef7a330959e2f479369e4883a096fa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Boy_2
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 1720
+        width: 77
+        height: 111
+      alignment: 9
+      pivot: {x: 0.5, y: 0.481982}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2e17e3e30a7775408c0b763b5742bfd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Boy_3
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 1722
+        width: 77
+        height: 109
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49082568}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ce7cf149dc3a6b4586fc1a33a352dcc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Boy_4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 597
+        width: 71
+        height: 104
+      alignment: 9
+      pivot: {x: 0.5, y: 0.53365386}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9810000ab3f18445aa050a86f4d8e2b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Girl_1
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 1772
+        width: 85
+        height: 103
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5291262}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed5d5579349fe444fb4fb0a936987373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Girl_2
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1340
+        width: 101
+        height: 108
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5138889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ca989c0f92bfe74a822e4935873fa83
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Girl_3
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 1480
+        width: 95
+        height: 110
+      alignment: 9
+      pivot: {x: 0.52105266, y: 0.49545455}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d63d615556f84a449d85bf084406f63
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Girl_4
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 1667
+        width: 85
+        height: 103
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5291262}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bfaeae411bb6244da13de24a3f7d34c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Avatars-Rounded-Girl_5
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 1217
+        width: 101
+        height: 108
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5138889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ad1d9957e670ba4a828e21da0a35340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-BasicElements-Small-Box-Small
+      rect:
+        serializedVersion: 2
+        x: 1439
+        y: 514
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b56dd3bca9cc7d4409b25e66d312827f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-BasicElements-Small-Circle-Outline-Small
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 1675
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fd350610bea72e46877982020f872db
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-BasicElements-Small-Circle-Small
+      rect:
+        serializedVersion: 2
+        x: 1663
+        y: 1747
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d71ffe61025febc478b85bfaf02fe374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Add-User-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 604
+        width: 53
+        height: 46
+      alignment: 9
+      pivot: {x: 0.4811321, y: 0.48913044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4f60aec2ef754942a4586c0535fe161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Chat-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 552
+        width: 48
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.51111114}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adde783ff8724ed4a936d4d4baaf018e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Clip-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 372
+        width: 47
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4871795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e27700bd7b71db41bb4614c140bce6c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Dot-Small
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1599
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84895224111548745a00ed073e7489d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Fear-Smiley_Small
+      rect:
+        serializedVersion: 2
+        x: 1293
+        y: 224
+        width: 44
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0c81829767f9054daeba78c03fedc3e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Lens-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 956
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78fafe57fb486594ca8ef4ddccc4f9a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Mail-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 338
+        width: 39
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c856e327d08972e469c03c5261fbc340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Menu-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 574
+        width: 53
+        height: 28
+      alignment: 9
+      pivot: {x: 0.4811321, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f38384951277f964a8be4ef0a028acb4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Smiley-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 161
+        width: 45
+        height: 43
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5232558}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3749469766a14374ab2463483b4a3697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Trash-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 81
+        width: 41
+        height: 45
+      alignment: 9
+      pivot: {x: 0.4878049, y: 0.4888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb1824c6b3104b6458b081fc1c74aca7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-User-Delete-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 394
+        width: 51
+        height: 44
+      alignment: 9
+      pivot: {x: 0.51960784, y: 0.48863637}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fcb00d99c4492f48b1aa560a424da04
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Chat-Popup-Writing-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 394
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39a7a41fa80dfe34bb797ef3813535a9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Close-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 728
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73b5f0b6ec6201a449a255deb1d4f318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Chest-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 329
+        width: 75
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59fa41119ad45374d8643951fd3fcc62
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Coin-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 94
+        width: 79
+        height: 78
+      alignment: 9
+      pivot: {x: 0.49367088, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d84039d6c4fe5dd4dbd0e2d8ec4c9d93
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-CoinMini-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1339
+        y: 254
+        width: 39
+        height: 40
+      alignment: 9
+      pivot: {x: 0.51282054, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cc14b2992336c64a9a927fd028718b2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Coins-Sack-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 836
+        width: 73
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5205479, y: 0.5104167}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 261b93d29f0f3f548a5fe93c8bde5938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Coinsx1-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 334
+        width: 46
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65f2d6dd222a5f847a38532e2b91b05d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Coinsx1Big-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 325
+        width: 46
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7c9b1275b308dd45a1d0d4f2943f513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Coinsx3-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1522
+        width: 103
+        height: 94
+      alignment: 9
+      pivot: {x: 0.5048544, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5bed5ec2d48a8542ba22326d3de13d2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Gift-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1171
+        y: 502
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e772d0dbe98cebe4ba63cd2ef7185a47
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Text-Deal-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 1091
+        width: 93
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05adc4bb29c628d449fe5fef10ea89b0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Text-New-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 978
+        width: 93
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 540c6c712dddc7c44afd64683c7c45d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-CoinsShop-Popup-Text-Sale-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 931
+        width: 93
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c6d7647caae0e640a0e2a4757191df4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Bomb-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1930
+        y: 1720
+        width: 67
+        height: 86
+      alignment: 9
+      pivot: {x: 0.49253732, y: 0.49418604}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaf33d158f950524dac4714bb8e40df0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Cross-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 315
+        width: 81
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04ff1c1999596704cb4d8de53c717528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Demon-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 1848
+        width: 98
+        height: 60
+      alignment: 9
+      pivot: {x: 0.50510204, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efeb77eeeb48f5849a41fc08e14424ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Gun-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 338
+        width: 80
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de5546d138cda2648ad8f210b0187bd8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Knight-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 85
+        width: 66
+        height: 84
+      alignment: 9
+      pivot: {x: 0.5, y: 0.48809522}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c53a0010831dfc4b890ab766a91267f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Plus-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1862
+        width: 47
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5106383, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afe6e1c0f333dab45a1cb71cf90ec7d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Potion-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 886
+        y: 6
+        width: 66
+        height: 86
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5116279}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e8172faa81e8e24b8d99b8189ae39c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Shield-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 979
+        y: 240
+        width: 67
+        height: 75
+      alignment: 9
+      pivot: {x: 0.49253732, y: 0.50666666}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 496c2250d49533a429052541d1727a9e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Skull-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 2
+        width: 70
+        height: 87
+      alignment: 9
+      pivot: {x: 0.5214286, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 915197150d31ade4e9b61b165b25c97e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Abilities-Sword-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 859
+        width: 72
+        height: 77
+      alignment: 9
+      pivot: {x: 0.5069444, y: 0.48051947}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5410ffb2e08a7d4ba85ad20647b601c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Arrow-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 174
+        width: 76
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4868421, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d9761a7e813d0b4f9ff670c5b39d0b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Avatar-DarkSkin-Small
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 1386
+        width: 89
+        height: 90
+      alignment: 9
+      pivot: {x: 0.49438202, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb19b90d9ac1d2a4cbb2ef992cede442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Avatar2-DarkSkin-Big
+      rect:
+        serializedVersion: 2
+        x: 1705
+        y: 1652
+        width: 223
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 218f9e0aed9763446aa53d21cce588ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Avatar2-DarkSkin-Small
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 1294
+        width: 89
+        height: 90
+      alignment: 9
+      pivot: {x: 0.505618, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b17f783c72a3de44b9c0401360695ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Chat-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 574
+        width: 51
+        height: 50
+      alignment: 9
+      pivot: {x: 0.51960784, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc216b8d1efb5124eac02b18f7490462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Chest-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 892
+        width: 54
+        height: 46
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51086956}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5482a5874982c184e9101e9a53f28b11
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Coins-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1663
+        y: 1789
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ffb784949c48a246a4e46a9040e6f6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Cup-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 932
+        width: 65
+        height: 55
+      alignment: 9
+      pivot: {x: 0.50769234, y: 0.4909091}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5fe7452d1cdd114288579fa63656e19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Diamond-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 702
+        width: 53
+        height: 53
+      alignment: 9
+      pivot: {x: 0.509434, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d103bcd66b159814aa2e03faa15c7c53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Exit-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 432
+        width: 62
+        height: 68
+      alignment: 9
+      pivot: {x: 0.5080645, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b32a8cf564270ec41a4d4060dcd3f25c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Heart-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1769
+        width: 47
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5106383, y: 0.52380955}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1100ee8277db76b48b7653c644cdfb99
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Level-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 440
+        width: 48
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d794c234449abde4d8f6b23e5439158c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Mail-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 757
+        width: 54
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac7b938061a5bfd4096fbca121444aa7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Mail-Outline-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 745
+        width: 52
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b5f4eb5b9d32cb48979354aa5117c3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Missions-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 173
+        width: 46
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b80001f6a1471574491ecd574c2aa16f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Settings-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 940
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6b97776aeffcb643819efd1e3890f99
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-DemoScene-Icons-Top-Shopping-Cart-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 576
+        width: 59
+        height: 48
+      alignment: 9
+      pivot: {x: 0.48305085, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0502763c1837204dbe2dda9840a5147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-GemsPopup-Chest-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 440
+        width: 74
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 323a512946548904f9b8f0b6dc3d9307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-GemsPopup-Diamond-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 501
+        width: 76
+        height: 71
+      alignment: 9
+      pivot: {x: 0.5131579, y: 0.5140845}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9875d5c1d71735c488fa21157ffa8366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-GemsPopup-Diamond-Outline-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1197
+        y: 23
+        width: 78
+        height: 73
+      alignment: 9
+      pivot: {x: 0.4871795, y: 0.51369864}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbff4266738a8a94badbee366a2d1e51
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-HomeScene-Info-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 790
+        width: 52
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67f30aa7cc3f3a14a9e0f4c178d5a944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-HomeScene-Multiuser-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 838
+        width: 56
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eee750788f0d0c241bc7dc703b5a47e8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-HomeScene-Stats-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 882
+        width: 87
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5229885, y: 0.5106383}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d383afbad5f1cd347b208dc32a209e30
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-HomeScene-User-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1334
+        y: 394
+        width: 46
+        height: 44
+      alignment: 9
+      pivot: {x: 0.45652175, y: 0.47727272}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64a5e7f082d3e6f43901eefc330da974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-HomeScene-Video-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1341
+        y: 461
+        width: 49
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab230ffd6896fa448a1ab081e8149092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InfoPopup-Head-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1813
+        width: 47
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5319149, y: 0.4893617}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a764a02b900c0114f842d38c2b6ddb9b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InfoPopup-Headphones-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 845
+        width: 54
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5185185, y: 0.4888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab3a37a729b92204cad6e1a75c8a986b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Ability-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 1138
+        width: 93
+        height: 67
+      alignment: 9
+      pivot: {x: 0.516129, y: 0.5074627}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40830593a9c42864981763e564ca4721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Aim-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 1639
+        width: 84
+        height: 79
+      alignment: 9
+      pivot: {x: 0.48809522, y: 0.5316456}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f47451bb33d0f646924dc829936e571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Amulet-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 1207
+        width: 89
+        height: 85
+      alignment: 9
+      pivot: {x: 0.505618, y: 0.49411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4e5b80116a706146b4656de46ca04b6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Apple-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 85
+        width: 70
+        height: 84
+      alignment: 9
+      pivot: {x: 0.45714286, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea0d80bc08dc4b14d812875166a7c4ec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Arm-Muscles-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 86
+        width: 85
+        height: 83
+      alignment: 9
+      pivot: {x: 0.43529412, y: 0.5180723}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e312a6cbf3d53644912f58ac45ab37c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Axe-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 322
+        width: 73
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5068493, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab407f60119556c4091e8aa8a86be2eb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Body-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 3
+        width: 80
+        height: 80
+      alignment: 9
+      pivot: {x: 0.5625, y: 0.4875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d1d69cb280845b4486afa1875b5ebd4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Bolt-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1966
+        width: 47
+        height: 81
+      alignment: 9
+      pivot: {x: 0.5106383, y: 0.49382716}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80e7a4fedf629514298c82eb28d91408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Bomb-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 86
+        width: 71
+        height: 83
+      alignment: 9
+      pivot: {x: 0.57746476, y: 0.5060241}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d46bf84ff7439c34388af46d7f488e6a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Bunny-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 98
+        width: 58
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a69938894eb3d364590af1c815220e32
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Canon-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 317
+        width: 89
+        height: 75
+      alignment: 9
+      pivot: {x: 0.5505618, y: 0.49333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7018dae6c46f9949a0a0a1202b9bd74
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Coffee-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 237
+        width: 77
+        height: 76
+      alignment: 9
+      pivot: {x: 0.46753246, y: 0.43421054}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9555ecf105ad20045b85d2656c6ba221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Compass-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 3
+        width: 85
+        height: 80
+      alignment: 9
+      pivot: {x: 0.48235294, y: 0.4875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f34fd17c644240a449b5c2398d5d47d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-CookingPot-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 3
+        width: 71
+        height: 80
+      alignment: 9
+      pivot: {x: 0.46478873, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fad542b87062f9242b9df0cbb8f66641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Cross-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 97
+        width: 76
+        height: 75
+      alignment: 9
+      pivot: {x: 0.5, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 755f9a23bc17fbf42a48092c0da5ace8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Demon-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1450
+        width: 103
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5048544, y: 0.5714286}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 634db6fcb6aa6b34589130558610ec8b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Fight-Axe-Scythe-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 21
+        width: 92
+        height: 74
+      alignment: 9
+      pivot: {x: 0.48913044, y: 0.5405405}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 790a738fa9635f443bee7e722c77c1d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Fight-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 174
+        width: 70
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4857143, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5a5c511c80156447acbb7dae9e0c54d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Fight_Axe-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 98
+        width: 92
+        height: 74
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5405405}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850ee05c13b664f49b9df3d1430b95ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Fire-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 93
+        width: 82
+        height: 78
+      alignment: 9
+      pivot: {x: 0.5243902, y: 0.51282054}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 162e9e5afb400394cb4bf71684d37a69
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Freeze-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 394
+        width: 80
+        height: 76
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5394737}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2883d0857bc3f3b459de16ea8bae6bf4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Gangster-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 85
+        width: 76
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e364e7008417ef344b379d325b907e38
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Gun-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1102
+        y: 253
+        width: 92
+        height: 67
+      alignment: 9
+      pivot: {x: 0.45652175, y: 0.58208954}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3cc8620471e1304b83d8bcce585a52e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Hammer-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 316
+        width: 66
+        height: 76
+      alignment: 9
+      pivot: {x: 0.42424244, y: 0.4868421}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b394d34ba1b92f448e962c13a59b365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Hourglass-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1243
+        y: 504
+        width: 50
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 695365b57d9f58e478ff504700535ac4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Key-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2
+        width: 65
+        height: 81
+      alignment: 9
+      pivot: {x: 0.52307695, y: 0.5185185}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2937e5ed40d090546ad48d9f2dc5b978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Knights-Hat-Icon
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 3
+        width: 75
+        height: 86
+      alignment: 9
+      pivot: {x: 0.52, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e534e8cd040d4642880a1e39cd4d4ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Leaves-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 934
+        width: 79
+        height: 77
+      alignment: 9
+      pivot: {x: 0.49367088, y: 0.5194805}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faeb7295945d0234c8c6e37da821849c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Libra-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 93
+        width: 89
+        height: 78
+      alignment: 9
+      pivot: {x: 0.5505618, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ed072efb53aa904883e9b1360265597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Lifebelt-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 237
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be0ced77df2d87b4c9f38d7753d145ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Magic-Stick-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 3
+        width: 85
+        height: 80
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0.5125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 036974cebd852cf42899acd6f6c8404f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Map-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 429
+        width: 72
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 072fb3af10b1bc24f9014ed54a25d733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Pinned-Notices-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 424
+        width: 71
+        height: 73
+      alignment: 9
+      pivot: {x: 0.49295774, y: 0.46575344}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1e2f85ae121804e857c98bec2e6d57
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Potion-Half-Small
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 938
+        width: 77
+        height: 85
+      alignment: 9
+      pivot: {x: 0.4935065, y: 0.5058824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b94119ef412f21e4db459a8f2316ff53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Potion-Leaves-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1999
+        y: 1691
+        width: 48
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54914343d6197da48b3e2b41f05be813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Potion-Poison-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 996
+        width: 54
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b44d6d30dcfa5b94680276dbf37da526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Rain-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 1590
+        width: 90
+        height: 75
+      alignment: 9
+      pivot: {x: 0.5222222, y: 0.46666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3c3ed28eb8a7e94aa30277b15f2c6c5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Rest-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1930
+        y: 1808
+        width: 68
+        height: 67
+      alignment: 9
+      pivot: {x: 0.42647058, y: 0.49253732}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e94f80e227310a44b5f06243c55ea26
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Rink-Magic-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1618
+        width: 104
+        height: 85
+      alignment: 9
+      pivot: {x: 0.4903846, y: 0.49411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22deb5dee97a6274089893494c58e397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Scythe-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 1773
+        width: 99
+        height: 73
+      alignment: 9
+      pivot: {x: 0.46464646, y: 0.47945204}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7df293d2f98dd4f46a284c17584f48a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Scythe-Icon_2-Small
+      rect:
+        serializedVersion: 2
+        x: 1018
+        y: 946
+        width: 72
+        height: 77
+      alignment: 9
+      pivot: {x: 0.45833334, y: 0.53246754}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 818fb5c33fa74024791db0956c3e18d2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Share-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 933
+        width: 79
+        height: 78
+      alignment: 9
+      pivot: {x: 0.556962, y: 0.47435898}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20f3975920bf97940ad0933370986a25
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Shield-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1591
+        y: 1639
+        width: 70
+        height: 81
+      alignment: 9
+      pivot: {x: 0.4857143, y: 0.50617284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a7a60ac86ff56489396f1bca372615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Skull-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1930
+        y: 1639
+        width: 67
+        height: 79
+      alignment: 9
+      pivot: {x: 0.46268657, y: 0.48101267}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2f287078c6887e4e9387db5d85be9cb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Spaceship-Icon
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 240
+        width: 52
+        height: 75
+      alignment: 9
+      pivot: {x: 0.5192308, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32f67f678f0a5464aa66c77f08cbe7ef
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Speed-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 500
+        width: 88
+        height: 72
+      alignment: 9
+      pivot: {x: 0.52272725, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a56216bf79b16644faade31770551a3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Spell-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 988
+        y: 97
+        width: 61
+        height: 75
+      alignment: 9
+      pivot: {x: 0.5409836, y: 0.49333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096453e214aa8d2439942d4680b757e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Strength-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 20
+        width: 67
+        height: 75
+      alignment: 9
+      pivot: {x: 0.49253732, y: 0.49333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1351ca9d8cbf1f441a8e01e4626af056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Sun-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 22
+        width: 78
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b001cc2e33ecea499d45cbc1c72a25e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Sword-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 757
+        width: 74
+        height: 77
+      alignment: 9
+      pivot: {x: 0.5675676, y: 0.53246754}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed32bee1fbb6c2349896d524fdb14cc5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Target-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 1592
+        width: 96
+        height: 81
+      alignment: 9
+      pivot: {x: 0.5104167, y: 0.50617284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ec10626ae2b78f45aaf9236a0f38ce1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Timer-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 1
+        width: 74
+        height: 83
+      alignment: 9
+      pivot: {x: 0.5810811, y: 0.48192772}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ea6b778f7bde4c4d8acea8a19775efd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Ufo-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 5
+        width: 82
+        height: 79
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5063291}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f838602d01de9614dae6096ac07a5a54
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Velocity-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 510
+        width: 72
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49a88e34fb536ac428e9a0ff9ad524ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Viking-Head-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 1412
+        width: 94
+        height: 66
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45454547}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16d609af817bc014eadc2cee29cc943f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Water-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 91
+        width: 72
+        height: 79
+      alignment: 9
+      pivot: {x: 0.4861111, y: 0.49367088}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e303b43b0a789e40862208495229286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Weapon-Axe-Icon_2-Small
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 91
+        width: 80
+        height: 79
+      alignment: 9
+      pivot: {x: 0.55, y: 0.51898736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4aac4b6f28fe1ff4693361305a07e3d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Wing-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 393
+        width: 72
+        height: 77
+      alignment: 9
+      pivot: {x: 0.5277778, y: 0.4935065}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 610295579c39a7b40b2b861026ceb313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Witch-Hat-Icon
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 1327
+        width: 93
+        height: 83
+      alignment: 9
+      pivot: {x: 0.516129, y: 0.5180723}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f11a08388d02d5e41bcb3ebfa1a5ad2b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-InventoryPopup-Zombie-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 426
+        width: 74
+        height: 72
+      alignment: 9
+      pivot: {x: 0.4864865, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19bd2c00c03501342bda6f87ff2acda9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-ItemPopup-Clock
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 173
+        width: 51
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6307df39393ac874d93f2e17890f0e3d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-ItemPopup-Menu-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 478
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f77e48937facd2940a44e7c14f46af24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-ItemPopup-Skull
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1911
+        width: 47
+        height: 53
+      alignment: 9
+      pivot: {x: 0.5106383, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b54feea9c6f3b94ea92807777041657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-ItemPopup-Star
+      rect:
+        serializedVersion: 2
+        x: 1663
+        y: 1669
+        width: 40
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca7abb788bcb42a4ca224262f8338f6f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Angel-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 206
+        width: 69
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5072464, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c4d898e39de90d4fb99b8f9e8923bb9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Arrow-Down-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 599
+        width: 48
+        height: 46
+      alignment: 9
+      pivot: {x: 0.47916666, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a23de0d30031bf4aa7fb1fa1cd4dffc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Arrow-Up-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 525
+        width: 49
+        height: 47
+      alignment: 9
+      pivot: {x: 0.48979592, y: 0.4893617}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcf9f6b25c978784ba8b3c44f9323602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-1-Small
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 2
+        width: 58
+        height: 89
+      alignment: 9
+      pivot: {x: 0.51724136, y: 0.49438202}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d47ebdccfe23724397b746016a6f3cf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-2-Small
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 2
+        width: 58
+        height: 89
+      alignment: 9
+      pivot: {x: 0.51724136, y: 0.49438202}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2faffd7a334ef2549b6e08ea5d0a6f1d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-3-Small
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 2
+        width: 58
+        height: 89
+      alignment: 9
+      pivot: {x: 0.51724136, y: 0.49438202}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 841a836038c4f764dba47d84ce98929d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Challenge-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 296
+        width: 41
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78c08f6e31fd92744a2488f3ba0b668d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Crown-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 174
+        width: 70
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9e1d663eea76264db0550780ee3e8b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Cup-Circle-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 696
+        width: 49
+        height: 47
+      alignment: 9
+      pivot: {x: 0.48979592, y: 0.4893617}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60e84599caaf6f549b890429ae0a57ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Cup
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 173
+        width: 61
+        height: 51
+      alignment: 9
+      pivot: {x: 0.5, y: 0.50980395}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e9b391b0150c9c48aa27f0634776553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Speak-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 800
+        width: 54
+        height: 43
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5116279}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57416999db142264c994b5c6c08dd237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-Time-Icon
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 647
+        width: 49
+        height: 47
+      alignment: 9
+      pivot: {x: 0.48979592, y: 0.4893617}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29985138f2cbaf4887be163ee9b5afc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LeaderboardPopup-User-Outline-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 394
+        width: 30
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5329ca4da09cb2645af6d7342c7a7943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LevelPopup-Crown-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 394
+        width: 42
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6337f30cbcb80e4481db36659814d26
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LevelPopup-Lock-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 180
+        width: 36
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6c3b036aacf270499fec74762fcff09
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LevelPopup-Missions-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 1243
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcd97553948f5cf42a67a003b078d924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LevelPopup-Multiplayer-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 394
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e185bf161cedbf049b62571e4361404f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LevelUpPopup-Unlock-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 537
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ce2c43b0f0d4164c9fac18514062db2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LivesShopPopup-Diamond-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1663
+        y: 1706
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 317ad7bfaa44d174a91514f7ff69d214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LivesShopPopup-Diamond-Plus-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 128
+        width: 74
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58b7a3fa42ce8f94fbddbea5f9e76d10
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LoginRegisterPopup-Lock-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 296
+        width: 35
+        height: 40
+      alignment: 9
+      pivot: {x: 0.51428574, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21045fc90d27455449dd50b9347ff55e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LoginRegisterPopup-Mail-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1663
+        y: 1639
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cce16946f3a7fd40bf0c0b7c1cccd77
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LoginRegisterPopup-User-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 45
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aae780a9f36a69543ba84adefbf13806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LoginRegisterPopup-User-Plus-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1439
+        y: 478
+        width: 40
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af5978e1d919e0a4391c065b43c916d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LosePopup-Grave-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 574
+        width: 48
+        height: 50
+      alignment: 9
+      pivot: {x: 0.47916666, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75cefa29f545e2a4cbd17dca3c323569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LosePopup-Level-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 10
+        width: 46
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72fb44f8fdb3fa7419993eda184f99c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LosePopup-Repeat-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1382
+        y: 413
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f20a1af24f50ece40a39c218bd8de6b3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LosePopup-Time-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 574
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8f5c3ffc6004b148944bced1a802b0e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-LosePopup-WitchHat-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 652
+        width: 53
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4296b0843217faa4d9864858afe56e37
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Messages-Popup-New-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 574
+        width: 60
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7fda0d6fd823cf4aad531674d836014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-Messages-Popup-New-Icon-Small_2
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 394
+        width: 78
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a3e716b5d08bd4ab48c03dd34716d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-MissionsPopup-Coin-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 173
+        width: 56
+        height: 51
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49019608}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d767aed0061de5140b146a875a519cd7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-MissionsPopup-Diamond-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 172
+        width: 58
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56c91c36eae6c564991c355fb1d92134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-MissionsPopup-Heart-Outline-icon-Small
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 172
+        width: 58
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb874b008367728479416f4e027b86ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-ProfilePopup-Dot
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 1221
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45e8d4cef11061848a4b8638e6092c49
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-ProfilePopup-Gender-Female-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 85
+        width: 52
+        height: 84
+      alignment: 9
+      pivot: {x: 0.5192308, y: 0.48809522}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df4a206f95af8964e86965595983001f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-ProfilePopup-Gender-Male-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 499
+        width: 77
+        height: 73
+      alignment: 9
+      pivot: {x: 0.46753246, y: 0.56164384}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9d1f4aeb20b1f548ad448e95660af0a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-WinPopup-Magic-Stick-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1259
+        y: 269
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2843bc8e7ca32bc4eb60298be907821c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-WinPopup-Next-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 130
+        width: 46
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c3841da325560b449ac069d46b52cb0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-Demo-Small-WinPopup-Skull-Icon-Small
+      rect:
+        serializedVersion: 2
+        x: 1999
+        y: 1636
+        width: 48
+        height: 53
+      alignment: 9
+      pivot: {x: 0.5208333, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 369a2715cf912b8478caa0391c84e829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-HighResolution-Compass-Icon-PNG-Arrow
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 85
+        width: 63
+        height: 487
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43942505}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ac8945369c21d45a5472c3857fed8b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-HighResolution-Compass-Icon-PNG-Background
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 577
+        width: 505
+        height: 505
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8136d13c01fc428478f8f373783826f4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-HighResolution-Compass-Icon-PNG-Compass-Icon-Full
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 1084
+        width: 541
+        height: 550
+      alignment: 9
+      pivot: {x: 0.46950093, y: 0.4618182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83109706fb9c1864f892d44d811ec9c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons-HighResolution-Compass-Icon-PNG-Text
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1025
+        width: 583
+        height: 590
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e99086110866314c923b3bdfe50421c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lists-White-Basic-List-Background
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1910
+        width: 900
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee6325af78b26b0438af579b8cccca0d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-BorderRound-Background
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1238
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16767b04998191c44a11dc5e8b43c636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-BorderRound-Border
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 1115
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4dcb26be01f273499aa2eb1e29cecc6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-BorderSoftRound-Background
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 1136
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f524773bd27ec54f80899c11b55ccda
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-BorderSoftRound-Border
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1013
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0e864e206e9f9443874e0673a37ca76
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-BorderSquare-Background
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 1034
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e630a4ced4326c54eaff5d5a067c277b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-BorderSquare-Border
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 989
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55ce0fd801776dd40a1c436cf640cbfd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Dark-Square-SquareBackground
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 932
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0060bd9737567545873186b5dd0bc40
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Dark-Square-SquareTopBar
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 626
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1aa3421064508ef4ca9a995f3360e9f2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Light-SoftRounded-PNG-Fade-Gradient-Top
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1877
+        width: 800
+        height: 31
+      alignment: 9
+      pivot: {x: 0.5, y: 0.37096775}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae90c0628ac612f4d846969a7057e871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Light-SoftRounded-PNG-LightBlue-Popup-Top
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 1941
+        width: 800
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b57d3cde4f743040bd377c065dbd154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Light-SoftRounded-PNG-White-Popup-Top
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 1833
+        width: 800
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f2166aad2c764940a6a121f36d3a33e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Light-Square-SquareBackground
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 472
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65dca7f1a8ca8b2489787d00daedabfd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Light-Square-SquareTopBar
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 626
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f909811f7a1c7134391df242e838c854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Popups-Popup-Close-Icon
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 226
+        width: 351
+        height: 346
+      alignment: 9
+      pivot: {x: 0.4957265, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bb4bc75c65eee14a8f1b29c4d677f72
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Black
+      rect:
+        serializedVersion: 2
+        x: 1907
+        y: 1638
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e6f81347b358f14daafe599bc3a8c9d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Blue
+      rect:
+        serializedVersion: 2
+        x: 1915
+        y: 1638
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38877e1e1d59a8d4d837de43a671eac9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Blue_2
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 1571
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccabc14e87c400646bcc40fafc8ed60a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueDark
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1585
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a929cb8aa1021f6489f6c04c3f0b90b7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueLight
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 1585
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c71c5ac96af33f4b85ffd624b56540a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueMoreDark
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1571
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f67fe5770643a64894a6b953477666a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Green
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1557
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db380ae7fb7283e43b621c3696b9491c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Orange
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 1557
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 399a8f6527afd354d9b024711a1f2ed1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Pink
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1543
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c5ac0da96ed5d0409c7e0c5d627947c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-PinkDark
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 1543
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc8c1f160fd4f424689d3dbc9f55e9ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Purple
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1529
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40ff224028785c24a95235e152bae9e5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Red
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 1529
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cdcb6b0d1e1e574880d1bd6bb03cc0e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Turquoise
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1515
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f547709792d342b4fa7df7b98c0268aa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-White
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 1515
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5278a641464e18547ac6583580d1d8f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Yellow
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1501
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8248cb369deb14ab9aae64d6abf7fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progress-Bars-Squares-Progress-Bar-White
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1617
+        width: 600
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ca509ca24c2334d90f2a2baa85a7c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Radiobuttons-Radiobuttons_PNG-Radiobutton-Dark-Skin
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 190
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53e6fe59cab06854fa973e06ba4d9923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Radiobuttons-Radiobuttons_PNG-Radiobutton-Light-Skin
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 266
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b042b5d307165346a8bcce05a7fe5ba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tooltips-White-Tooltip-Arrow
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1705
+        width: 108
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcb512c7afb55094a9d41298452dc541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tooltips-White-Tooltip-Background
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 1631
+        width: 600
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c560bdbb5a9078c4bbf31019002727ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: d32cd6e76ed23384ca060f9011a5b4ee
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
