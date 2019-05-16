@@ -18,7 +18,7 @@ public class LoadingPage : UIPage
         base.Initial(parent, dat);
         model.SetParent(parent);
         var view = model.ComponentReflection<View>();
-        view.Slider.SetFillSize(0.5f);
+        //view.Slider.SetFillSize(0.5f);
         //List<string> list = new List<string>();
         //for (int i = 0; i < 1000; i++)
         //    list.Add(i.ToString());

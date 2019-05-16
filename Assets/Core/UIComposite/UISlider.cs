@@ -21,7 +21,8 @@ namespace huqiang.UIComposite
         {
             Horizontal, Vertical
         }
-        public ModelElement Background;
+        ModelElement model;
+        public ModelElement FillImage;
         ImageElement image;
         public ModelElement Nob;
         SliderInfo info;
@@ -36,19 +37,17 @@ namespace huqiang.UIComposite
                 value = 1;
             if(Nob!=null)
             {
-                if(Background!=null)
+                if (info.direction == Direction.Horizontal)
                 {
-                    if(info.direction==Direction.Horizontal)
-                    {
-                        float w = Background.data.sizeDelta.x;
-                        Nob.data.sizeDelta.x = value * w;
-                        ApplyValue();
-                    }
-                    else
-                    {
-                        float w = Background.data.sizeDelta.y;
-                        Nob.data.sizeDelta.y = value * w;
-                    }
+                    float w = model.data.sizeDelta.x;
+                    Nob.data.sizeDelta.x = value * w;
+                    ApplyValue();
+                }
+                else
+                {
+                    float w = model.data.sizeDelta.y;
+                    Nob.data.sizeDelta.y = value * w;
+                    ApplyValue();
                 }
             }
         }
@@ -62,14 +61,16 @@ namespace huqiang.UIComposite
             } }
         public override void Initial(ModelElement mod)
         {
+            model = mod;
+            callBack = EventCallBack.RegEvent<EventCallBack>(model);
+            callBack.Drag = callBack.DragEnd = Draging;
+            callBack.Click = Click;
+            callBack.AutoColor = false;
             var child = mod.child;
-            Background = mod.FindChild("Background");
-            if (Background != null)
+            FillImage = mod.FindChild("FillImage");
+            if (FillImage != null)
             {
-                image = Background.GetComponent<ImageElement>();
-                callBack =  EventCallBack.RegEvent<EventCallBack>(Background);
-                callBack.Drag = callBack.DragEnd = Draging;
-                callBack.Click = Click;
+                image = FillImage.GetComponent<ImageElement>();
             }
             Nob = mod.FindChild("Nob");
             var fake= mod.GetExtand();
@@ -100,11 +101,9 @@ namespace huqiang.UIComposite
         }
         void ApplyValue()
         {
-            if (Background == null)
-                return;
             if (Nob == null)
                 return;
-            var size = Background.data.sizeDelta;
+            var size = model.data.sizeDelta;
             if (info.direction==Direction.Horizontal)
             {
                 float rx = size.x * 0.5f;
@@ -152,6 +151,11 @@ namespace huqiang.UIComposite
                     Nob.data.localScale.z = s;
                     Nob.IsChanged = true;
                 }
+            }
+            if(image!=null)
+            {
+                image.data.fillAmount = ratio;
+                image.IsChanged = true;
             }
         }
     }

@@ -70,9 +70,10 @@ namespace huqiang.UI
             a.type = dat.type;
             a.raycastTarget = false;
             a.color = image.color;
-            a.material = image.material;
             if (image.msChanged)
             {
+                image.msChanged = false;
+                a.material = image.material;
                 if (image.mSprite == null)
                     a.sprite = null;
                 else  a.sprite = ElementAsset.FindSprite(image.assetName, image.textureName, image.spriteName);
