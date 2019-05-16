@@ -11,20 +11,10 @@ using static huqiang.UIComposite.UISlider;
 
 public class SliderHelper : UICompositeHelp
 {
-    public unsafe struct SliderInfo
-    {
-        public Vector2 StartOffset;
-        public Vector2 EndOffset;
-        public float MinScale;
-        public float MaxScale;
-        public Direction direction;
-        public static int Size = sizeof(SliderInfo);
-        public static int ElementSize = Size / 4;
-    }
     public Vector2 StartOffset;
     public Vector2 EndOffset;
-    public float MinScale;
-    public float MaxScale;
+    public float MinScale=1;
+    public float MaxScale=1;
     public Direction direction;
     UISlider slider;
     public void Awake()

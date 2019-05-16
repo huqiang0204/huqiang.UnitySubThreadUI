@@ -1,14 +1,20 @@
 ﻿using huqiang.UI;
 using huqiang.UIEvent;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace huqiang.UIComposite
 {
+    public unsafe struct SliderInfo
+    {
+        public Vector2 StartOffset;
+        public Vector2 EndOffset;
+        public float MinScale;
+        public float MaxScale;
+        public UISlider.Direction direction;
+        public static int Size = sizeof(SliderInfo);
+        public static int ElementSize = Size / 4;
+    }
     public class UISlider : ModelInital
     {
         public enum Direction
@@ -18,14 +24,34 @@ namespace huqiang.UIComposite
         public ModelElement Background;
         ImageElement image;
         public ModelElement Nob;
-        public Vector2 StartOffset;
-        public Vector2 EndOffset;
-        public float MinScale;
-        public float MaxScale;
-        public Direction direction;
+        SliderInfo info;
         float ratio;
         EventCallBack callBack;
         Vector2 pos;
+        public void SetFillSize(float value)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 1)
+                value = 1;
+            if(Nob!=null)
+            {
+                if(Background!=null)
+                {
+                    if(info.direction==Direction.Horizontal)
+                    {
+                        float w = Background.data.sizeDelta.x;
+                        Nob.data.sizeDelta.x = value * w;
+                        ApplyValue();
+                    }
+                    else
+                    {
+                        float w = Background.data.sizeDelta.y;
+                        Nob.data.sizeDelta.y = value * w;
+                    }
+                }
+            }
+        }
         public Action<UISlider> OnValueChanged;
         public float Percentage { get { return ratio; } set {
                 if (value < 0)
@@ -46,6 +72,14 @@ namespace huqiang.UIComposite
                 callBack.Click = Click;
             }
             Nob = mod.FindChild("Nob");
+            var fake= mod.GetExtand();
+            if(fake!=null)
+            {
+                unsafe
+                {
+                    info = *(SliderInfo*)fake.ip;
+                }
+            }
         }
         void Draging(EventCallBack back, UserAction action, Vector2 v)
         {
@@ -68,24 +102,27 @@ namespace huqiang.UIComposite
         {
             if (Background == null)
                 return;
+            if (Nob == null)
+                return;
             var size = Background.data.sizeDelta;
-            if (direction==Direction.Horizontal)
+            if (info.direction==Direction.Horizontal)
             {
-                float r = pos.x / size.x+0.5f;
-                if (r < 0)
-                    r = 0;
-                else if (r > 1)
-                    r = 1;
-                ratio = r;
                 float rx = size.x * 0.5f;
                 float lx = -rx;
-                Vector2 start = new Vector2(lx+StartOffset.x,StartOffset.y);
-                Vector2 end = new Vector2(rx - EndOffset.x, EndOffset.y);
+                float nx = Nob.data.sizeDelta.x * 0.5f;
+                Vector2 start = new Vector2(lx + info.StartOffset.x+nx, info.StartOffset.y);
+                Vector2 end = new Vector2(rx - info.EndOffset.x-nx, info.EndOffset.y);
+                if (pos.x < start.x)
+                    pos.x = start.x;
+                else if (pos.x > end.x)
+                    pos.x = end.x;
+                float w = end.x - start.x;
+                ratio = (pos.x - start.x) / w;
                 pos = (end - start) * ratio + start;
                 if(Nob!=null)
                 {
                     Nob.data.localPosition = pos;
-                    float s = (MaxScale - MinScale) * ratio + MinScale;
+                    float s = (info.MaxScale - info.MinScale) * ratio + info.MinScale;
                     Nob.data.localScale.x = s;
                     Nob.data.localScale.y = s;
                     Nob.data.localScale.z = s;
@@ -94,21 +131,22 @@ namespace huqiang.UIComposite
             }
             else
             {
-                float r = pos.y / size.y + 0.5f;
-                if (r < 0)
-                    r = 0;
-                else if (r > 1)
-                    r = 1;
-                ratio = r;
-                float ry = size.y * 0.5f;
-                float ly = -ry;
-                Vector2 start = new Vector2(StartOffset.x, ly+StartOffset.y);
-                Vector2 end = new Vector2(EndOffset.x,ly- EndOffset.y);
+                float ty = size.y * 0.5f;
+                float dy = -ty;
+                float ny = Nob.data.sizeDelta.y * 0.5f;
+                Vector2 start = new Vector2( info.StartOffset.x,dy+ info.StartOffset.y+ny);
+                Vector2 end = new Vector2(info.EndOffset.x,ty- info.EndOffset.y-ny);
+                if (pos.y < start.y)
+                    pos.y = start.y;
+                else if (pos.y > end.y)
+                    pos.y = end.y;
+                float w = end.y - start.y;
+                ratio = (pos.y - start.y) / w;
                 pos = (end - start) * ratio + start;
                 if (Nob != null)
                 {
                     Nob.data.localPosition = pos;
-                    float s = (MaxScale - MinScale) * ratio + MinScale;
+                    float s = (info.MaxScale - info.MinScale) * ratio + info.MinScale;
                     Nob.data.localScale.x = s;
                     Nob.data.localScale.y = s;
                     Nob.data.localScale.z = s;

@@ -509,5 +509,11 @@ namespace huqiang.UI
                 return -1;
             return p.child.IndexOf(this);
         }
+        public FakeStruct GetExtand()
+        {
+            if (ModData != null)
+                return ModData.buffer.GetData(data.ex) as FakeStruct;
+            return null;
+        }
     }
 }

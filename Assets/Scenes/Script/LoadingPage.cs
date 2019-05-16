@@ -6,14 +6,19 @@ using UnityEngine;
 
 public class LoadingPage : UIPage
 {
+    class View
+    {
+        public UISlider Slider;
+    }
     ModelElement txt;
     System.Random ran;
     public override void Initial(ModelElement parent, object dat = null)
     {
-        //model = ModelManagerUI.FindModel("baseUI", "RankingListWindow");
-        //base.Initial(parent, dat);
-        //model.SetParent(parent);
-        //var view =  model.ComponentReflection<View>();
+        model = ModelManagerUI.FindModel("baseUI", "Slider");
+        base.Initial(parent, dat);
+        model.SetParent(parent);
+        var view = model.ComponentReflection<View>();
+        view.Slider.SetFillSize(0.5f);
         //List<string> list = new List<string>();
         //for (int i = 0; i < 1000; i++)
         //    list.Add(i.ToString());

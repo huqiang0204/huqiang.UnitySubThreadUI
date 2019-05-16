@@ -78,7 +78,6 @@ namespace huqiang.UIEvent
         public bool IsRightPressed { get; private set; }
         public bool IsMiddlePressed { get; private set; }
         public bool IsActive { get; set; }
-        bool Need;
         void CalculVelocities()
         {
             if (PressTime > Accelerationtime)
@@ -136,8 +135,8 @@ namespace huqiang.UIEvent
                     break;
                 default:
                     IsLeftButtonDown = false;
-                    isPressed = false;
-                    IsLeftButtonUp = false;
+                    //isPressed = false;
+                    //IsLeftButtonUp = false;
                     IsMoved = false;
                     FingerStationary = false;
                     break;
@@ -174,7 +173,6 @@ namespace huqiang.UIEvent
         public void LoadMouse()
         {
             IsActive = true;
-            Need = true;
             MouseWheelDelta = Input.mouseScrollDelta.y;
             if (MouseWheelDelta != 0)
                 IsMouseWheel = true;
@@ -245,7 +243,8 @@ namespace huqiang.UIEvent
                     try
                     {
 #endif
-                        inputs[i].Dispatch();
+                        if (inputs[i].IsActive)
+                            inputs[i].Dispatch();
 #if DEBUG
                     }
                     catch (Exception ex)
@@ -263,7 +262,6 @@ namespace huqiang.UIEvent
         /// </summary>
         void Dispatch()
         {
-            Need = false;
             if (IsLeftButtonDown | IsRightButtonPressed | IsMiddleButtonPressed)
             {
                 List<EventCallBack> tmp = MultiFocus;
@@ -333,34 +331,27 @@ namespace huqiang.UIEvent
                     inputs[i] = new UserAction(i);
             }
             var touches = Input.touches;
-            if (touches != null)
+            for (int i = 0; i < 10; i++)
             {
-                for (int i = 0; i < touches.Length; i++)
-                {
-                    int id = touches[i].fingerId;
-                    inputs[id].LoadFinger(ref touches[i]);
-                    inputs[id].IsActive = true;
-                    inputs[id].Need = true;
-                }
-                for (int i = 0; i < 10; i++)
+                if (touches != null)
                 {
                     for (int j = 0; j < touches.Length; j++)
                     {
-                        if (i == touches[j].fingerId)
+                        if (touches[j].fingerId == i)
+                        {
+                            inputs[i].LoadFinger(ref touches[j]);
+                            inputs[i].IsActive = true;
                             goto label;
+                        }
                     }
-                    inputs[i].isPressed = false;
-                    inputs[i].IsActive = false;
-                label:;
                 }
-            }
-            else
-            {
-                for (int i = 0; i < 10; i++)
+                if (inputs[i].isPressed)
                 {
                     inputs[i].isPressed = false;
-                    inputs[i].IsActive = false;
-                }
+                    inputs[i].IsLeftButtonUp = true;
+                    inputs[i].Dispatch();
+                }else inputs[i].IsActive = false;
+            label:;
             }
         }
         static void DispatchMouse()
@@ -381,43 +372,38 @@ namespace huqiang.UIEvent
                 for (int i = 0; i < 10; i++)
                     inputs[i] = new UserAction(i);
             }
-            bool finger = false;
             var touches = Input.touches;
-            if (touches != null)
+            for (int i = 0; i < 10; i++)
             {
-                if (touches.Length > 0)
-                    finger = true;
-                for (int i = 0; i < touches.Length; i++)
+                int id = i;
+                if (touches != null)
                 {
-                    int id = touches[i].fingerId;
-                    inputs[id].LoadFinger(ref touches[i]);
-                    inputs[id].IsActive = true;
-                    inputs[id].Need = true;
-                }
-                for (int i = 0; i < 10; i++)
-                {
+
                     for (int j = 0; j < touches.Length; j++)
                     {
-                        if (i == touches[j].fingerId)
+                        if (touches[j].fingerId == id)
+                        {
+                            inputs[id].LoadFinger(ref touches[j]);
+                            inputs[id].IsActive = true;
+                            inputs[id].Dispatch();
                             goto label;
+                        }
                     }
-                    inputs[i].isPressed = false;
-                    inputs[i].IsActive = false;
-                label:;
                 }
-            }
-            else
-            {
-                for (int i = 0; i < 10; i++)
+                if (inputs[id].isPressed)
                 {
-                    inputs[i].isPressed = false;
-                    inputs[i].IsActive = false;
+                    inputs[id].isPressed = false;
+                    inputs[id].IsLeftButtonUp = true;
+                    inputs[id].Dispatch();
                 }
+                else inputs[id].IsActive = false;
+                label:;
             }
-            if (!finger)
+            if (touches.Length == 0)
             {
                 var action = inputs[0];
                 action.LoadMouse();
+                action.Dispatch();
             }
         }
         public static void DispatchEvent()

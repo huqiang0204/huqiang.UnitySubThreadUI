@@ -144,10 +144,10 @@ RectTransform:
   m_Father: {fileID: 272871214}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 16, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &242275314
 MonoBehaviour:
@@ -239,9 +239,9 @@ MonoBehaviour:
   compositeType: 0
   StartOffset: {x: 0, y: 0}
   EndOffset: {x: 0, y: 0}
-  MinScale: 0
-  MaxScale: 0
-  direction: 0
+  MinScale: 1
+  MaxScale: 1
+  direction: 1
 --- !u!1 &529987366
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d11d293485d362468f0ead7eab118cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUI: {fileID: 4900000, guid: cfacf4ebb470c6c44ad06c8fae4984cc, type: 3}
+  baseUI: {fileID: 4900000, guid: 57f77b1d1d0e38f45b22aec547a73086, type: 3}
 --- !u!223 &529987368
 Canvas:
   m_ObjectHideFlags: 0
@@ -412,7 +412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1099826942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,10 +502,10 @@ RectTransform:
   m_Father: {fileID: 272871214}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 191.3}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2046037441
 MonoBehaviour:
@@ -520,14 +520,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4009434, g: 0.6376617, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300454, guid: 976bc3d6b0309c34ea5ab78e8caa5a31, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
