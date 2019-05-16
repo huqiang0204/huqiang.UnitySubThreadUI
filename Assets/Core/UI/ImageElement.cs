@@ -22,24 +22,10 @@ namespace huqiang.UI
         public Int32 spriteName;
         public static int Size = sizeof(ImageData);
         public static int ElementSize = Size / 4;
-        public static void LoadFromBuff(ref ImageData img, void* p)
-        {
-            fixed (float* trans = &img.alphaHit)
-            {
-                Int32* a = (Int32*)trans;
-                Int32* b = (Int32*)p;
-                for (int i = 0; i < ElementSize; i++)
-                {
-                    *a = *b;
-                    a++;
-                    b++;
-                }
-            }
-        }
     }
     public class ImageElement : GraphicE
     {
-        Image Context;
+        public Image Context;
         public ImageData data;
         public string assetName;
         public string textureName;

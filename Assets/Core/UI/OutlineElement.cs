@@ -14,7 +14,7 @@ namespace huqiang.UI
     }
     public class OutLineElement : DataConversion
     {
-        Outline Context;
+        public Outline Context;
         public OutLineData data;
         public unsafe override void Load(FakeStruct fake)
         {

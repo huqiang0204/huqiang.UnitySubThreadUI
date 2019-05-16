@@ -38,6 +38,7 @@ namespace huqiang.UI
         /// int16数组
         /// </summary>
         public Int32 child;
+        public Int32 ex;
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
@@ -216,6 +217,9 @@ namespace huqiang.UI
                         ed->parentType = ss.parentType;
                         ed->margin = ss.margin;
                         ed->DesignSize = ss.DesignSize;
+                    }else if(coms[i] is UICompositeHelp)
+                    {
+                        ed->ex = buffer.AddData((coms[i] as UICompositeHelp).ToFakeStruct(buffer));
                     }
                     else if (!(coms[i] is CanvasRenderer))
                     {

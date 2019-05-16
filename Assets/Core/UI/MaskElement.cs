@@ -6,7 +6,7 @@ namespace huqiang.UI
 {
     public class MaskElement : DataConversion
     {
-        Mask Context;
+        public Mask Context;
         bool data;
         public unsafe override void Load(FakeStruct fake)
         {
