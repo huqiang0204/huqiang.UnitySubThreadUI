@@ -59,12 +59,17 @@ namespace huqiang.UIComposite
                     value = 1;
                 ratio = value;
             } }
+        public UISlider()
+        {
+            info.MinScale = 1;
+            info.MinScale = 1;
+        }
         public override void Initial(ModelElement mod)
         {
             model = mod;
             callBack = EventCallBack.RegEvent<EventCallBack>(model);
             callBack.Drag = callBack.DragEnd = Draging;
-            callBack.Click = Click;
+            callBack.PointerDown = PointDown;
             callBack.AutoColor = false;
             var child = mod.child;
             FillImage = mod.FindChild("FillImage");
@@ -89,7 +94,7 @@ namespace huqiang.UIComposite
             if (OnValueChanged != null)
                 OnValueChanged(this);
         }
-        void Click(EventCallBack back, UserAction action)
+        void PointDown(EventCallBack back, UserAction action)
         {
             var v = new Vector2(back.GlobalPosition.x,back.GlobalPosition.y);
             pos = action.CanPosition - v;

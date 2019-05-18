@@ -52,7 +52,6 @@ public class ElementEditor : Editor
                 }
             }
         }
-
     }
     static void Create(string Assetname, string dicpath, GameObject gameObject)
     {

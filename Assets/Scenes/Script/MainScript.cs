@@ -12,11 +12,11 @@ public class MainScript : MonoBehaviour
         App.Initial(transform as RectTransform);
         ModelManagerUI.LoadModels(baseUI.bytes, "baseUI");
 
-        //ElementAsset.LoadAssetsAsync("picture.unity3d").PlayOver = (o, e) =>
-        //{
+        ElementAsset.LoadAssetsAsync("picture.unity3d").PlayOver = (o, e) =>
+        {
             UIPage.LoadPage<LoadingPage>();
-            // ShowPopWindow<PropKeyWin>();
-        //};
+            //ShowPopWindow<PropKeyWin>();
+        };
     }
 
     // Update is called once per frame

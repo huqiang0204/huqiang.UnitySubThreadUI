@@ -75,7 +75,6 @@ namespace huqiang.UIComposite
                     OnScrollEnd(o);
             };
             eventCall.Scrolling = Scrolling;
-            eventCall.PointerUp = (o, e) => { };
             eventCall.ScrollEndY = OnScrollEnd;
             eventCall.ForceEvent = true;
             eventCall.AutoColor = false;

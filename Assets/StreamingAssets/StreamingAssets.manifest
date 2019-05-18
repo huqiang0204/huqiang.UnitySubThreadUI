@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3704410546
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: picture.unity3d
+      Dependencies: {}

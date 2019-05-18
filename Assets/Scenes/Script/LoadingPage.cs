@@ -1,14 +1,11 @@
 ﻿using huqiang.UI;
 using huqiang.UIComposite;
-using huqiang.UIEvent;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class LoadingPage : UIPage
 {
     class View
     {
-        public UISlider Slider;
+        public UISlider Slider;      //好友排行榜ScrollY
     }
     ModelElement txt;
     System.Random ran;

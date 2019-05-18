@@ -7,7 +7,6 @@ using huqiang.Data;
 using huqiang.UI;
 using huqiang.UIComposite;
 using UnityEngine;
-using static huqiang.UIComposite.UISlider;
 
 public class SliderHelper : UICompositeHelp
 {
@@ -15,7 +14,7 @@ public class SliderHelper : UICompositeHelp
     public Vector2 EndOffset;
     public float MinScale=1;
     public float MaxScale=1;
-    public Direction direction;
+    public UISlider.Direction direction;
     UISlider slider;
     public void Awake()
     {

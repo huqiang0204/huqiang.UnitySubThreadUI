@@ -100,19 +100,6 @@ namespace huqiang.UIEvent
             var root = UIPage.Root;
             if (root != null)
                 DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
-            //if (Roots != null)
-            //    for (int j = 0; j < Roots.Count; j++)
-            //    {
-            //        var t = Roots[j];
-            //        if (t != null)
-            //            for (int i = t.child.Count- 1; i >= 0; i--)
-            //            {
-            //                var r = t.child[i];
-            //                if (DispatchEvent(r , Vector3.zero, Vector3.one, Quaternion.identity, action))
-            //                    goto label;
-            //            }
-            //    }
-            //label:;
         }
         public static bool DispatchEvent(ModelElement ui, Vector3 pos, Vector3 scale, Quaternion quate, UserAction action)
         {
@@ -366,6 +353,9 @@ namespace huqiang.UIEvent
         public bool AutoColor = true;
         Color g_color;
         public object DataContext;
+        /// <summary>
+        /// Parent GlobalScale
+        /// </summary>
         Vector3 pgs = Vector3.one;
         public Vector3 GlobalScale = Vector3.one;
         public Vector3 GlobalPosition;
@@ -466,7 +456,7 @@ namespace huqiang.UIEvent
             if (!entry)
             {
                 entry = true;
-                entryTime = DateTime.Now.Ticks;
+                entryTime = UserAction.Ticks;
                 if (PointerEntry != null)
                     PointerEntry(this, action);
                 LastPosition = action.CanPosition;
@@ -476,7 +466,7 @@ namespace huqiang.UIEvent
                 stayTime = action.EventTicks - entryTime;
                 if (action.CanPosition == LastPosition)
                 {
-                    HoverTime += UserAction.TimeSlice * 2000;
+                    HoverTime += UserAction.TimeSlice * 10000;
                     if (HoverTime > ClickTime)
                         if (PointerHover != null)
                             PointerHover(this, action);
@@ -509,6 +499,7 @@ namespace huqiang.UIEvent
         }
         protected virtual void OnDrag(UserAction action)
         {
+            if(action.CanPosition!=action.LastPosition)
             if (Drag != null)
             {
                 var v = action.Motion;

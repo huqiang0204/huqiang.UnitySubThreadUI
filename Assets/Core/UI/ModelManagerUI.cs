@@ -97,7 +97,7 @@ namespace huqiang.UI
             db.fakeStruct = ModelElement.LoadFromObject(uiRoot.transform, db);
             File.WriteAllBytes(path, db.ToBytes());
         }
-        static List<PrefabAsset> prefabs = new List<PrefabAsset>();
+        public static List<PrefabAsset> prefabs = new List<PrefabAsset>();
         /// <summary>
         /// 载入模型数据
         /// </summary>

@@ -86,12 +86,8 @@ namespace huqiang
             mission.AddSubMission(SubThread,null);
             ThreadMission.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
-            time += UserAction.TimeSlice;
-            if(time>=FrameTime)
-            {
-                time -= FrameTime;
-                root.Apply();//更新UI
-            }
+            //time -= FrameTime;
+            root.Apply();//更新UI
             AnimationManage.Manage.Update();
             AllTime += Time.deltaTime;
             //DownloadManager.UpdateMission();

@@ -14,6 +14,7 @@ namespace huqiang.UIEvent
         }
         public static InputType inputType = InputType.OnlyMouse;
         public int Id { get; private set; }
+        public Vector2 LastPosition;
         public Vector2 CanPosition;
         public Vector2 Position;
         public Vector2 Motion;
@@ -102,6 +103,7 @@ namespace huqiang.UIEvent
         }
         public void LoadFinger(ref Touch touch)
         {
+            LastPosition = CanPosition;
             Id = touch.fingerId;
             switch (touch.phase)
             {
@@ -143,7 +145,7 @@ namespace huqiang.UIEvent
             }
             if (IsLeftButtonDown)
             {
-                EventTicks = DateTime.Now.Ticks;
+                EventTicks = Ticks;
                 PressTime = 0;
             }
             else PressTime += TimeSlice;
@@ -172,6 +174,7 @@ namespace huqiang.UIEvent
         }
         public void LoadMouse()
         {
+            LastPosition = CanPosition;
             IsActive = true;
             MouseWheelDelta = Input.mouseScrollDelta.y;
             if (MouseWheelDelta != 0)
@@ -188,7 +191,7 @@ namespace huqiang.UIEvent
             IsMiddlePressed = Input.GetMouseButton(2);
             if (IsLeftButtonDown | IsRightButtonPressed | IsMiddleButtonPressed)
             {
-                EventTicks = DateTime.Now.Ticks;
+                EventTicks = Ticks;
                 PressTime = 0;
                 rawPosition = Input.mousePosition;
             }
@@ -311,6 +314,8 @@ namespace huqiang.UIEvent
             CheckMouseLeave();
         }
         public static int TimeSlice;
+        public static int LastTime;
+        public static long Ticks;
         static UserAction[] inputs;
         public static UserAction GetInput(int id)
         {
@@ -349,7 +354,6 @@ namespace huqiang.UIEvent
                 {
                     inputs[i].isPressed = false;
                     inputs[i].IsLeftButtonUp = true;
-                    inputs[i].Dispatch();
                 }else inputs[i].IsActive = false;
             label:;
             }
@@ -385,16 +389,14 @@ namespace huqiang.UIEvent
                         {
                             inputs[id].LoadFinger(ref touches[j]);
                             inputs[id].IsActive = true;
-                            inputs[id].Dispatch();
                             goto label;
                         }
                     }
                 }
-                if (inputs[id].isPressed)
+                if (touches.Length > 0 & inputs[id].isPressed)
                 {
                     inputs[id].isPressed = false;
                     inputs[id].IsLeftButtonUp = true;
-                    inputs[id].Dispatch();
                 }
                 else inputs[id].IsActive = false;
                 label:;
@@ -403,12 +405,18 @@ namespace huqiang.UIEvent
             {
                 var action = inputs[0];
                 action.LoadMouse();
-                action.Dispatch();
             }
         }
         public static void DispatchEvent()
         {
-            TimeSlice = (int)(Time.deltaTime * 1000);
+            DateTime now = DateTime.Now;
+            Ticks = now.Ticks;
+            int s = now.Millisecond;
+            int t = s - LastTime;
+            if (t < 0)
+                t += 1000;
+            TimeSlice = t;
+            LastTime = s;
             if (inputType == InputType.OnlyMouse)
             {
                 DispatchMouse();
