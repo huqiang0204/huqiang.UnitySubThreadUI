@@ -58,6 +58,8 @@ namespace huqiang.UIComposite
                 else if (value > 1)
                     value = 1;
                 ratio = value;
+                RatioToPos();
+                ApplyValue();
             } }
         public UISlider()
         {
@@ -103,6 +105,30 @@ namespace huqiang.UIComposite
             ApplyValue();
             if (OnValueChanged != null)
                 OnValueChanged(this);
+        }
+        void RatioToPos()
+        {
+            var size = model.data.sizeDelta;
+            if (info.direction == Direction.Horizontal)
+            {
+                float rx = size.x * 0.5f;
+                float lx = -rx;
+                float nx = Nob.data.sizeDelta.x * 0.5f;
+                Vector2 start = new Vector2(lx + info.StartOffset.x + nx, info.StartOffset.y);
+                Vector2 end = new Vector2(rx - info.EndOffset.x - nx, info.EndOffset.y);
+                float w = end.x - start.x;
+                pos.x = ratio * w + start.x;
+            }
+            else
+            {
+                float ty = size.y * 0.5f;
+                float dy = -ty;
+                float ny = Nob.data.sizeDelta.y * 0.5f;
+                Vector2 start = new Vector2(info.StartOffset.x, dy + info.StartOffset.y + ny);
+                Vector2 end = new Vector2(info.EndOffset.x, ty - info.EndOffset.y - ny);
+                float w = end.y - start.y;
+                pos.y = ratio * w + start.y;
+            }
         }
         void ApplyValue()
         {
