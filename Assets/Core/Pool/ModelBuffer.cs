@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.Data;
+using System;
 using UnityEngine;
 
 namespace huqiang.Pool
@@ -6,11 +7,12 @@ namespace huqiang.Pool
     public class ModelBuffer
     {
         Type[] types;
-        Action<GameObject> Reset;
         GameObject[] buff;
         int point, size;
+        public int Index;
         public Int64 type;
-        public ModelBuffer(Int64 type, int buffersize, Action<GameObject> reset,Type[] typ)
+        Container<InstanceContext> container;
+        public ModelBuffer(Int64 type, int buffersize, Type[] typ, Container<InstanceContext> contain)
         {
             if (buffersize > 0)
                 buff = new GameObject[buffersize];
@@ -18,7 +20,7 @@ namespace huqiang.Pool
             size = buffersize;
             this.type = type;
             types = typ;
-            Reset = reset;
+            container = contain;
         }
         /// <summary>
         /// 找回或创建一个新的实例
@@ -30,13 +32,18 @@ namespace huqiang.Pool
             {
                 point--;
                 buff[point].SetActive(true);
-                if (Reset != null)
-                    Reset(buff[point]);
                 return buff[point];
             }
             GameObject g = new GameObject("", types);
-            if (Reset != null)
-                Reset(g);
+            if(container!=null)
+            {
+                InstanceContext context = new InstanceContext();
+                context.Instance = g;
+                context.Id = g.GetInstanceID();
+                context.Type = type;
+                context.buffer = this;
+                container.Add(context);
+            }
             return g;
         }
         /// <summary>
@@ -47,13 +54,16 @@ namespace huqiang.Pool
         {
             if (point >= size)
             {
+                if(container!=null)
+                {
+                    int id = obj.GetInstanceID();
+                    container.Remove((o) => { return o.Id == id; });
+                }
                 GameObject.Destroy(obj);
                 return false;
             }
             else
             {
-                if (Reset != null)
-                    Reset(obj);
                 for (int i = 0; i < point; i++)
                     if (buff[i] == obj)
                         return false;//防止重复回收

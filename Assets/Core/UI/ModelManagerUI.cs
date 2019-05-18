@@ -28,9 +28,9 @@ namespace huqiang.UI
         {
             if (point >= 63)
                 return;
-            var name = context.comName;
+            var name = context.name;
             for (int i = 0; i < point; i++)
-                if (types[i].comName == name)
+                if (types[i].name == name)
                 {
                     types[i] = context;
                     return;
@@ -43,7 +43,7 @@ namespace huqiang.UI
             string name = com.GetType().Name;
             for (int i = 0; i < point; i++)
             {
-                if (types[i].comName==name)
+                if (types[i].name==name)
                 {
                     Int64 a = 1 << i;
                     return a;
@@ -76,7 +76,7 @@ namespace huqiang.UI
             string name = com.GetType().Name;
             for (int i = 0; i < point; i++)
             {
-                if (types[i].comName==name)
+                if (types[i].name==name)
                 {
                     type = (Int16)i;
                     if (types[i].Load != null)
@@ -162,7 +162,7 @@ namespace huqiang.UI
                 }
                 else break;
             }
-            ModelBuffer model = new ModelBuffer(type, size, null, tmp.ToArray());
+            ModelBuffer model = new ModelBuffer(type, size, tmp.ToArray(),null);
             models.Add(model);
             return model;
         }
@@ -341,9 +341,13 @@ namespace huqiang.UI
     {
         public Type type;
         public Func<Component, DataBuffer, FakeStruct> Load;
-        public string comName;
+        public string name;
         public Type dcType;
         public string dcName;
+        public virtual bool Compare(object obj)
+        {
+            return false;
+        }
         public virtual DataConversion Create()
         {
             return null;
@@ -355,7 +359,7 @@ namespace huqiang.UI
         {
             Load = load;
             type = typeof(T);
-            comName = type.Name;
+            name = type.Name;
             dcType= typeof(U);
             dcName = dcType.Name;
         }
