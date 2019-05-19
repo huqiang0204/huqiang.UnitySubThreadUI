@@ -37,6 +37,7 @@ public class TestHelper:UICompositeHelp
             }
         }
     }
+    public string AssetName = "baseUI";
     private void Awake()
     {
         LoadBundle();
@@ -46,17 +47,25 @@ public class TestHelper:UICompositeHelp
         PrefabAsset asset = new PrefabAsset();
         asset.models = new ModelElement();
         asset.models.Load(db.fakeStruct);
-        asset.name = "baseUI";
+        asset.name = AssetName;
         ModelManagerUI.prefabs.Add(asset);
         var c = transform.childCount;
         for (int i = 0; i < c; i++)
             GameObject.Destroy(transform.GetChild(i).gameObject);
         App.Initial(transform);
-        UIPage.LoadPage<LoadingPage>();
+        LoadTestPage();
+    }
+    public virtual void LoadTestPage()
+    {
     }
     private void Update()
     {
         App.Update();
+        OnUpdate();
+    }
+    public virtual void OnUpdate()
+    {
+
     }
     private void OnDestroy()
     {
