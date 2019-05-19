@@ -13,7 +13,7 @@ namespace huqiang.UIComposite
     {
         ModelElement model;
         public ModelElement Nob;
-        EventCallBack callBack;
+        public EventCallBack callBack;
         float _r;
         public float Radius { get { return _r; }set { _r = value;_s = _r * _r; } }
         public enum Direction
@@ -71,14 +71,14 @@ namespace huqiang.UIComposite
             _dir = (Direction)index;
             vector.x = x;
             vector.y = y;
-            if (Rocking != null)
-                Rocking(this);
             if (Nob != null)
             {
                 Nob.data.localPosition.x = x;
                 Nob.data.localPosition.y = y;
                 Nob.IsChanged = true;
             }
+            if (Rocking != null)
+                Rocking(this);
         }
         void DragEnd(EventCallBack back, UserAction action, Vector2 v)
         {
