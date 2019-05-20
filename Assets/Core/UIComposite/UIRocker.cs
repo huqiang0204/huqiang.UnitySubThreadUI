@@ -45,7 +45,7 @@ namespace huqiang.UIComposite
             callBack.IsCircular = true;
             _r = mod.data.sizeDelta.x * 0.5f;
             _s = _r * _r;
-            Nob = mod.FindChild("Nob");
+            Nob = mod.Find("Nob");
         }
         void Draging(EventCallBack back, UserAction action, Vector2 v)
         {

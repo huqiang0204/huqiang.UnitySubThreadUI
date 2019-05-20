@@ -91,12 +91,12 @@ namespace huqiang
             mission.waitAction = wait;
             MainMission.Enqueue(mission);
         }
-        public void Dispose()
+        void Dispose()
         {
             run = false;
         }
         static List<ThreadMission>threads = new List<ThreadMission>();
-        static int point;
+        static ThreadMission FreeMission;
         public static void AddMission(Action<object> action, object dat, int index, Action<object> wait = null)
         {
             if (threads == null)
@@ -105,14 +105,13 @@ namespace huqiang
             }
             if (index < 0 | index >= threads.Count)
             {
-                threads[point].AddSubMission(action, dat);
-                point++;
-                if (point >= threads.Count)
-                    point = 0;
+                if (FreeMission == null)
+                    FreeMission = new ThreadMission();
+                FreeMission.AddSubMission(action, dat, wait);
             }
             else
             {
-                threads[index].AddSubMission(action, dat);
+                threads[index].AddSubMission(action, dat, wait);
             }
         }
         public static void InvokeToMain(Action<object> action, object dat, Action<object> wait=null)
@@ -123,24 +122,34 @@ namespace huqiang
                 if (threads[i].Id == id)
                 {
                     threads[i].AddMainMission(action, dat, wait);
-                    break;
+                    return;
                 }
             }
+            if (FreeMission == null)
+                FreeMission = new ThreadMission();
+            FreeMission.AddMainMission(action, dat, wait);
         }
         public static void ExtcuteMain()
         {
             for (int i = 0; i < threads.Count; i++)
             {
-                for (int j = 0; j < 2048; j++)
+                ExtcuteMain(threads[i]);
+            }
+            if (FreeMission != null)
+                ExtcuteMain(FreeMission);
+        }
+        static void ExtcuteMain(ThreadMission mission)
+        {
+            for (int j = 0; j < 2048; j++)
+            {
+                var m = mission.MainMission.Dequeue();
+                if (m == null)
+                    break;
+                else
                 {
-                    var m = threads[i].MainMission.Dequeue();
-                    if (m == null)
-                        break;
-                    else {
-                        m.action(m.data);
-                        if (m.waitAction != null)
-                            threads[i].AddSubMission(m.waitAction,m.data);
-                    }
+                    m.action(m.data);
+                    if (m.waitAction != null)
+                        mission.AddSubMission(m.waitAction, m.data);
                 }
             }
         }
@@ -149,6 +158,11 @@ namespace huqiang
             for (int i = 0; i < threads.Count; i++)
                 threads[i].Dispose();
             threads.Clear();
+            if(FreeMission!=null)
+            {
+                FreeMission.Dispose();
+                FreeMission = null;
+            }
         }
         static int MainID;
         public static void SetMianId()

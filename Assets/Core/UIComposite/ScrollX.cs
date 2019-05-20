@@ -83,7 +83,7 @@ namespace huqiang.UIComposite
             eventCall.CutRect = true;
             if (model != null)
             {
-                var item = model.FindChild("Item");
+                var item = model.Find("Item");
                 if (item != null)
                 {
                     item.activeSelf = false;

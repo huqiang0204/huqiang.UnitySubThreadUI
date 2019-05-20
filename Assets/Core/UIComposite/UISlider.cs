@@ -74,12 +74,12 @@ namespace huqiang.UIComposite
             callBack.PointerDown = PointDown;
             callBack.AutoColor = false;
             var child = mod.child;
-            FillImage = mod.FindChild("FillImage");
+            FillImage = mod.Find("FillImage");
             if (FillImage != null)
             {
                 image = FillImage.GetComponent<ImageElement>();
             }
-            Nob = mod.FindChild("Nob");
+            Nob = mod.Find("Nob");
             var fake= mod.GetExtand();
             if(fake!=null)
             {

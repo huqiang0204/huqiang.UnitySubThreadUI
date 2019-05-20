@@ -18,7 +18,7 @@ namespace huqiang.UI
     }
     public class RawImageElement: GraphicE
     {
-        RawImage Context;
+        public RawImage Context;
         public RawImageData data;
         public string assetName;
         public string textureName;

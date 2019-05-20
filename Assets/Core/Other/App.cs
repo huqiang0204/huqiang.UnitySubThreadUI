@@ -84,10 +84,11 @@ namespace huqiang
             UserAction.DispatchEvent();
             Keyboard.DispatchEvent();
             mission.AddSubMission(SubThread,null);
+            root.Apply();//更新UI
             ThreadMission.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
             //time -= FrameTime;
-            root.Apply();//更新UI
+       
             AnimationManage.Manage.Update();
             AllTime += Time.deltaTime;
             //DownloadManager.UpdateMission();
