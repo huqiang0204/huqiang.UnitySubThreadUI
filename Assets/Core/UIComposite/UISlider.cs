@@ -64,7 +64,7 @@ namespace huqiang.UIComposite
         public UISlider()
         {
             info.MinScale = 1;
-            info.MinScale = 1;
+            info.MaxScale = 1;
         }
         public override void Initial(ModelElement mod)
         {

@@ -10,6 +10,20 @@ namespace huqiang.Other
         {
         }
         public Color[] buffer = new Color[256*256];
+        static Texture2D at2d;
+        public static Texture2D AlphaTemplate()
+        {
+            if (at2d == null)
+            {
+                at2d = new Texture2D(256, 1, TextureFormat.ARGB32, false);
+                Color[] color = new Color[256];
+                for (int i = 0; i < 256; i++)
+                    color[i].a =i* 0.00392156f;
+                at2d.SetPixels(color);
+                at2d.Apply();
+            }
+            return at2d;
+        }
         public static Texture2D LoadHTemplate()
         {
             if(ht2d==null)

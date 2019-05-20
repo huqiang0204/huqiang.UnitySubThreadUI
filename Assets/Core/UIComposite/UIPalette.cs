@@ -16,11 +16,13 @@ namespace huqiang.UIComposite
         ModelElement NobB;
         RawImageElement template;
         RawImageElement htemp;
+        RawImageElement slider;
         Palette palette;
         public Color SelectColor;
         float Alpha;
         public Action<UIPalette> ColorChanged;
         public Action<UIPalette> TemplateChanged;
+        UISlider uISlider;
         public override void Initial(ModelElement mod)
         {
             palette = new Palette();
@@ -39,9 +41,16 @@ namespace huqiang.UIComposite
             ThreadMission.InvokeToMain((o)=> {
                 htemp.Context.texture = Palette.LoadCTemplate();
                 template.Context.texture = palette.texture;
+                slider.Context.texture = Palette.AlphaTemplate();
             },null);
             palette.LoadHSVT(1);
             SelectColor.a = 1;
+            var son = mod.Find("Slider");
+            slider = son.GetComponent<RawImageElement>();
+            uISlider = new UISlider();
+            uISlider.Initial(son);
+            uISlider.OnValueChanged = AlphaChanged;
+            uISlider.Percentage = 1;
         }
         void DragingR(EventCallBack back, UserAction action, Vector2 v)
         {
@@ -114,6 +123,12 @@ namespace huqiang.UIComposite
             SelectColor.r = col.r;
             SelectColor.g = col.g;
             SelectColor.b = col.b;
+            if (ColorChanged != null)
+                ColorChanged(this);
+        }
+        void AlphaChanged(UISlider slider)
+        {
+            SelectColor.a = slider.Percentage;
             if (ColorChanged != null)
                 ColorChanged(this);
         }
