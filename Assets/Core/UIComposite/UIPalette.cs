@@ -10,7 +10,6 @@ namespace huqiang.UIComposite
     {
         EventCallBack callBackR;
         EventCallBack callBackC;
-        Vector2 posR;
         ModelElement hc;
         ModelElement NobA;
         ModelElement NobB;
@@ -66,11 +65,9 @@ namespace huqiang.UIComposite
             float r = Mathf.Sqrt(220 * 220 / sx);
             x *= r;
             y *= r;
-            posR.x = x;
-            posR.y = y;
             if(NobA!=null)
             {
-                NobA.data.localPosition = posR;
+                NobA.data.localPosition = new Vector3(x,y,0);
                 NobA.IsChanged = true;
             }
             float al = MathH.atan(-x, -y);
