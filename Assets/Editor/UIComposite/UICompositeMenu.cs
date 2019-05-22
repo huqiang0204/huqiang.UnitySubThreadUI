@@ -83,7 +83,7 @@ public static class UICompositeMenu
         var fn = ss.transform as RectTransform;
         fn.sizeDelta = new Vector2(400, 20);
         fn.SetParent(Scroll.transform);
-        fn.localPosition = new Vector3(0, -240, 0);
+        fn.localPosition = new Vector3(0, -190, 0);
         fn.localScale = Vector3.one;
         ss.AddComponent<Image>().type = Image.Type.Sliced;
         var help = ss.AddComponent<SliderHelper>();
@@ -128,7 +128,7 @@ public static class UICompositeMenu
         var fn = ss.transform as RectTransform;
         fn.sizeDelta = new Vector2(20, 400);
         fn.SetParent(Scroll.transform);
-        fn.localPosition = new Vector3(240, 0, 0);
+        fn.localPosition = new Vector3(190, 0, 0);
         fn.localScale = Vector3.one;
         ss.AddComponent<Image>().type = Image.Type.Sliced;
         var help = ss.AddComponent<SliderHelper>();
