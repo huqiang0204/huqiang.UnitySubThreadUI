@@ -14,6 +14,7 @@ public class UITest : TestHelper
         public UIRocker Rocker;
         public UIPalette Palette;
         public ImageElement Image;
+        public UIDate Date;
     }
     public Transform Sphere;
     Vector3 v;

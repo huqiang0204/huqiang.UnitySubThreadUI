@@ -97,7 +97,7 @@ namespace huqiang
         }
         static List<ThreadMission>threads = new List<ThreadMission>();
         static ThreadMission FreeMission;
-        public static void AddMission(Action<object> action, object dat, int index, Action<object> wait = null)
+        public static void AddMission(Action<object> action, object dat, int index=-1, Action<object> wait = null)
         {
             if (threads == null)
             {

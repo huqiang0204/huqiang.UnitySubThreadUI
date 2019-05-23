@@ -490,11 +490,7 @@ namespace huqiang.UI
         public T ComponentReflection<T>()where T:class,new()
         {
             T t = new T();
-            var r = ModelManagerUI.ObjectFelds(t);
-            ModelManagerUI.LoadToGameR(this,r,"");
-            ReflectionModel[] all = r.All;
-            for (int i = 0; i < all.Length; i++)
-                all[i].field.SetValue(t, all[i].Value);
+            ModelManagerUI.ComponentReflection(this, t);
             return t;
         }
         int mIndex =-1;

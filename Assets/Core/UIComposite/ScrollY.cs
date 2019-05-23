@@ -354,5 +354,24 @@ namespace huqiang.UIComposite
             }
             return y;
         }
+        public static ScrollItem GetCenterItem(List<ScrollItem> items)
+        {
+            if (items.Count < 1)
+                return null;
+            float min = 100;
+            ScrollItem item = items[0];
+            for (int i = 1; i < items.Count; i++)
+            {
+                float y = items[i].target.data.localPosition.y;
+                if (y < 0)
+                    y = -y;
+                if (y < min)
+                {
+                    min = y;
+                    item = items[i];
+                }
+            }
+            return item;
+        }
     }
 }

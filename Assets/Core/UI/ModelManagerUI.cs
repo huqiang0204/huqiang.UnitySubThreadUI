@@ -320,6 +320,14 @@ namespace huqiang.UI
                 }
             }
         }
+        public static void ComponentReflection(ModelElement mod, object obj)
+        {
+            var r = ObjectFelds(obj);
+            LoadToGameR(mod, r, "");
+            ReflectionModel[] all = r.All;
+            for (int i = 0; i < all.Length; i++)
+                all[i].field.SetValue(obj, all[i].Value);
+        }
     }
     public class ReflectionModel
     {

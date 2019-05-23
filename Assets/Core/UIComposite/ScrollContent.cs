@@ -188,6 +188,7 @@ namespace huqiang.UIComposite
             ScrollItem a = new ScrollItem();
             a.target = uI;
             a.obj = obj;
+            ModelManagerUI.ComponentReflection(uI,obj);
             if (Reflection != null)
                 Reflection(a, a.target);
             return a;
