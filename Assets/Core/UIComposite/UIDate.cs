@@ -2,6 +2,7 @@
 using huqiang.UIEvent;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace huqiang.UIComposite
 {
@@ -21,9 +22,9 @@ namespace huqiang.UIComposite
         int[] ys;
         string[] ms;
         List<string> Days;
-        string unitY="Year";
-        string unitM="Month";
-        string unitD="Day";
+        string unitY=" Year";
+        string unitM=" Month";
+        string unitD=" Day";
         public string YearUnit { get { return unitY; } set {
                 unitY = value;
                 var its = Year.Items;
@@ -74,28 +75,37 @@ namespace huqiang.UIComposite
             Year.Initial(y);
             Year.ItemObject = typeof(ItemView);
             Year.ItemUpdate = YearItem;
+            Year.Scroll = Scrolling;
             Year.ScrollEnd = YearScrollToEnd;
             Year.ItemDockCenter = true;
             Year.scrollType = ScrollType.Loop;
+            Year.eventCall.boxSize = new Vector2(120,160);
+            Year.eventCall.UseAssignSize = true;
 
             var m = model.Find("Month");
             Month = new ScrollY();
             Month.Initial(m);
             Month.ItemObject = typeof(ItemView);
             Month.ItemUpdate = MonthItem;
+            Month.Scroll = Scrolling;
             Month.ScrollEnd = MonthScrollToEnd;
             Month.ItemDockCenter = true;
             Month.scrollType = ScrollType.Loop;
+            Month.eventCall.boxSize = new Vector2(120, 160);
+            Month.eventCall.UseAssignSize = true;
 
             var d = model.Find("Day");
             Day = new ScrollY();
             Day.Initial(d);
             Day.ItemObject = typeof(ItemView);
             Day.ItemUpdate = DayItem;
+            Day.Scroll = Scrolling;
             Day.ScrollEnd = DayScrollToEnd;
             Day.ItemDockCenter = true;
             Day.ScrollEnd = DayScrollToEnd;
             Day.scrollType = ScrollType.Loop;
+            Day.eventCall.boxSize = new Vector2(120, 160);
+            Day.eventCall.UseAssignSize = true;
 
             var fs = mod.GetExtand();
             if(fs!=null)
@@ -125,6 +135,36 @@ namespace huqiang.UIComposite
                 Days.Add((i+1).ToString());
             Day.BindingData = Days;
             Day.Refresh();
+            UpdateItems(Year);
+            UpdateItems(Month);
+            UpdateItems(Day);
+        }
+        void Scrolling(ScrollY scroll, Vector2 vector)
+        {
+            UpdateItems(scroll);
+        }
+        void UpdateItems(ScrollY scroll)
+        {
+            var items = scroll.Items;
+            for(int i=0;i<items.Count;i++)
+            {
+                var mod = items[i].target;
+                float h = mod.data.sizeDelta.y;
+                float y = mod.data.localPosition.y;
+                float angle = y / h * 15f;
+                mod.data.localRotation = Quaternion.Euler(angle, 0, 0);
+
+                var v = MathH.Tan2(90 - angle);
+                mod.data.localPosition.y = v.y * 100;
+                mod.IsChanged = true;
+                var txt = (items[i].obj as ItemView).Item;
+                var col = txt.color;
+                angle /= 45;
+                if (angle < 0)
+                    angle = -angle;
+                col.a = 1 - angle;
+                txt.color = col;
+            }
         }
         void YearItem(object obj,object dat,int index)
         {
@@ -174,6 +214,7 @@ namespace huqiang.UIComposite
             for (int i = 0; i <a; i++)
                 Days.Add((i + 1).ToString());
             Day.Refresh(0,Day.Point);
+            UpdateItems(Day);
         }
     }
 }

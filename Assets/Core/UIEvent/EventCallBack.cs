@@ -47,6 +47,7 @@ namespace huqiang.UIEvent
                 }
             }
             T u = new T();
+            u.boxSize = MinBox;
             u.Context = element;
             u.graphic = element.GetComponent<GraphicE>();
             if (u.graphic != null)
@@ -67,6 +68,7 @@ namespace huqiang.UIEvent
                 }
             }
             EventCallBack u = Activator.CreateInstance(type) as EventCallBack;
+            u.boxSize = MinBox;
             u.Context = element;
             u.graphic = element.GetComponent<GraphicE>();
             if (u.graphic != null)
@@ -147,14 +149,16 @@ namespace huqiang.UIEvent
                 callBack.GlobalPosition = o;
                 callBack.GlobalRotation = q;
                 bool inside = false;
-                float w = ui.data.sizeDelta.x * s.x;
-                float h = ui.data.sizeDelta.y * s.y;
-                if (!callBack.UseActualSize)
+                float w,h;
+                if (callBack.UseAssignSize)
                 {
-                    if (w < MinBox.x)
-                        w = MinBox.x;
-                    if (h < MinBox.y)
-                        h = MinBox.y;
+                    w = callBack.boxSize.x*s.x;
+                    h = callBack.boxSize.y*s.y;
+                }
+                else
+                {
+                    w = ui.data.sizeDelta.x * s.x;
+                    h = ui.data.sizeDelta.y * s.y;
                 }
                 if (callBack.IsCircular)
                 {
@@ -289,6 +293,7 @@ namespace huqiang.UIEvent
         int yTime;
         float lastX;
         float lastY;
+        public Vector2 boxSize;
         Vector2 maxVelocity;
         Vector2 sDistance;
         public float ScrollDistanceX
@@ -344,9 +349,10 @@ namespace huqiang.UIEvent
         /// </summary>
         public bool Penetrate = false;
         /// <summary>
-        /// 当此项开启时忽略最小尺寸校正
+        ///  使用指定尺寸
         /// </summary>
-        public bool UseActualSize = false;
+        public bool UseAssignSize = false;
+
         public bool IsCircular = false;
         public bool entry { get; protected set; }
         private int index;
