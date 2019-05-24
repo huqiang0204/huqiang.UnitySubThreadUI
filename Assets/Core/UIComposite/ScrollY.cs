@@ -14,14 +14,16 @@ namespace huqiang.UIComposite
         {
             var eve = scroll.eventCall;
             var tar = scroll.eventCall.ScrollDistanceY;
-            float v = scroll.Point + tar;
+            float ty = scroll.Size.y * 0.5f;
+            float v = scroll.Point + tar+ty;
             float sy = scroll.ItemSize.y;
             float oy = v % sy;
             tar -= oy;
             if (oy > sy * 0.5f)
                 tar += sy;
+            tar += sy * 0.5f;
             scroll.eventCall.ScrollDistanceY = tar;
-            v = scroll.Point + tar + scroll.ScrollView.data.sizeDelta.y * 0.5f;
+            v = scroll.Point + tar + ty;
             int i = (int)(v / sy);
             int c = scroll.DataLength;
             i %= c;

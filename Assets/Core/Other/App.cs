@@ -83,14 +83,12 @@ namespace huqiang
             Scale.ScreenCurrentHeight= Screen.height;
             UserAction.DispatchEvent();
             Keyboard.DispatchEvent();
-            mission.AddSubMission(SubThread,null);
             root.Apply();//更新UI
             ThreadMission.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
-            //time -= FrameTime;
-       
             AnimationManage.Manage.Update();
             AllTime += Time.deltaTime;
+            mission.AddSubMission(SubThread, null);
             //DownloadManager.UpdateMission();
         }
         static void SubThread(object obj)

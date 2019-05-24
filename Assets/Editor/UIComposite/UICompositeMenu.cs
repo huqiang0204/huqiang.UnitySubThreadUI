@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -215,5 +216,78 @@ public static class UICompositeMenu
         fn.localPosition = new Vector3(200, 0, 0);
         fn.localScale = Vector3.one;
         Nob.AddComponent<Image>().color=new Color(1,1,1,0.5f);
+    }
+    [MenuItem("GameObject/UIComposite/UIDate", false, 5)]
+    static public void AddDate(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var date = new GameObject("Date", typeof(RectTransform));
+        RectTransform rect = date.transform as RectTransform;
+        rect.sizeDelta = new Vector2(360, 210);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        rect.localPosition = Vector3.zero;
+        rect.localScale = Vector3.one;
+
+        var now = DateTime.Now;
+        var Year = new GameObject("Year", typeof(RectTransform));
+        var fr = Year.transform as RectTransform;
+        fr.sizeDelta = new Vector2(120, 210);
+        fr.SetParent(rect);
+        fr.localPosition = new Vector3(-120,0,0);
+        fr.localScale = Vector3.one;
+        Year.AddComponent<Image>();
+        Year.AddComponent<Mask>().showMaskGraphic = false;
+
+        var Item = new GameObject("Item", typeof(RectTransform));
+        var fn = Item.transform as RectTransform;
+        fn.sizeDelta = new Vector2(120, 30);
+        fn.SetParent(fr);
+        fn.localPosition = Vector3.zero;
+        fn.localScale = Vector3.one;
+        var txt = Item.AddComponent<Text>();
+        txt.alignment =TextAnchor.MiddleCenter;
+        txt.text =now.Year+ " Year";
+        txt.fontSize = 24;
+
+        var Month = new GameObject("Month", typeof(RectTransform));
+        fr = Month.transform as RectTransform;
+        fr.sizeDelta = new Vector2(120, 210);
+        fr.SetParent(rect);
+        fr.localPosition = Vector3.zero;
+        fr.localScale = Vector3.one;
+        Month.AddComponent<Image>();
+        Month.AddComponent<Mask>().showMaskGraphic = false;
+
+        Item = new GameObject("Item", typeof(RectTransform));
+        fn = Item.transform as RectTransform;
+        fn.sizeDelta = new Vector2(120, 30);
+        fn.SetParent(fr);
+        fn.localPosition = Vector3.zero;
+        fn.localScale = Vector3.one;
+        txt = Item.AddComponent<Text>();
+        txt.alignment = TextAnchor.MiddleCenter;
+        txt.text = now.Month + " Month";
+        txt.fontSize = 24;
+
+        var Day = new GameObject("Day", typeof(RectTransform));
+        fr = Day.transform as RectTransform;
+        fr.sizeDelta = new Vector2(120, 210);
+        fr.SetParent(rect);
+        fr.localPosition = new Vector3(120, 0, 0);
+        fr.localScale = Vector3.one;
+        Day.AddComponent<Image>();
+        Day.AddComponent<Mask>().showMaskGraphic = false;
+
+        Item = new GameObject("Item", typeof(RectTransform));
+        fn = Item.transform as RectTransform;
+        fn.sizeDelta = new Vector2(120, 30);
+        fn.SetParent(fr);
+        fn.localPosition = Vector3.zero;
+        fn.localScale = Vector3.one;
+        txt = Item.AddComponent<Text>();
+        txt.alignment = TextAnchor.MiddleCenter;
+        txt.text = now.Day + " Day";
+        txt.fontSize = 24;
     }
 }
