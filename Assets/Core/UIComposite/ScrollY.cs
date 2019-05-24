@@ -23,13 +23,6 @@ namespace huqiang.UIComposite
                 tar += sy;
             tar += sy * 0.5f;
             scroll.eventCall.ScrollDistanceY = tar;
-            v = scroll.Point + tar + ty;
-            int i = (int)(v / sy);
-            int c = scroll.DataLength;
-            i %= c;
-            if (i < 0)
-                i += c - 1;
-            scroll.PreDockindex = i;
         }
         public EventCallBack eventCall;//scrollY自己的按钮
         protected float height;
@@ -55,7 +48,6 @@ namespace huqiang.UIComposite
             }
         }
         public bool ItemDockCenter;
-        public int PreDockindex { get; private set; }
         public Vector2 ContentSize { get; private set; }
         public ScrollY()
         {
