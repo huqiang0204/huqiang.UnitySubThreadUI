@@ -479,7 +479,9 @@ namespace huqiang.UI
                 }
                 if(mIndex>-1)
                 {
-                    Context.SetSiblingIndex(mIndex);
+                    if (mIndex > Context.childCount)
+                        Context.SetAsLastSibling();
+                    else  Context.SetSiblingIndex(mIndex);
                     mIndex = -1;
                 }
                 for (int i = 0; i < components.Count; i++)
