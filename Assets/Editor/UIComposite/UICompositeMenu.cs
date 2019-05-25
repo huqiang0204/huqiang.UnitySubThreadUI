@@ -11,27 +11,27 @@ public static class UICompositeMenu
     static public void AddSlider(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
-        var  ss = new GameObject("Slider",typeof(RectTransform));
+        var ss = new GameObject("Slider", typeof(RectTransform));
         RectTransform rect = ss.transform as RectTransform;
-        rect.sizeDelta = new Vector2(400,20);
-        if(parent!=null)
-        rect.SetParent(parent.transform);
+        rect.sizeDelta = new Vector2(400, 20);
+        if (parent != null)
+            rect.SetParent(parent.transform);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
         var image = ss.AddComponent<Image>();
-        var Fill = new GameObject("FillImage",typeof(RectTransform));
-        var  fr = Fill.transform as RectTransform;
+        var Fill = new GameObject("FillImage", typeof(RectTransform));
+        var fr = Fill.transform as RectTransform;
         fr.sizeDelta = new Vector2(400, 20);
         fr.SetParent(rect);
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
         image = Fill.AddComponent<Image>();
         image.type = Image.Type.Sliced;
-        var Nob = new GameObject("Nob",typeof(RectTransform));
-        var  fn = Nob.transform as RectTransform;
+        var Nob = new GameObject("Nob", typeof(RectTransform));
+        var fn = Nob.transform as RectTransform;
         fn.sizeDelta = new Vector2(30, 30);
         fn.SetParent(rect);
-        fn.localPosition = new Vector3(-200,0,0);
+        fn.localPosition = new Vector3(-200, 0, 0);
         fn.localScale = Vector3.one;
         image = Nob.AddComponent<Image>();
     }
@@ -64,7 +64,7 @@ public static class UICompositeMenu
             Scroll.transform.SetParent(parent.transform);
         Scroll.transform.localPosition = Vector3.zero;
         Scroll.transform.localScale = Vector3.one;
-   
+
         var ss = new GameObject("Scorll", typeof(RectTransform));
         RectTransform rect = ss.transform as RectTransform;
         rect.SetParent(Scroll.transform);
@@ -201,13 +201,13 @@ public static class UICompositeMenu
         fn.localScale = Vector3.one;
         Nob.AddComponent<Image>();
 
-        var  Slider = new GameObject("Slider", typeof(RectTransform));
+        var Slider = new GameObject("Slider", typeof(RectTransform));
         fn = Slider.transform as RectTransform;
         fn.sizeDelta = new Vector2(400, 20);
         fn.SetParent(rect);
         fn.localPosition = new Vector3(0, -285, 0);
         fn.localScale = Vector3.one;
-        Slider.AddComponent<Image>().type=Image.Type.Sliced;
+        Slider.AddComponent<Image>().type = Image.Type.Sliced;
 
         Nob = new GameObject("Nob", typeof(RectTransform));
         fn = Nob.transform as RectTransform;
@@ -215,9 +215,9 @@ public static class UICompositeMenu
         fn.SetParent(Slider.transform);
         fn.localPosition = new Vector3(200, 0, 0);
         fn.localScale = Vector3.one;
-        Nob.AddComponent<Image>().color=new Color(1,1,1,0.5f);
+        Nob.AddComponent<Image>().color = new Color(1, 1, 1, 0.5f);
     }
-    [MenuItem("GameObject/UIComposite/UIDate", false, 5)]
+    [MenuItem("GameObject/UIComposite/UIDate", false, 6)]
     static public void AddDate(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -234,7 +234,7 @@ public static class UICompositeMenu
         var fr = Year.transform as RectTransform;
         fr.sizeDelta = new Vector2(120, 210);
         fr.SetParent(rect);
-        fr.localPosition = new Vector3(-120,0,0);
+        fr.localPosition = new Vector3(-120, 0, 0);
         fr.localScale = Vector3.one;
         Year.AddComponent<Image>();
         Year.AddComponent<Mask>().showMaskGraphic = false;
@@ -246,8 +246,8 @@ public static class UICompositeMenu
         fn.localPosition = Vector3.zero;
         fn.localScale = Vector3.one;
         var txt = Item.AddComponent<Text>();
-        txt.alignment =TextAnchor.MiddleCenter;
-        txt.text =now.Year+ " Year";
+        txt.alignment = TextAnchor.MiddleCenter;
+        txt.text = now.Year + " Year";
         txt.fontSize = 24;
 
         var Month = new GameObject("Month", typeof(RectTransform));
@@ -288,6 +288,29 @@ public static class UICompositeMenu
         txt = Item.AddComponent<Text>();
         txt.alignment = TextAnchor.MiddleCenter;
         txt.text = now.Day + " Day";
+        txt.fontSize = 24;
+    }
+    [MenuItem("GameObject/UIComposite/TreeView", false, 7)]
+    static public void AddTreeView(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var ss = new GameObject("TreeView", typeof(RectTransform));
+        RectTransform rect = ss.transform as RectTransform;
+        rect.sizeDelta = new Vector2(400, 400);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        rect.localPosition = Vector3.zero;
+        rect.localScale = Vector3.one;
+        ss.AddComponent<Image>();
+        ss.AddComponent<Mask>().showMaskGraphic = false;
+        var Item = new GameObject("Item", typeof(RectTransform));
+        var fr = Item.transform as RectTransform;
+        fr.sizeDelta = new Vector2(200, 40);
+        fr.SetParent(rect);
+        fr.localPosition = Vector3.zero;
+        fr.localScale = Vector3.one;
+        var txt = Item.AddComponent<Text>();
+        txt.alignment = TextAnchor.MiddleLeft;
         txt.fontSize = 24;
     }
 }
