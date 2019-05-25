@@ -2,9 +2,7 @@
 using huqiang.UIEvent;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace huqiang.UIComposite
 {
@@ -70,9 +68,6 @@ namespace huqiang.UIComposite
                     else ShowLabel.text = dat.ToString();
                 }
             }
-        }
-        public DropdownEx()
-        {
         }
         public override void Initial(ModelElement mod)
         {
