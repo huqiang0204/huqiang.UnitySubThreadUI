@@ -61,6 +61,7 @@ namespace huqiang.UI
         public ModelElement parent { get; private set; }
         public List<DataConversion> components = new List<DataConversion>();
         public List<ModelElement> child = new List<ModelElement>();
+        bool parentChanged;
         public void SetParent(ModelElement element)
         {
             if (element == this)
@@ -69,6 +70,7 @@ namespace huqiang.UI
                 parent.child.Remove(this);
             element.child.Add(this);
             parent = element;
+            parentChanged = true;
         }
         public DataConversion GetComponent(string type)
         {
@@ -461,10 +463,19 @@ namespace huqiang.UI
                     var obj = ModelManagerUI.CreateNew(data.type);
                     LoadToObject(obj.transform);
                 }
-                else if (IsChanged)
+                else
                 {
-                    IsChanged = false;
-                    LoadToObject(Context, ref data, this);
+                    if(parentChanged)
+                    {
+                        if (parent != null)
+                            Context.SetParent(parent.Context);
+                        else Context.SetParent(null);
+                    }
+                    if (IsChanged)
+                    {
+                        IsChanged = false;
+                        LoadToObject(Context, ref data, this);
+                    }
                 }
                 if(mIndex>-1)
                 {
