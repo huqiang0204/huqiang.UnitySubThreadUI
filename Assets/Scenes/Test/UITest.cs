@@ -1,10 +1,5 @@
-﻿using huqiang;
-using huqiang.Other;
-using huqiang.UI;
+﻿using huqiang.UI;
 using huqiang.UIComposite;
-using huqiang.UIEvent;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UITest : TestHelper

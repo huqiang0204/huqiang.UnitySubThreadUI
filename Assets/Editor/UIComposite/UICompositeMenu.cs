@@ -313,4 +313,40 @@ public static class UICompositeMenu
         txt.alignment = TextAnchor.MiddleLeft;
         txt.fontSize = 24;
     }
+    [MenuItem("GameObject/UIComposite/DropDownEx", false, 7)]
+    static public void AddDropDown(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var ss = new GameObject("DropDownEx", typeof(RectTransform));
+        RectTransform rect = ss.transform as RectTransform;
+        rect.sizeDelta = new Vector2(400, 40);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+
+        var label = new GameObject("Label", typeof(RectTransform));
+        var fr = label.transform as RectTransform;
+        fr.sizeDelta = new Vector2(400, 40);
+        fr.SetParent(rect);
+        fr.localPosition = Vector3.zero;
+        fr.localScale = Vector3.one;
+        var txt = label.AddComponent<Text>();
+        txt.alignment = TextAnchor.MiddleLeft;
+        txt.fontSize = 24;
+
+        var Scroll = new GameObject("Scorll", typeof(RectTransform));
+        RectTransform scr = Scroll.transform as RectTransform;
+        scr.sizeDelta = new Vector2(400, 400);
+        scr.SetParent(rect);
+        scr.localPosition = new Vector3(0,-220,0);
+        scr.localScale = Vector3.one;
+        ss.AddComponent<Image>();
+        ss.AddComponent<Mask>().showMaskGraphic = false;
+
+        var Item = new GameObject("Item", typeof(RectTransform));
+        fr = Item.transform as RectTransform;
+        fr.sizeDelta = new Vector2(400, 40);
+        fr.SetParent(scr);
+        fr.localPosition = Vector3.zero;
+        fr.localScale = Vector3.one;
+    }
 }

@@ -19,6 +19,7 @@ namespace huqiang.UIComposite
             public int Index;
         }
         public ModelElement main;
+        ModelElement Label;
         ScrollY m_scroll;
         public ScrollY scrollY
         {
@@ -72,16 +73,17 @@ namespace huqiang.UIComposite
         public override void Initial(ModelElement mod)
         {
             main = mod;
-            ShowLabel = main.child[0].GetComponent<TextElement>();
+            Label = mod.Find("Label");
+            ShowLabel = Label.GetComponent<TextElement>();
             callBack = EventCallBack.RegEvent<EventCallBack>(mod);
             callBack.Click = Show;
-        }
-        public DropdownEx(ScrollY scroll, EventCallBack parent)
-        {
-            main = parent.Context;
-            parent.Click = Show;
-            ShowLabel = main.child[0].GetComponent<TextElement>();
-            scrollY = scroll;
+            var scroll = mod.Find("Scroll");
+            if(scroll!=null)
+            {
+                m_scroll = new ScrollY();
+                m_scroll.Initial(scroll);
+                scroll.activeSelf = false;
+            }
         }
         void Show(EventCallBack back, UserAction action)
         {
