@@ -94,6 +94,28 @@ namespace huqiang.Data
                     return buffer[i];
             return null;
         }
+        public T FindAndSwap(Func<T, bool> action, int index)
+        {
+            if (action == null)
+                return null;
+            for (int i = 0; i < top; i++)
+                if (action(buffer[i]))
+                {
+                    var t = buffer[index];
+                    var r = buffer[i];
+                    buffer[i] = t;
+                    buffer[index] = r;
+                    return r;
+                }
+            return null;
+        }
+        public void Swap(int source, int target)
+        {
+            var s = buffer[source];
+            var t = buffer[target];
+            buffer[source] = t;
+            buffer[target] = s;
+        }
         public void Clear()
         {
             for (int i = 0; i < top; i++)
@@ -101,6 +123,25 @@ namespace huqiang.Data
                 buffer[i] = null;
             }
             top = 0;
+        }
+        public void Sort(Func<T, T, bool> com)
+        {
+            for (int i = 0; i < top; i++)
+            {
+                var t = buffer[i];
+                int s = i;
+                for (int j = i + 1; j < top; j++)
+                {
+                    if (com(t, buffer[j]))
+                    {
+                        t = buffer[j];
+                        s = j;
+                    }
+                }
+                var u = buffer[i];
+                buffer[i] = t;
+                buffer[s] = u;
+            }
         }
     }
 }
