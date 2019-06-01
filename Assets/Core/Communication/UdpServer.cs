@@ -20,7 +20,11 @@ namespace huqiang
     public class UdpServer
     {
         Socket soc;
-        Thread thread;
+#if UNITY_WSA
+        System.Threading.Tasks.Task thread;
+#else
+         Thread thread;
+#endif
         int remotePort;
         QueueBuffer<SocData> queue;
         public bool Packaging = true;
@@ -51,8 +55,12 @@ namespace huqiang
             if (thread == null)
             {
                 //创建消息接收线程
+#if UNITY_WSA
+               thread =  System.Threading.Tasks.Task.Run(Run);
+#else
                 thread = new Thread(Run);
-                thread.Start();
+                 thread.Start();
+#endif
             }
         }
         public void Send(byte[] dat, IPEndPoint ip, byte tag)
@@ -205,8 +213,12 @@ namespace huqiang
         }
         public void Close()
         {
-            soc.Close();
             running = false;
+#if UNITY_WSA
+            soc.Dispose();
+#else
+            soc.Close();
+#endif
         }
         public List<UdpLink> links;
         //设置用户的udp对象用于发送消息

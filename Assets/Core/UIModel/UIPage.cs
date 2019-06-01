@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using huqiang.UI;
 using huqiang.UIEvent;
+using System.Reflection;
 
 public class UIPage : UIBase
 {

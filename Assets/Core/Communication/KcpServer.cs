@@ -33,7 +33,11 @@ namespace huqiang
         }
         public void Close()
         {
+#if UNITY_WSA
+            soc.Dispose();
+#else
             soc.Close();
+#endif
         }
         //设置用户的udp对象用于发送消息
         public T FindOrCreateLink(IPEndPoint ep)

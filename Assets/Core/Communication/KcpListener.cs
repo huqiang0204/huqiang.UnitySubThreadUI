@@ -11,7 +11,11 @@ namespace huqiang
     {
         public static KcpListener Instance;
         public Socket soc;
-        Thread thread;
+#if UNITY_WSA
+         System.Threading.Tasks.Task thread;
+#else
+         Thread thread;
+#endif
         protected bool running;
         int remotePort;
         int _port;
@@ -33,8 +37,12 @@ namespace huqiang
             if (thread == null)
             {
                 //创建消息接收线程
+#if UNITY_WSA
+                System.Threading.Tasks.Task.Run(Run);
+#else
                 thread = new Thread(Run);
-                thread.Start();
+                 thread.Start();
+#endif
             }
         }
         void Run()
@@ -64,7 +72,11 @@ namespace huqiang
         {
             running = false;
             thread = null;
+#if UNITY_WSA
+            soc.Dispose();
+#else
             soc.Close();
+#endif
         }
         public virtual void Dispatch(byte[] dat, IPEndPoint endPoint)
         {

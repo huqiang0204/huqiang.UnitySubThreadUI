@@ -55,37 +55,6 @@ namespace huqiang
             cd.Tri = tri;
             return cd;
         }
-        public static void ViewToClass(IView v, Transform trans)
-        {
-            if (!(v is IView))
-                return;
-            var member = v.GetType().GetFields(BindingFlags.GetField | BindingFlags.Public | BindingFlags.Instance);
-            for (int i = 0; i < member.Length; i++)
-            {
-                var t = member[i].FieldType;
-                if(t==typeof(IView))
-                {
-                    char[] name = t.FullName.ToCharArray();
-                    int len = name.Length - 2;
-                    if (name[len] == '[')
-                        if (name[len + 1] == ']')
-                        {
-                            char[] buff = new char[len];
-                            for (int b = 0; b < len; b++)
-                                buff[b] = name[b];
-                            name = buff;
-                        }
-                    string fullname = new string(name);
-                    var o = t.Assembly.CreateInstance(fullname);
-                    ViewToClass(o as IView,trans.Find(member[i].Name));
-                    member[i].SetValue(v, o);
-                }
-                else if(t==typeof(MonoBehaviour))
-                {
-                    member[i].SetValue(v, trans.GetComponent(t));
-                }
-            }
-        }
         public static Vector3 GetCenter(Mesh mesh)
         {
             var vert = mesh.vertices;

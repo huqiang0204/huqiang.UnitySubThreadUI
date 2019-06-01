@@ -17,7 +17,11 @@ namespace huqiang
         }
         QueueBuffer<Mission> SubMission;
         QueueBuffer<Mission> MainMission;
-        Thread thread;
+#if UNITY_WSA
+        System.Threading.Tasks.Task thread;
+#else
+         Thread thread;
+#endif
         public string Tag;
         public int Id { get; private set; }
         AutoResetEvent are;
@@ -28,11 +32,20 @@ namespace huqiang
             Tag = tag;
             SubMission = new QueueBuffer<Mission>();
             MainMission = new QueueBuffer<Mission>();
-            thread = new Thread(Run);
+#if UNITY_WSA
+            thread = System.Threading.Tasks.Task.Run(Run);
+            are = new AutoResetEvent(false);
+            run = true;
+            thread.Start();
+            Id = thread.Id;
+#else
+               thread = new Thread(Run);
             are = new AutoResetEvent(false);
             run = true;
             thread.Start();
             Id = thread.ManagedThreadId;
+#endif
+
             threads.Add(this);
         }
         void Run()

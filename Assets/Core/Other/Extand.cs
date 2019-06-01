@@ -6,6 +6,7 @@ using System.Text;
 using UGUI;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
 
 namespace huqiang
 {
@@ -103,47 +104,6 @@ namespace huqiang
                 raw.uvRect = new Rect(rect.x / w, rect.y / h, rect.width / w, rect.height / h);
                 raw.SetNativeSize();
             }
-        }
-        public static T Clone<T>(this T obj) where T : class, new()
-        {
-            if (obj != null)
-            {
-                try
-                {
-                    Type type = obj.GetType();
-                    var tmp = Activator.CreateInstance(type);
-                    var fields = type.GetFields();
-                    if (fields != null)
-                    {
-                        for (int i = 0; i < fields.Length; i++)
-                        {
-                            var f = fields[i];
-                            var ft = f.FieldType;
-                            if (ft.IsClass)
-                            {
-                                if (ft == typeof(string))
-                                {
-                                    f.SetValue(tmp, f.GetValue(obj));
-                                }
-                                else
-                                {
-                                    f.SetValue(tmp, f.GetValue(obj).Clone());
-                                }
-                            }
-                            else
-                            {
-                                f.SetValue(tmp, f.GetValue(obj));
-                            }
-                        }
-                    }
-                    return tmp as T;
-                }
-                catch (Exception ex)
-                {
-                    Debug.Log(ex.StackTrace);
-                }
-            }
-            return null;
         }
         public static void WriteString(this Stream stream, string str)
         {

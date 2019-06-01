@@ -89,12 +89,21 @@ namespace huqiang
     }
     public class KcpThread<T> : LinkBuffer<T> where T : KcpLink, new()
     {
-        Thread thread;
+#if UNITY_WSA
+        System.Threading.Tasks.Task thread;
+#else
+         Thread thread;
+#endif
         public KcpThread(int size =2048):base (size)
         {
             running = true;
-            thread = new Thread(Run);
-            thread.Start();
+#if UNITY_WSA
+          System.Threading.Tasks.Task.Run(Run);
+#else
+                thread = new Thread(Run);
+               thread.Start();
+#endif
+
         }
         void Run()
         {
@@ -106,7 +115,11 @@ namespace huqiang
                 t -= now;
                 t /= 10000;
                 if (t < 10)
+#if UNITY_WSA
+                    System.Threading.Tasks.Task.Delay(10 - (int)t);
+#else
                     Thread.Sleep(10 - (int)t);
+#endif
             }
         }
     }

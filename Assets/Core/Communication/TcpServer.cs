@@ -28,9 +28,14 @@ namespace huqiang
         /// 单例服务器实例
         /// </summary>
         public static TcpServer Instance;
-
-        Thread server;
+#if UNITY_WSA
+        System.Threading.Tasks.Task server;
+        System.Threading.Tasks.Task[] threads;
+#else
+         Thread server;
         Thread[] threads;
+#endif
+
         PackType packType;
         IPEndPoint endPoint;
         int ThreadCount;
@@ -50,25 +55,37 @@ namespace huqiang
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Debug.Log(ex.StackTrace);
             }
             soc.Listen(0);
             Instance = this;
-            threads = new Thread[thread];
+#if UNITY_WSA
+            threads = new System.Threading.Tasks.Task[thread];
+            for (int i = 0; i < thread; i++)
+            {
+                threads[i] = System.Threading.Tasks.Task.Run(Run);
+            }
+#else
+                 threads = new Thread[thread];
             for (int i = 0; i < thread; i++)
             {
                 threads[i] = new Thread(Run);
-                threads[i].Start(i);
+                threads[i].Start();
             }
+#endif
         }
         public void Start()
         {
             if(server==null)
             {
+#if UNITY_WSA
+                server= System.Threading.Tasks.Task.Run(AcceptClient);
+#else
                 server = new Thread(AcceptClient);
                 server.Start();
+#endif
             }
-            if(threadTimer==null)
+            if (threadTimer==null)
             {
                 threadTimer = new ThreadTimer();
                 threadTimer.Interal = 1000;
@@ -79,7 +96,7 @@ namespace huqiang
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.StackTrace);
+                        Debug.Log(ex.StackTrace);
                     }
                 };
             }
@@ -89,10 +106,14 @@ namespace huqiang
         byte[] nil = { 0 };
         public void Dispose()
         {
+#if UNITY_WSA
+            soc.Dispose();
+#else
             soc.Disconnect(true);
-            server.Abort();
+                   server.Abort();
             for (int i = 0; i < threads.Length; i++)
                 threads[i].Abort();
+#endif
             if (threadTimer != null)
                 threadTimer.Dispose();
         }
@@ -114,32 +135,33 @@ namespace huqiang
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.StackTrace);
+                    Debug.Log(ex.StackTrace);
                 }
             }
         }
-        void Run(object index)
+        void Run()
         {
-            int os = (int)index;
             while (true)
             {
                 var now = DateTime.Now;
                 long a = now.Ticks;
-                int s = os;
                 for (int i = 0; i < SingleCount; i++)
                 {
-                    var c = Links[s];
+                    var c = Links[i];
                     if (c != null)
                     {
                         c.Recive();
                     }
-                    s +=ThreadCount;
                 }
                 long t = DateTime.Now.Ticks;
                 t -= a;
                 t /= 10000;
                 if (t < 10)
+#if UNITY_WSA
+                    System.Threading.Tasks.Task.Delay(10 - (int)t);
+#else
                     Thread.Sleep(10 - (int)t);
+#endif
             }
         }
 

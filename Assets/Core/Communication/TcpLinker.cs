@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Net;
 using UnityEngine;
+using System.Reflection;
 
 namespace huqiang
 {
@@ -91,13 +92,21 @@ namespace huqiang
         {
             if (Link != null)
                 lock (Link)
-                    Link.Close();
+#if UNITY_WSA
+                    Link.Dispose();
+#else
+             Link.Close();
+#endif
         }
         public virtual void Dispose()
         {
             if (Link != null)
                 lock (Link)
-                    Link.Close();
+#if UNITY_WSA
+                    Link.Dispose();
+#else
+             Link.Close();
+#endif
         }
         public void Recive()
         {
@@ -117,7 +126,7 @@ namespace huqiang
                         }
                     }catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        Debug.Log(ex);
                     }
                 }
             }

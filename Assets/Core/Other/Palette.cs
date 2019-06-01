@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Reflection;
 
 namespace huqiang.Other
 {
@@ -32,7 +33,7 @@ namespace huqiang.Other
                 ht2d = new Texture2D(1, 360, TextureFormat.ARGB32, false);
                 ThreadMission.AddMission((o)=> {
                     HTemplate(colors);
-                },null,-1,(o)=> {
+                },null,null,(o)=> {
                     ht2d.SetPixels(colors);
                     ht2d.Apply();
                 });
@@ -48,7 +49,7 @@ namespace huqiang.Other
                 ct2d = new Texture2D(640, 640, TextureFormat.ARGB32, false);
                 ThreadMission.AddMission((o) => {
                     CTemplate(colors);
-                }, null, -1, 
+                }, null, null, 
                 (o) => {
                     ct2d.SetPixels(colors);
                     ct2d.Apply();
@@ -67,7 +68,7 @@ namespace huqiang.Other
             ThreadMission.AddMission(
                 (o) => {
                     HSVTemplate(h, buffer);
-                }, this, -1,
+                }, this, null,
                 (o) => {
                     if (t2d == null)
                         t2d = new Texture2D(256, 256, TextureFormat.ARGB32, false);

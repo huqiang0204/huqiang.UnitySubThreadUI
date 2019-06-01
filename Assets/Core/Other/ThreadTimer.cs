@@ -9,7 +9,11 @@ namespace huqiang
     public class ThreadTimer
     {
         bool run = false;
-        Thread thread;
+#if UNITY_WSA
+        System.Threading.Tasks.Task thread;
+#else
+         Thread thread;
+#endif
         AutoResetEvent auto;
         public Action<ThreadTimer,Int32> Tick;
         Int32 m_inter;
@@ -19,8 +23,12 @@ namespace huqiang
             Interal = inter;
             auto = new AutoResetEvent(true);
             run = true;
-            thread = new Thread(() => {Run();});
-            thread.Start();
+#if UNITY_WSA
+            thread = System.Threading.Tasks.Task.Run(Run);
+#else
+                thread = new Thread(Run);
+               thread.Start();
+#endif
         }
         void Run()
         {
