@@ -18,11 +18,14 @@ namespace huqiang
         QueueBuffer<Mission> SubMission;
         QueueBuffer<Mission> MainMission;
         Thread thread;
+        public string Tag;
         public int Id { get; private set; }
         AutoResetEvent are;
         bool run;
-        public ThreadMission()
+        bool subFree,mainFree;
+        public ThreadMission(string tag)
         {
+            Tag = tag;
             SubMission = new QueueBuffer<Mission>();
             MainMission = new QueueBuffer<Mission>();
             thread = new Thread(Run);
@@ -40,12 +43,17 @@ namespace huqiang
                 {
                     var m = SubMission.Dequeue();
                     if (m == null)
+                    {
+                        subFree = true;
                         are.WaitOne(1);
-                    else {
+                    }
+                    else
+                    {
+                        subFree = false;
                         m.action(m.data);
                         if (m.waitAction != null)//如果有等待的任务
                         {
-                            if(m.Id==MainID)//交给主线程
+                            if (m.Id == MainID)//交给主线程
                             {
                                 m.action = m.waitAction;
                                 m.waitAction = null;
@@ -96,38 +104,53 @@ namespace huqiang
             run = false;
         }
         static List<ThreadMission>threads = new List<ThreadMission>();
-        static ThreadMission FreeMission;
-        public static void AddMission(Action<object> action, object dat, int index=-1, Action<object> wait = null)
+        public static void AddMission(Action<object> action, object dat, string tag = null, Action<object> wait = null)
         {
             if (threads == null)
             {
                 return;
             }
-            if (index < 0 | index >= threads.Count)
+            for (int i = 0; i < threads.Count; i++)
             {
-                if (FreeMission == null)
-                    FreeMission = new ThreadMission();
-                FreeMission.AddSubMission(action, dat, wait);
+                if (threads[i].Tag == tag)
+                {
+                    threads[i].AddSubMission(action, dat, wait);
+                    return;
+                }
             }
-            else
-            {
-                threads[index].AddSubMission(action, dat, wait);
-            }
+            var mis = new ThreadMission(null);
+            mis.AddSubMission(action, dat, wait);
+            threads.Add(mis);
         }
         public static void InvokeToMain(Action<object> action, object dat, Action<object> wait=null)
         {
             var id = Thread.CurrentThread.ManagedThreadId;
-            for (int i = 0; i < threads.Count; i++)
+            if(id==MainID)
             {
-                if (threads[i].Id == id)
+                for (int i = 0; i < threads.Count; i++)
                 {
-                    threads[i].AddMainMission(action, dat, wait);
-                    return;
+                    if (threads[i].Tag == null)
+                    {
+                        threads[i].AddMainMission(action, dat, wait);
+                        return;
+                    }
+                }
+                var mis = new ThreadMission(null);
+                mis.AddMainMission(action, dat, wait);
+                threads.Add(mis);
+            }
+            else
+            {
+                for (int i = 0; i < threads.Count; i++)
+                {
+                    if (threads[i].Id == id)
+                    {
+                        threads[i].AddMainMission(action, dat, wait);
+                        return;
+                    }
                 }
             }
-            if (FreeMission == null)
-                FreeMission = new ThreadMission();
-            FreeMission.AddMainMission(action, dat, wait);
+         
         }
         public static void ExtcuteMain()
         {
@@ -135,8 +158,6 @@ namespace huqiang
             {
                 ExtcuteMain(threads[i]);
             }
-            if (FreeMission != null)
-                ExtcuteMain(FreeMission);
         }
         static void ExtcuteMain(ThreadMission mission)
         {
@@ -144,9 +165,13 @@ namespace huqiang
             {
                 var m = mission.MainMission.Dequeue();
                 if (m == null)
+                {
+                    mission.mainFree = true;
                     break;
+                }
                 else
                 {
+                    mission.mainFree = false;
                     m.action(m.data);
                     if (m.waitAction != null)
                         mission.AddSubMission(m.waitAction, m.data);
@@ -158,11 +183,19 @@ namespace huqiang
             for (int i = 0; i < threads.Count; i++)
                 threads[i].Dispose();
             threads.Clear();
-            if(FreeMission!=null)
-            {
-                FreeMission.Dispose();
-                FreeMission = null;
-            }
+        }
+        public static void DisposeFree()
+        {
+            int c = threads.Count-1;
+            lock (threads)
+                for (int i = 0; i < threads.Count; i++)
+                {
+                    if (threads[i].subFree & threads[i].mainFree)
+                    {
+                        threads[i].Dispose();
+                        threads.RemoveAt(i);
+                    }
+                }
         }
         static int MainID;
         public static void SetMianId()

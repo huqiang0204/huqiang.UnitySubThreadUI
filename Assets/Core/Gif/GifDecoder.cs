@@ -284,7 +284,7 @@ public class GifDecoder
         m.dat = dat;
         m.tag = tag;
         m.CallBack = callback;
-        ThreadMission.AddMission(Decode, m, 1);
+        ThreadMission.AddMission(Decode, m, "gif");
     }
 
     static  void Decode(object mis)

@@ -72,7 +72,7 @@ namespace huqiang
             buff.transform.SetParent(UIRoot);
             buff.SetActive(false);
             ModelManagerUI.CycleBuffer = buff.transform;
-            mission = new ThreadMission();
+            mission = new ThreadMission("UI");
         }
         public static float AllTime;
         public static float FrameTime = 33;
