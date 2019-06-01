@@ -86,6 +86,9 @@ namespace huqiang.UIComposite
                     ItemSize = item.data.sizeDelta;
                 }
             }
+            model.SizeChanged = (o) => {
+                Refresh(m_point,0);
+            };
         }
         public Action<ScrollX, Vector2> Scroll;
         public Action<ScrollX> ScrollStart;
