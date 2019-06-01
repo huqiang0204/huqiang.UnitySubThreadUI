@@ -39,7 +39,7 @@ public static class UICompositeMenu
     static public void AddScroll(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
-        var ss = new GameObject("Scorll", typeof(RectTransform));
+        var ss = new GameObject("Scroll", typeof(RectTransform));
         RectTransform rect = ss.transform as RectTransform;
         rect.sizeDelta = new Vector2(400, 400);
         if (parent != null)
@@ -50,7 +50,7 @@ public static class UICompositeMenu
         ss.AddComponent<Mask>().showMaskGraphic = false;
         var Item = new GameObject("Item", typeof(RectTransform));
         var fr = Item.transform as RectTransform;
-        fr.sizeDelta = new Vector2(400, 80);
+        fr.sizeDelta = new Vector2(80, 80);
         fr.SetParent(rect);
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
@@ -59,13 +59,13 @@ public static class UICompositeMenu
     static public void AddScrollX(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
-        var Scroll = new GameObject("ScorllX", typeof(RectTransform));
+        var Scroll = new GameObject("ScrollX", typeof(RectTransform));
         if (parent != null)
             Scroll.transform.SetParent(parent.transform);
         Scroll.transform.localPosition = Vector3.zero;
         Scroll.transform.localScale = Vector3.one;
 
-        var ss = new GameObject("Scorll", typeof(RectTransform));
+        var ss = new GameObject("Scroll", typeof(RectTransform));
         RectTransform rect = ss.transform as RectTransform;
         rect.SetParent(Scroll.transform);
         rect.sizeDelta = new Vector2(400, 400);
@@ -104,13 +104,13 @@ public static class UICompositeMenu
     static public void AddScrollY(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
-        var Scroll = new GameObject("ScorllY", typeof(RectTransform));
+        var Scroll = new GameObject("ScrollY", typeof(RectTransform));
         if (parent != null)
             Scroll.transform.SetParent(parent.transform);
         Scroll.transform.localPosition = Vector3.zero;
         Scroll.transform.localScale = Vector3.one;
 
-        var ss = new GameObject("Scorll", typeof(RectTransform));
+        var ss = new GameObject("Scroll", typeof(RectTransform));
         RectTransform rect = ss.transform as RectTransform;
         rect.SetParent(Scroll.transform);
         rect.sizeDelta = new Vector2(400, 400);
@@ -333,7 +333,7 @@ public static class UICompositeMenu
         txt.alignment = TextAnchor.MiddleLeft;
         txt.fontSize = 24;
 
-        var Scroll = new GameObject("Scorll", typeof(RectTransform));
+        var Scroll = new GameObject("Scroll", typeof(RectTransform));
         RectTransform scr = Scroll.transform as RectTransform;
         scr.sizeDelta = new Vector2(400, 400);
         scr.SetParent(rect);

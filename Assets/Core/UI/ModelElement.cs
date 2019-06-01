@@ -322,7 +322,7 @@ namespace huqiang.UI
                 p = t.data.sizeDelta;
                 pp = t.data.pivot;
             }
-            else { p = new Vector2(Screen.width, Screen.height); }
+            else { p = new Vector2(Scale.LayoutWidth, Scale.LayoutHeight); }
             rect.data.localScale = Vector3.one;
             float sx = p.x * (pivot.x - 0.5f);
             float sy = p.y * (pivot.y - 0.5f);
@@ -382,24 +382,21 @@ namespace huqiang.UI
         }
         static void Resize(ModelElement ele)
         {
-            if (ele.Main == null)
+            if (ele == null)
                 return;
-            var transform = ele.Main.transform;
             Vector2 size;
             Vector2 p = Anchors[0];
             if (ele.data.parentType == ParentType.Tranfrom)
             {
-                var t = (transform.parent as RectTransform);
-                size = t.sizeDelta;
-                p = t.pivot;
+                var t = ele.parent;
+                size = t.data.sizeDelta;
+                p = t.data.pivot;
             }
             else
             {
-                var t = transform.root as RectTransform;
-                size = t.sizeDelta;
+                size = new Vector2(Scale.LayoutWidth,Scale.LayoutHeight);
             }
 
-            RectTransform rect = transform as RectTransform;
             Docking(ele, ele.data.scaleType, size, ele.data.DesignSize);
             if (ele.data.sizeType == SizeType.Anchor)
             {
@@ -410,7 +407,7 @@ namespace huqiang.UI
             {
                 var mar = ele.data.margin;
                 if (ele.data.parentType == ParentType.BangsScreen)
-                    if (Scale.ScreenHeight / Scale.ScreenWidth > 2f)
+                    if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
                         mar.top += 88;
                 MarginEx(ele, mar, p, size);
             }
@@ -422,7 +419,7 @@ namespace huqiang.UI
                 mar.top = ele.data.margin.top * size.y;
                 mar.down = ele.data.margin.down * size.y;
                 if (ele.data.parentType == ParentType.BangsScreen)
-                    if (Scale.ScreenHeight / Scale.ScreenWidth > 2f)
+                    if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
                         mar.top += 88;
                 MarginEx(ele, mar, p, size);
             }
@@ -430,7 +427,12 @@ namespace huqiang.UI
         public static void ScaleSize(ModelElement element)
         {
             if (element.data.SizeScale)
+            {
                 Resize(element);
+                if (element.SizeChanged != null)
+                    element.SizeChanged(element);
+                element.IsChanged = true;
+            }
             var child = element.child;
             for (int i = 0; i < child.Count; i++)
             {
@@ -523,6 +525,14 @@ namespace huqiang.UI
             if (ModData != null)
                 return ModData.buffer.GetData(data.ex) as FakeStruct;
             return null;
+        }
+        public Action<ModelElement> SizeChanged;
+        public void SetSize(Vector2 size)
+        {
+            data.sizeDelta = size;
+            if (SizeChanged != null)
+                SizeChanged(this);
+            IsChanged = true;
         }
     }
 }

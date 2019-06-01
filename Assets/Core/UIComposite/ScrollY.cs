@@ -16,7 +16,7 @@ namespace huqiang.UIComposite
             var tar = scroll.eventCall.ScrollDistanceY;
             float ty = scroll.Size.y * 0.5f;
             float v = scroll.Point + tar+ty;
-            float sy = scroll.ItemSize.y;
+            float sy = scroll.ctSize.y;
             float oy = v % sy;
             tar -= oy;
             if (oy > sy * 0.5f)
@@ -49,10 +49,9 @@ namespace huqiang.UIComposite
         }
         public bool ItemDockCenter;
         public Vector2 ContentSize { get; private set; }
-        public ScrollY()
-        {
-        }
-
+        public bool DynamicSize = true;
+        Vector2 ctSize;
+        float ctScale;
         public override void Initial(ModelElement model)
         {
             base.Initial(model);
@@ -136,16 +135,28 @@ namespace huqiang.UIComposite
         public void Calcul()
         {
             float w = Size.x - ItemOffset.x;
-            w /= ItemSize.x;
-            Column = (int)w;
+            float dw = w / ItemSize.x;
+            Column = (int)dw;
             if (Column < 1)
                 Column = 1;
+            if (DynamicSize)
+            {
+                float dx = w / Column;
+                ctScale =dx / ItemSize.x;
+                ctSize.x = dx;
+                ctSize.y = ItemSize.y * ctScale;
+            }
+            else
+            {
+                ctSize = ItemSize;
+                ctScale = 1;
+            }
             int c = DataLength;
             int a = c % Column;
             c /= Column;
             if (a > 0)
                 c++;
-            height = c * ItemSize.y;
+            height = c * ctSize.y;
             if (height < Size.y)
                 height = Size.y;
             ActualSize = new Vector2(Size.x, height);
@@ -164,10 +175,6 @@ namespace huqiang.UIComposite
                 return;
             }
             if (ItemMod == null)
-            {
-                return;
-            }
-            if (ItemSize.y == 0)
             {
                 return;
             }
@@ -192,19 +199,15 @@ namespace huqiang.UIComposite
             {
                 return;
             }
-            if (ItemSize.y == 0)
-            {
-                return;
-            }
-            float y = _index * ItemSize.y;
-            m_point = y;
             Calcul();
+            float y = _index * ctSize.y;
+            m_point = y;
             Order(true);
         }
         void Order(bool force=false)
         {
             int len = DataLength;
-            float ly = ItemSize.y;
+            float ly = ctSize.y;
             int sr = (int)(m_point /ly);//起始索引
             int er = (int)((m_point + Size.y) / ly)+1;
             sr *= Column;
@@ -251,15 +254,16 @@ namespace huqiang.UIComposite
         }
         void UpdateItem(int index,float oy,bool force)
         {
-            float ly = ItemSize.y;
+            float ly = ctSize.y;
             int row = index / Column;
             float dy = ly * row + oy;
             dy -= m_point;
             float ss = 0.5f * Size.y - 0.5f * ly;
             dy = ss - dy;
-            float ox = (index%Column) * ItemSize.x + ItemSize.x * 0.5f + ItemOffset.x - Size.x * 0.5f;
+            float ox = (index%Column) * ctSize.x + ctSize.x * 0.5f + ItemOffset.x - Size.x * 0.5f;
             var a = PopItem(index);
             a.target.data.localPosition = new Vector3(ox, dy, 0);
+            a.target.data.localScale = new Vector3(ctScale,ctScale,ctScale);
             Items.Add(a);
             if (a.index < 0 | force)
             {

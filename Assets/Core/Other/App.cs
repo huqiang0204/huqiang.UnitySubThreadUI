@@ -105,10 +105,15 @@ namespace huqiang
             {
                 Vector2 v = new Vector2(Scale.LayoutWidth, Scale.LayoutHeight);
                 UIPage.Root.data.sizeDelta = v;
+                if (Scale.DpiScale)
+                {
+                    var dr = Scale.DpiRatio;
+                    UIPage.Root.data.localScale = new Vector3(dr, dr, dr);
+                }
+                else UIPage.Root.data.localScale = Vector3.one;
                 UIPage.Root.IsChanged = true;
                 if (UIPage.CurrentPage != null)
                     UIPage.CurrentPage.ReSize();
-                UINotify.Root.data.sizeDelta = v;
                 UINotify.Root.IsChanged = true;
                 if (UINotify.CurrentPage != null)
                     UINotify.CurrentPage.ReSize();

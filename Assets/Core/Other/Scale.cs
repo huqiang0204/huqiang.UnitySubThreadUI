@@ -72,7 +72,7 @@ public class Scale
     static float ScreenCurrentWidth ;
     static float ScreenCurrentHeight;
 
-    public static float NormalDpi = 96;
+    public static float NormalDpi = 192;
     public static float ScreenDpi;
     public static float DpiRatio;
     public static void Initial()
@@ -87,14 +87,23 @@ public class Scale
         ScreenCurrentWidth = Screen.width;
         ScreenCurrentHeight = Screen.height;
     }
+    public static bool DpiScale;
     public static bool ScreenChanged()
     {
         if (ScreenCurrentWidth != ScreenWidth | ScreenCurrentHeight != ScreenHeight)
         {
             ScreenWidth = ScreenCurrentWidth;
             ScreenHeight = ScreenCurrentHeight;
-            LayoutWidth =  ScreenWidth/DpiRatio;
-            LayoutHeight = ScreenHeight/DpiRatio;
+            if(DpiScale)
+            {
+                LayoutWidth = ScreenWidth / DpiRatio;
+                LayoutHeight = ScreenHeight / DpiRatio;
+            }
+            else
+            {
+                LayoutWidth = ScreenWidth;
+                LayoutHeight = ScreenHeight;
+            }
             return true;
         }
         return false;

@@ -15,20 +15,15 @@ namespace huqiang.UIComposite
         {
             var eve = scroll.eventCall;
             var tar = scroll.eventCall.ScrollDistanceX;
-            float v = scroll.Point + tar;
+            float tx = scroll.Size.x * 0.5f;
+            float v = scroll.Point + tar + tx;
             float sx = scroll.ItemSize.x;
             float ox = v % sx;
             tar -= ox;
             if (ox > sx * 0.5f)
                 tar += sx;
+            tar += sx * 0.5f;
             scroll.eventCall.ScrollDistanceX = tar;
-            v = scroll.Point + tar + scroll.ScrollView.data.sizeDelta.x * 0.5f;
-            int i = (int)(v / sx);
-            int c = scroll.DataLength;
-            i %= c;
-            if (i < 0)
-                i += c - 1;
-            scroll.PreDockindex = i;
         }
         public EventCallBack eventCall;//scrollx自己的按钮
         protected float height;
@@ -56,9 +51,9 @@ namespace huqiang.UIComposite
         public bool ItemDockCenter;
         public int PreDockindex { get; private set; }
         public Vector2 ContentSize { get; private set; }
-        public ScrollX()
-        {
-        }
+        public bool DynamicSize = true;
+        Vector2 ctSize;
+        float ctScale;
 
         public override void Initial(ModelElement model)
         {
@@ -152,17 +147,29 @@ namespace huqiang.UIComposite
         }
         public void Calcul()
         {
-            float w = Size.x - ItemOffset.x;
-            w /= ItemSize.x;
-            Column = (int)w;
+            float w = Size.y - ItemOffset.y;
+            float dw = w / ItemSize.y;
+            Column = (int)dw;
             if (Column < 1)
                 Column = 1;
+            if (DynamicSize)
+            {
+                float dx = w / Column;
+                ctScale = dx / ItemSize.y;
+                ctSize.y = dx;
+                ctSize.x = ItemSize.x * ctScale;
+            }
+            else
+            {
+                ctSize = ItemSize;
+                ctScale = 1;
+            }
             int c = DataLength;
             int a = c % Column;
             c /= Column;
             if (a > 0)
                 c++;
-            height = c * ItemSize.x;
+            height = c * ctSize.x;
             if (height < Size.x)
                 height = Size.x;
             ActualSize = new Vector2(Size.x, height);
@@ -181,10 +188,6 @@ namespace huqiang.UIComposite
                 return;
             }
             if (ItemMod == null)
-            {
-                return;
-            }
-            if (ItemSize.x == 0)
             {
                 return;
             }
@@ -209,21 +212,17 @@ namespace huqiang.UIComposite
             {
                 return;
             }
-            if (ItemSize.x == 0)
-            {
-                return;
-            }
+            Calcul();
             float x = _index * ItemSize.x;
             m_point = x;
-            Calcul();
             Order(true);
         }
         void Order(bool force = false)
         {
             int len = DataLength;
-            float lx = ItemSize.x;
-            int sr = (int)(m_point / lx);//起始索引
-            int er = (int)((m_point + Size.x) / lx) + 1;
+            float lx = ctSize.x;
+            int sr = (int)(-m_point / lx);//起始索引
+            int er = (int)((-m_point + Size.x) / lx) + 1;
             sr *= Column;
             er *= Column;//结束索引
             int e = er - sr;//总计显示数据
@@ -268,15 +267,16 @@ namespace huqiang.UIComposite
         }
         void UpdateItem(int index, float ox, bool force)
         {
-            float lx = ItemSize.x;
+            float lx = ctSize.x;
             int row = index / Column;
             float dx = lx * row + ox;
-            dx -= m_point;
-            float ss = 0.5f * Size.x - 0.5f * lx;
-            dx = ss - dx;
-            float os = (index % Column) * ItemSize.x + ItemSize.x * 0.5f + ItemOffset.x - Size.x * 0.5f;
+            dx += m_point;
+            float ss = -0.5f * Size.x + 0.5f * lx;//x起点
+            dx = ss + dx;
+            float os = (index % Column) * ctSize.x + ctSize.x * 0.5f + ItemOffset.x - Size.x * 0.5f;
             var a = PopItem(index);
-            a.target.data.localPosition = new Vector3(os, dx, 0);
+            a.target.data.localPosition = new Vector3(dx, os, 0);
+            a.target.data.localScale = new Vector3(ctScale,ctScale,ctScale);
             Items.Add(a);
             if (a.index < 0 | force)
             {

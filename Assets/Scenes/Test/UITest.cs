@@ -1,5 +1,6 @@
 ﻿using huqiang.UI;
 using huqiang.UIComposite;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UITest : TestHelper
@@ -12,12 +13,16 @@ public class UITest : TestHelper
         public UIDate Date;
         public TreeView TreeView;
         public TextElement Log;
+        public ScrollX Scroll;
     }
     public Transform Sphere;
     Vector3 v;
     public override void LoadTestPage()
     {
         Application.targetFrameRate = 60;
+#if UNITY_IPHONE || UNITY_ANDROID
+        Scale.DpiScale = true;
+#endif
         var model = ModelManagerUI.FindModel("baseUI", "asd");
         model.SetParent(UIPage.Root);
         var view = model.ComponentReflection<View>();
@@ -46,6 +51,11 @@ public class UITest : TestHelper
         view.TreeView.nodes = node;
         view.TreeView.Refresh();
         view.Log.text = Scale.ScreenDpi.ToString();
+        List<int> testData = new List<int>();
+        for (int i = 0; i < 13; i++)
+            testData.Add(i);
+        view.Scroll.BindingData = testData;
+        view.Scroll.Refresh();
         //AnimationManage.Manage.ToDo(33,(o)=> {
         //    view.HTemplate.Context.texture = Palette.LoadCTemplate();
         //},null);

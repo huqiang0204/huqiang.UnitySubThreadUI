@@ -13,6 +13,12 @@ namespace huqiang.UIComposite
     {
         None, Loop, BounceBack
     }
+    public unsafe struct ScrollInfo
+    {
+        public Vector2 minBox;
+        public static int Size = sizeof(ScrollInfo);
+        public static int ElementSize = Size / 4;
+    }
     public class ScrollContent: ModelInital
     {
         static Type me = typeof(ModelElement);
@@ -188,7 +194,8 @@ namespace huqiang.UIComposite
             ScrollItem a = new ScrollItem();
             a.target = uI;
             a.obj = obj;
-            ModelManagerUI.ComponentReflection(uI,obj);
+            if (obj != null)
+                ModelManagerUI.ComponentReflection(uI, obj);
             if (Reflection != null)
                 Reflection(a, a.target);
             return a;
