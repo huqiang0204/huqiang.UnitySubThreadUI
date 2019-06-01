@@ -50,9 +50,5 @@ public class UITest : TestHelper
     public override void OnUpdate()
     {
         base.OnUpdate();
-        if(Sphere!=null)
-        {
-            Sphere.localPosition += v;
-        }
     }
 }

@@ -60,8 +60,10 @@ namespace huqiang.UIEvent
                 {
                     if(m_touch.active)
                     {
+#if !UNITY_STANDALONE_WIN
                         targetDisplay = m_touch.targetDisplay;
                         type = m_touch.type;
+#endif
                         selection = m_touch.selection;
                         text = m_touch.text;
                         canGetSelection = m_touch.canGetSelection;

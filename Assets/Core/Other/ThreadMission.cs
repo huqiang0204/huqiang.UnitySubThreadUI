@@ -39,7 +39,7 @@ namespace huqiang
             thread.Start();
             Id = thread.Id;
 #else
-               thread = new Thread(Run);
+            thread = new Thread(Run);
             are = new AutoResetEvent(false);
             run = true;
             thread.Start();

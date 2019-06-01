@@ -40,6 +40,7 @@ namespace huqiang
         public static void Initial(Transform uiRoot)
         {
             ThreadMission.SetMianId();
+            Scale.Initial();
             Initial();
             InitialUI();
             UIRoot = uiRoot as RectTransform;
@@ -79,8 +80,7 @@ namespace huqiang
         static float time;
         public static void Update()
         {
-            Scale.ScreenCurrentWidth = Screen.width;
-            Scale.ScreenCurrentHeight= Screen.height;
+            Scale.MainUpdate();
             UserAction.DispatchEvent();
             Keyboard.DispatchEvent();
             root.Apply();//更新UI
@@ -101,13 +101,9 @@ namespace huqiang
         }
         static void Resize()
         {
-            float w = Scale.ScreenCurrentWidth;
-            float h = Scale.ScreenCurrentHeight;
-            if (Scale.ScreenWidth != w | Scale.ScreenHeight != h)
+            if(Scale.ScreenChanged())
             {
-                Scale.ScreenWidth = w;
-                Scale.ScreenHeight = h;
-                Vector2 v = new Vector2(w, h);
+                Vector2 v = new Vector2(Scale.LayoutWidth, Scale.LayoutHeight);
                 UIPage.Root.data.sizeDelta = v;
                 UIPage.Root.IsChanged = true;
                 if (UIPage.CurrentPage != null)

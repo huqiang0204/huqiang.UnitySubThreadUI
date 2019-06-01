@@ -5,9 +5,6 @@ using System.Reflection;
 
 namespace huqiang
 {
-    public interface IView
-    {
-    }
     public class Model
     {
         public struct ConeData

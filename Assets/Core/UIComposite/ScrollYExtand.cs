@@ -19,8 +19,6 @@ namespace huqiang.UIComposite
         public ModelElement View;
         public Vector2 ActualSize;
         public Action<ScrollYExtand, Vector2> Scroll;
-        public ScrollYExtand()
-        { }
         public override void Initial(ModelElement model)
         {
             View = model;
