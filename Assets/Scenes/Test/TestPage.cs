@@ -50,7 +50,7 @@ public class TestPage : UIPage
         view.TreeView.Refresh();
         view.Log.text = Scale.ScreenDpi.ToString();
         List<int> testData = new List<int>();
-        for (int i = 0; i < 13; i++)
+        for (int i = 0; i <999; i++)
             testData.Add(i);
         view.Scroll.BindingData = testData;
         view.Scroll.ItemObject = typeof(Item);

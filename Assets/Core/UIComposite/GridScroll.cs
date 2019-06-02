@@ -62,6 +62,9 @@ namespace huqiang.UIComposite
             eventCall.CutRect = true;
             eventCall.ScrollEndX = OnScrollEndX;
             eventCall.ScrollEndY = OnScrollEndY;
+            model.SizeChanged = (o) => {
+                Refresh(Position);
+            };
         }
         void Scrolling(EventCallBack back, Vector2 v)
         {
@@ -71,7 +74,19 @@ namespace huqiang.UIComposite
                 return;
             v.x /= -eventCall.Context.data.localScale.x;
             v.y /= eventCall.Context.data.localScale.y;
-            v = Limit(back, v);
+            switch (scrollType)
+            {
+                case ScrollType.None:
+                    v = ScrollNone(back, ref v, ref Position.x, ref Position.y);
+                    break;
+                case ScrollType.Loop:
+                    v = ScrollLoop(back, ref v, ref Position.x, ref Position.y);
+                    break;
+                case ScrollType.BounceBack:
+                    v = BounceBack(back, ref v, ref Position.x, ref Position.y);
+                    break;
+            }
+            //v = Limit(back, v);
             Order();
             if (v != Vector2.zero)
             {
@@ -193,6 +208,7 @@ namespace huqiang.UIComposite
             y = Position.y - y;
             y += Size.y * 0.5f;
             item.target.data.localPosition = new Vector3(x, y, 0);
+            item.target.IsChanged = true;
         }
         /// <summary>
         /// 刷新到指定位置
@@ -309,7 +325,7 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (Position.x < 0)
+                if (Position.x < -0.25f)
                 {
                     back.DecayRateX = 0.988f;
                     float d = 0.25f - Position.x;
@@ -334,7 +350,7 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (Position.y < 0)
+                if (Position.y < -0.25f)
                 {
                     back.DecayRateY = 0.988f;
                     float d = 0.25f - Position.y;

@@ -33,7 +33,6 @@ namespace huqiang.UIComposite
         /// 滚动的当前位置，从0开始
         /// </summarx>
         public float Point { get { return m_point; } set { Refresh(0, value - m_point); } }
-        float m_pos = 0;
         /// <summarx>
         /// 0-1之间
         /// </summarx>

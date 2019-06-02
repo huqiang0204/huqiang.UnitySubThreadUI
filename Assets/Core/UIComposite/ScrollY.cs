@@ -32,7 +32,6 @@ namespace huqiang.UIComposite
         /// 滚动的当前位置，从0开始
         /// </summary>
         public float Point { get { return m_point; } set { Refresh(0,value - m_point); } }
-        float m_pos = 0;
         /// <summary>
         /// 0-1之间
         /// </summary>
@@ -80,8 +79,6 @@ namespace huqiang.UIComposite
         public Action<ScrollY, Vector2> Scroll;
         public Action<ScrollY> ScrollStart;
         public Action<ScrollY> ScrollEnd;
-        public Action<ScrollY> ScrollToTop;
-        public Action<ScrollY> ScrollToDown;
         void Draging(EventCallBack back, UserAction action, Vector2 v)
         {
             back.DecayRateY = 0.998f;
