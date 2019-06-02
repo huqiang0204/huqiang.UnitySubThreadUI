@@ -16,7 +16,11 @@ public class TestPage : UIPage
         public UIDate Date;
         public TreeView TreeView;
         public TextElement Log;
-        public ScrollX Scroll;
+        public ScrollY Scroll;
+    }
+    class Item
+    {
+        public TextElement Text;
     }
     public override void Initial(ModelElement parent, object dat = null)
     {
@@ -49,6 +53,11 @@ public class TestPage : UIPage
         for (int i = 0; i < 13; i++)
             testData.Add(i);
         view.Scroll.BindingData = testData;
+        view.Scroll.ItemObject = typeof(Item);
+        view.Scroll.ItemUpdate = (o, e, i) => {
+            (o as Item).Text.text = i.ToString();
+        };
         view.Scroll.Refresh();
+        
     }
 }

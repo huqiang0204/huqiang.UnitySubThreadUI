@@ -27,7 +27,7 @@ namespace huqiang.UIComposite
         }
         public EventCallBack eventCall;//scrollx自己的按钮
         protected float height;
-        int Column = 1;
+        int Row = 1;
         float m_point;
         /// <summarx>
         /// 滚动的当前位置，从0开始
@@ -167,14 +167,14 @@ namespace huqiang.UIComposite
         {
             float w = Size.y - ItemOffset.y;
             float dw = w / ItemSize.y;
-            Column = (int)dw;
-            if (Column < 1)
-                Column = 1;
+            Row = (int)dw;
+            if (Row < 1)
+                Row = 1;
             if (DynamicSize)
             {
-                float dx = w / Column;
-                ctScale = dx / ItemSize.y;
-                ctSize.y = dx;
+                float dy = w / Row;
+                ctScale = dy / ItemSize.y;
+                ctSize.y = dy;
                 ctSize.x = ItemSize.x * ctScale;
             }
             else
@@ -183,8 +183,8 @@ namespace huqiang.UIComposite
                 ctScale = 1;
             }
             int c = DataLength;
-            int a = c % Column;
-            c /= Column;
+            int a = c % Row;
+            c /= Row;
             if (a > 0)
                 c++;
             height = c * ctSize.x;
@@ -241,8 +241,8 @@ namespace huqiang.UIComposite
             float lx = ctSize.x;
             int sr = (int)(-m_point / lx);//起始索引
             int er = (int)((-m_point + Size.x) / lx) + 1;
-            sr *= Column;
-            er *= Column;//结束索引
+            sr *= Row;
+            er *= Row;//结束索引
             int e = er - sr;//总计显示数据
             if (e > len)
                 e = len;
@@ -286,12 +286,12 @@ namespace huqiang.UIComposite
         void UpdateItem(int index, float ox, bool force)
         {
             float lx = ctSize.x;
-            int row = index / Column;
-            float dx = lx * row + ox;
-            dx += m_point;
+            int col = index / Row;//列
+            float dx = lx * col + ox;//列起点
+            dx += m_point;//滚动框当前起点
             float ss = -0.5f * Size.x + 0.5f * lx;//x起点
             dx = ss + dx;
-            float os = (index % Column) * ctSize.x + ctSize.x * 0.5f + ItemOffset.x - Size.x * 0.5f;
+            float os = Size.y * 0.5f- ItemOffset.y - (index % Row) * ctSize.x - ctSize.x * 0.5f  ;//行起点
             var a = PopItem(index);
             a.target.data.localPosition = new Vector3(dx, os, 0);
             a.target.data.localScale = new Vector3(ctScale,ctScale,ctScale);
