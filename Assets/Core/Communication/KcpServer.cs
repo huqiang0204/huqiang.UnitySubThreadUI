@@ -1,43 +1,39 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 
 namespace huqiang
 {
     public class KcpServer<T>:KcpListener where T:KcpLink,new()
     {
         public static int SingleCount = 2048;
-        public LinkBuffer<T>[] linkBuff;
-        int maxLink;
+        public LinkThread<T>[] linkBuff;
         int tCount=0;
-        public Int32 allLink;
         public KcpServer(int port = 0, int remote = 0) :base(port,remote)
         {
             Instance = this;
+            Day = DateTime.Now.Day;
         }
         public void Run(int threadCount = 8,int threadbuff = 2048)
         {
             tCount = threadCount;
             if(tCount>0)
             {
-                linkBuff = new KcpThread<T>[threadCount];
+                linkBuff = new LinkThread<T>[threadCount];
                 for (int i = 0; i < threadCount; i++)
-                    linkBuff[i] = new KcpThread<T>(threadbuff);
+                    linkBuff[i] = new LinkThread<T>(threadbuff);
             }
             else
             {
                 tCount = 1;
-                linkBuff = new LinkBuffer<T>[1];
-                linkBuff[0] = new LinkBuffer<T>();
+                linkBuff = new LinkThread<T>[1];
+                linkBuff[0] = new LinkThread<T>();
             }
             Start();
         }
         public void Close()
         {
-#if UNITY_WSA
-            soc.Dispose();
-#else
             soc.Close();
-#endif
         }
         //设置用户的udp对象用于发送消息
         public T FindOrCreateLink(IPEndPoint ep)
@@ -49,14 +45,16 @@ namespace huqiang
                 fixed (byte* bp = &b[0])
                     ip = *(Int32*)bp;
             }
-            var link = FindLink(ip);
+            var link = FindLink(ip,ep.Port);
             if (link == null)
             {
                 link = new T();
                 link.envelope = new KcpEnvelope();
                 link.kcp = this;
                 link.ConnectTime = DateTime.Now.Ticks;
-                link._connect = true;
+                link.endpPoint = ep;
+                link.port = ep.Port;
+                link.ip = ip;
                 int s = 0;
                 int c = linkBuff[0].Count;
                 for (int i = 1; i < tCount; i++)
@@ -69,6 +67,7 @@ namespace huqiang
                 }
                 link.buffIndex = s;
                 linkBuff[s].Add(link);
+                link.Awake();
             }
             return link;
         }
@@ -77,17 +76,18 @@ namespace huqiang
             var link = FindOrCreateLink(ep);
             if(link!=null)
             {
+                link._connect = true;
                 link.metaData.Enqueue(dat);
             }
         }
         public override void RemoveLink(KcpLink link)
         {
             linkBuff[link.buffIndex].Delete(link);
-            maxLink--;
         }
         public override void Dispose()
         {
             base.Dispose();
+            soc.Close();
             Instance = null;
             for (int i = 0; i < tCount; i++)
                 linkBuff[i].running = false;
@@ -102,11 +102,11 @@ namespace huqiang
             }
             return null;
         }
-        public T FindLink(int ip)
+        public T FindLink(int ip,int port)
         {
             for (int i = 0; i < tCount; i++)
             {
-                var l = linkBuff[i].Find(ip);
+                var l = linkBuff[i].Find(ip, port);
                 if (l != null)
                     return l;
             }
@@ -114,6 +114,10 @@ namespace huqiang
         }
         ThreadTimer timer;
         static byte[] Heart = new byte[1];
+        static int Day;
+        /// <summary>
+        /// 开启心跳,防止超时断线
+        /// </summary>
         public void OpenHeart()
         {
             if(timer==null)
@@ -123,10 +127,7 @@ namespace huqiang
                     try
                     {
                         var dat = envelope.Pack(Heart, EnvelopeType.Mate);
-                        for(int i=0;i<tCount;i++)
-                        {
-                            linkBuff[i].SendAll(this, dat);
-                        }
+                        Broadcast(dat);
                     }
                     catch
                     {
@@ -134,6 +135,16 @@ namespace huqiang
                 };
             }
         }
+        public void Broadcast(byte[][] dat)
+        {
+            for (int i = 0; i < tCount; i++)
+            {
+                linkBuff[i].SendAll(this, dat);
+            }
+        }
+        /// <summary>
+        /// 关闭心跳
+        /// </summary>
         public void CloseHeart()
         {
             if(timer!=null)

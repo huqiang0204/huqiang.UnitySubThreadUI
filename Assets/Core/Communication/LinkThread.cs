@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace huqiang
 {
-    public class LinkBuffer<T> where T : KcpLink, new()
+    public class LinkBuffer<T> where T : NetworkLink, new()
     {
         protected T[] buffer;
         protected int max;
@@ -16,14 +16,15 @@ namespace huqiang
             buffer = new T[size];
             max = size;
         }
-        public T Find(int ip)
+        public T Find(int ip,int port)
         {
             for (int i = 0; i < top; i++)
             {
                 var link = buffer[i];
                 if (link != null)
                     if (link.ip == ip)
-                        return link;
+                        if (link.port == port)
+                            return link;
             }
             return null;
         }
@@ -55,6 +56,10 @@ namespace huqiang
                 buffer[index].Index = index;
         }
         public int Count { get { return top; } }
+        public T this[int index]
+        {
+            get { return buffer[index]; }
+        }
         public void SendAll(KcpListener soc, byte[] data)
         {
             for (int i = 0; i < top; i++)
@@ -87,39 +92,33 @@ namespace huqiang
             }
         }
     }
-    public class KcpThread<T> : LinkBuffer<T> where T : KcpLink, new()
+    public class LinkThread<T> : LinkBuffer<T> where T :NetworkLink, new()
     {
-#if UNITY_WSA
-        System.Threading.Tasks.Task thread;
-#else
-         Thread thread;
-#endif
-        public KcpThread(int size =2048):base (size)
+        Thread thread;
+        public LinkThread(int size =2048):base (size)
         {
             running = true;
-#if UNITY_WSA
-          System.Threading.Tasks.Task.Run(Run);
-#else
-                thread = new Thread(Run);
-               thread.Start();
-#endif
-
+            thread = new Thread(Run);
+            thread.Start();
         }
         void Run()
         {
             while (running)
             {
                 var now = DateTime.Now.Ticks;
-                Recive();
+                try
+                {
+                    Recive();
+                }
+                catch (Exception ex)
+                {
+                    UnityEngine.Debug.Log(ex.StackTrace);
+                }
                 long t = DateTime.Now.Ticks;
                 t -= now;
                 t /= 10000;
                 if (t < 10)
-#if UNITY_WSA
-                    System.Threading.Tasks.Task.Delay(10 - (int)t);
-#else
-                    Thread.Sleep(10 - (int)t);
-#endif
+                    Thread.Sleep(1);
             }
         }
     }

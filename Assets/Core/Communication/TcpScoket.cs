@@ -1,5 +1,4 @@
-﻿using huqiang.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -17,15 +16,11 @@ namespace huqiang
     {
         const int bufferSize = 262144;
         TcpEnvelope envelope;
-#if UNITY_WSA
-        System.Threading.Tasks.Task thread;
-#else
-         Thread thread;
-#endif
+        Thread thread;
         private Socket client = null;
         public bool isConnection { get { if (client == null) return false; return client.Connected; } }
         IPEndPoint iep;
-        QueueBuffer<SocData> queue;
+        Queue<SocData> queue;
         public TcpSocket(int bs = 262144,PackType type = PackType.All,int es = 262144)
         {
             buffer = new byte[bs];
@@ -35,7 +30,7 @@ namespace huqiang
                 envelope = new TcpEnvelope(es);
                 envelope.type = type;
             }
-            queue = new QueueBuffer<SocData>();
+            queue = new Queue<SocData>();
         }
         byte[] buffer;
         bool reConnect=false;
@@ -49,11 +44,7 @@ namespace huqiang
                     {
                         if (client.Connected)
                             client.Shutdown(SocketShutdown.Both);
-#if UNITY_WSA
-                       client.Dispose();
-#else
-            client.Close();
-#endif
+                        client.Close();
                     }
                     break;
                 }
@@ -66,11 +57,7 @@ namespace huqiang
                         {
                             if (client.Connected)
                                 client.Shutdown(SocketShutdown.Both);
-#if UNITY_WSA
-                            client.Dispose();
-#else
-            client.Close();
-#endif
+                            client.Close();
                             Connect();
                         }
                     }
@@ -78,11 +65,7 @@ namespace huqiang
                     {
                         try
                         {
-#if UNITY_WSA
-                            client.Dispose();
-#else
-            client.Close();
-#endif
+                            client.Close();
                         }
                         catch (Exception ex)
                         {
@@ -121,11 +104,7 @@ namespace huqiang
             catch (Exception ex)
             {
                 reConnect = true;
-#if UNITY_WSA
-                client.Dispose();
-#else
-            client.Close();
-#endif
+                client.Close();
                 if (ConnectFaild != null)
                     ConnectFaild(ex.StackTrace);
             }
@@ -160,7 +139,8 @@ namespace huqiang
                     {
                         SocData soc = new SocData();
                         soc.data = tmp;
-                        queue.Enqueue(soc);
+                        lock (queue)
+                            queue.Enqueue(soc);
                     }
                 }
             }
@@ -192,7 +172,8 @@ namespace huqiang
                 soc.data = data;
                 soc.tag =tag;
                 soc.obj = obj;
-                queue.Enqueue(soc);
+                lock (queue)
+                    queue.Enqueue(soc);
             }
         }
         unsafe int GetLenth(byte[] buff, int index)
@@ -233,12 +214,8 @@ namespace huqiang
             iep = remote;
             if (thread == null)
             {
-#if UNITY_WSA
-              thread =  System.Threading.Tasks.Task.Run(Run);
-#else
                 thread = new Thread(Run);
-               thread.Start();
-#endif
+                thread.Start();
             }
         }
         /// <summary>
@@ -256,10 +233,10 @@ namespace huqiang
                 SocData soc;
                 for (int i = 0; i < c; i++)
                 {
-                    soc = queue.Dequeue();
-                    if (soc != null)
-                        if (a_Dispatch != null)
-                            a_Dispatch(soc.data, soc.tag, soc.obj);
+                    lock (queue)
+                        soc = queue.Dequeue();
+                    if (a_Dispatch != null)
+                        a_Dispatch(soc.data, soc.tag, soc.obj);
                 }
             }
         }

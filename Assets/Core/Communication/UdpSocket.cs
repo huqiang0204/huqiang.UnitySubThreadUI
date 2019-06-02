@@ -11,11 +11,7 @@ namespace huqiang
     public class UdpSocket
     {
         Socket soc;
-#if UNITY_WSA
-        System.Threading.Tasks.Task thread;
-#else
-         Thread thread;
-#endif
+        Thread thread;
         TcpEnvelope envelope;
         IPEndPoint endPoint;
         public bool Packaging = false;
@@ -41,12 +37,8 @@ namespace huqiang
             auto = subThread;
             if (thread == null)
             {
-#if UNITY_WSA
-                thread = System.Threading.Tasks.Task.Run(Run);
-#else
                 thread = new Thread(Run);
-               thread.Start();
-#endif
+                thread.Start();
             }
             queue = new QueueBuffer<SocData>();
         }
@@ -82,7 +74,7 @@ namespace huqiang
                 }
                 catch (Exception ex)
                 {
-                    
+                    UnityEngine.Debug.Log(ex.StackTrace);
                 }
             }
         }
@@ -120,11 +112,7 @@ namespace huqiang
         }
         public void Close()
         {
-#if UNITY_WSA
-           soc.Dispose();
-#else
             soc.Close();
-#endif
             running = false;
         }
         public bool Send(byte[] dat, IPEndPoint point, byte tag)
@@ -136,7 +124,7 @@ namespace huqiang
                     var buf = envelope.Pack(dat, tag);
                     if (buf != null)
                         for (int i = 0; i < buf.Length; i++)
-                            soc.SendTo(buf[i],  point);
+                            soc.SendTo(buf[i], point);
                 }
                 else soc.SendTo(dat, point);
                 return true;
@@ -154,7 +142,7 @@ namespace huqiang
                 var buf = envelope.Pack(dat, tag);
                 if (buf != null)
                     for (int i = 0; i < buf.Length; i++)
-                        soc.SendTo(buf[i], ip);
+                        soc.SendTo(buf[i],  ip);
             }
             else soc.SendTo(dat, ip);
             endPoint.Address = IPAddress.Any;

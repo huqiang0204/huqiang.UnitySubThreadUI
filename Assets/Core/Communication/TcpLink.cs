@@ -3,42 +3,37 @@ using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Net;
-using UnityEngine;
-using System.Reflection;
 
 namespace huqiang
 {
     /// <summary>
     /// 客户端连接
     /// </summary>
-    public class TcpLinker
+    public class TcpLink:NetworkLink
     {
         //PlayerInfo playerInfo;
-        TcpEnvelope envelope;
+        TcpEnvelope envelope=new TcpEnvelope();
         internal Socket Link;
         byte[] buff;
-        public TcpLinker(Socket soc, PackType pack = PackType.All, int buffsize = 4096)
+        public void SetSocket(Socket soc,IPEndPoint end,PackType pack=PackType.All,int buffsize=4096)
         {
             Link = soc;
-            envelope = new TcpEnvelope();
             envelope.type = pack;
-            var obj = soc.RemoteEndPoint.GetType().GetProperty("Address");
-            addr = obj.GetValue(soc.RemoteEndPoint,null) as IPAddress;
-            //生成id
+            endpPoint = end;
+            addr = end.Address;
+            buff = new byte[buffsize];
             var buf = addr.GetAddressBytes();
             unsafe
             {
                 fixed (byte* bp = &buf[0])
                     ip = *(int*)bp;
             }
-            buff = new byte[buffsize];
+            port = end.Port;
         }
         public void SetPackType(PackType pack)
         {
             envelope.type = pack;
         }
-        public int ip;
-        public int port;
         //玩家登录ip
         public IPAddress addr;
         public int Send(byte[] data,byte type = EnvelopeType.Mate)
@@ -58,7 +53,7 @@ namespace huqiang
             }
             catch (Exception ex)
             {
-                Debug.Log(ex.StackTrace);
+                UnityEngine.Debug.Log(ex.StackTrace);
                 return -1;
             }
             return 0;
@@ -79,7 +74,7 @@ namespace huqiang
             }
             catch (Exception ex)
             {
-                Debug.Log(ex.StackTrace);
+                UnityEngine.Debug.Log(ex.StackTrace);
                 return -1;
             }
             return 0;
@@ -88,27 +83,19 @@ namespace huqiang
         {
             return Send(Encoding.UTF8.GetBytes(data));
         }
-        ~TcpLinker()
+        ~TcpLink()
         {
             if (Link != null)
                 lock (Link)
-#if UNITY_WSA
-                    Link.Dispose();
-#else
-             Link.Close();
-#endif
+                    Link.Close();
         }
         public virtual void Dispose()
         {
             if (Link != null)
                 lock (Link)
-#if UNITY_WSA
-                    Link.Dispose();
-#else
-             Link.Close();
-#endif
+                    Link.Close();
         }
-        public void Recive()
+        public override void Recive(long time)
         {
             try
             {
@@ -126,13 +113,12 @@ namespace huqiang
                         }
                     }catch (Exception ex)
                     {
-                        Debug.Log(ex);
+                        System.Diagnostics.Debug.WriteLine(ex);
                     }
                 }
             }
             catch (Exception ex)
             {
-              
             }
         }
         public virtual void Dispatch( byte[] dat, byte tag)

@@ -1,5 +1,4 @@
-﻿using huqiang.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -20,19 +19,15 @@ namespace huqiang
     public class UdpServer
     {
         Socket soc;
-#if UNITY_WSA
-        System.Threading.Tasks.Task thread;
-#else
-         Thread thread;
-#endif
+        Thread thread;
         int remotePort;
-        QueueBuffer<SocData> queue;
+        Queue<SocData> queue;
         public bool Packaging = true;
         bool running;
         bool auto;
         PackType packType = PackType.All;
         Int16 id = 10000;
-        static Int16 MinID = 11000;
+        static Int16 MinID=11000;
         static Int16 MaxID = 21000;
         /// <summary>
         /// UdpServer构造
@@ -42,25 +37,22 @@ namespace huqiang
         /// <param name="subThread"></param>
         public UdpServer(int port, int remote, bool subThread = true, PackType type = PackType.Total)
         {
-            queue = new QueueBuffer<SocData>(4096);
+            queue = new Queue<SocData>();
             packType = type;
             remotePort = remote;
             //udp服务器端口绑定
             IPEndPoint ip = new IPEndPoint(IPAddress.Any, port);
             soc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp); //new UdpClient(_port);//new IPEndPoint(IPAddress.Parse(ip),
             soc.Bind(ip);
+
             running = true;
             auto = subThread;
             links = new List<UdpLink>();
             if (thread == null)
             {
                 //创建消息接收线程
-#if UNITY_WSA
-               thread =  System.Threading.Tasks.Task.Run(Run);
-#else
                 thread = new Thread(Run);
-                 thread.Start();
-#endif
+                thread.Start();
             }
         }
         public void Send(byte[] dat, IPEndPoint ip, byte tag)
@@ -70,25 +62,25 @@ namespace huqiang
                 case PackType.Part:
                     var all = Envelope.SubVolume(dat, tag, id, 1472);
                     for (int i = 0; i < all.Length; i++)
-                        soc.SendTo(all[i], ip);
-                    id += (Int16)all.Length;
+                        soc.SendTo(all[i],  ip);
+                    id+=(Int16)all.Length;
                     if (id > MaxID)
                         id = MinID;
                     break;
                 case PackType.Total:
                     dat = Envelope.PackingInt(dat, tag);
-                    soc.SendTo(dat, ip);
+                    soc.SendTo(dat,  ip);
                     break;
                 case PackType.All:
                     all = Envelope.PackAll(dat, tag, id, 1472);//1472-25
                     for (int i = 0; i < all.Length; i++)
-                        soc.SendTo(all[i], ip);
+                        soc.SendTo(all[i],  ip);
                     id += (Int16)all.Length;
                     if (id > MaxID)
                         id = MinID;
                     break;
                 default:
-                    soc.SendTo(dat, ip);
+                    soc.SendTo(dat,  ip);
                     break;
             }
         }
@@ -126,7 +118,7 @@ namespace huqiang
                 {
                     var link = links[i];
                     for (int j = 0; j < dat.Length; j++)
-                        soc.SendTo(dat[j], link.endpPoint);
+                        soc.SendTo(dat[j],  link.endpPoint);
                 }
             }
         }
@@ -136,7 +128,7 @@ namespace huqiang
             {
                 for (int i = 0; i < links.Count; i++)
                 {
-                    soc.SendTo(dat, links[i].endpPoint);
+                    soc.SendTo(dat,  links[i].endpPoint);
                 }
             }
         }
@@ -173,7 +165,7 @@ namespace huqiang
                 }
                 catch (Exception ex)
                 {
-                    
+                    UnityEngine.Debug.Log(ex.StackTrace);
                 }
             }
         }
@@ -190,7 +182,8 @@ namespace huqiang
                 soc.data = data;
                 soc.tag = tag;
                 soc.obj = iP;
-                queue.Enqueue(soc);
+                lock (queue)
+                    queue.Enqueue(soc);
             }
 
         }
@@ -203,22 +196,18 @@ namespace huqiang
                 SocData soc;
                 for (int i = 0; i < c; i++)
                 {
-                    soc = queue.Dequeue();
-                    if (soc != null)
-                        if (MainDispatch != null)
-                            MainDispatch(soc.data, soc.tag, soc.obj as UdpLink);
+                    lock (queue)
+                        soc = queue.Dequeue();
+                    if (MainDispatch != null)
+                        MainDispatch(soc.data, soc.tag, soc.obj as UdpLink);
                 }
             }
             ClearUnusedLink();
         }
         public void Close()
         {
-            running = false;
-#if UNITY_WSA
-            soc.Dispose();
-#else
             soc.Close();
-#endif
+            running = false;
         }
         public List<UdpLink> links;
         //设置用户的udp对象用于发送消息

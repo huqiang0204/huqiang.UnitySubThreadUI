@@ -6,16 +6,12 @@ using System.Text;
 
 namespace huqiang
 {
-    public class KcpLink
+    public class KcpLink:NetworkLink
     {
         internal KcpListener kcp;
-        public int buffIndex;
-        public int Index;
         public Int64 id;
-        public Int32 ip;
-        public Int32 port;
         public string uniId;
-        public IPEndPoint endpPoint;
+
         public KcpEnvelope envelope = new KcpEnvelope();
      
         public QueueBuffer<byte[]> metaData = new QueueBuffer<byte[]>();
@@ -33,7 +29,7 @@ namespace huqiang
         protected long lastTime;
         internal bool _connect;
         public bool Connected { get { return _connect; } }
-        public void Recive(long now)
+        public override void Recive(long now)
         {
             int c = metaData.Count;
             byte[][] tmp = new byte[c][];
@@ -77,13 +73,16 @@ namespace huqiang
             ss = envelope.ValidateData.ToArray();
             envelope.ValidateData.Clear();//获取接收成功的数据
             for (int i = 0; i < ss.Length; i++)
-                kcp.soc.SendTo(ss[i], endpPoint);//通知对方接收数据成功
+                kcp.soc.SendTo(ss[i],  endpPoint);//通知对方接收数据成功
         }
         public void Send(byte[] data, byte type)
         {
             var ss = envelope.Pack(data, type);
             for (int i = 0; i < ss.Length; i++)
                 kcp.soc.SendTo(ss[i], endpPoint);
+        }
+        public virtual void Awake()
+        {
         }
         public virtual void Connect()
         {
