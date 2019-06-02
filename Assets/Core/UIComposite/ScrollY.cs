@@ -97,7 +97,22 @@ namespace huqiang.UIComposite
             if (ScrollView == null)
                 return;
             v.y /= eventCall.Context.data.localScale.y;
-            float y = Limit(back, v.y);
+            back.VelocityX = 0;
+            v.x = 0;
+            float x = 0;
+            float y = 0;
+            switch (scrollType)
+            {
+                case ScrollType.None:
+                    y = ScrollNone(back, ref v, ref x, ref m_point).y;
+                    break;
+                case ScrollType.Loop:
+                    y = ScrollLoop(back, ref v, ref x, ref m_point).y;
+                    break;
+                case ScrollType.BounceBack:
+                    y = BounceBack(back, ref v, ref x, ref m_point).y;
+                    break;
+            }
             Order();
             if (y != 0)
             {
@@ -114,7 +129,7 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (m_point < 0)
+                if (m_point < -0.25f)
                 {
                     back.DecayRateY = 0.988f;
                     float d = 0.25f - m_point;
@@ -239,7 +254,6 @@ namespace huqiang.UIComposite
                 e = er - sr;
                 RecycleOutside(sr, er);
             }
-       
             PushItems();//将未被回收的数据压入缓冲区
             int index = sr;
             float oy = 0;
@@ -286,74 +300,6 @@ namespace huqiang.UIComposite
             Size = size;
             ScrollView.data.sizeDelta = size;
             Refresh();
-        }
-        protected float Limit(EventCallBack callBack, float y)
-        {
-            var size = Size;
-            switch (scrollType)
-            {
-                case ScrollType.None:
-                    if (y == 0)
-                        return 0;
-                    float vy = m_point + y;
-                    if (vy < 0)
-                    {
-                        m_point = 0;
-                        eventCall.VelocityY = 0;
-                        if (ScrollToTop != null)
-                            ScrollToTop(this);
-                        return 0;
-                    }
-                    else if (vy + size.y > ActualSize.y)
-                    {
-                        m_point = ActualSize.y - size.y;
-                        eventCall.VelocityY = 0;
-                        if (ScrollToDown != null)
-                            ScrollToDown(this);
-                        return 0;
-                    }
-                    m_point += y;
-                    break;
-                case ScrollType.Loop:
-                    if (y == 0)
-                        return 0;
-                    m_point += y;
-                    float ay = ActualSize.y;
-                    if (m_point < 0)
-                        m_point += ay;
-                    else if (m_point > ay)
-                        m_point %= ay;
-                    break;
-                case ScrollType.BounceBack:
-                    m_point += y;
-                    if (!callBack.Pressed)
-                    {
-                        if (m_point < 0)
-                        {
-                            if (y < 0)
-                            {
-                                if (eventCall.DecayRateY >= 0.99f)
-                                {
-                                    eventCall.DecayRateY = 0.9f;
-                                    eventCall.VelocityY = eventCall.VelocityY;
-                                }
-                            }
-                        }
-                        else if (m_point + size.y > ActualSize.y)
-                        {
-                            if (y > 0)
-                            {
-                                if (eventCall.DecayRateY >= 0.99f)
-                                {
-                                    eventCall.DecayRateY = 0.9f;
-                                    eventCall.VelocityY = eventCall.VelocityY;
-                                }
-                            }
-                        }
-                    }
-                    break;
-            }
-            return y;
         }
         public static ScrollItem GetCenterItem(List<ScrollItem> items)
         {

@@ -16,7 +16,7 @@ public class TestPage : UIPage
         public UIDate Date;
         public TreeView TreeView;
         public TextElement Log;
-        public ScrollY Scroll;
+        public ScrollX Scroll;
     }
     public override void Initial(ModelElement parent, object dat = null)
     {

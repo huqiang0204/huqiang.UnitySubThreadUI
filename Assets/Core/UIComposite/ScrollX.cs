@@ -110,7 +110,22 @@ namespace huqiang.UIComposite
             if (ScrollView == null)
                 return;
             v.x /= eventCall.Context.data.localScale.x;
-            float x = Limit(back, v.x);
+            back.VelocityY = 0;
+            v.y = 0;
+            float x = 0;
+            float y = 0;
+            switch (scrollType)
+            {
+                case ScrollType.None:
+                    x = ScrollNone(back, ref v, ref m_point, ref y).x;
+                    break;
+                case ScrollType.Loop:
+                    x = ScrollLoop(back, ref v, ref m_point, ref y).x;
+                    break;
+                case ScrollType.BounceBack:
+                    x = BounceBack(back, ref v, ref m_point, ref y).x;
+                    break;
+            }
             Order();
             if (x != 0)
             {
@@ -127,7 +142,7 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (m_point < 0)
+                if (m_point < -0.25f)
                 {
                     back.DecayRateX = 0.988f;
                     float d = 0.25f - m_point;
@@ -299,74 +314,6 @@ namespace huqiang.UIComposite
             Size = size;
             ScrollView.data.sizeDelta = size;
             Refresh();
-        }
-        protected float Limit(EventCallBack callBack, float x)
-        {
-            var size = Size;
-            switch (scrollType)
-            {
-                case ScrollType.None:
-                    if (x == 0)
-                        return 0;
-                    float vx = m_point + x;
-                    if (vx < 0)
-                    {
-                        m_point = 0;
-                        eventCall.VelocityX = 0;
-                        if (ScrollToTop != null)
-                            ScrollToTop(this);
-                        return 0;
-                    }
-                    else if (vx + size.x > ActualSize.x)
-                    {
-                        m_point = ActualSize.x - size.x;
-                        eventCall.VelocityX = 0;
-                        if (ScrollToDown != null)
-                            ScrollToDown(this);
-                        return 0;
-                    }
-                    m_point += x;
-                    break;
-                case ScrollType.Loop:
-                    if (x == 0)
-                        return 0;
-                    m_point += x;
-                    float ax = ActualSize.x;
-                    if (m_point < 0)
-                        m_point += ax;
-                    else if (m_point > ax)
-                        m_point %= ax;
-                    break;
-                case ScrollType.BounceBack:
-                    m_point += x;
-                    if (!callBack.Pressed)
-                    {
-                        if (m_point < 0)
-                        {
-                            if (x < 0)
-                            {
-                                if (eventCall.DecayRateX >= 0.99f)
-                                {
-                                    eventCall.DecayRateX = 0.9f;
-                                    eventCall.VelocityX = eventCall.VelocityX;
-                                }
-                            }
-                        }
-                        else if (m_point + size.x > ActualSize.x)
-                        {
-                            if (x > 0)
-                            {
-                                if (eventCall.DecayRateX >= 0.99f)
-                                {
-                                    eventCall.DecayRateX = 0.9f;
-                                    eventCall.VelocityX = eventCall.VelocityX;
-                                }
-                            }
-                        }
-                    }
-                    break;
-            }
-            return x;
         }
     }
 }

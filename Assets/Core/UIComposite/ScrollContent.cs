@@ -1,5 +1,6 @@
 ﻿using huqiang.Data;
 using huqiang.UI;
+using huqiang.UIEvent;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -126,9 +127,6 @@ namespace huqiang.UIComposite
         public List<ScrollItem> Items=new List<ScrollItem>();
         List<ScrollItem> Buffer=new List<ScrollItem>();
         List<ScrollItem> Recycler = new List<ScrollItem>();
-        public ScrollContent()
-        {
-        }
         /// <summary>
         /// 当无法使用跨域反射时，使用此委托进行间接反射
         /// </summary>
@@ -294,6 +292,220 @@ namespace huqiang.UIComposite
             {
                 items[i].target.activeSelf = false;
             }
+        }
+        public Action<ScrollContent> ScrollToStartX;
+        public Action<ScrollContent> ScrollToEndX;
+        public Action<ScrollContent> ScrollToStartY;
+        public Action<ScrollContent> ScrollToEndY;
+        protected  float LimitS(EventCallBack callBack, float v,ref float point,bool h)
+        {
+            var size = Size;
+            switch (scrollType)
+            {
+                case ScrollType.None:
+                    if (v == 0)
+                        return 0;
+                    float vy = point + v;
+                    if (vy < 0)
+                    {
+                        point = 0;
+                        if (h)
+                        {
+                            callBack.VelocityX = 0;
+                            if (ScrollToStartX != null)
+                                ScrollToStartX(this);
+                        }
+                        else
+                        {
+                            callBack.VelocityY = 0;
+                            if (ScrollToStartY != null)
+                                ScrollToStartY(this);
+                        }
+                     
+                        return 0;
+                    }
+                    else if (vy + size.y > ActualSize.y)
+                    {
+                        point = ActualSize.y - size.y;
+                        if(h)
+                        {
+                            callBack.VelocityX = 0;
+                            if (ScrollToEndX != null)
+                                ScrollToEndX(this);
+                        }
+                        else
+                        {
+                            callBack.VelocityY = 0;
+                            if (ScrollToEndY != null)
+                                ScrollToEndY(this);
+                        }
+                        return 0;
+                    }
+                    point += v;
+                    break;
+                case ScrollType.Loop:
+                    if (v == 0)
+                        return 0;
+                    point += v;
+                    float ay = 0;
+                    if (h)
+                        ay = ActualSize.x;
+                    else ay = ActualSize.y;
+                    if (point < 0)
+                        point += ay;
+                    else if (point > ay)
+                        point %= ay;
+                    break;
+                case ScrollType.BounceBack:
+                    point += v;
+                    if (!callBack.Pressed)
+                    {
+                        if (point < 0)
+                        {
+                            if (v < 0)
+                            {
+                                if(h)
+                                {
+                                    if (callBack.DecayRateX >= 0.99f)
+                                    {
+                                        callBack.DecayRateX = 0.9f;
+                                        callBack.VelocityX = callBack.VelocityX;
+                                    }
+                                }
+                                else
+                                {
+                                    if (callBack.DecayRateY >= 0.99f)
+                                    {
+                                        callBack.DecayRateY = 0.9f;
+                                        callBack.VelocityY = callBack.VelocityY;
+                                    }
+                                }
+                            }
+                        }
+                        else if (point + size.y > ActualSize.y)
+                        {
+                            if (v > 0)
+                            {
+                                if(h)
+                                {
+                                    if (callBack.DecayRateX >= 0.99f)
+                                    {
+                                        callBack.DecayRateX = 0.9f;
+                                        callBack.VelocityX = callBack.VelocityX;
+                                    }
+                                }
+                                else
+                                {
+                                    if (callBack.DecayRateY >= 0.99f)
+                                    {
+                                        callBack.DecayRateY = 0.9f;
+                                        callBack.VelocityY = callBack.VelocityY;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+            return v;
+        }
+        protected Vector2 ScrollNone(EventCallBack eventCall,ref Vector2 v,ref float x,ref float y)
+        {
+            Vector2 v2 = Vector2.zero;
+            float vx = x + v.x;
+            if (vx < 0)
+            {
+                x = 0;
+                eventCall.VelocityX = 0;
+                v.x = 0;
+            }
+            else if (vx + Size.x > ActualSize.x)
+            {
+                x = ActualSize.x - Size.x;
+                eventCall.VelocityX = 0;
+                v.x = 0;
+            }
+            else
+            {
+                x += v.x;
+                v2.x = v.x;
+            }
+            float vy = y + v.y;
+            if (vy < 0)
+            {
+                y = 0;
+                eventCall.VelocityY = 0;
+                v.y = 0;
+            }
+            else if (vy + Size.y > ActualSize.y)
+            {
+                y = ActualSize.y - Size.y;
+                eventCall.VelocityY = 0;
+                v.y = 0;
+            }
+            else
+            {
+                y += v.y;
+                v2.y = v.y;
+            }
+            return v2;
+        }
+        protected Vector2 ScrollLoop(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
+        {
+            x += v.x;
+            y += v.y;
+            if(x<0)
+                x+= ActualSize.x;
+            else x %= ActualSize.x;
+            if (y < 0)
+                y += ActualSize.y;
+            else y %= ActualSize.y;
+            return v;
+        }
+        protected Vector2 BounceBack(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
+        {
+            x += v.x;
+            y += v.y;
+            if (!eventCall.Pressed)
+            {
+                if (x < 0)
+                {
+                    if (v.x < 0)
+                        if (eventCall.DecayRateX >= 0.99f)
+                        {
+                            eventCall.DecayRateX = 0.9f;
+                            eventCall.VelocityX = eventCall.VelocityX;
+                        }
+                }
+                else if (x + Size.x > ActualSize.x)
+                {
+                    if (v.x > 0)
+                        if (eventCall.DecayRateX >= 0.99f)
+                        {
+                            eventCall.DecayRateX = 0.9f;
+                            eventCall.VelocityX = eventCall.VelocityX;
+                        }
+                }
+                if (y < 0)
+                {
+                    if (v.y < 0)
+                        if (eventCall.DecayRateY >= 0.99f)
+                        {
+                            eventCall.DecayRateY = 0.9f;
+                            eventCall.VelocityY = eventCall.VelocityY;
+                        }
+                }
+                else if (y + Size.y > ActualSize.y)
+                {
+                    if (v.y > 0)
+                        if (eventCall.DecayRateY >= 0.99f)
+                        {
+                            eventCall.DecayRateY = 0.9f;
+                            eventCall.VelocityY = eventCall.VelocityY;
+                        }
+                }
+            }
+            return v;
         }
     }
 }
