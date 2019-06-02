@@ -72,7 +72,7 @@ namespace huqiang.UIComposite
                 return;
             if (BindingData == null)
                 return;
-            v.x /= -eventCall.Context.data.localScale.x;
+            v.x /= eventCall.Context.data.localScale.x;
             v.y /= eventCall.Context.data.localScale.y;
             switch (scrollType)
             {
@@ -86,7 +86,6 @@ namespace huqiang.UIComposite
                     v = BounceBack(back, ref v, ref Position.x, ref Position.y);
                     break;
             }
-            //v = Limit(back, v);
             Order();
             if (v != Vector2.zero)
             {
@@ -325,22 +324,28 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (Position.x < -0.25f)
+                if (Position.x < -Tolerance)
                 {
                     back.DecayRateX = 0.988f;
-                    float d = 0.25f - Position.x;
-                    back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
-                }
-                else if (Position.x + Size.x > ActualSize.x)
-                {
-                    back.DecayRateX = 0.988f;
-                    float d = ActualSize.x - Position.x - Size.x - 0.25f;
+                    float d =  - Position.x;
                     back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                 }
                 else
                 {
-                    if (ScrollEnd != null)
-                        ScrollEnd(this);
+                    float max = ActualSize.x+Tolerance;
+                    if (max < Size.x)
+                        max = Size.x + Tolerance;
+                    if (Position.x + Size.x >max)
+                    {
+                        back.DecayRateX = 0.988f;
+                        float d = ActualSize.x - Position.x - Size.x;
+                        back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
+                    }
+                    else
+                    {
+                        if (ScrollEnd != null)
+                            ScrollEnd(this);
+                    }
                 }
             }
             else if (ScrollEnd != null)
@@ -350,22 +355,28 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (Position.y < -0.25f)
+                if (Position.y < -Tolerance)
                 {
                     back.DecayRateY = 0.988f;
-                    float d = 0.25f - Position.y;
-                    back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
-                }
-                else if (Position.y + Size.y > ActualSize.y)
-                {
-                    back.DecayRateY = 0.988f;
-                    float d = ActualSize.y - Position.y - Size.y - 0.25f;
+                    float d = - Position.y;
                     back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
                 }
                 else
                 {
-                    if (ScrollEnd != null)
-                        ScrollEnd(this);
+                    float max = ActualSize.y+Tolerance;
+                    if (max < Size.y)
+                        max = Size.y + Tolerance;
+                    if (Position.y + Size.y > max)
+                    {
+                        back.DecayRateY = 0.988f;
+                        float d = ActualSize.y - Position.y - Size.y ;
+                        back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
+                    }
+                    else
+                    {
+                        if (ScrollEnd != null)
+                            ScrollEnd(this);
+                    }
                 }
             }
             else if (ScrollEnd != null)

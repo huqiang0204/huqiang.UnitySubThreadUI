@@ -16,7 +16,8 @@ public class TestPage : UIPage
         public UIDate Date;
         public TreeView TreeView;
         public TextElement Log;
-        public ScrollY Scroll;
+        public GridScroll Scroll;
+        public ScrollXS ScrollX;
     }
     class Item
     {
@@ -50,14 +51,22 @@ public class TestPage : UIPage
         view.TreeView.Refresh();
         view.Log.text = Scale.ScreenDpi.ToString();
         List<int> testData = new List<int>();
-        for (int i = 0; i <999; i++)
+        for (int i = 0; i <166; i++)
             testData.Add(i);
+        //view.ScrollX.scroll.BindingData = testData;
+        //view.ScrollX.scroll.ItemObject = typeof(Item);
+        //view.ScrollX.scroll.ItemUpdate = (o, e, i) => {
+        //    (o as Item).Text.text = i.ToString();
+        //};
+        //view.Scroll.Refresh();
+
         view.Scroll.BindingData = testData;
         view.Scroll.ItemObject = typeof(Item);
+        view.Scroll.Column = 16;
         view.Scroll.ItemUpdate = (o, e, i) => {
             (o as Item).Text.text = i.ToString();
         };
         view.Scroll.Refresh();
-        
+
     }
 }

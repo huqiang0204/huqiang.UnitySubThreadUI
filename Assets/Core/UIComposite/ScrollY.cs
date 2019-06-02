@@ -126,22 +126,28 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (m_point < -0.25f)
+                if (m_point < -Tolerance)
                 {
                     back.DecayRateY = 0.988f;
-                    float d = 0.25f - m_point;
-                    back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
-                }
-                else if (m_point + Size.y > ActualSize.y)
-                {
-                    back.DecayRateY = 0.988f;
-                    float d = ActualSize.y - m_point - Size.y - 0.25f;
+                    float d = - m_point;
                     back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
                 }
                 else
                 {
-                    if (ScrollEnd != null)
-                        ScrollEnd(this);
+                    float max = ActualSize.y + Tolerance;
+                    if (max < Size.y)
+                        max = Size.y + Tolerance;
+                    if (m_point + Size.y > max)
+                    {
+                        back.DecayRateY = 0.988f;
+                        float d = ActualSize.y - m_point - Size.y;
+                        back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
+                    }
+                    else
+                    {
+                        if (ScrollEnd != null)
+                            ScrollEnd(this);
+                    }
                 }
             }
             else if (ScrollEnd != null)

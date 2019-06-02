@@ -26,7 +26,7 @@ namespace huqiang.UIComposite
             scroll.eventCall.ScrollDistanceX = tar;
         }
         public EventCallBack eventCall;//scrollx自己的按钮
-        protected float height;
+        protected float width;
         int Row = 1;
         float m_point;
         /// <summarx>
@@ -141,22 +141,28 @@ namespace huqiang.UIComposite
         {
             if (scrollType == ScrollType.BounceBack)
             {
-                if (m_point < -0.25f)
+                if (m_point < -Tolerance)
                 {
                     back.DecayRateX = 0.988f;
-                    float d = 0.25f - m_point;
-                    back.ScrollDistanceX = d * eventCall.Context.data.localScale.x;
-                }
-                else if (m_point + Size.x > ActualSize.x)
-                {
-                    back.DecayRateX = 0.988f;
-                    float d = ActualSize.x - m_point - Size.x - 0.25f;
-                    back.ScrollDistanceX = d * eventCall.Context.data.localScale.x;
+                    float d = -m_point;
+                    back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                 }
                 else
                 {
-                    if (ScrollEnd != null)
-                        ScrollEnd(this);
+                    float max = ActualSize.x + Tolerance;
+                    if (max < Size.x)
+                        max = Size.x + Tolerance;
+                    if (m_point + Size.x > max)
+                    {
+                        back.DecayRateX = 0.988f;
+                        float d = ActualSize.x - m_point - Size.x ;
+                        back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
+                    }
+                    else
+                    {
+                        if (ScrollEnd != null)
+                            ScrollEnd(this);
+                    }
                 }
             }
             else if (ScrollEnd != null)
@@ -186,10 +192,10 @@ namespace huqiang.UIComposite
             c /= Row;
             if (a > 0)
                 c++;
-            height = c * ctSize.x;
-            if (height < Size.x)
-                height = Size.x;
-            ActualSize = new Vector2(Size.x, height);
+            width = c * ctSize.x;
+            if (width < Size.x)
+                width = Size.x;
+            ActualSize = new Vector2(width, Size.y);
         }
         public override void Refresh(float x = 0, float y = 0)
         {
@@ -238,8 +244,8 @@ namespace huqiang.UIComposite
         {
             int len = DataLength;
             float lx = ctSize.x;
-            int sr = (int)(-m_point / lx);//起始索引
-            int er = (int)((-m_point + Size.x) / lx) + 1;
+            int sr = (int)(m_point / lx);//起始索引
+            int er = (int)((m_point + Size.x) / lx) + 1;
             sr *= Row;
             er *= Row;//结束索引
             int e = er - sr;//总计显示数据
@@ -287,7 +293,7 @@ namespace huqiang.UIComposite
             float lx = ctSize.x;
             int col = index / Row;//列
             float dx = lx * col + ox;//列起点
-            dx += m_point;//滚动框当前起点
+            dx -= m_point;//滚动框当前起点
             float ss = -0.5f * Size.x + 0.5f * lx;//x起点
             dx = ss + dx;
             float os = Size.y * 0.5f- ItemOffset.y - (index % Row) * ctSize.x - ctSize.x * 0.5f  ;//行起点

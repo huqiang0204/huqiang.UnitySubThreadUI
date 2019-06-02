@@ -22,6 +22,7 @@ namespace huqiang.UIComposite
     }
     public class ScrollContent: ModelInital
     {
+        public static float Tolerance = 0.25f;
         static Type me = typeof(ModelElement);
         public ScrollType scrollType=ScrollType.BounceBack;
         public static readonly Vector2 Center = new Vector2(0.5f, 0.5f);
@@ -296,7 +297,7 @@ namespace huqiang.UIComposite
         protected Vector2 ScrollNone(EventCallBack eventCall,ref Vector2 v,ref float x,ref float y)
         {
             Vector2 v2 = Vector2.zero;
-            float vx = x + v.x;
+            float vx = x - v.x;
             if (vx < 0)
             {
                 x = 0;
@@ -311,7 +312,7 @@ namespace huqiang.UIComposite
             }
             else
             {
-                x += v.x;
+                x -= v.x;
                 v2.x = v.x;
             }
             float vy = y + v.y;
@@ -336,7 +337,7 @@ namespace huqiang.UIComposite
         }
         protected Vector2 ScrollLoop(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
         {
-            x += v.x;
+            x -= v.x;
             y += v.y;
             if(x<0)
                 x+= ActualSize.x;
@@ -348,7 +349,7 @@ namespace huqiang.UIComposite
         }
         protected Vector2 BounceBack(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
         {
-            x += v.x;
+            x -= v.x;
             y += v.y;
             if (!eventCall.Pressed)
             {
