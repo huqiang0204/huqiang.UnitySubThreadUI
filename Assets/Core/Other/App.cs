@@ -82,6 +82,7 @@ namespace huqiang
         public static void Update()
         {
             Scale.MainUpdate();
+           
             UserAction.DispatchEvent();
             Keyboard.DispatchEvent();
             root.Apply();//更新UI

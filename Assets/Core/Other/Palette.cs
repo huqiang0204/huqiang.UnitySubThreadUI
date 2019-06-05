@@ -89,6 +89,7 @@ namespace huqiang.Other
         }
         public static void HSVTemplate(float H,Color[] buffer)
         {
+            int len = buffer.Length;
             int index = 0;
             float V = 0;
             for (int d = 0; d < 256; d++)
@@ -96,11 +97,13 @@ namespace huqiang.Other
                 float S = 0;
                 for (int t = 0; t < 256; t++)
                 {
-                    buffer[index]= Color.HSVToRGB(H,S,V);
+                    var col= buffer[index]= Color.HSVToRGB(H,S,V);
                     index++;
-                    S += 0.0039216f;
+                    if (index >= len)
+                        index = 0;
+                    S += 0.00392156f;
                 }
-                V += 0.0039216f;
+                V += 0.00392156f;
             }
         }
         static void HTemplate(Color[] buffer)

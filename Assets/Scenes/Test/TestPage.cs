@@ -49,7 +49,7 @@ public class TestPage : UIPage
         }
         view.TreeView.nodes = node;
         view.TreeView.Refresh();
-        view.Log.text = Scale.ScreenDpi.ToString();
+        view.Log.text = Scale.LayoutWidth.ToString();
         List<int> testData = new List<int>();
         for (int i = 0; i <166; i++)
             testData.Add(i);

@@ -23,11 +23,13 @@ public class TestHelper:UICompositeHelp
         ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
         ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
     }
-    static void LoadBundle()
+    public virtual void LoadBundle()
     {
+#if UNITY_EDITOR
         if (ElementAsset.bundles.Count == 0)
         {
-            var dic = Application.dataPath + "/StreamingAssets";
+            //var dic = Application.dataPath + "/StreamingAssets";
+            var dic = Application.streamingAssetsPath;
             if (Directory.Exists(dic))
             {
                 var bs = Directory.GetFiles(dic, "*.unity3d");
@@ -37,6 +39,7 @@ public class TestHelper:UICompositeHelp
                 }
             }
         }
+#endif
     }
     public string AssetName = "baseUI";
     private void Awake()

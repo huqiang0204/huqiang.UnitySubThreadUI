@@ -340,7 +340,7 @@ MonoBehaviour:
   scaleType: 0
   sizeType: 2
   anchorType: 0
-  parentType: 0
+  parentType: 1
   margin:
     left: 0
     down: 0
@@ -2565,7 +2565,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1642023166}
   - component: {fileID: 1642023169}
-  - component: {fileID: 1642023170}
   - component: {fileID: 1642023167}
   m_Layer: 0
   m_Name: Scroll
@@ -2614,28 +2613,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642023165}
   m_CullTransparentMesh: 0
---- !u!114 &1642023170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1642023165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61abd668d4d85f94b95f3393a082d7ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scaleType: 0
-  sizeType: 2
-  anchorType: 0
-  parentType: 1
-  margin:
-    left: 0
-    down: 0
-    right: 0
-    top: 0
-  DesignSize: {x: 0, y: 0}
 --- !u!1 &1724157739
 GameObject:
   m_ObjectHideFlags: 0
