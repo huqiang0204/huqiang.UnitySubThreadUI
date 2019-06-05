@@ -30,4 +30,19 @@ namespace huqiang.UI
             return fake;
         }
     }
+    public class RectMaskElement : DataConversion
+    {
+        public RectMask2D Context;
+        public override void LoadToObject(Component game)
+        {
+            var a = game.GetComponent<RectMask2D>();
+            if (a == null)
+                return;
+            Context = a;
+        }
+        public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
+        {
+            return null;
+        }
+    }
 }

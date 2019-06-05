@@ -210,7 +210,7 @@ namespace huqiang.UIComposite
         }
         void AddCenterArea()
         {
-
+            
         }
         void AddLeftArea()
         {

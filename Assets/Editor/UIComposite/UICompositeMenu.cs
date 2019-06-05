@@ -46,8 +46,7 @@ public static class UICompositeMenu
             rect.SetParent(parent.transform);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
-        ss.AddComponent<Image>();
-        ss.AddComponent<Mask>().showMaskGraphic = false;
+        ss.AddComponent<RectMask2D>();
         var Item = new GameObject("Item", typeof(RectTransform));
         var fr = Item.transform as RectTransform;
         fr.sizeDelta = new Vector2(80, 80);
@@ -71,8 +70,7 @@ public static class UICompositeMenu
         rect.sizeDelta = new Vector2(400, 400);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
-        ss.AddComponent<Image>();
-        ss.AddComponent<Mask>().showMaskGraphic = false;
+        ss.AddComponent<RectMask2D>();
         var Item = new GameObject("Item", typeof(RectTransform));
         var fr = Item.transform as RectTransform;
         fr.sizeDelta = new Vector2(80, 80);
@@ -116,8 +114,7 @@ public static class UICompositeMenu
         rect.sizeDelta = new Vector2(400, 400);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
-        ss.AddComponent<Image>();
-        ss.AddComponent<Mask>().showMaskGraphic = false;
+        ss.AddComponent<RectMask2D>();
         var Item = new GameObject("Item", typeof(RectTransform));
         var fr = Item.transform as RectTransform;
         fr.sizeDelta = new Vector2(80, 80);
@@ -256,8 +253,7 @@ public static class UICompositeMenu
         fr.SetParent(rect);
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
-        Month.AddComponent<Image>();
-        Month.AddComponent<Mask>().showMaskGraphic = false;
+        Month.AddComponent<RectMask2D>();
 
         Item = new GameObject("Item", typeof(RectTransform));
         fn = Item.transform as RectTransform;
@@ -276,8 +272,7 @@ public static class UICompositeMenu
         fr.SetParent(rect);
         fr.localPosition = new Vector3(120, 0, 0);
         fr.localScale = Vector3.one;
-        Day.AddComponent<Image>();
-        Day.AddComponent<Mask>().showMaskGraphic = false;
+        Day.AddComponent<RectMask2D>();
 
         Item = new GameObject("Item", typeof(RectTransform));
         fn = Item.transform as RectTransform;
@@ -301,8 +296,7 @@ public static class UICompositeMenu
             rect.SetParent(parent.transform);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
-        ss.AddComponent<Image>();
-        ss.AddComponent<Mask>().showMaskGraphic = false;
+        ss.AddComponent<RectMask2D>();
         var Item = new GameObject("Item", typeof(RectTransform));
         var fr = Item.transform as RectTransform;
         fr.sizeDelta = new Vector2(200, 40);
@@ -339,8 +333,7 @@ public static class UICompositeMenu
         scr.SetParent(rect);
         scr.localPosition = new Vector3(0,-220,0);
         scr.localScale = Vector3.one;
-        ss.AddComponent<Image>();
-        ss.AddComponent<Mask>().showMaskGraphic = false;
+        ss.AddComponent<RectMask2D>();
 
         var Item = new GameObject("Item", typeof(RectTransform));
         fr = Item.transform as RectTransform;
