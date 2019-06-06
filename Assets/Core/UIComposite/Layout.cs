@@ -18,12 +18,17 @@ namespace huqiang.UIComposite
         public Layout layout;
         EventCallBack callBack;
         public Direction direction { get; private set; }
-        public LayoutLine(Layout lay,ModelElement mod,Direction dir,bool fix=false)
+        /// <summary>
+        /// 需要绘制线
+        /// </summary>
+        public bool realLine { get; private set; }
+        public LayoutLine(Layout lay,ModelElement mod,Direction dir,bool real=true)
         {
+            realLine= real;
             layout = lay;
             layout.lines.Add(this);
             model = mod;
-            if (!fix)
+            if (real)
             {
                 callBack = EventCallBack.RegEvent<EventCallBack>(model);
                 callBack.Drag = Drag;
@@ -212,15 +217,25 @@ namespace huqiang.UIComposite
         public LayoutLine Down;
         public void SizeChanged()
         {
+            float hl = Layout.LineWidth*0.5f;
             float rx = Right.model.data.localPosition.x;
-            float lx= Left.model.data.localPosition.x;
+            if (Right.realLine)
+                rx -= hl;
+            float lx = Left.model.data.localPosition.x;
+            if (Left.realLine)
+                lx += hl;
             float ty = Top.model.data.localPosition.y;
+            if (Top.realLine)
+                ty -= hl;
             float dy = Down.model.data.localPosition.y;
+            if (Down.realLine)
+                dy += hl;
             float w = rx - lx;
             float h = ty - dy;
+
             model.data.sizeDelta.x = w;
             model.data.sizeDelta.y = h;
-            model.data.localPosition.x = lx + w * 0.5f;
+            model.data.localPosition.x = lx  + w * 0.5f;
             model.data.localPosition.y = dy + h * 0.5f;
             model.IsChanged = true;
             if (auxiliary != null)
@@ -440,19 +455,19 @@ namespace huqiang.UIComposite
         {
             ModelElement m = new ModelElement();
             m.Load(LineMod.ModData);
-            Left = new LayoutLine(this,m,LayoutLine.Direction.Vertical,true);
+            Left = new LayoutLine(this,m,LayoutLine.Direction.Vertical,false);
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
-            Right = new LayoutLine(this, m, LayoutLine.Direction.Vertical, true);
+            Right = new LayoutLine(this, m, LayoutLine.Direction.Vertical, false);
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
-            Top = new LayoutLine(this, m, LayoutLine.Direction.Vertical, true);
+            Top = new LayoutLine(this, m, LayoutLine.Direction.Vertical, false);
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
-            Down = new LayoutLine(this, m, LayoutLine.Direction.Vertical, true);
+            Down = new LayoutLine(this, m, LayoutLine.Direction.Vertical, false);
         }
         void InitialArea()
         {
@@ -479,7 +494,6 @@ namespace huqiang.UIComposite
             Down.SetSize(new Vector2(0, -ty), new Vector2(size.x, LineWidth));
             for (int i = 0; i < lines.Count; i++)
                 lines[i].SizeChanged();
-            MainArea.SizeChanged();
         }
     }
 }
