@@ -52,6 +52,10 @@ namespace huqiang.UIComposite
                     MoveDown(v.y);
                 else
                     MoveTop(v.y);
+                for (int i = 0; i < Top.Count; i++)
+                    Top[i].SizeChanged();
+                for (int i = 0; i < Down.Count; i++)
+                    Down[i].SizeChanged();
             }
             for (int i = 0; i < AdjacentLines.Count; i++)
                 AdjacentLines[i].SizeChanged();
@@ -81,10 +85,6 @@ namespace huqiang.UIComposite
             }
             model.data.localPosition.y = y;
             model.IsChanged = true;
-            for (int i = 0; i < Top.Count; i++)
-            {
-                Top[i].SizeChanged();
-            }
         }
         void MoveRight(float dis)
         {
@@ -98,10 +98,6 @@ namespace huqiang.UIComposite
             }
             model.data.localPosition.x = x;
             model.IsChanged = true;
-            for (int i = 0; i < Right.Count; i++)
-            {
-                Right[i].SizeChanged();
-            }
         }
         void MoveDown(float dis)
         {
@@ -110,17 +106,13 @@ namespace huqiang.UIComposite
             for (int i = 0; i < Down.Count; i++)
             {
                 var ty = Down[i].Down.model.data.localPosition.y;
-                if (y >= ty)
+                if (y <= ty)
                     y = ty - 1;
             }
             model.data.localPosition.y = y;
             model.IsChanged = true;
-            for (int i = 0; i < Down.Count; i++)
-            {
-                Down[i].SizeChanged();
-            }
         }
-        public void SetSize(Vector2 pos,Vector2 size)
+        public void SetSize(Vector3 pos,Vector2 size)
         {
             model.data.localPosition = pos;
             model.data.sizeDelta = size;
@@ -155,6 +147,7 @@ namespace huqiang.UIComposite
                     float sx = LineStart.model.data.localPosition.x;
                     float ex = LineEnd.model.data.localPosition.x;
                     float w= ex - sx;
+                    model.data.localPosition.x = sx + 0.5f * w;
                     if (w < 0)
                         w = -w;
                     model.data.sizeDelta.x = w;
@@ -165,11 +158,20 @@ namespace huqiang.UIComposite
                     float sx = LineStart.model.data.localPosition.y;
                     float ex = LineEnd.model.data.localPosition.y;
                     float w = ex - sx;
+                    model.data.localPosition.y = sx + 0.5f * w;
                     if (w < 0)
                         w = -w;
                     model.data.sizeDelta.y = w;
                     model.IsChanged = true;
                 }
+                for (int i = 0; i < Left.Count; i++)
+                    Left[i].SizeChanged();
+                for (int i = 0; i < Right.Count; i++)
+                    Right[i].SizeChanged();
+                for (int i = 0; i < Top.Count; i++)
+                    Top[i].SizeChanged();
+                for (int i = 0; i < Down.Count; i++)
+                    Down[i].SizeChanged();
             }
         }
     }
@@ -246,32 +248,17 @@ namespace huqiang.UIComposite
         {
             LayoutArea area = new LayoutArea(layout);
             layout.areas.Add(area);
-            Vector2 size = model.data.sizeDelta;
-            float px = model.data.localPosition.x;
-            float py = model.data.localPosition.y;
-            float w = size.x * 0.5f;
-            float os = w * 0.5f;
-            var m = area.model;
-            m.data.localPosition.x = px - os;
-            m.data.localPosition.y = py;
-            m.data.sizeDelta = new Vector2(w,size.y);
-            m.IsChanged = true;
-
-            model.data.localPosition.x = px + os;
-            model.data.sizeDelta.x = w;
-            model.IsChanged = true;
-
-            m = new ModelElement();
+            var m = new ModelElement();
             m.Load(Left.model.ModData);
 
             float ex = Top.model.data.localPosition.y;
             float sx = Down.model.data.localPosition.y;
-            w = ex - sx;
+           float w = ex - sx;
             if (w < 0)
                 w = -w;
             LayoutLine line = new LayoutLine(layout,m,LayoutLine.Direction.Vertical);
-            line.SetSize(new Vector2(px,py),new Vector2(Layout.LineWidth,w));
-            m.IsChanged = true;
+            line.SetSize(model.data.localPosition, new Vector2(Layout.LineWidth,w));
+
             area.Left = Left;
             area.Top = Top;
             area.Down = Down;
@@ -292,20 +279,107 @@ namespace huqiang.UIComposite
         }
         LayoutArea AddRightArea()
         {
-            return null;
+            LayoutArea area = new LayoutArea(layout);
+            layout.areas.Add(area);
+            var m = new ModelElement();
+            m.Load(Right.model.ModData);
+
+            float ex = Top.model.data.localPosition.y;
+            float sx = Down.model.data.localPosition.y;
+            float w = ex - sx;
+            if (w < 0)
+                w = -w;
+            LayoutLine line = new LayoutLine(layout, m, LayoutLine.Direction.Vertical);
+            line.SetSize(model.data.localPosition, new Vector2(Layout.LineWidth, w));
+
+            area.Left = line;
+            area.Top = Top;
+            area.Down = Down;
+            area.Right = Right;
+
+            Right.Left.Remove(this);
+            Right = line;
+            line.Left.Add(this);
+            line.Right.Add(area);
+
+            Top.AdjacentLines.Add(line);
+            Down.AdjacentLines.Add(line);
+            line.LineStart = Top;
+            line.LineEnd = Down;
+
+            ModelElement.ScaleSize(model);
+            return area;
         }
         LayoutArea AddTopArea()
         {
-            return null;
+            LayoutArea area = new LayoutArea(layout);
+            layout.areas.Add(area);
+            var m = new ModelElement();
+            m.Load(Top.model.ModData);
+
+            float ex = Right.model.data.localPosition.x;
+            float sx = Left.model.data.localPosition.x;
+            float w = ex - sx;
+            if (w < 0)
+                w = -w;
+            LayoutLine line = new LayoutLine(layout, m, LayoutLine.Direction.Horizontal);
+            line.SetSize(model.data.localPosition, new Vector2(w, Layout.LineWidth));
+
+            area.Left = Left;
+            area.Top = Top;
+            area.Down = line;
+            area.Right = Right;
+
+            Top.Down.Remove(this);
+            Top= line;
+            line.Down.Add(this);
+            line.Top.Add(area);
+
+            Left.AdjacentLines.Add(line);
+            Right.AdjacentLines.Add(line);
+            line.LineStart = Left;
+            line.LineEnd = Right;
+
+            ModelElement.ScaleSize(model);
+            return area;
         }
         LayoutArea AddDownArea()
         {
-            return null;
+            LayoutArea area = new LayoutArea(layout);
+            layout.areas.Add(area);
+            var m = new ModelElement();
+            m.Load(Down.model.ModData);
+
+            float ex = Right.model.data.localPosition.x;
+            float sx = Left.model.data.localPosition.x;
+            float w = ex - sx;
+            if (w < 0)
+                w = -w;
+            LayoutLine line = new LayoutLine(layout, m, LayoutLine.Direction.Horizontal);
+            line.SetSize(model.data.localPosition, new Vector2(w, Layout.LineWidth));
+
+            area.Left = Left;
+            area.Top = line;
+            area.Down = Down;
+            area.Right = Right;
+
+            Down.Top.Remove(this);
+            Down = line;
+            line.Top.Add(this);
+            line.Down.Add(area);
+
+            Left.AdjacentLines.Add(line);
+            Right.AdjacentLines.Add(line);
+            line.LineStart = Left;
+            line.LineEnd = Right;
+
+            ModelElement.ScaleSize(model);
+            return area;
         }
     }
     public class Layout : ModelInital
     {
-        public static float LineWidth = 4f;
+        public static float LineWidth = 12f;
         public List<LayoutLine> lines = new List<LayoutLine>();
         public List<LayoutArea> areas = new List<LayoutArea>();
         ModelElement model;

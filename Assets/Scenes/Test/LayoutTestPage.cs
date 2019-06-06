@@ -19,7 +19,14 @@ public class LayoutTestPage : UIPage
         model = ModelManagerUI.FindModel("baseUI", "layout");
         base.Initial(parent, dat);
         view = model.ComponentReflection<View>();
-        var area = view.Layout.MainArea.AddArea(LayoutArea.Dock.Left);
-        area.model.GetComponent<ImageElement>().color = Color.gray;
+        var area = view.Layout.MainArea;
+        var d = area.AddArea(LayoutArea.Dock.Down);
+        d.model.GetComponent<ImageElement>().color = Color.red;
+        var one = d.AddArea(LayoutArea.Dock.Right);
+        one.model.GetComponent<ImageElement>().color = Color.green;
+        var top= area.AddArea(LayoutArea.Dock.Top);
+        top.model.GetComponent<ImageElement>().color = Color.yellow;
+        var l= top.AddArea(LayoutArea.Dock.Left);
+        l.model.GetComponent<ImageElement>().color = Color.blue;
     }
 }
