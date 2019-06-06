@@ -23,31 +23,38 @@ namespace huqiang.UIComposite
             layout = lay;
             layout.lines.Add(this);
             model = mod;
-            if(!fix)
+            if (!fix)
             {
                 callBack = EventCallBack.RegEvent<EventCallBack>(model);
                 callBack.Drag = Drag;
                 callBack.DragEnd = Drag;
                 direction = dir;
             }
+            else mod.activeSelf = false;
             mod.SetParent(layout.LineLevel);
         }
         void Drag(EventCallBack callBack,UserAction action,Vector2 v)
         {
-            if(direction==Direction.Horizontal)
+            if(direction==Direction.Vertical)//竖线只能横向移动
             {
                 if(v.x<0)
                     MoveLeft(v.x);
                 else
                     MoveRight(v.x);
+                for (int i = 0; i < Left.Count; i++)
+                    Left[i].SizeChanged();
+                for (int i = 0; i <Right.Count; i++)
+                    Right[i].SizeChanged();
             }
-            else
+            else//横线只能纵向移动
             {
                 if(v.y<0)
                     MoveDown(v.y);
                 else
                     MoveTop(v.y);
             }
+            for (int i = 0; i < AdjacentLines.Count; i++)
+                AdjacentLines[i].SizeChanged();
         }
         void MoveLeft(float dis)
         {
@@ -61,10 +68,6 @@ namespace huqiang.UIComposite
             }
             model.data.localPosition.x = x;
             model.IsChanged = true;
-            for(int i=0;i<Left.Count;i++)
-            {
-                Left[i].SizeChanged();
-            }
         }
         void MoveTop(float dis)
         {
@@ -140,6 +143,35 @@ namespace huqiang.UIComposite
         /// 底部相邻的区域
         /// </summary>
         public List<LayoutArea> Down = new List<LayoutArea>();
+        public LayoutLine LineStart;//起点相邻的线
+        public LayoutLine LineEnd;//终点相邻的线
+        public List<LayoutLine> AdjacentLines = new List<LayoutLine>();//所有与之相邻的线
+        public void SizeChanged()
+        {
+            if(LineStart!=null&LineEnd!=null)
+            {
+                if(direction==Direction.Horizontal)
+                {
+                    float sx = LineStart.model.data.localPosition.x;
+                    float ex = LineEnd.model.data.localPosition.x;
+                    float w= ex - sx;
+                    if (w < 0)
+                        w = -w;
+                    model.data.sizeDelta.x = w;
+                    model.IsChanged = true;
+                }
+                else
+                {
+                    float sx = LineStart.model.data.localPosition.y;
+                    float ex = LineEnd.model.data.localPosition.y;
+                    float w = ex - sx;
+                    if (w < 0)
+                        w = -w;
+                    model.data.sizeDelta.y = w;
+                    model.IsChanged = true;
+                }
+            }
+        }
     }
     public class LayoutArea
     {
@@ -149,11 +181,13 @@ namespace huqiang.UIComposite
         }
         public ModelElement model;
         Layout layout;
-        public LayoutArea(Layout lay,ModelElement mod)
+        public LayoutArea(Layout lay)
         {
             layout = lay;
-            model = mod;
-            mod.SetParent(layout.AreaLevel);
+            model = new ModelElement();
+            model.Load(layout.AreaMod.ModData);
+            layout = lay;
+            model.SetParent(layout.AreaLevel);
             layout.areas.Add(this);
         }
         /// <summary>
@@ -187,42 +221,37 @@ namespace huqiang.UIComposite
             model.IsChanged = true;
             ModelElement.ScaleSize(model);//触发SizeChange事件
         }
-        public void AddArea(Dock dock)
+        public LayoutArea AddArea(Dock dock)
         {
             switch(dock)
             {
                 case Dock.Left:
-                    AddLeftArea();
-                    break;
+                    return AddLeftArea();
                 case Dock.Top:
-                    AddTopArea();
-                    break;
+                    return AddTopArea();
                 case Dock.Right:
-                    AddRightArea();
-                    break;
+                    return AddRightArea();
                 case Dock.Down:
-                    AddDownArea();
-                    break;
+                    return AddDownArea();
                 default:
                     AddCenterArea();
-                    break;
+                    return this;
             }
         }
         void AddCenterArea()
         {
             
         }
-        void AddLeftArea()
+        LayoutArea AddLeftArea()
         {
-            ModelElement m = new ModelElement();
-            m.Load(layout.AreaMod.ModData);
-            LayoutArea area = new LayoutArea(layout,m);
+            LayoutArea area = new LayoutArea(layout);
             layout.areas.Add(area);
             Vector2 size = model.data.sizeDelta;
             float px = model.data.localPosition.x;
             float py = model.data.localPosition.y;
             float w = size.x * 0.5f;
             float os = w * 0.5f;
+            var m = area.model;
             m.data.localPosition.x = px - os;
             m.data.localPosition.y = py;
             m.data.sizeDelta = new Vector2(w,size.y);
@@ -234,25 +263,44 @@ namespace huqiang.UIComposite
 
             m = new ModelElement();
             m.Load(Left.model.ModData);
+
+            float ex = Top.model.data.localPosition.y;
+            float sx = Down.model.data.localPosition.y;
+            w = ex - sx;
+            if (w < 0)
+                w = -w;
             LayoutLine line = new LayoutLine(layout,m,LayoutLine.Direction.Vertical);
-            m.data.localPosition = new Vector3(px,py,0);
+            line.SetSize(new Vector2(px,py),new Vector2(Layout.LineWidth,w));
             m.IsChanged = true;
+            area.Left = Left;
+            area.Top = Top;
+            area.Down = Down;
             area.Right = line;
+
+            Left.Right.Remove(this);
             Left = line;
+            line.Right.Add(this);
+            line.Left.Add(area);
+       
+            Top.AdjacentLines.Add(line);
+            Down.AdjacentLines.Add(line);
+            line.LineStart = Top;
+            line.LineEnd = Down;
 
             ModelElement.ScaleSize(model);
+            return area;
         }
-        void AddRightArea()
+        LayoutArea AddRightArea()
         {
-
+            return null;
         }
-        void AddTopArea()
+        LayoutArea AddTopArea()
         {
-
+            return null;
         }
-        void AddDownArea()
+        LayoutArea AddDownArea()
         {
-
+            return null;
         }
     }
     public class Layout : ModelInital
@@ -281,9 +329,11 @@ namespace huqiang.UIComposite
         public ModelElement AreaMod;
         public ModelElement LineLevel;
         public ModelElement AreaLevel;
+        public LayoutArea MainArea { get; private set; }
         public override void Initial(ModelElement mod)
         {
             base.Initial(mod);
+            model = mod;
             LineLevel = mod.Find("LineLevel");
             AreaLevel= mod.Find("AreaLevel");
             LineMod = mod.Find("Line");
@@ -296,43 +346,48 @@ namespace huqiang.UIComposite
         }
         void InitialFixLine()
         {
-            Vector2 size = model.data.sizeDelta;
-            float rx = size.x*0.5f;
-            float ty = size.y;
-
             ModelElement m = new ModelElement();
             m.Load(LineMod.ModData);
             Left = new LayoutLine(this,m,LayoutLine.Direction.Vertical,true);
-            Left.SetSize(new Vector2(-rx,0),new Vector2(LineWidth,size.y));
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
             Right = new LayoutLine(this, m, LayoutLine.Direction.Vertical, true);
-            Right.SetSize(new Vector2(rx, 0), new Vector2(LineWidth, size.y));
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
             Top = new LayoutLine(this, m, LayoutLine.Direction.Vertical, true);
-            Top.SetSize(new Vector2(0, ty), new Vector2(size.x, LineWidth));
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
             Down = new LayoutLine(this, m, LayoutLine.Direction.Vertical, true);
-            Down.SetSize(new Vector2(0, -ty), new Vector2(size.x, LineWidth));
         }
         void InitialArea()
         {
             ModelElement m = new ModelElement();
             m.Load(AreaMod.ModData);
-            LayoutArea area = new LayoutArea(this,m);
+            LayoutArea area = new LayoutArea(this);
             area.Left = Left;
             area.Right = Right;
             area.Top = Top;
             area.Down = Down;
+            areas.Add(area);
+            MainArea = area;
+            area.SizeChanged();
         }
         void SizeChanged(ModelElement mod)
         {
+            Vector2 size = model.data.sizeDelta;
+            float rx = size.x * 0.5f;
+            float ty = size.y*0.5f;
 
+            Left.SetSize(new Vector2(-rx, 0), new Vector2(LineWidth, size.y));
+            Right.SetSize(new Vector2(rx, 0), new Vector2(LineWidth, size.y));
+            Top.SetSize(new Vector2(0, ty), new Vector2(size.x, LineWidth));
+            Down.SetSize(new Vector2(0, -ty), new Vector2(size.x, LineWidth));
+            for (int i = 0; i < lines.Count; i++)
+                lines[i].SizeChanged();
+            MainArea.SizeChanged();
         }
     }
 }

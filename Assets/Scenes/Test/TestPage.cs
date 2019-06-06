@@ -25,9 +25,10 @@ public class TestPage : UIPage
     }
     public override void Initial(ModelElement parent, object dat = null)
     {
-        base.Initial(parent, dat);
         model = ModelManagerUI.FindModel("baseUI", "asd");
-        model.SetParent(UIPage.Root);
+        base.Initial(parent, dat);
+      
+        //model.SetParent(UIPage.Root);
         var view = model.ComponentReflection<View>();
         view.Rocker.Radius = 100;
         view.Palette.TemplateChanged = view.Palette.ColorChanged = (o) => {
