@@ -463,7 +463,8 @@ namespace huqiang.UI
                 if (Context == null)
                 {
                     var obj = ModelManagerUI.CreateNew(data.type);
-                    LoadToObject(obj.transform);
+                    if (obj != null)
+                        LoadToObject(obj.transform);
                 }
                 else
                 {

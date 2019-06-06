@@ -15,7 +15,7 @@ namespace huqiang.UIComposite
         {
             Horizontal, Vertical
         }
-        Layout layout;
+        public Layout layout;
         EventCallBack callBack;
         public Direction direction { get; private set; }
         public LayoutLine(Layout lay,ModelElement mod,Direction dir,bool fix=false)
@@ -182,7 +182,7 @@ namespace huqiang.UIComposite
             Center,Left,Top,Right,Down
         }
         public ModelElement model;
-        Layout layout;
+        public Layout layout;
         public LayoutArea(Layout lay)
         {
             layout = lay;
@@ -191,6 +191,8 @@ namespace huqiang.UIComposite
             layout = lay;
             model.SetParent(layout.AreaLevel);
             layout.areas.Add(this);
+            if (lay.Auxiliary != null)
+                auxiliary = new LayoutAuxiliary(this);
         }
         /// <summary>
         /// 左边相邻的线
@@ -221,6 +223,8 @@ namespace huqiang.UIComposite
             model.data.localPosition.x = lx + w * 0.5f;
             model.data.localPosition.y = dy + h * 0.5f;
             model.IsChanged = true;
+            if (auxiliary != null)
+                auxiliary.SizeChanged();
             ModelElement.ScaleSize(model);//触发SizeChange事件
         }
         public LayoutArea AddArea(Dock dock)
@@ -376,6 +380,17 @@ namespace huqiang.UIComposite
             ModelElement.ScaleSize(model);
             return area;
         }
+        public LayoutAuxiliary auxiliary;
+        public void ShowAuxiliaryDocker()
+        {
+            if (auxiliary != null)
+                auxiliary.ShowDocker();
+        }
+        public void HideAuxiliaryDocker()
+        {
+            if (auxiliary != null)
+                auxiliary.HideDocker();
+        }
     }
     public class Layout : ModelInital
     {
@@ -403,6 +418,7 @@ namespace huqiang.UIComposite
         public ModelElement AreaMod;
         public ModelElement LineLevel;
         public ModelElement AreaLevel;
+        public ModelElement Auxiliary;
         public LayoutArea MainArea { get; private set; }
         public override void Initial(ModelElement mod)
         {
@@ -414,6 +430,8 @@ namespace huqiang.UIComposite
             LineMod.activeSelf = false;
             AreaMod = mod.Find("Area");
             AreaMod.activeSelf = false;
+            Auxiliary = mod.Find("Auxiliary");
+            Auxiliary.activeSelf = false;
             model.SizeChanged = SizeChanged;
             InitialFixLine();
             InitialArea();

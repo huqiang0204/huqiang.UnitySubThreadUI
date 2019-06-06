@@ -23,5 +23,4 @@ public class PopWindow : UIBase
     {
         return false;
     }
-
 }
