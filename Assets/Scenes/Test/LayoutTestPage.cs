@@ -31,6 +31,7 @@ public class LayoutTestPage : UIPage
         l.auxiliary.headDock = LayoutAuxiliary.HeadDock.Down;
         var context = l.auxiliary.AddContent("test");
         context.LoadPopWindow<GridTestWindow>();
+        l.auxiliary.Refresh();
     } 
 }
 public class GridTestWindow : PopWindow

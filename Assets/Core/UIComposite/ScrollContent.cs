@@ -55,6 +55,9 @@ namespace huqiang.UIComposite
             get { return model; }
         }
         public ModelElement[] ItemMods;
+        /// <summary>
+        /// 模型,数据,索引
+        /// </summary>
         public Action<object, object, int> ItemUpdate;
         IList dataList;
         Array array;

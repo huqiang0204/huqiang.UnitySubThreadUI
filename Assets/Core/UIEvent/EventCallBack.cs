@@ -565,6 +565,15 @@ namespace huqiang.UIEvent
             eventCall.ForceEvent = false;
             eventCall.Penetrate = false;
         }
+        public void RemoveFocus()
+        {
+            if(FocusAction!=null)
+            {
+                Pressed = false;
+                FocusAction.RemoveFocus(this);
+                FocusAction = null;
+            }
+        }
         #endregion
     }
 }

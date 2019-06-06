@@ -117,6 +117,11 @@ namespace huqiang.UIComposite
     }
     public class LayoutAuxiliary
     {
+        class HeadView
+        {
+            public EventCallBack Lable;
+            public EventCallBack Close;
+        }
         /// <summary>
         /// 选项头停靠方向
         /// </summary>
@@ -128,7 +133,6 @@ namespace huqiang.UIComposite
         public ModelElement model;
         public ModelElement content;
         public ModelElement head;
-        public ModelElement HeadItem;
         ModelElement docker;
         public Vector3 contentPos;
         public Vector2 contentSize;
@@ -137,6 +141,7 @@ namespace huqiang.UIComposite
         LayoutContent Current;
         float headHigh;
         public HeadDock headDock = HeadDock.Top;
+        ScrollX headScroll;
         public LayoutAuxiliary(LayoutArea area)
         {
             layoutArea = area;
@@ -144,12 +149,17 @@ namespace huqiang.UIComposite
             model.Load(area.layout.Auxiliary.ModData);
             head = model.Find("Head");
             headHigh = head.data.sizeDelta.y;
-            HeadItem = model.Find("HeadItem");
-            HeadItem.activeSelf = false;
             docker = model.Find("Docker");
             docker.activeSelf = false;
             content = model.Find("Content");
             model.SetParent(area.model);
+            headScroll = new ScrollX();
+            headScroll.Initial(head);
+            headScroll.scrollType = ScrollType.None;
+            headScroll.DynamicSize = false;
+            headScroll.BindingData = contents;
+            headScroll.ItemObject = typeof(HeadView);
+            headScroll.ItemUpdate = ItemUpdate;
         }
         public LayoutContent AddContent(string name)
         {
@@ -160,7 +170,6 @@ namespace huqiang.UIComposite
             content.name = name;
             content.model.name = name;
             Current = content;
-            RefreshHead();
             return content;
         }
         public void RemoveContent(LayoutContent content)
@@ -174,10 +183,6 @@ namespace huqiang.UIComposite
             Current = con;
             if (Current != null)
                 Current.model.activeSelf = true;
-        }
-        void RefreshHead()
-        {
-
         }
         public void ShowDocker()
         {
@@ -216,6 +221,64 @@ namespace huqiang.UIComposite
                 mod.data.sizeDelta = content.data.sizeDelta;
                 mod.IsChanged = true;
             }
+            headScroll.Refresh(headScroll.Point, 0);
+        }
+        void ItemUpdate(object obj,object dat,int index)
+        {
+            var v = obj as HeadView;
+            var c = dat as LayoutContent;
+            v.Lable.DataContext = c;
+            v.Lable.Context.GetComponent<TextElement>().text = c.name;
+            v.Close.DataContext = c;
+            v.Lable.PointerDown = HeadPointDown;
+            v.Lable.Click = HeadClick;
+            v.Lable.Drag = HeadDrag;
+            v.Lable.DragEnd = HeadDragEnd;
+            v.Close.Click = CloseClick;
+        }
+        int ac = 0;
+        void HeadPointDown(EventCallBack eventCall, UserAction action)
+        {
+            ac = 0;
+        }
+        void HeadClick(EventCallBack eventCall, UserAction action)
+        {
+            ShowContent(eventCall.DataContext as LayoutContent);
+        }
+        void HeadDrag(EventCallBack eventCall, UserAction action, Vector2 v)
+        {
+            if(ac==0)
+            {
+                float x = action.CanPosition.x - eventCall.RawPosition.x;
+                if (x < -30 | x > 30)
+                    ac = 1;
+                else
+                {
+                    float y = action.CanPosition.y - eventCall.RawPosition.y;
+                    if (y < -30 | y > 30)
+                    {
+                        headScroll.eventCall.RemoveFocus();
+                        layoutArea.layout.ShowAllDocker();
+                        ac = 2;
+                    }
+                }
+            }
+        }
+        void HeadDragEnd(EventCallBack eventCall, UserAction action, Vector2 v)
+        {
+            layoutArea.layout.HideAllDocker();
+        }
+        void CloseClick(EventCallBack eventCall, UserAction action)
+        {
+            var context = eventCall.DataContext as LayoutContent;
+            if (context != null)
+                context.Close();
+            model.SetParent(null);
+            ModelManagerUI.RecycleElement(model);
+        }
+        public void Refresh()
+        {
+            headScroll.Refresh(headScroll.Point, 0);
         }
     }
 }

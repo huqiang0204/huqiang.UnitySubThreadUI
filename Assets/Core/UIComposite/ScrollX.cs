@@ -50,10 +50,12 @@ namespace huqiang.UIComposite
         public bool ItemDockCenter;
         public int PreDockindex { get; private set; }
         public Vector2 ContentSize { get; private set; }
+        /// <summary>
+        /// 动态尺寸,自动对齐
+        /// </summary>
         public bool DynamicSize = true;
         Vector2 ctSize;
         float ctScale;
-
         public override void Initial(ModelElement model)
         {
             base.Initial(model);
@@ -295,8 +297,8 @@ namespace huqiang.UIComposite
             float dx = lx * col + ox;//列起点
             dx -= m_point;//滚动框当前起点
             float ss = -0.5f * Size.x + 0.5f * lx;//x起点
-            dx = ss + dx;
-            float os = Size.y * 0.5f- ItemOffset.y - (index % Row) * ctSize.x - ctSize.x * 0.5f  ;//行起点
+            dx += ss;
+            float os = Size.y * 0.5f- ItemOffset.y - (index % Row) * ctSize.y - ctSize.y * 0.5f  ;//行起点
             var a = PopItem(index);
             a.target.data.localPosition = new Vector3(dx, os, 0);
             a.target.data.localScale = new Vector3(ctScale,ctScale,ctScale);

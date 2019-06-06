@@ -68,7 +68,8 @@ namespace huqiang.UI
                 return;
             if (parent != null)
                 parent.child.Remove(this);
-            element.child.Add(this);
+            if (element != null)
+                element.child.Add(this);
             parent = element;
             parentChanged = true;
         }

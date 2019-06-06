@@ -495,5 +495,15 @@ namespace huqiang.UIComposite
             for (int i = 0; i < lines.Count; i++)
                 lines[i].SizeChanged();
         }
+        public void ShowAllDocker()
+        {
+            for (int i = 0; i < areas.Count; i++)
+                areas[i].ShowAuxiliaryDocker();
+        }
+        public void HideAllDocker()
+        {
+            for (int i = 0; i < areas.Count; i++)
+                areas[i].HideAuxiliaryDocker();
+        }
     }
 }
