@@ -184,22 +184,37 @@ namespace huqiang.UIComposite
             UIAnimation.Manage.FrameToDo(2,SetTextSize,null);
             return content;
         }
-        public void AddContent(LayoutContent content)
+        public void AddContent(LayoutContent con)
         {
             if (Current != null)
                 Current.Hide();
-            content.auxiliary = this;
-            content.model.SetParent(model);
-            content.model.IsChanged = true;
-            content.Head.SetParent(head);
-            content.Head.IsChanged = true;
-            contents.Add(content);
-            Current = content;
+            con.auxiliary = this;
+            con.model.SetParent(content);
+            con.Head.SetParent(head);
+            con.Head.IsChanged = true;
+            contents.Add(con);
+            Current = con;
             panel.Order();
+            con.model.data.sizeDelta = content.data.sizeDelta;
+            ModelElement.ScaleSize(con.model);
+            con.model.IsChanged = true;
         }
-        public void RemoveContent(LayoutContent content)
+        public void RemoveContent(LayoutContent con)
         {
-            contents.Remove(content);
+            contents.Remove(con);
+            if (con==Current)
+            {
+                if(contents.Count==0)
+                {
+                    layoutArea.Dispose();
+                    Current = null;
+                }
+                else
+                {
+                    Current = contents[0];
+                    Current.Show();
+                }
+            }
         }
         public void ShowContent(LayoutContent con)
         {

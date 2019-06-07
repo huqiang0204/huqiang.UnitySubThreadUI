@@ -406,6 +406,10 @@ namespace huqiang.UIComposite
             if (auxiliary != null)
                 auxiliary.HideDocker();
         }
+        public void Dispose()
+        {
+
+        }
     }
     public class Layout : ModelInital
     {
@@ -513,7 +517,6 @@ namespace huqiang.UIComposite
             Drag.data.localPosition = Drag.parent.ScreenToLocal(action.CanPosition);
             Drag.activeSelf = true;
             Drag.IsChanged = true;
-            Debug.Log("dring");
         }
         public void DragEnd(UserAction action)
         {
