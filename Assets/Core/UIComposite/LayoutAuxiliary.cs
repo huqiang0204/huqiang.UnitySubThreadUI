@@ -47,10 +47,6 @@ namespace huqiang.UIComposite
             model.IsChanged = true;
             ModelElement.ScaleSize(model);
         }
-        public void Close()
-        {
-          
-        }
         public PopWindow window;
         public void LoadPopWindow<T>()where T:PopWindow,new()
         {
