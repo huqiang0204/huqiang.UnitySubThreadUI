@@ -431,9 +431,9 @@ namespace huqiang.UIComposite
             Top.Down.Remove(this);
             Down.Top.Remove(this);
             model.SetParent(null);
+            MergeArea();
             ModelManagerUI.RecycleElement(model);
             layout.areas.Remove(this);
-            MergeArea();
         }
        void MergeArea()
         {

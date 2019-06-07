@@ -198,9 +198,12 @@ namespace huqiang.UIComposite
             con.model.data.sizeDelta = content.data.sizeDelta;
             ModelElement.ScaleSize(con.model);
             con.model.IsChanged = true;
+            con.model.activeSelf = true;
         }
         public void RemoveContent(LayoutContent con)
         {
+            con.model.SetParent(null);
+            con.Head.SetParent(null);
             contents.Remove(con);
             if (con==Current)
             {
@@ -325,8 +328,8 @@ namespace huqiang.UIComposite
         void CenterPointUp(EventCallBack callBack,UserAction action)
         {
             Cover.activeSelf = false;
-            AddContent(layout.DragContent);
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
+            AddContent(layout.DragContent);
         }
         void PointLeave(EventCallBack callBack, UserAction action)
         {
@@ -335,10 +338,10 @@ namespace huqiang.UIComposite
         void PointUp(EventCallBack callBack, UserAction action)
         {
             Cover.activeSelf = false;
+            layout.DragAuxiliary.RemoveContent(layout.DragContent);
             var area = layoutArea.AddArea((LayoutArea.Dock)callBack.DataContext);
             area.auxiliary.AddContent(layout.DragContent);
             area.SizeChanged();
-            layout.DragAuxiliary.RemoveContent(layout.DragContent);
         }
         void LeftPointEntry(EventCallBack callBack, UserAction action)
         {
