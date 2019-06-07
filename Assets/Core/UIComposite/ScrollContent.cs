@@ -358,7 +358,7 @@ namespace huqiang.UIComposite
             {
                 if (x < 0)
                 {
-                    if (v.x < 0)
+                    if (v.x > 0)
                         if (eventCall.DecayRateX >= 0.99f)
                         {
                             eventCall.DecayRateX = 0.9f;
@@ -367,7 +367,7 @@ namespace huqiang.UIComposite
                 }
                 else if (x + Size.x > ActualSize.x)
                 {
-                    if (v.x > 0)
+                    if (v.x < 0)
                         if (eventCall.DecayRateX >= 0.99f)
                         {
                             eventCall.DecayRateX = 0.9f;

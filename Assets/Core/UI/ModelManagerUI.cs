@@ -146,6 +146,25 @@ namespace huqiang.UI
             }
             return null;
         }
+        public static ModelElement CloneModel(string asset, string name)
+        {
+            for (int i = 0; i < prefabs.Count; i++)
+            {
+                if (asset == prefabs[i].name)
+                {
+                    var models = prefabs[i].models;
+                    var mod= models.Find(name);
+                    if(mod!=null)
+                    {
+                        ModelElement model = new ModelElement();
+                        model.Load(mod.ModData);
+                        return model;
+                    }
+                    return null;
+                }
+            }
+            return null;
+        }
         static ModelBuffer CreateModelBuffer(Int64 type, Int32 size = 32)
         {
             long t = type;
