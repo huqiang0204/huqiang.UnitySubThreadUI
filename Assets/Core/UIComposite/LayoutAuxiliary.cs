@@ -55,72 +55,21 @@ namespace huqiang.UIComposite
             window = t;
         }
     }
-    public class AuxiliaryHead
-    {
-        public string name;
-        public ModelElement model;
-        public LayoutContent context;
-        TextElement label;
-        public ModelElement head;
-        ModelElement close;
-        LayoutAuxiliary auxiliary;
-        public AuxiliaryHead(LayoutAuxiliary aux, ModelElement mod)
-        {
-            auxiliary = aux;
-            model = new ModelElement();
-            model.Load(mod.ModData);
-            model.SetParent(aux.head);
-            head= model.Find("Lable");
-            label = head.GetComponent<TextElement>();
-            head.RegEvent<EventCallBack>();
-            var eve = head.baseEvent;
-            eve.Click = HeadClick;
-            eve.Drag = HeadDrag;
-            eve.DragEnd = HeadDragEnd;
-            close = head.Find("Close");
-            close.RegEvent<EventCallBack>();
-            close.baseEvent.Click = CloseClick;
-        }
-        void HeadClick(EventCallBack eventCall,UserAction action)
-        {
-            auxiliary.ShowContent(context);
-        }
-        void HeadDrag(EventCallBack eventCall,UserAction action,Vector2 v)
-        {
-
-        }
-        void HeadDragEnd(EventCallBack eventCall,UserAction action,Vector2 v)
-        {
-
-        }
-        void CloseClick(EventCallBack eventCall, UserAction action)
-        {
-            if(context!=null)
-                context.Close();
-            model.SetParent(null);
-            ModelManagerUI.RecycleElement(model);
-        }
-        /// <summary>
-        /// 断开关联
-        /// </summary>
-        public void BreakContext()
-        {
-            context = null;
-            model.SetParent(null);
-            ModelManagerUI.RecycleElement(model);
-        }
-        public void BindingContext(LayoutContent content)
-        {
-            context = content;
-            label.text = content.name;
-        }
-    }
     public class LayoutAuxiliary
     {
         class HeadView
         {
             public EventCallBack Lable;
             public EventCallBack Close;
+        }
+        class HeadInfo
+        {
+            public ModelElement Head;
+            public ModelElement Lable;
+            public ModelElement Close;
+            public TextElement txt;
+            public EventCallBack eve;
+            public EventCallBack clo;
         }
         /// <summary>
         /// 选项头停靠方向
@@ -133,15 +82,16 @@ namespace huqiang.UIComposite
         public ModelElement model;
         public ModelElement content;
         public ModelElement head;
+        public ModelElement Item;
         ModelElement docker;
         public Vector3 contentPos;
         public Vector2 contentSize;
         public List<LayoutContent> contents = new List<LayoutContent>();
-        public List<AuxiliaryHead> heads = new List<AuxiliaryHead>();
+        List<HeadInfo> Items = new List<HeadInfo>();
         LayoutContent Current;
         float headHigh;
         public HeadDock headDock = HeadDock.Top;
-        ScrollX headScroll;
+        StackPanel headScroll;
         public LayoutAuxiliary(LayoutArea area)
         {
             layoutArea = area;
@@ -153,13 +103,12 @@ namespace huqiang.UIComposite
             docker.activeSelf = false;
             content = model.Find("Content");
             model.SetParent(area.model);
-            headScroll = new ScrollX();
+            Item = model.Find("Item");
+            Item.activeSelf = false;
+            headScroll =new StackPanel();
+            headScroll.direction = Direction.Horizontal;
             headScroll.Initial(head);
-            headScroll.scrollType = ScrollType.None;
-            headScroll.DynamicSize = false;
-            headScroll.BindingData = contents;
-            headScroll.ItemObject = typeof(HeadView);
-            headScroll.ItemUpdate = ItemUpdate;
+            InitialDocker();
         }
         public LayoutContent AddContent(string name)
         {
@@ -170,7 +119,39 @@ namespace huqiang.UIComposite
             content.name = name;
             content.model.name = name;
             Current = content;
+            InitialItem(name,content);
+            UIAnimation.Manage.FrameToDo(2,SetTextSize,null);
             return content;
+        }
+        void InitialItem(string name,LayoutContent context)
+        {
+            ModelElement mod = new ModelElement();
+            mod.Load(Item.ModData);
+            mod.SetParent(head);
+
+            var lable = mod.Find("Lable");
+            var eve = EventCallBack.RegEvent<EventCallBack>(lable);
+            eve.PointerDown = HeadPointDown;
+            eve.Click = HeadClick;
+            eve.Drag = HeadDrag;
+            eve.DragEnd = HeadDragEnd;
+            eve.DataContext = context;
+            var txt = lable.GetComponent<TextElement>();
+            txt.text = name;
+            txt.UseTextSize = true;
+
+            var close = mod.Find("Close");
+            var clo = EventCallBack.RegEvent<EventCallBack>(close);
+            clo.DataContext = context;
+            clo.Click = CloseClick;
+            HeadInfo info= new HeadInfo();
+            info.Head = mod;
+            info.Lable = lable;
+            info.Close = close;
+            info.txt = txt;
+            info.eve = eve;
+            info.clo = clo;
+            Items.Add(info);
         }
         public void RemoveContent(LayoutContent content)
         {
@@ -221,20 +202,7 @@ namespace huqiang.UIComposite
                 mod.data.sizeDelta = content.data.sizeDelta;
                 mod.IsChanged = true;
             }
-            headScroll.Refresh(headScroll.Point, 0);
-        }
-        void ItemUpdate(object obj,object dat,int index)
-        {
-            var v = obj as HeadView;
-            var c = dat as LayoutContent;
-            v.Lable.DataContext = c;
-            v.Lable.Context.GetComponent<TextElement>().text = c.name;
-            v.Close.DataContext = c;
-            v.Lable.PointerDown = HeadPointDown;
-            v.Lable.Click = HeadClick;
-            v.Lable.Drag = HeadDrag;
-            v.Lable.DragEnd = HeadDragEnd;
-            v.Close.Click = CloseClick;
+            headScroll.Order();
         }
         int ac = 0;
         void HeadPointDown(EventCallBack eventCall, UserAction action)
@@ -257,16 +225,19 @@ namespace huqiang.UIComposite
                     float y = action.CanPosition.y - eventCall.RawPosition.y;
                     if (y < -30 | y > 30)
                     {
-                        headScroll.eventCall.RemoveFocus();
                         layoutArea.layout.ShowAllDocker();
                         ac = 2;
                     }
                 }
+            }else if(ac==2)
+            {
+                layoutArea.layout.Draging(action);
             }
         }
         void HeadDragEnd(EventCallBack eventCall, UserAction action, Vector2 v)
         {
             layoutArea.layout.HideAllDocker();
+            layoutArea.layout.DragEnd(action);
         }
         void CloseClick(EventCallBack eventCall, UserAction action)
         {
@@ -276,9 +247,42 @@ namespace huqiang.UIComposite
             model.SetParent(null);
             ModelManagerUI.RecycleElement(model);
         }
+        void SetTextSize(object obj)
+        {
+            for(int i=0;i<Items.Count;i++)
+            {
+                var it = Items[i];
+                float w = it.Lable.data.sizeDelta.x;
+                float fw = w + 40;
+                it.Head.data.sizeDelta.x = fw;
+                it.Close.data.localPosition.x = w * 0.5f+8;
+                it.Close.IsChanged = true;
+            }
+            headScroll.Order();
+        }
         public void Refresh()
         {
-            headScroll.Refresh(headScroll.Point, 0);
+            headScroll.Order();
+        }
+        void InitialDocker()
+        {
+            var cen = docker.Find("Center");
+            var eve= EventCallBack.RegEvent<EventCallBack>(cen);
+            eve.PointerUp = CenterPointUp;
+            eve.PointerEntry = CenterPointEntry;
+            eve.PointerLeave = CenterPointLeave;
+        }
+        void CenterPointEntry(EventCallBack callBack, UserAction action)
+        {
+            Debug.Log("center entry");
+        }
+        void CenterPointUp(EventCallBack callBack,UserAction action)
+        {
+            Debug.Log("center up");
+        }
+        void CenterPointLeave(EventCallBack callBack, UserAction action)
+        {
+            Debug.Log("center leave");
         }
     }
 }

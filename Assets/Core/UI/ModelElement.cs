@@ -42,16 +42,87 @@ namespace huqiang.UI
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
-    public class ModelElement:DataConversion
+    public class ModelElement : DataConversion
     {
+        public static Coordinates GetGlobaInfo(ModelElement rect, bool Includeroot = true)
+        {
+            ModelElement[] buff = new ModelElement[32];
+            buff[0] = rect;
+            var parent = rect.parent;
+            int max = 1;
+            if (parent != null)
+                for (; max < 32; max++)
+                {
+                    buff[max] = parent;
+                    parent = parent.parent;
+                    if (parent == null)
+                        break;
+                }
+            Vector3 pos, scale;
+            Quaternion quate;
+            if (Includeroot)
+            {
+                var p = buff[max];
+                pos = p.data.localPosition;
+                scale = p.data.localScale;
+                quate = p.data.localRotation;
+                max--;
+            }
+            else
+            {
+                pos = Vector3.zero;
+                scale = Vector3.one;
+                quate = Quaternion.identity;
+                max--;
+            }
+            for (; max >= 0; max--)
+            {
+                var rt = buff[max];
+                Vector3 p = rt.data.localPosition;
+                Vector3 o = Vector3.zero;
+                o.x = p.x * scale.x;
+                o.y = p.y * scale.y;
+                o.z = p.z * scale.z;
+                pos += o;
+                quate *= rt.data.localRotation;
+                Vector3 s = rt.data.localScale;
+                scale.x *= s.x;
+                scale.y *= s.y;
+            }
+            Coordinates coord = new Coordinates();
+            coord.Postion = pos;
+            coord.quaternion = quate;
+            coord.Scale = scale;
+            return coord;
+        }
         public static ModelElement CreateNew(string name)
         {
-           var mod =  new ModelElement();
+            var mod = new ModelElement();
             mod.name = name;
             mod.data.localScale = Vector3.one;
+            mod.data.localRotation = Quaternion.identity;
             mod.data.anchorMax = mod.data.anchorMin =
             mod.data.pivot = new Vector2(0.5f, 0.5f);
             return mod;
+        }
+
+        public Coordinates coordinates { get { return GetGlobaInfo(this); } }
+        public Vector3 ScreenToLocal(Vector3 v)
+        {
+            var g = GetGlobaInfo(this);
+            v -= g.Postion;
+            if (g.Scale.x != 0)
+                v.x /= g.Scale.x;
+            else v.x = 0;
+            if (g.Scale.y != 0)
+                v.y /= g.Scale.y;
+            else v.y = 0;
+            if (g.Scale.z != 0)
+                v.z /= g.Scale.z;
+            else v.z = 0;
+            var q = Quaternion.Inverse(g.quaternion);
+            v = q * v;
+            return v;
         }
         public RectTransform Context;
         public int regIndex;
@@ -489,9 +560,24 @@ namespace huqiang.UI
                     mIndex = -1;
                 }
                 for (int i = 0; i < components.Count; i++)
-                    if (components[i] != null)
-                        if (components[i].IsChanged)
-                            components[i].Apply();
+                {
+                    var com = components[i];
+                    if(com!=null)
+                    {
+                        if(com.IsChanged)
+                        {
+                            com.Apply();
+                        }
+                        else
+                        {
+                            TextElement txt = com as TextElement;
+                            if (txt != null)
+                            {
+                                txt.LoadTextSize();
+                            }
+                        }
+                    }
+                }
                 for (int i = 0; i < child.Count; i++)
                     child[i].Apply();
                 Context.gameObject.SetActive(true);

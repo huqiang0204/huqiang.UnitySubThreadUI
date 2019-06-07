@@ -44,12 +44,17 @@ namespace huqiang.UI
         }
         public Text Context;
         public TextData data;
+        public Vector2 preferredSize;
+        public bool UseTextSize;
+        bool textChanged;
         protected string fontName;
         protected string mtext;
         public string text { set {
                 if (mtext != null)
                     IsChanged = true;
-                 mtext = value; }
+                 mtext = value;
+                textChanged = true;
+            }
             get { return mtext; } }
         public unsafe override void Load(FakeStruct fake)
         {
@@ -70,7 +75,7 @@ namespace huqiang.UI
                 return;
             LoadToObject(a,ref dat,image);
         }
-        public static void LoadToObject(Text a, ref TextData dat, TextElement image)
+        public static void LoadToObject(Text a, ref TextData dat, TextElement txt)
         {
             a.alignByGeometry = dat.alignByGeometry;
             a.alignment = dat.alignment;
@@ -83,12 +88,12 @@ namespace huqiang.UI
             a.resizeTextMinSize = dat.resizeTextMinSize;
             a.supportRichText = dat.supportRichText;
             a.verticalOverflow = dat.verticalOverflow;
-            a.color = image.color;
+            a.color = txt.color;
             a.raycastTarget = false;
-            a.material = image.material;
-            a.font = FindFont(image.fontName);
-            a.text = image.text;
-            image.Context = a;
+            a.material = txt.material;
+            a.font = FindFont(txt.fontName);
+            a.text = txt.text;
+            txt.Context = a;
         }
         public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
         {
@@ -124,6 +129,23 @@ namespace huqiang.UI
             Update();
             LoadToObject(Context, ref data, this);
             IsChanged = false;
+        }
+        public void LoadTextSize()
+        {
+            if (Context == null)
+                return;
+            if(textChanged)
+            {
+                textChanged = false;
+                preferredSize.x = Context.preferredWidth;
+                preferredSize.y = Context.preferredHeight;
+                if (UseTextSize)
+                {
+                    model.data.sizeDelta.x = preferredSize.x;
+                    model.data.sizeDelta.y = preferredSize.y;
+                    model.IsChanged = true;
+                }
+            }
         }
     }
     public class EmojiElement:TextElement

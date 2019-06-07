@@ -9,12 +9,12 @@ using UnityEngine;
 
 namespace huqiang.UIComposite
 {
+    public enum Direction
+    {
+        Horizontal, Vertical
+    }
     public class LayoutLine
     {
-        public enum Direction
-        {
-            Horizontal, Vertical
-        }
         public Layout layout;
         EventCallBack callBack;
         public Direction direction { get; private set; }
@@ -275,7 +275,7 @@ namespace huqiang.UIComposite
            float w = ex - sx;
             if (w < 0)
                 w = -w;
-            LayoutLine line = new LayoutLine(layout,m,LayoutLine.Direction.Vertical);
+            LayoutLine line = new LayoutLine(layout,m,Direction.Vertical);
             line.SetSize(model.data.localPosition, new Vector2(Layout.LineWidth,w));
 
             area.Left = Left;
@@ -308,7 +308,7 @@ namespace huqiang.UIComposite
             float w = ex - sx;
             if (w < 0)
                 w = -w;
-            LayoutLine line = new LayoutLine(layout, m, LayoutLine.Direction.Vertical);
+            LayoutLine line = new LayoutLine(layout, m, Direction.Vertical);
             line.SetSize(model.data.localPosition, new Vector2(Layout.LineWidth, w));
 
             area.Left = line;
@@ -341,7 +341,7 @@ namespace huqiang.UIComposite
             float w = ex - sx;
             if (w < 0)
                 w = -w;
-            LayoutLine line = new LayoutLine(layout, m, LayoutLine.Direction.Horizontal);
+            LayoutLine line = new LayoutLine(layout, m, Direction.Horizontal);
             line.SetSize(model.data.localPosition, new Vector2(w, Layout.LineWidth));
 
             area.Left = Left;
@@ -374,7 +374,7 @@ namespace huqiang.UIComposite
             float w = ex - sx;
             if (w < 0)
                 w = -w;
-            LayoutLine line = new LayoutLine(layout, m, LayoutLine.Direction.Horizontal);
+            LayoutLine line = new LayoutLine(layout, m, Direction.Horizontal);
             line.SetSize(model.data.localPosition, new Vector2(w, Layout.LineWidth));
 
             area.Left = Left;
@@ -434,6 +434,7 @@ namespace huqiang.UIComposite
         public ModelElement LineLevel;
         public ModelElement AreaLevel;
         public ModelElement Auxiliary;
+        public ModelElement Drag;
         public LayoutArea MainArea { get; private set; }
         public override void Initial(ModelElement mod)
         {
@@ -447,6 +448,8 @@ namespace huqiang.UIComposite
             AreaMod.activeSelf = false;
             Auxiliary = mod.Find("Auxiliary");
             Auxiliary.activeSelf = false;
+            Drag = mod.Find("Drag");
+            Drag.activeSelf = false;
             model.SizeChanged = SizeChanged;
             InitialFixLine();
             InitialArea();
@@ -455,19 +458,19 @@ namespace huqiang.UIComposite
         {
             ModelElement m = new ModelElement();
             m.Load(LineMod.ModData);
-            Left = new LayoutLine(this,m,LayoutLine.Direction.Vertical,false);
+            Left = new LayoutLine(this,m,Direction.Vertical,false);
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
-            Right = new LayoutLine(this, m, LayoutLine.Direction.Vertical, false);
+            Right = new LayoutLine(this, m, Direction.Vertical, false);
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
-            Top = new LayoutLine(this, m, LayoutLine.Direction.Vertical, false);
+            Top = new LayoutLine(this, m, Direction.Vertical, false);
 
             m = new ModelElement();
             m.Load(LineMod.ModData);
-            Down = new LayoutLine(this, m, LayoutLine.Direction.Vertical, false);
+            Down = new LayoutLine(this, m, Direction.Vertical, false);
         }
         void InitialArea()
         {
@@ -504,6 +507,17 @@ namespace huqiang.UIComposite
         {
             for (int i = 0; i < areas.Count; i++)
                 areas[i].HideAuxiliaryDocker();
+        }
+        public void Draging(UserAction action)
+        {
+            Drag.data.localPosition = Drag.parent.ScreenToLocal(action.CanPosition);
+            Drag.activeSelf = true;
+            Drag.IsChanged = true;
+            Debug.Log("dring");
+        }
+        public void DragEnd(UserAction action)
+        {
+            Drag.activeSelf = false;
         }
     }
 }

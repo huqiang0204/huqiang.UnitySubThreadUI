@@ -111,7 +111,7 @@ namespace huqiang.UIEvent
             }
             if (!ui.activeSelf)
                 return false;
-            Vector3 p = ui.data.localPosition;
+            Vector3 p =quate* ui.data.localPosition;
             Vector3 o = Vector3.zero;
             o.x = p.x * scale.x;
             o.y = p.y * scale.y;
@@ -186,7 +186,6 @@ namespace huqiang.UIEvent
                 if (inside)
                 {
                     var child = ui.child;
-                    //action.CurrentEntry.Add(callBack);
                     for (int i = child.Count- 1; i >= 0; i--)
                     {
                         if (DispatchEvent(child[i], o, s, q, action))
@@ -205,8 +204,7 @@ namespace huqiang.UIEvent
                     }
                     else if (action.IsLeftButtonUp | action.IsRightButtonUp | action.IsMiddleButtonUp)
                     {
-                        if (callBack.Pressed)
-                            callBack.OnMouseUp(action);
+                         callBack.OnMouseUp(action);
                     }
                     else
                     {
@@ -434,7 +432,6 @@ namespace huqiang.UIEvent
         }
         protected virtual void OnMouseUp(UserAction action)
         {
-            Pressed = false;
             entry = false;
             if (AutoColor)
             {
@@ -444,19 +441,24 @@ namespace huqiang.UIEvent
             }
             if (PointerUp != null)
                 PointerUp(this, action);
-            long r = DateTime.Now.Ticks - pressTime;
-            if (r <= ClickTime)
+            if(Pressed)
             {
-                float x = RawPosition.x - action.CanPosition.x;
-                float y = RawPosition.y - action.CanPosition.y;
-                x *= x;
-                y *= y;
-                x += y;
-                if (x < ClickArea)
-                    if (Click != null)
-                        Click(this, action);
+                Pressed = false;
+                long r = DateTime.Now.Ticks - pressTime;
+                if (r <= ClickTime)
+                {
+                    float x = RawPosition.x - action.CanPosition.x;
+                    float y = RawPosition.y - action.CanPosition.y;
+                    x *= x;
+                    y *= y;
+                    x += y;
+                    if (x < ClickArea)
+                        if (Click != null)
+                            Click(this, action);
+                }
             }
         }
+         
         protected virtual void OnMouseMove(UserAction action)
         {
             if (!entry)

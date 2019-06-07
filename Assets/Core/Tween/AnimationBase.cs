@@ -120,9 +120,16 @@ namespace huqiang
                     t.level--;
                     if (t.level <= 0)
                     {
-                        if (t.DoEvent != null)
-                            t.DoEvent(t.parameter);
-                        frame_events.RemoveAt(i);
+                        try
+                        {
+                            if (t.DoEvent != null)
+                                t.DoEvent(t.parameter);
+                            frame_events.RemoveAt(i);
+                        }catch(Exception ex)
+                        {
+                            Debug.LogError(ex.StackTrace);
+                            frame_events.RemoveAt(i);
+                        }
                     }
                 }
                 else frame_events.RemoveAt(i);
