@@ -290,27 +290,31 @@ namespace huqiang.UIComposite
 
             mod = docker.Find("Left");
             eve = EventCallBack.RegEvent<EventCallBack>(mod);
-            eve.PointerUp = LeftPointUp;
+            eve.PointerUp = PointUp;
             eve.PointerEntry = LeftPointEntry;
             eve.PointerLeave = PointLeave;
+            eve.DataContext = LayoutArea.Dock.Left;
 
             mod = docker.Find("Top");
             eve = EventCallBack.RegEvent<EventCallBack>(mod);
-            eve.PointerUp = TopPointUp;
+            eve.PointerUp = PointUp;
             eve.PointerEntry = TopPointEntry;
             eve.PointerLeave = PointLeave;
+            eve.DataContext = LayoutArea.Dock.Top;
 
             mod = docker.Find("Right");
             eve = EventCallBack.RegEvent<EventCallBack>(mod);
-            eve.PointerUp = RightPointUp;
+            eve.PointerUp = PointUp;
             eve.PointerEntry = RightPointEntry;
             eve.PointerLeave = PointLeave;
+            eve.DataContext = LayoutArea.Dock.Right;
 
             mod = docker.Find("Down");
             eve = EventCallBack.RegEvent<EventCallBack>(mod);
-            eve.PointerUp = DownPointUp;
+            eve.PointerUp = PointUp;
             eve.PointerEntry = DownPointEntry;
             eve.PointerLeave = PointLeave;
+            eve.DataContext = LayoutArea.Dock.Down;
         }
         void CenterPointEntry(EventCallBack callBack, UserAction action)
         {
@@ -321,12 +325,20 @@ namespace huqiang.UIComposite
         void CenterPointUp(EventCallBack callBack,UserAction action)
         {
             Cover.activeSelf = false;
-            layout.DragAuxiliary.RemoveContent(layout.DragContent);
             AddContent(layout.DragContent);
+            layout.DragAuxiliary.RemoveContent(layout.DragContent);
         }
         void PointLeave(EventCallBack callBack, UserAction action)
         {
             Cover.activeSelf = false;
+        }
+        void PointUp(EventCallBack callBack, UserAction action)
+        {
+            Cover.activeSelf = false;
+            var area = layoutArea.AddArea((LayoutArea.Dock)callBack.DataContext);
+            area.auxiliary.AddContent(layout.DragContent);
+            area.SizeChanged();
+            layout.DragAuxiliary.RemoveContent(layout.DragContent);
         }
         void LeftPointEntry(EventCallBack callBack, UserAction action)
         {
@@ -337,10 +349,6 @@ namespace huqiang.UIComposite
             Cover.data.sizeDelta.y = size.y;
             Cover.activeSelf = true;
         }
-        void LeftPointUp(EventCallBack callBack, UserAction action)
-        {
-            Cover.activeSelf = false;
-        }
         void TopPointEntry(EventCallBack callBack, UserAction action)
         {
             var size = model.data.sizeDelta;
@@ -349,10 +357,6 @@ namespace huqiang.UIComposite
             Cover.data.sizeDelta.x = size.x ;
             Cover.data.sizeDelta.y = size.y*0.5f;
             Cover.activeSelf = true;
-        }
-        void TopPointUp(EventCallBack callBack, UserAction action)
-        {
-            Cover.activeSelf = false;
         }
         void RightPointEntry(EventCallBack callBack, UserAction action)
         {
@@ -363,10 +367,6 @@ namespace huqiang.UIComposite
             Cover.data.sizeDelta.y = size.y;
             Cover.activeSelf = true;
         }
-        void RightPointUp(EventCallBack callBack, UserAction action)
-        {
-            Cover.activeSelf = false;
-        }
         void DownPointEntry(EventCallBack callBack, UserAction action)
         {
             var size = model.data.sizeDelta;
@@ -375,10 +375,6 @@ namespace huqiang.UIComposite
             Cover.data.sizeDelta.x = size.x;
             Cover.data.sizeDelta.y = size.y * 0.5f;
             Cover.activeSelf = true;
-        }
-        void DownPointUp(EventCallBack callBack, UserAction action)
-        {
-            Cover.activeSelf = false;
         }
     }
 }
