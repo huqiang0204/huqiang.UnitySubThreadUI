@@ -232,7 +232,10 @@ namespace huqiang.UI
                     components[i].LoadToObject(com);
             Context = com as RectTransform;
             if (parent != null)
+            {
                 Context.SetParent(parent.Context);
+                Context.SetSiblingIndex(parent.child.IndexOf(this));
+            }
             LoadToObject(Context,ref data, this);
         }
         static void LoadToObject(RectTransform com,ref ElementData data,ModelElement ui)
@@ -543,7 +546,10 @@ namespace huqiang.UI
                     if(parentChanged)
                     {
                         if (parent != null)
+                        {
                             Context.SetParent(parent.Context);
+                            Context.SetSiblingIndex(parent.child.IndexOf(this));
+                        }
                         else Context.SetParent(null);
                     }
                     if (IsChanged)

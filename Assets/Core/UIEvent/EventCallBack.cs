@@ -185,6 +185,7 @@ namespace huqiang.UIEvent
                 }
                 if (inside)
                 {
+                    action.CurrentEntry.Add(callBack);
                     var child = ui.child;
                     for (int i = child.Count- 1; i >= 0; i--)
                     {

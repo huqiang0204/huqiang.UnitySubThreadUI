@@ -83,6 +83,7 @@ namespace huqiang.UIComposite
         public ModelElement content;
         public ModelElement head;
         public ModelElement Item;
+        public ModelElement Cover;
         ModelElement docker;
         public Vector3 contentPos;
         public Vector2 contentSize;
@@ -105,6 +106,8 @@ namespace huqiang.UIComposite
             model.SetParent(area.model);
             Item = model.Find("Item");
             Item.activeSelf = false;
+            Cover = model.Find("Cover");
+            Cover.activeSelf = false;
             headScroll =new StackPanel();
             headScroll.direction = Direction.Horizontal;
             headScroll.Initial(head);
@@ -266,23 +269,101 @@ namespace huqiang.UIComposite
         }
         void InitialDocker()
         {
-            var cen = docker.Find("Center");
-            var eve= EventCallBack.RegEvent<EventCallBack>(cen);
+            var mod = docker.Find("Center");
+            var eve= EventCallBack.RegEvent<EventCallBack>(mod);
             eve.PointerUp = CenterPointUp;
             eve.PointerEntry = CenterPointEntry;
-            eve.PointerLeave = CenterPointLeave;
+            eve.PointerLeave = PointLeave;
+
+            mod = docker.Find("Left");
+            eve = EventCallBack.RegEvent<EventCallBack>(mod);
+            eve.PointerUp = LeftPointUp;
+            eve.PointerEntry = LeftPointEntry;
+            eve.PointerLeave = PointLeave;
+
+            mod = docker.Find("Top");
+            eve = EventCallBack.RegEvent<EventCallBack>(mod);
+            eve.PointerUp = TopPointUp;
+            eve.PointerEntry = TopPointEntry;
+            eve.PointerLeave = PointLeave;
+
+            mod = docker.Find("Right");
+            eve = EventCallBack.RegEvent<EventCallBack>(mod);
+            eve.PointerUp = RightPointUp;
+            eve.PointerEntry = RightPointEntry;
+            eve.PointerLeave = PointLeave;
+
+            mod = docker.Find("Down");
+            eve = EventCallBack.RegEvent<EventCallBack>(mod);
+            eve.PointerUp = DownPointUp;
+            eve.PointerEntry = DownPointEntry;
+            eve.PointerLeave = PointLeave;
         }
         void CenterPointEntry(EventCallBack callBack, UserAction action)
         {
-            Debug.Log("center entry");
+            Cover.data.localPosition = Vector3.zero;
+            Cover.data.sizeDelta = model.data.sizeDelta;
+            Cover.activeSelf = true;
         }
         void CenterPointUp(EventCallBack callBack,UserAction action)
         {
-            Debug.Log("center up");
+            Cover.activeSelf = false;
         }
-        void CenterPointLeave(EventCallBack callBack, UserAction action)
+        void PointLeave(EventCallBack callBack, UserAction action)
         {
-            Debug.Log("center leave");
+            Cover.activeSelf = false;
+        }
+        void LeftPointEntry(EventCallBack callBack, UserAction action)
+        {
+            var size = model.data.sizeDelta;
+            Cover.data.localPosition.x = size.x*-0.25f;
+            Cover.data.localPosition.y = 0;
+            Cover.data.sizeDelta.x = size.x*0.5f;
+            Cover.data.sizeDelta.y = size.y;
+            Cover.activeSelf = true;
+        }
+        void LeftPointUp(EventCallBack callBack, UserAction action)
+        {
+            Cover.activeSelf = false;
+        }
+        void TopPointEntry(EventCallBack callBack, UserAction action)
+        {
+            var size = model.data.sizeDelta;
+            Cover.data.localPosition.x = 0;
+            Cover.data.localPosition.y = size.y*0.25f;
+            Cover.data.sizeDelta.x = size.x ;
+            Cover.data.sizeDelta.y = size.y*0.5f;
+            Cover.activeSelf = true;
+        }
+        void TopPointUp(EventCallBack callBack, UserAction action)
+        {
+            Cover.activeSelf = false;
+        }
+        void RightPointEntry(EventCallBack callBack, UserAction action)
+        {
+            var size = model.data.sizeDelta;
+            Cover.data.localPosition.x = size.x * 0.25f;
+            Cover.data.localPosition.y = 0;
+            Cover.data.sizeDelta.x = size.x * 0.5f;
+            Cover.data.sizeDelta.y = size.y;
+            Cover.activeSelf = true;
+        }
+        void RightPointUp(EventCallBack callBack, UserAction action)
+        {
+            Cover.activeSelf = false;
+        }
+        void DownPointEntry(EventCallBack callBack, UserAction action)
+        {
+            var size = model.data.sizeDelta;
+            Cover.data.localPosition.x = 0;
+            Cover.data.localPosition.y = size.y * -0.25f;
+            Cover.data.sizeDelta.x = size.x;
+            Cover.data.sizeDelta.y = size.y * 0.5f;
+            Cover.activeSelf = true;
+        }
+        void DownPointUp(EventCallBack callBack, UserAction action)
+        {
+            Cover.activeSelf = false;
         }
     }
 }
