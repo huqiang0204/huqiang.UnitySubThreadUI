@@ -519,5 +519,7 @@ namespace huqiang.UIComposite
         {
             Drag.activeSelf = false;
         }
+        public LayoutContent DragContent;
+        public LayoutAuxiliary DragAuxiliary;
     }
 }

@@ -8,16 +8,27 @@ namespace huqiang.UIComposite
 {
     public class LayoutContent
     {
+        public ModelElement Head;
+        public ModelElement lable;
+        public ModelElement close;
+        public TextElement txt;
+        public EventCallBack eve;
+        public EventCallBack clo;
+        public LayoutContent content;
         public string name;
         public ModelElement model;
         public LayoutAuxiliary auxiliary;
-        public LayoutContent(LayoutAuxiliary aux)
+        Layout layout;
+        public LayoutContent(LayoutAuxiliary aux,string nam)
         {
             auxiliary = aux;
+            name = nam;
+            layout = auxiliary.layoutArea.layout;
             model = new ModelElement();
             model.Load(aux.content.ModData);
             model.SetParent(aux.content);
             model.IsChanged = true;
+            InitialLabel();
         }
         public void Hide()
         {
@@ -38,9 +49,7 @@ namespace huqiang.UIComposite
         }
         public void Close()
         {
-            model.SetParent(null);
-            ModelManagerUI.RecycleElement(model);
-            auxiliary.contents.Remove(this);
+          
         }
         public PopWindow window;
         public void LoadPopWindow<T>()where T:PopWindow,new()
@@ -54,23 +63,72 @@ namespace huqiang.UIComposite
             t.ReSize();
             window = t;
         }
+        void InitialLabel()
+        {
+            Head = new ModelElement();
+            Head.Load(auxiliary.Item.ModData);
+            Head.SetParent(auxiliary.head);
+
+            lable = Head.Find("Lable");
+            var eve = EventCallBack.RegEvent<EventCallBack>(lable);
+            eve.PointerDown = HeadPointDown;
+            eve.Click = HeadClick;
+            eve.Drag = HeadDrag;
+            eve.DragEnd = HeadDragEnd;
+            eve.DataContext = this;
+            var txt = lable.GetComponent<TextElement>();
+            txt.text = name;
+            txt.UseTextSize = true;
+
+            close = Head.Find("Close");
+            clo = EventCallBack.RegEvent<EventCallBack>(close);
+            clo.DataContext = this;
+            clo.Click = CloseClick;
+        }
+        int ac = 0;
+        void HeadPointDown(EventCallBack eventCall, UserAction action)
+        {
+            ac = 0;
+        }
+        void HeadClick(EventCallBack eventCall, UserAction action)
+        {
+            auxiliary.ShowContent(this);
+        }
+        void HeadDrag(EventCallBack eventCall, UserAction action, Vector2 v)
+        {
+            if (ac == 0)
+            {
+                float y = action.CanPosition.y - eventCall.RawPosition.y;
+                if (y < -30 | y > 30)
+                {
+                    layout.ShowAllDocker();
+                    ac = 2;
+                    layout.DragAuxiliary = auxiliary;
+                    layout.DragContent = this;
+                }
+            }
+            else if (ac == 2)
+            {
+                layout.Draging(action);
+            }
+        }
+        void HeadDragEnd(EventCallBack eventCall, UserAction action, Vector2 v)
+        {
+            layout.HideAllDocker();
+            layout.DragEnd(action);
+        }
+        void CloseClick(EventCallBack eventCall, UserAction action)
+        {
+            Head.SetParent(null);
+            ModelManagerUI.RecycleElement(Head);
+            model.SetParent(null);
+            ModelManagerUI.RecycleElement(model);
+            auxiliary.contents.Remove(this);
+            auxiliary.panel.Order();
+        }
     }
     public class LayoutAuxiliary
     {
-        class HeadView
-        {
-            public EventCallBack Lable;
-            public EventCallBack Close;
-        }
-        class HeadInfo
-        {
-            public ModelElement Head;
-            public ModelElement Lable;
-            public ModelElement Close;
-            public TextElement txt;
-            public EventCallBack eve;
-            public EventCallBack clo;
-        }
         /// <summary>
         /// 选项头停靠方向
         /// </summary>
@@ -88,14 +146,15 @@ namespace huqiang.UIComposite
         public Vector3 contentPos;
         public Vector2 contentSize;
         public List<LayoutContent> contents = new List<LayoutContent>();
-        List<HeadInfo> Items = new List<HeadInfo>();
         LayoutContent Current;
         float headHigh;
         public HeadDock headDock = HeadDock.Top;
-        StackPanel headScroll;
+        public StackPanel panel;
+        Layout layout;
         public LayoutAuxiliary(LayoutArea area)
         {
             layoutArea = area;
+            layout = area.layout;
             model = new ModelElement();
             model.Load(area.layout.Auxiliary.ModData);
             head = model.Find("Head");
@@ -108,53 +167,35 @@ namespace huqiang.UIComposite
             Item.activeSelf = false;
             Cover = model.Find("Cover");
             Cover.activeSelf = false;
-            headScroll =new StackPanel();
-            headScroll.direction = Direction.Horizontal;
-            headScroll.Initial(head);
+            panel =new StackPanel();
+            panel.direction = Direction.Horizontal;
+            panel.Initial(head);
             InitialDocker();
         }
         public LayoutContent AddContent(string name)
         {
             if (Current != null)
                 Current.Hide();
-            LayoutContent content = new LayoutContent(this);
+            LayoutContent content = new LayoutContent(this,name);
             contents.Add(content);
             content.name = name;
             content.model.name = name;
             Current = content;
-            InitialItem(name,content);
             UIAnimation.Manage.FrameToDo(2,SetTextSize,null);
             return content;
         }
-        void InitialItem(string name,LayoutContent context)
+        public void AddContent(LayoutContent content)
         {
-            ModelElement mod = new ModelElement();
-            mod.Load(Item.ModData);
-            mod.SetParent(head);
-
-            var lable = mod.Find("Lable");
-            var eve = EventCallBack.RegEvent<EventCallBack>(lable);
-            eve.PointerDown = HeadPointDown;
-            eve.Click = HeadClick;
-            eve.Drag = HeadDrag;
-            eve.DragEnd = HeadDragEnd;
-            eve.DataContext = context;
-            var txt = lable.GetComponent<TextElement>();
-            txt.text = name;
-            txt.UseTextSize = true;
-
-            var close = mod.Find("Close");
-            var clo = EventCallBack.RegEvent<EventCallBack>(close);
-            clo.DataContext = context;
-            clo.Click = CloseClick;
-            HeadInfo info= new HeadInfo();
-            info.Head = mod;
-            info.Lable = lable;
-            info.Close = close;
-            info.txt = txt;
-            info.eve = eve;
-            info.clo = clo;
-            Items.Add(info);
+            if (Current != null)
+                Current.Hide();
+            content.auxiliary = this;
+            content.model.SetParent(model);
+            content.model.IsChanged = true;
+            content.Head.SetParent(head);
+            content.Head.IsChanged = true;
+            contents.Add(content);
+            Current = content;
+            panel.Order();
         }
         public void RemoveContent(LayoutContent content)
         {
@@ -205,67 +246,24 @@ namespace huqiang.UIComposite
                 mod.data.sizeDelta = content.data.sizeDelta;
                 mod.IsChanged = true;
             }
-            headScroll.Order();
-        }
-        int ac = 0;
-        void HeadPointDown(EventCallBack eventCall, UserAction action)
-        {
-            ac = 0;
-        }
-        void HeadClick(EventCallBack eventCall, UserAction action)
-        {
-            ShowContent(eventCall.DataContext as LayoutContent);
-        }
-        void HeadDrag(EventCallBack eventCall, UserAction action, Vector2 v)
-        {
-            if(ac==0)
-            {
-                float x = action.CanPosition.x - eventCall.RawPosition.x;
-                if (x < -30 | x > 30)
-                    ac = 1;
-                else
-                {
-                    float y = action.CanPosition.y - eventCall.RawPosition.y;
-                    if (y < -30 | y > 30)
-                    {
-                        layoutArea.layout.ShowAllDocker();
-                        ac = 2;
-                    }
-                }
-            }else if(ac==2)
-            {
-                layoutArea.layout.Draging(action);
-            }
-        }
-        void HeadDragEnd(EventCallBack eventCall, UserAction action, Vector2 v)
-        {
-            layoutArea.layout.HideAllDocker();
-            layoutArea.layout.DragEnd(action);
-        }
-        void CloseClick(EventCallBack eventCall, UserAction action)
-        {
-            var context = eventCall.DataContext as LayoutContent;
-            if (context != null)
-                context.Close();
-            model.SetParent(null);
-            ModelManagerUI.RecycleElement(model);
+            panel.Order();
         }
         void SetTextSize(object obj)
         {
-            for(int i=0;i<Items.Count;i++)
+            for(int i=0;i<contents.Count;i++)
             {
-                var it = Items[i];
-                float w = it.Lable.data.sizeDelta.x;
+                var it = contents[i];
+                float w = it.lable.data.sizeDelta.x;
                 float fw = w + 40;
                 it.Head.data.sizeDelta.x = fw;
-                it.Close.data.localPosition.x = w * 0.5f+8;
-                it.Close.IsChanged = true;
+                it.close.data.localPosition.x = w * 0.5f+8;
+                it.close.IsChanged = true;
             }
-            headScroll.Order();
+            panel.Order();
         }
         public void Refresh()
         {
-            headScroll.Order();
+            panel.Order();
         }
         void InitialDocker()
         {
@@ -308,6 +306,8 @@ namespace huqiang.UIComposite
         void CenterPointUp(EventCallBack callBack,UserAction action)
         {
             Cover.activeSelf = false;
+            layout.DragAuxiliary.RemoveContent(layout.DragContent);
+            AddContent(layout.DragContent);
         }
         void PointLeave(EventCallBack callBack, UserAction action)
         {
