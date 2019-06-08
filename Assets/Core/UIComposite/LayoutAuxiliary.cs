@@ -9,7 +9,7 @@ namespace huqiang.UIComposite
     public class LayoutContent
     {
         public ModelElement Head;
-        public ModelElement lable;
+        public ModelElement label;
         public ModelElement close;
         public TextElement txt;
         public EventCallBack eve;
@@ -65,14 +65,14 @@ namespace huqiang.UIComposite
             Head.Load(auxiliary.Item.ModData);
             Head.SetParent(auxiliary.head);
 
-            lable = Head.Find("Lable");
-            var eve = EventCallBack.RegEvent<EventCallBack>(lable);
+            label = Head.Find("Label");
+            var eve = EventCallBack.RegEvent<EventCallBack>(label);
             eve.PointerDown = HeadPointDown;
             eve.Click = HeadClick;
             eve.Drag = HeadDrag;
             eve.DragEnd = HeadDragEnd;
             eve.DataContext = this;
-            var txt = lable.GetComponent<TextElement>();
+            var txt = label.GetComponent<TextElement>();
             txt.text = name;
             txt.UseTextSize = true;
 
@@ -119,7 +119,7 @@ namespace huqiang.UIComposite
             ModelManagerUI.RecycleElement(Head);
             model.SetParent(null);
             ModelManagerUI.RecycleElement(model);
-            auxiliary.contents.Remove(this);
+            auxiliary.RemoveContent(this);
             auxiliary.panel.Order();
         }
     }
@@ -267,7 +267,7 @@ namespace huqiang.UIComposite
             for(int i=0;i<contents.Count;i++)
             {
                 var it = contents[i];
-                float w = it.lable.data.sizeDelta.x;
+                float w = it.label.data.sizeDelta.x;
                 float fw = w + 40;
                 it.Head.data.sizeDelta.x = fw;
                 it.close.data.localPosition.x = w * 0.5f+8;

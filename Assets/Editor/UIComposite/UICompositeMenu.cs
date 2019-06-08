@@ -307,7 +307,7 @@ public static class UICompositeMenu
         txt.alignment = TextAnchor.MiddleLeft;
         txt.fontSize = 24;
     }
-    [MenuItem("GameObject/UIComposite/DropDownEx", false, 7)]
+    [MenuItem("GameObject/UIComposite/DropDownEx", false, 8)]
     static public void AddDropDown(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -342,4 +342,132 @@ public static class UICompositeMenu
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
     }
+    [MenuItem("GameObject/UIComposite/Layout", false, 9)]
+    static public void AddLayout(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var layout = new GameObject("Layout", typeof(RectTransform));
+        RectTransform rect = layout.transform as RectTransform;
+        rect.sizeDelta = new Vector2(1920, 1080);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        var sse= layout.AddComponent<SizeScaleEx>();
+        sse.anchorType = AnchorType.Cneter;
+        sse.sizeType = SizeType.Margin;
+        sse.parentType = ParentType.Tranfrom;
+        sse.DesignSize = new Vector2(1920,1080);
+
+        var AreaLevel = new GameObject("AreaLevel", typeof(RectTransform));
+        AreaLevel.transform.SetParent(rect);
+        var LineLevel = new GameObject("LineLevel", typeof(RectTransform));
+        LineLevel.transform.SetParent(rect);
+        var Line= new GameObject("Line", typeof(RectTransform),typeof(Image));
+        Line.transform.SetParent(rect);
+        Line.GetComponent<Image>().color = new Color32(64,64,64,255);
+        var Area = new GameObject("Area", typeof(RectTransform), typeof(Image));
+        Area.transform.SetParent(rect);
+        Area.GetComponent<Image>().color = Color.black;
+        var Auxiliary = new GameObject("Auxiliary", typeof(RectTransform));
+        Auxiliary.transform.SetParent(rect);
+        var Content = new GameObject("Content", typeof(RectTransform));
+        Content.transform.SetParent(Auxiliary.transform);
+        var Head = new GameObject("Head", typeof(RectTransform),typeof(RectMask2D));
+        Head.transform.SetParent(Auxiliary.transform);
+        var Cover = new GameObject("Cover", typeof(RectTransform),typeof(RawImage));
+        Cover.transform.SetParent(Auxiliary.transform);
+        Cover.GetComponent<RawImage>().color = new Color32(128,128,128,128);
+
+        var Docker = new GameObject("Docker",typeof(RectTransform));
+        Docker.transform.SetParent(Auxiliary.transform);
+
+        var Center = new GameObject("Center",typeof(RectTransform),typeof(Image));
+        var st = Center.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = Vector3.zero;
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(100, 100);
+        var img = Center.GetComponent<Image>();
+        img.color = new Color32(59,87,255,128);
+        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+
+        var Left = new GameObject("Left", typeof(RectTransform), typeof(Image));
+        st = Left.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(-90,0,0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(60,100);
+        img = Center.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+
+        var Top = new GameObject("Top", typeof(RectTransform), typeof(Image));
+        st =Top.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(0,90,0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(100, 60);
+        img = Center.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+
+        var Right = new GameObject("Right", typeof(RectTransform), typeof(Image));
+        st = Right.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(90, 0, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(60, 100);
+        img = Center.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+
+        var Down = new GameObject("Down", typeof(RectTransform), typeof(Image));
+        st = Down.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(0, -90, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(100, 60);
+        img = Center.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = Resources.Load("unity_builtin_extra/Background") as Sprite;
+
+        var Item = new GameObject("Item", typeof(RectTransform));
+        Item.transform.SetParent(Auxiliary.transform);
+
+        var Label = new GameObject("Label",typeof(RectTransform),typeof(Text));
+        st = Label.transform as RectTransform;
+        st.SetParent(Item.transform);
+        st.localPosition = new Vector3(-20,0,0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(200,40);
+        var txt= Label.GetComponent<Text>();
+        txt.color = Color.white;
+        txt.fontSize = 32;
+        txt.text = "Label";
+        txt.alignment = TextAnchor.MiddleLeft;
+
+        var Close = new GameObject("Close", typeof(RectTransform), typeof(Text));
+        st = Close.transform as RectTransform;
+        st.SetParent(Item.transform);
+        st.localPosition = new Vector3(100, 0, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(48, 48);
+        txt = Close.GetComponent<Text>();
+        txt.color = Color.white;
+        txt.fontSize = 36;
+        txt.text = "X";
+        txt.alignment = TextAnchor.MiddleCenter;
+
+        var Drag = new GameObject("Drag", typeof(RectTransform), typeof(Image));
+        st = Drag.transform as RectTransform;
+        st.SetParent(rect);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(40, 40);
+        img = Center.GetComponent<Image>();
+        img.color = Color.green;
+        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+
+        rect.localScale = Vector3.one;
+        rect.localPosition = Vector3.zero;
+    }
+
 }
