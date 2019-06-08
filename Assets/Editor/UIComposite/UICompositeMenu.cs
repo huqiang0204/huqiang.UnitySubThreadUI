@@ -61,7 +61,7 @@ public static class UICompositeMenu
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
     }
-    [MenuItem("GameObject/UIComposite/ScrollX", false, 2)]
+    [MenuItem("GameObject/UIComposite/ScrollX", false, 3)]
     static public void AddScrollX(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -105,7 +105,7 @@ public static class UICompositeMenu
         Nob.AddComponent<Image>();
 
     }
-    [MenuItem("GameObject/UIComposite/ScrollY", false, 3)]
+    [MenuItem("GameObject/UIComposite/ScrollY", false, 4)]
     static public void AddScrollY(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -149,7 +149,7 @@ public static class UICompositeMenu
         fn.localScale = Vector3.one;
         Nob.AddComponent<Image>();
     }
-    [MenuItem("GameObject/UIComposite/UIRocker", false, 4)]
+    [MenuItem("GameObject/UIComposite/UIRocker", false, 5)]
     static public void AddRocker(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -168,7 +168,7 @@ public static class UICompositeMenu
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
     }
-    [MenuItem("GameObject/UIComposite/UIPalette", false, 5)]
+    [MenuItem("GameObject/UIComposite/UIPalette", false, 6)]
     static public void AddPalette(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -221,7 +221,7 @@ public static class UICompositeMenu
         fn.localScale = Vector3.one;
         Nob.AddComponent<Image>().color = new Color(1, 1, 1, 0.5f);
     }
-    [MenuItem("GameObject/UIComposite/UIDate", false, 6)]
+    [MenuItem("GameObject/UIComposite/UIDate", false, 7)]
     static public void AddDate(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -292,7 +292,7 @@ public static class UICompositeMenu
         txt.text = now.Day + " Day";
         txt.fontSize = 24;
     }
-    [MenuItem("GameObject/UIComposite/TreeView", false, 7)]
+    [MenuItem("GameObject/UIComposite/TreeView", false, 8)]
     static public void AddTreeView(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -314,7 +314,7 @@ public static class UICompositeMenu
         txt.alignment = TextAnchor.MiddleLeft;
         txt.fontSize = 24;
     }
-    [MenuItem("GameObject/UIComposite/DropDownEx", false, 8)]
+    [MenuItem("GameObject/UIComposite/DropDownEx", false, 9)]
     static public void AddDropDown(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -349,7 +349,7 @@ public static class UICompositeMenu
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
     }
-    [MenuItem("GameObject/UIComposite/Layout", false, 9)]
+    [MenuItem("GameObject/UIComposite/Layout", false, 10)]
     static public void AddLayout(MenuCommand menuCommand)
     {
         Sprite bk = AssetDatabase.GetBuiltinExtraResource<Sprite>(kBackgroundSpritePath);
@@ -478,5 +478,53 @@ public static class UICompositeMenu
 
         rect.localScale = Vector3.one;
         rect.localPosition = Vector3.zero;
+    }
+    [MenuItem("GameObject/UIComposite/DropdownEx", false, 11)]
+    static public void AddDropdownEx(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var drop = new GameObject("DropdownEx", typeof(RectTransform));
+        RectTransform dt =drop.transform as RectTransform;
+        dt.sizeDelta = new Vector2(400, 60);
+        var Label = new GameObject("Label", typeof(RectTransform), typeof(Text));
+        var st = Label.transform as RectTransform;
+        st.SetParent(dt);
+        st.localPosition = new Vector3(-20, 0, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(200, 40);
+        var txt = Label.GetComponent<Text>();
+        txt.color = Color.white;
+        txt.fontSize = 32;
+        txt.text = "Label";
+        txt.alignment = TextAnchor.MiddleCenter;
+
+        var Close = new GameObject("Arrow", typeof(RectTransform), typeof(Text));
+        st = Close.transform as RectTransform;
+        st.SetParent(dt);
+        st.localPosition = new Vector3(100, 0, 0);
+        st.localScale = new Vector3(1.8f,1,1);
+        st.sizeDelta = new Vector2(48, 48);
+        txt = Close.GetComponent<Text>();
+        txt.color = Color.white;
+        txt.fontSize = 36;
+        txt.text = "▼";
+        txt.alignment = TextAnchor.MiddleCenter;
+
+        var ss = new GameObject("Scroll", typeof(RectTransform));
+        RectTransform rect = ss.transform as RectTransform;
+        rect.sizeDelta = new Vector2(400, 400);
+        rect.SetParent(dt);
+        rect.localPosition = new Vector3(0,-30,0);
+        rect.localScale = Vector3.one;
+        ss.AddComponent<RectMask2D>();
+        var Item = new GameObject("Item", typeof(RectTransform));
+        var fr = Item.transform as RectTransform;
+        fr.sizeDelta = new Vector2(80, 80);
+        fr.SetParent(rect);
+        fr.localPosition = Vector3.zero;
+        fr.localScale = Vector3.one;
+
+        dt.localPosition = Vector3.zero;
+        dt.localScale = Vector3.one;
     }
 }
