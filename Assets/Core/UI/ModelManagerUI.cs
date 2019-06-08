@@ -307,6 +307,8 @@ namespace huqiang.UI
         static QueueBuffer<ModelElement> RecycleQueue = new QueueBuffer<ModelElement>();
         public static void RecycleElement(ModelElement model)
         {
+            if (model == null)
+                return;
             RecycleQueue.Enqueue(model);
             var child = model.child;
             for (int i = 0; i < child.Count; i++)

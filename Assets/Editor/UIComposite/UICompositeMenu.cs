@@ -7,6 +7,13 @@ using UnityEngine.UI;
 
 public static class UICompositeMenu
 {
+    private const string kStandardSpritePath = "UI/Skin/UISprite.psd";
+    private const string kBackgroundSpritePath = "UI/Skin/Background.psd";
+    private const string kInputFieldBackgroundPath = "UI/Skin/InputFieldBackground.psd";
+    private const string kKnobPath = "UI/Skin/Knob.psd";
+    private const string kCheckmarkPath = "UI/Skin/Checkmark.psd";
+    private const string kDropdownArrowPath = "UI/Skin/DropdownArrow.psd";
+    private const string kMaskPath = "UI/Skin/UIMask.psd";
     [MenuItem("GameObject/UIComposite/UISlider", false, 1)]
     static public void AddSlider(MenuCommand menuCommand)
     {
@@ -345,6 +352,8 @@ public static class UICompositeMenu
     [MenuItem("GameObject/UIComposite/Layout", false, 9)]
     static public void AddLayout(MenuCommand menuCommand)
     {
+        Sprite bk = AssetDatabase.GetBuiltinExtraResource<Sprite>(kBackgroundSpritePath);
+
         GameObject parent = menuCommand.context as GameObject;
         var layout = new GameObject("Layout", typeof(RectTransform));
         RectTransform rect = layout.transform as RectTransform;
@@ -373,6 +382,7 @@ public static class UICompositeMenu
         Content.transform.SetParent(Auxiliary.transform);
         var Head = new GameObject("Head", typeof(RectTransform),typeof(RectMask2D));
         Head.transform.SetParent(Auxiliary.transform);
+        (Head.transform as RectTransform).sizeDelta = new Vector2(100,60);
         var Cover = new GameObject("Cover", typeof(RectTransform),typeof(RawImage));
         Cover.transform.SetParent(Auxiliary.transform);
         Cover.GetComponent<RawImage>().color = new Color32(128,128,128,128);
@@ -388,7 +398,7 @@ public static class UICompositeMenu
         st.sizeDelta = new Vector2(100, 100);
         var img = Center.GetComponent<Image>();
         img.color = new Color32(59,87,255,128);
-        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+        img.sprite = bk;
 
         var Left = new GameObject("Left", typeof(RectTransform), typeof(Image));
         st = Left.transform as RectTransform;
@@ -398,7 +408,7 @@ public static class UICompositeMenu
         st.sizeDelta = new Vector2(60,100);
         img = Center.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
-        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+        img.sprite = bk;
 
         var Top = new GameObject("Top", typeof(RectTransform), typeof(Image));
         st =Top.transform as RectTransform;
@@ -408,7 +418,7 @@ public static class UICompositeMenu
         st.sizeDelta = new Vector2(100, 60);
         img = Center.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
-        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+        img.sprite = bk;
 
         var Right = new GameObject("Right", typeof(RectTransform), typeof(Image));
         st = Right.transform as RectTransform;
@@ -418,7 +428,7 @@ public static class UICompositeMenu
         st.sizeDelta = new Vector2(60, 100);
         img = Center.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
-        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+        img.sprite =bk;
 
         var Down = new GameObject("Down", typeof(RectTransform), typeof(Image));
         st = Down.transform as RectTransform;
@@ -428,7 +438,7 @@ public static class UICompositeMenu
         st.sizeDelta = new Vector2(100, 60);
         img = Center.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
-        img.sprite = Resources.Load("unity_builtin_extra/Background") as Sprite;
+        img.sprite = bk;
 
         var Item = new GameObject("Item", typeof(RectTransform));
         Item.transform.SetParent(Auxiliary.transform);
@@ -464,10 +474,9 @@ public static class UICompositeMenu
         st.sizeDelta = new Vector2(40, 40);
         img = Center.GetComponent<Image>();
         img.color = Color.green;
-        img.sprite = Resources.Load<Sprite>("unity_builtin_extra/Background");
+        img.sprite = bk;
 
         rect.localScale = Vector3.one;
         rect.localPosition = Vector3.zero;
     }
-
 }

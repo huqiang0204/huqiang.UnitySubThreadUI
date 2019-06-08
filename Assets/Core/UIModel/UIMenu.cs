@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 
-public class UINotify : UIBase
+public class UIMenu: UIBase
 {
     public static ModelElement Root { get; set; }
-    public static UINotify Instance { get; private set; }
+    public static UIMenu Instance { get; private set; }
     public static void UpdateData(string cmd, object obj)
     {
         if (Instance != null)
@@ -17,7 +17,8 @@ public class UINotify : UIBase
             Instance.Update(time);
     }
     List<PopWindow> pops;
-    public UINotify()
+    public PopWindow currentPop { get; private set; }
+    public UIMenu()
     {
         pops = new List<PopWindow>();
         Instance = this;
@@ -25,7 +26,8 @@ public class UINotify : UIBase
     public virtual void Show(object dat = null)
     {
     }
-    public override void ReSize() {
+    public override void ReSize()
+    {
         for (int i = 0; i < pops.Count; i++)
         {
             var p = pops[i];
@@ -52,26 +54,30 @@ public class UINotify : UIBase
     /// </summary>
     public void ReleasePopWindow()
     {
-        int c = pops.Count-1;
-        for(;c>=0;c--)
+        int c = pops.Count - 1;
+        for (; c >= 0; c--)
         {
             var p = pops[c];
             if (p.model != null)
             { p.Dispose(); pops.RemoveAt(c); }
             else if (!p.model.activeSelf)
-            { p.Dispose();pops.RemoveAt(c); }
+            { p.Dispose(); pops.RemoveAt(c); }
         }
     }
     protected T ShowPopWindow<T>(object obj = null) where T : PopWindow, new()
     {
+        if (currentPop != null)
+        { currentPop.Hide(); currentPop = null; }
         for (int i = 0; i < pops.Count; i++)
             if (pops[i] is T)
             {
+                currentPop = pops[i];
                 pops[i].Show(obj);
                 return pops[i] as T;
             }
         var t = new T();
         pops.Add(t);
+        currentPop = t;
         t.Initial(Root, this, obj);
         t.ReSize();
         return t;
@@ -85,7 +91,7 @@ public class UINotify : UIBase
     }
     public override void Update(float time)
     {
-       for(int i=0;i<pops.Count;i++)
+        for (int i = 0; i < pops.Count; i++)
         {
             var p = pops[i];
             if (p.model != null)

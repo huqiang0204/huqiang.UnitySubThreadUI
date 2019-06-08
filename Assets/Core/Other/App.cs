@@ -63,6 +63,13 @@ namespace huqiang
             page.Context.SetParent(root.Context);
             page.SetParent(root);
             UIPage.Root = page;
+
+            var menu = ModelElement.CreateNew("menu");
+            menu.Context = new GameObject("menu", typeof(RectTransform)).transform as RectTransform;
+            menu.Context.SetParent(root.Context);
+            menu.SetParent(root);
+            UIPage.Root = page;
+
             var notify = ModelElement.CreateNew("notify");
             notify.Context = new GameObject("notify", typeof(RectTransform)).transform as RectTransform;
             notify.SetParent(root);
@@ -117,8 +124,8 @@ namespace huqiang
                 if (UIPage.CurrentPage != null)
                     UIPage.CurrentPage.ReSize();
                 UINotify.Root.IsChanged = true;
-                if (UINotify.CurrentPage != null)
-                    UINotify.CurrentPage.ReSize();
+                if (UINotify.Instance != null)
+                    UINotify.Instance.ReSize();
             }
         }
         public static void Dispose()
