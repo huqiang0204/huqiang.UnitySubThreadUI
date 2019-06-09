@@ -11,7 +11,6 @@ public class TestPage : UIPage
     class View
     {
         public UIRocker Rocker;
-        public UIPalette Palette;
         public ImageElement Image;
         public UIDate Date;
         public TreeView TreeView;
@@ -31,9 +30,7 @@ public class TestPage : UIPage
         //model.SetParent(UIPage.Root);
         var view = model.ComponentReflection<View>();
         view.Rocker.Radius = 100;
-        view.Palette.TemplateChanged = view.Palette.ColorChanged = (o) => {
-            view.Image.color = o.SelectColor;
-        };
+
         TreeViewNode node = new TreeViewNode();
         node.content = "root";
         for (int i = 0; i < 10; i++)

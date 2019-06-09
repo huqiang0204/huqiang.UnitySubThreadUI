@@ -23,6 +23,10 @@ namespace huqiang.Data
         public static List<AssetBundle> bundles = new List<AssetBundle>();
         public static Texture FindTexture(string bundle, string tname)
         {
+            if (bundle == null)
+            {
+                return UnityEngine.Resources.Load<Texture>(tname);
+            }
             if (bundles == null)
                 return null;
             for (int i = 0; i < bundles.Count; i++)

@@ -37,6 +37,7 @@ namespace huqiang.UIComposite
             gesture = EventCallBack.RegEvent<GestureEvent>(model);
             gesture.PointerDown = PointDown;
             gesture.Drag = Drag;
+            gesture.AutoColor = false;
             ThreadMission.InvokeToMain(Apply, null);
         }
         void PointDown(EventCallBack callBack, UserAction action)
@@ -61,6 +62,13 @@ namespace huqiang.UIComposite
         void DrawLine(Vector2 start,Vector2 end)
         {
             Vector2[] box = CreateBox(ref start,ref end);
+            Vector2[] back = null;
+            Vector2[] forward = null;
+            if(LastBox!=null)
+            {
+                back = ExtandBoxBack(LastBox);
+                forward = ExtandBoxForward(box);
+            }
             float minx, miny, maxx, maxy;
             minx = box[0].x;
             miny = box[0].y;
@@ -99,18 +107,24 @@ namespace huqiang.UIComposite
                     if(c.x*c.x+c.y*c.y<s)//在圆里面
                     {
                         if (LastBox != null)
-                            if (Physics2D.DotToPolygon(LastBox, p))
+                        {
+                            if (Physics2D.DotToPolygon(back, p))
                                 goto label;
+                            else if (Physics2D.DotToPolygon(forward, p))
+                                goto label;
+                        }
                         FillColor(p);
-                    }else
+                        goto label2;
+                    }
+                label:;
                     if (Physics2D.DotToPolygon(box, p))
                     {
                         if (LastBox != null)
                             if (Physics2D.DotToPolygon(LastBox, p))
-                                goto label;
+                                goto label2;
                         FillColor(p);
                     }
-                label:;
+                label2:;
                 }
             }
             LastBox = box;
@@ -131,6 +145,30 @@ namespace huqiang.UIComposite
             box[3] = end +v + n;
             return box;
         }
+        Vector2[] ExtandBoxBack(Vector2[] box)
+        {
+            Vector2[] tmp = new Vector2[4];
+            for (int i = 0; i < 4; i++)
+                tmp[i] = box[i];
+            var v = tmp[1] - tmp[2];
+            v.x *= 1000;
+            v.y *= 1000;
+            tmp[0] += v;
+            tmp[1] += v;
+            return tmp;
+        }
+        Vector2[] ExtandBoxForward(Vector2[] box)
+        {
+            Vector2[] tmp = new Vector2[4];
+            for (int i = 0; i < 4; i++)
+                tmp[i] = box[i];
+            var v = tmp[2] - tmp[1];
+            v.x *= 1000;
+            v.y *= 1000;
+            tmp[2] += v;
+            tmp[3] += v;
+            return tmp;
+        }
         void FillColor(Vector2 p)
         {
             int x =(int)p.x;
@@ -148,7 +186,7 @@ namespace huqiang.UIComposite
             int index = y * Width+x;
             if (index >= 0 & index < buffer.Length)
             {
-                BlendColor(ref buffer[index],ref BrushColor);
+                BlendColor2(ref buffer[index],ref BrushColor);
             }
         }
         void BlendColor(ref Color A1, ref Color A2)
@@ -161,6 +199,21 @@ namespace huqiang.UIComposite
             A1.g = (a1 * A1.g + a2 * A2.g) / a;
             A1.b = (a1 * A1.b + a2 * A2.b) / a;
             A1.a = a;
+        }
+        void BlendColor2(ref Color A1, ref Color A2)
+        {
+            var backB = A1.b;
+            var backG = A1.g;
+            var backR = A1.r;
+            var foreB = A2.b;
+            var foreG = A2.g;
+            var foreR = A2.r;
+            float alpha = A2.a;
+
+            A1.b = (foreB * alpha) + (backB * (1.0f - alpha));
+            A1.g = (foreG * alpha) + (backG * (1.0f - alpha));
+            A1.r = (foreR * alpha) + (backR * (1.0f - alpha));
+            A1.a = 1;
         }
         void Apply(object obj)
         {

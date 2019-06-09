@@ -68,5 +68,12 @@ namespace huqiang.UI
                 data->shader = buffer.AddData(img.material.shader.name);
             return fake;
         }
+        public override void Apply()
+        {
+            base.Update();
+            base.Apply();
+            Context.uvRect = data.uvRect;
+            Context.color = _color;
+        }
     }
 }
