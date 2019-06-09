@@ -131,30 +131,6 @@ namespace huqiang.UIComposite
             box[3] = end +v + n;
             return box;
         }
-        Vector2[] MergeBox(Vector2[] A,Vector2[] B)
-        {
-            if(Physics2D.DotToPolygon(A, B[0]))
-            {
-                Vector2[] box = new Vector2[5];
-                box[0] = B[0];
-                box[1] = A[A.Length - 2];
-                box[2] = B[1];
-                box[3] = B[2];
-                box[4] = B[3];
-                return box;
-            }
-            else if(Physics2D.DotToPolygon(A,B[1]))
-            {
-                Vector2[] box = new Vector2[5];
-                box[0] = B[0];
-                box[1] = A[A.Length - 1];
-                box[2] = B[1];
-                box[3] = B[2];
-                box[4] = B[3];
-                return box;
-            }
-            return B;
-        }
         void FillColor(Vector2 p)
         {
             int x =(int)p.x;
