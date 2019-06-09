@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -7,13 +8,11 @@ using UnityEngine.UI;
 
 public static class UICompositeMenu
 {
-    private const string kStandardSpritePath = "UI/Skin/UISprite.psd";
-    private const string kBackgroundSpritePath = "UI/Skin/Background.psd";
-    private const string kInputFieldBackgroundPath = "UI/Skin/InputFieldBackground.psd";
-    private const string kKnobPath = "UI/Skin/Knob.psd";
-    private const string kCheckmarkPath = "UI/Skin/Checkmark.psd";
-    private const string kDropdownArrowPath = "UI/Skin/DropdownArrow.psd";
-    private const string kMaskPath = "UI/Skin/UIMask.psd";
+    private const string icons = "icons";
+    private const string background = "Background2";
+    private const string file= "Pinned-Notices";
+    private const string close = "Close";
+    private const string list = "list";
     [MenuItem("GameObject/UIComposite/UISlider", false, 1)]
     static public void AddSlider(MenuCommand menuCommand)
     {
@@ -352,7 +351,7 @@ public static class UICompositeMenu
     [MenuItem("GameObject/UIComposite/Layout", false, 10)]
     static public void AddLayout(MenuCommand menuCommand)
     {
-        Sprite bk = AssetDatabase.GetBuiltinExtraResource<Sprite>(kBackgroundSpritePath);
+        Sprite bk = EditorModelManager.FindSprite(icons,background);
 
         GameObject parent = menuCommand.context as GameObject;
         var layout = new GameObject("Layout", typeof(RectTransform));
@@ -406,7 +405,7 @@ public static class UICompositeMenu
         st.localPosition = new Vector3(-90,0,0);
         st.localScale = Vector3.one;
         st.sizeDelta = new Vector2(60,100);
-        img = Center.GetComponent<Image>();
+        img = Left.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
         img.sprite = bk;
 
@@ -416,7 +415,7 @@ public static class UICompositeMenu
         st.localPosition = new Vector3(0,90,0);
         st.localScale = Vector3.one;
         st.sizeDelta = new Vector2(100, 60);
-        img = Center.GetComponent<Image>();
+        img = Top.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
         img.sprite = bk;
 
@@ -426,7 +425,7 @@ public static class UICompositeMenu
         st.localPosition = new Vector3(90, 0, 0);
         st.localScale = Vector3.one;
         st.sizeDelta = new Vector2(60, 100);
-        img = Center.GetComponent<Image>();
+        img =Right.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
         img.sprite =bk;
 
@@ -436,7 +435,7 @@ public static class UICompositeMenu
         st.localPosition = new Vector3(0, -90, 0);
         st.localScale = Vector3.one;
         st.sizeDelta = new Vector2(100, 60);
-        img = Center.GetComponent<Image>();
+        img = Down.GetComponent<Image>();
         img.color = new Color32(59, 87, 255, 128);
         img.sprite = bk;
 
@@ -455,27 +454,25 @@ public static class UICompositeMenu
         txt.text = "Label";
         txt.alignment = TextAnchor.MiddleLeft;
 
-        var Close = new GameObject("Close", typeof(RectTransform), typeof(Text));
+        var Close = new GameObject("Close", typeof(RectTransform), typeof(Image));
         st = Close.transform as RectTransform;
         st.SetParent(Item.transform);
         st.localPosition = new Vector3(100, 0, 0);
         st.localScale = Vector3.one;
         st.sizeDelta = new Vector2(48, 48);
-        txt = Close.GetComponent<Text>();
-        txt.color = Color.white;
-        txt.fontSize = 36;
-        txt.text = "X";
-        txt.alignment = TextAnchor.MiddleCenter;
+        img = Close.GetComponent<Image>();
+        img.color = Color.white;
+        img.sprite = EditorModelManager.FindSprite(icons, close);
 
         var Drag = new GameObject("Drag", typeof(RectTransform), typeof(Image));
         st = Drag.transform as RectTransform;
         st.SetParent(rect);
         st.localScale = Vector3.one;
-        st.sizeDelta = new Vector2(40, 40);
-        img = Center.GetComponent<Image>();
+        st.sizeDelta = new Vector2(60, 60);
+        img = Drag.GetComponent<Image>();
         img.color = Color.green;
-        img.sprite = bk;
-
+        img.sprite = EditorModelManager.FindSprite(icons,file);
+        
         rect.localScale = Vector3.one;
         rect.localPosition = Vector3.zero;
     }
@@ -498,17 +495,15 @@ public static class UICompositeMenu
         txt.text = "Label";
         txt.alignment = TextAnchor.MiddleCenter;
 
-        var Close = new GameObject("Arrow", typeof(RectTransform), typeof(Text));
+        var Close = new GameObject("Arrow", typeof(RectTransform), typeof(Image));
         st = Close.transform as RectTransform;
         st.SetParent(dt);
         st.localPosition = new Vector3(100, 0, 0);
         st.localScale = new Vector3(1.8f,1,1);
         st.sizeDelta = new Vector2(48, 48);
-        txt = Close.GetComponent<Text>();
-        txt.color = Color.white;
-        txt.fontSize = 36;
-        txt.text = "▼";
-        txt.alignment = TextAnchor.MiddleCenter;
+        var img = Close.GetComponent<Image>();
+        img.color = Color.white;
+        img.sprite = EditorModelManager.FindSprite(icons, list);
 
         var ss = new GameObject("Scroll", typeof(RectTransform));
         RectTransform rect = ss.transform as RectTransform;

@@ -13,7 +13,7 @@ namespace UGUI
             ElementAsset.bundles.Clear();
         }
         public string dicpath;
-        public string Assetname = "prefabs";
+        public string Assetname = "baseUI.bytes";
         public string CloneName;
     }
 }

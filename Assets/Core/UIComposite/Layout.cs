@@ -439,7 +439,7 @@ namespace huqiang.UIComposite
         {
             if(Left.realLine)
             {
-                if (Left.Left.Count < 2)
+                if (Left.Left.Count < 2&Left.Right.Count<1)
                 {
                     var area = Left.Left[0];
                     area.Right= Right;
@@ -452,7 +452,7 @@ namespace huqiang.UIComposite
             }
             if (Right.realLine)
             {
-                if(Right.Right.Count<2)
+                if(Right.Right.Count<2&Right.Left.Count<1)
                 {
                     var area = Right.Right[0];
                     area.Left = Left;
@@ -465,7 +465,7 @@ namespace huqiang.UIComposite
             }
             if(Top.realLine)
             {
-                if(Top.Top.Count<2)
+                if(Top.Top.Count<2&Top.Down.Count<1)
                 {
                     var area = Top.Top[0];
                     area.Down = Down;
@@ -478,7 +478,7 @@ namespace huqiang.UIComposite
             }
             if(Down.realLine)
             {
-                if(Down.Down.Count<2)
+                if(Down.Down.Count<2&Down.Top.Count<1)
                 {
                     var area = Down.Down[0];
                     area.Top = Top;

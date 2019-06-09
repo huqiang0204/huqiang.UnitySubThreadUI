@@ -37,6 +37,17 @@ namespace huqiang.Data
         }
         public static Sprite FindSprite(string bundle, string tname, string name)
         {
+            if(bundle==null)
+            {
+                var ss= UnityEngine.Resources.LoadAll<Sprite>(tname);
+                if(ss!=null)
+                {
+                    for (int i = 0; i < ss.Length; i++)
+                        if (ss[i].name == name)
+                            return ss[i];
+                }
+                return null;
+            }
             if (bundles == null)
                 return null;
             for(int i=0;i<bundles.Count;i++)

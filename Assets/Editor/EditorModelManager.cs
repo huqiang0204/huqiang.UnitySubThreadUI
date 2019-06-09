@@ -17,7 +17,6 @@ public class EditorModelManager
         var path = Application.dataPath;
         if (folder != null)
             path += "/" + folder;
-
     }
     static UnityEngine.Object[] LoadSprite(string name)
     {

@@ -334,6 +334,13 @@ namespace huqiang.UIComposite
         void PointUp(EventCallBack callBack, UserAction action)
         {
             Cover.activeSelf = false;
+            if(layout.DragAuxiliary==this)
+            {
+                if(contents.Count<2)
+                {
+                    return;
+                }
+            }
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
             var area = layoutArea.AddArea((LayoutArea.Dock)callBack.DataContext);
             area.auxiliary.AddContent(layout.DragContent);

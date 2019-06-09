@@ -45,6 +45,7 @@ namespace huqiang.UIComposite
                     c.data.localPosition.y = 0;
                     if (sx > x)
                         c.activeSelf = false;
+                    else c.activeSelf = true;
                     sx += ix;
                     c.IsChanged = true;
                 }
@@ -67,6 +68,7 @@ namespace huqiang.UIComposite
                     c.data.localPosition.x = 0;
                     if (sy > y)
                         c.activeSelf = false;
+                    else c.activeSelf = true;
                     sy -= iy;
                     c.IsChanged = true;
                 }
