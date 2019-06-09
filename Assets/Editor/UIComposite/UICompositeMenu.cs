@@ -482,25 +482,27 @@ public static class UICompositeMenu
         GameObject parent = menuCommand.context as GameObject;
         var drop = new GameObject("DropdownEx", typeof(RectTransform));
         RectTransform dt =drop.transform as RectTransform;
+        if (parent != null)
+            dt.SetParent(parent.transform);
         dt.sizeDelta = new Vector2(400, 60);
         var Label = new GameObject("Label", typeof(RectTransform), typeof(Text));
         var st = Label.transform as RectTransform;
         st.SetParent(dt);
-        st.localPosition = new Vector3(-20, 0, 0);
+        st.localPosition = new Vector3(-30, 0, 0);
         st.localScale = Vector3.one;
-        st.sizeDelta = new Vector2(200, 40);
+        st.sizeDelta = new Vector2(340, 40);
         var txt = Label.GetComponent<Text>();
         txt.color = Color.white;
         txt.fontSize = 32;
         txt.text = "Label";
         txt.alignment = TextAnchor.MiddleCenter;
 
-        var Close = new GameObject("Arrow", typeof(RectTransform), typeof(Image));
+        var Close = new GameObject("Menu", typeof(RectTransform), typeof(Image));
         st = Close.transform as RectTransform;
         st.SetParent(dt);
-        st.localPosition = new Vector3(100, 0, 0);
-        st.localScale = new Vector3(1.8f,1,1);
-        st.sizeDelta = new Vector2(48, 48);
+        st.localPosition = new Vector3(170, 0, 0);
+        st.localScale = new Vector3(1,1,1);
+        st.sizeDelta = new Vector2(48, 36);
         var img = Close.GetComponent<Image>();
         img.color = Color.white;
         img.sprite = EditorModelManager.FindSprite(icons, list);
@@ -509,15 +511,27 @@ public static class UICompositeMenu
         RectTransform rect = ss.transform as RectTransform;
         rect.sizeDelta = new Vector2(400, 400);
         rect.SetParent(dt);
-        rect.localPosition = new Vector3(0,-30,0);
+        rect.localPosition = new Vector3(0,-230,0);
         rect.localScale = Vector3.one;
         ss.AddComponent<RectMask2D>();
         var Item = new GameObject("Item", typeof(RectTransform));
         var fr = Item.transform as RectTransform;
-        fr.sizeDelta = new Vector2(80, 80);
+        fr.sizeDelta = new Vector2(400, 80);
         fr.SetParent(rect);
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
+
+        Label = new GameObject("Label", typeof(RectTransform), typeof(Text));
+        st = Label.transform as RectTransform;
+        st.SetParent(fr);
+        st.localPosition = new Vector3(-30, 0, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(400, 60);
+        txt = Label.GetComponent<Text>();
+        txt.color = Color.white;
+        txt.fontSize = 32;
+        txt.text = "Label";
+        txt.alignment = TextAnchor.MiddleCenter;
 
         dt.localPosition = Vector3.zero;
         dt.localScale = Vector3.one;
