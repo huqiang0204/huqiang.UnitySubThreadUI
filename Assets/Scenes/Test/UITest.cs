@@ -23,7 +23,7 @@ public class UITest : TestHelper
 #if UNITY_IPHONE || UNITY_ANDROID
         Scale.DpiScale = true;
 #endif
-        UIPage.LoadPage<LayoutTestPage>();
+        UIPage.LoadPage<DrawPage>();
     }
     public override void OnUpdate()
     {

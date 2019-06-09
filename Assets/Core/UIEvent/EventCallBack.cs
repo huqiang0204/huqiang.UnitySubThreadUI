@@ -388,6 +388,22 @@ namespace huqiang.UIEvent
             else
                 sDistance.y = (float)MathH.PowDistance(DecayRateY, maxVelocity.y, 1000000);
         }
+        public Vector3 ScreenToLocal(Vector3 v)
+        {
+            v -= GlobalPosition;
+            if (GlobalScale.x != 0)
+                v.x /= GlobalScale.x;
+            else v.x = 0;
+            if (GlobalScale.y != 0)
+                v.y /= GlobalScale.y;
+            else v.y = 0;
+            if (GlobalScale.z != 0)
+                v.z /= GlobalScale.z;
+            else v.z = 0;
+            var q = Quaternion.Inverse(GlobalRotation);
+            v = q * v;
+            return v;
+        }
         #region event
         public Action<EventCallBack, UserAction> PointerDown;
         public Action<EventCallBack, UserAction> PointerUp;

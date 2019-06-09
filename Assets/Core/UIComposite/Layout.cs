@@ -522,7 +522,6 @@ namespace huqiang.UIComposite
         public LayoutArea MainArea { get; private set; }
         public override void Initial(ModelElement mod)
         {
-            base.Initial(mod);
             model = mod;
             LineLevel = mod.Find("LineLevel");
             AreaLevel= mod.Find("AreaLevel");

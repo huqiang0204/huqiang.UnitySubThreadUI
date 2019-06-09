@@ -150,6 +150,15 @@ namespace huqiang
             float r = Mathf.Sqrt(len * len / sx);
             return new Vector2(v.x * r, v.y * r);
         }
+        public static Vector2 Rotate(this Vector2 v, float angle)
+        {
+            var a = MathH.atan(v.x,v.y);
+            a += angle;
+            a %= 360;
+            if (a < 0)
+                a += 360;
+            return MathH.Tan2(a);
+        }
         public static Vector3 Move(this Vector3 v, float len)
         {
             if (v.x == 0 & v.y == 0 & v.z == 0)
