@@ -2,6 +2,7 @@
 using huqiang.UIEvent;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace huqiang.UIComposite
 {
@@ -185,7 +186,35 @@ namespace huqiang.UIComposite
             }
             if(image!=null)
             {
-                image.data.fillAmount = ratio;
+                if(image.data.type==Image.Type.Filled)
+                {
+                    image.data.fillAmount = ratio;
+                }
+                else
+                {
+                    var mod = image.model;
+                    if(info.direction==Direction.Horizontal)
+                    {
+                        float w = ratio * size.x;
+                        float rx = size.x * 0.5f;
+                        float lx = w*0.5f - rx;
+                        mod.data.localPosition.x = lx;
+                        mod.data.localPosition.y = 0;
+                        mod.data.sizeDelta.x = w;
+                        mod.data.sizeDelta.y = size.y;
+                    }
+                    else
+                    {
+                        float w = ratio * size.y;
+                        float rx = size.y * 0.5f;
+                        float lx = w*0.5f - rx;
+                        mod.data.localPosition.y = lx;
+                        mod.data.localPosition.x = 0;
+                        mod.data.sizeDelta.y = w;
+                        mod.data.sizeDelta.x= size.x;
+                    }
+                    mod.IsChanged = true;
+                }
                 image.IsChanged = true;
             }
         }

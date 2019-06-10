@@ -1,4 +1,5 @@
 ﻿using huqiang.Data;
+using huqiang.UIComposite;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,18 +14,29 @@ public static class UICompositeMenu
     private const string file= "Pinned-Notices";
     private const string close = "Close";
     private const string list = "list";
-    [MenuItem("GameObject/UIComposite/UISlider", false, 1)]
-    static public void AddSlider(MenuCommand menuCommand)
+    private const string line = "Line";
+    private const string leaves = "Leaves";
+    private const string ufo = "Ufo";
+    private const string circleol = "Circle-Outline";
+    private const string circlesm = "Circle-Small";
+    [MenuItem("GameObject/UIComposite/UISliderH", false, 1)]
+    static public void AddSliderH(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
-        var ss = new GameObject("Slider", typeof(RectTransform));
+        var ss = new GameObject("SliderH", typeof(RectTransform));
         RectTransform rect = ss.transform as RectTransform;
         rect.sizeDelta = new Vector2(400, 20);
         if (parent != null)
             rect.SetParent(parent.transform);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
+        var help = ss.AddComponent<SliderHelper>();
+        help.StartOffset.x = -15;
+        help.EndOffset.x = -15;
         var image = ss.AddComponent<Image>();
+        image.sprite = EditorModelManager.FindSprite(icons, background);
+        image.type = Image.Type.Sliced;
+
         var Fill = new GameObject("FillImage", typeof(RectTransform));
         var fr = Fill.transform as RectTransform;
         fr.sizeDelta = new Vector2(400, 20);
@@ -32,14 +44,61 @@ public static class UICompositeMenu
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
         image = Fill.AddComponent<Image>();
+        image.sprite = EditorModelManager.FindSprite(icons, background);
         image.type = Image.Type.Sliced;
+        image.fillMethod = Image.FillMethod.Horizontal;
+        image.color = new Color32(94,137,197,255);
+
         var Nob = new GameObject("Nob", typeof(RectTransform));
         var fn = Nob.transform as RectTransform;
         fn.sizeDelta = new Vector2(30, 30);
         fn.SetParent(rect);
-        fn.localPosition = new Vector3(-200, 0, 0);
+        fn.localPosition = new Vector3(200, 0, 0);
         fn.localScale = Vector3.one;
         image = Nob.AddComponent<Image>();
+        image.color = Color.green;
+        image.sprite = EditorModelManager.FindSprite(icons,leaves);
+    }
+    [MenuItem("GameObject/UIComposite/UISliderV", false, 1)]
+    static public void AddSliderV(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var ss = new GameObject("SliderV", typeof(RectTransform));
+        RectTransform rect = ss.transform as RectTransform;
+        rect.sizeDelta = new Vector2(20,400);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        rect.localPosition = Vector3.zero;
+        rect.localScale = Vector3.one;
+        var help = ss.AddComponent<SliderHelper>();
+        help.direction = UISlider.Direction.Vertical;
+        help.StartOffset.y = -15;
+        help.EndOffset.y = -15;
+        var image = ss.AddComponent<Image>();
+        image.sprite = EditorModelManager.FindSprite(icons, background);
+        image.type = Image.Type.Sliced;
+
+        var Fill = new GameObject("FillImage", typeof(RectTransform));
+        var fr = Fill.transform as RectTransform;
+        fr.sizeDelta = new Vector2(20, 400);
+        fr.SetParent(rect);
+        fr.localPosition = Vector3.zero;
+        fr.localScale = Vector3.one;
+        image = Fill.AddComponent<Image>();
+        image.sprite = EditorModelManager.FindSprite(icons, background);
+        image.type = Image.Type.Sliced;
+        image.fillMethod = Image.FillMethod.Vertical;
+        image.color = new Color32(94, 137, 197, 255);
+
+        var Nob = new GameObject("Nob", typeof(RectTransform));
+        var fn = Nob.transform as RectTransform;
+        fn.sizeDelta = new Vector2(30, 30);
+        fn.SetParent(rect);
+        fn.localPosition = new Vector3(0, 200, 0);
+        fn.localScale = Vector3.one;
+        image = Nob.AddComponent<Image>();
+        image.color = Color.green;
+        image.sprite = EditorModelManager.FindSprite(icons, ufo);
     }
     [MenuItem("GameObject/UIComposite/Scroll", false, 2)]
     static public void AddScroll(MenuCommand menuCommand)
@@ -159,13 +218,16 @@ public static class UICompositeMenu
             rect.SetParent(parent.transform);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
-        ss.AddComponent<Image>();
+        var img=  ss.AddComponent<Image>();
+        img.sprite= EditorModelManager.FindSprite(icons, circleol);
         var Item = new GameObject("Nob", typeof(RectTransform));
         var fr = Item.transform as RectTransform;
         fr.sizeDelta = new Vector2(100, 100);
         fr.SetParent(rect);
         fr.localPosition = Vector3.zero;
         fr.localScale = Vector3.one;
+        img = Item.AddComponent<Image>();
+        img.sprite = EditorModelManager.FindSprite(icons, circlesm);
     }
     [MenuItem("GameObject/UIComposite/UIPalette", false, 6)]
     static public void AddPalette(MenuCommand menuCommand)
