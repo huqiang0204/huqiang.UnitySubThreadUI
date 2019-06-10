@@ -24,6 +24,8 @@ public class UITest : TestHelper
         Scale.DpiScale = true;
 #endif
         UIPage.LoadPage<DrawPage>();
+        //UIPage.LoadPage<LayoutTestPage>();
+        //UIPage.LoadPage<TestPage>();
     }
     public override void OnUpdate()
     {
