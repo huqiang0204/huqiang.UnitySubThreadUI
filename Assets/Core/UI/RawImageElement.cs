@@ -32,21 +32,21 @@ namespace huqiang.UI
         }
         public override void LoadToObject(Component game)
         {
-            LoadToObject(game, ref data, this);
-        }
-        public static void LoadToObject(Component game, ref RawImageData dat, RawImageElement image)
-        {
-            var a = game.GetComponent<RawImage>();
-            if (a == null)
+           Context = game.GetComponent<RawImage>();
+            if (Context == null)
                 return;
-            a.uvRect = dat.uvRect;
-            a.color = image.color;
-            a.raycastTarget = false;
+            LoadToObject(Context, ref data, this);
+        }
+        public static void LoadToObject(RawImage raw, ref RawImageData dat, RawImageElement image)
+        {
+            raw.uvRect = dat.uvRect;
+            raw.color = image._color;
+            raw.raycastTarget = false;
             if (image.shader != "Default UI Material")
-                a.material = new Material(Shader.Find(image.shader));
+                raw.material = new Material(Shader.Find(image.shader));
             if (image.textureName != null)
-                a.texture = ElementAsset.FindTexture(image.assetName, image.textureName);
-            image.Context = a;
+                raw.texture = ElementAsset.FindTexture(image.assetName, image.textureName);
+            image.Context = raw;
         }
         public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
         {
@@ -74,6 +74,7 @@ namespace huqiang.UI
             base.Apply();
             Context.uvRect = data.uvRect;
             Context.color = _color;
+            IsChanged = false;
         }
     }
 }
