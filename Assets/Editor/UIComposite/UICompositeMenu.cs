@@ -192,7 +192,7 @@ public static class UICompositeMenu
         var fn = Nob.transform as RectTransform;
         fn.sizeDelta = new Vector2(44, 44);
         fn.SetParent(rect);
-        fn.localPosition = new Vector3(0, 220, 0);
+        fn.localPosition = new Vector3(0, -220, 0);
         fn.localScale = Vector3.one;
         Nob.AddComponent<Image>();
 
