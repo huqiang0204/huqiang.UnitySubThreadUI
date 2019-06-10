@@ -15,7 +15,6 @@ public class UITest : TestHelper
         var dic = Application.streamingAssetsPath;
         ElementAsset.bundles.Add(AssetBundle.LoadFromFile(dic+ "/picture.unity3d"));
 #endif
-
     }
     public override void LoadTestPage()
     {
@@ -23,8 +22,8 @@ public class UITest : TestHelper
 #if UNITY_IPHONE || UNITY_ANDROID
         Scale.DpiScale = true;
 #endif
-        UIPage.LoadPage<DrawPage>();
-        //UIPage.LoadPage<LayoutTestPage>();
+        //UIPage.LoadPage<DrawPage>();
+        UIPage.LoadPage<LayoutTestPage>();
         //UIPage.LoadPage<TestPage>();
     }
     public override void OnUpdate()
