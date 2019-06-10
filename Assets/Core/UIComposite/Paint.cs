@@ -1,4 +1,5 @@
-﻿using huqiang.UI;
+﻿using huqiang.Data;
+using huqiang.UI;
 using huqiang.UIEvent;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace huqiang.UIComposite
         Vector2[] LastBox;
         Vector2 LastDirect;
         Vector2 CurDirect;
+        LoopBuffer<DrawArea> loopBuffer=new LoopBuffer<DrawArea>(2);
         public override void Initial(ModelElement mod)
         {
             base.Initial(mod);
@@ -45,6 +47,7 @@ namespace huqiang.UIComposite
             Origin = callBack.ScreenToLocal(action.CanPosition);
             LastPos = Origin;
             LastBox = null;
+            loopBuffer.Clear();
         }
         void Drag(EventCallBack callBack, UserAction action,Vector2 v)
         {
@@ -59,115 +62,38 @@ namespace huqiang.UIComposite
                     LastPos = CurPos;
                 }
         }
-        void DrawLine(Vector2 start,Vector2 end)
+        void DrawLine(Vector2 start, Vector2 end)
         {
-            Vector2[] box = CreateBox(ref start,ref end);
-            Vector2[] back = null;
-            Vector2[] forward = null;
-            if(LastBox!=null)
-            {
-                back = ExtandBoxBack(LastBox);
-                forward = ExtandBoxForward(box);
-            }
-            float minx, miny, maxx, maxy;
-            minx = box[0].x;
-            miny = box[0].y;
-            maxx = box[0].x;
-            maxy = box[0].y;
-            for (int i = 1; i < box.Length; i++)
-            {
-                if (box[i].x < minx)
-                    minx = box[i].x;
-                else if (box[i].x > maxx)
-                    maxx = box[i].x;
-                if (box[i].y < miny)
-                    miny = box[i].y;
-                else if (box[i].y > maxy)
-                    maxy = box[i].y;
-            }
-            var s = BrushSize * 0.5f;
-            int h = (int)s;
-            int sx = (int)minx;
-            sx-=h;
-            int ex = (int)maxx;
-            ex+=h;
-            int sy = (int)miny;
-            sy-=h;
-            int ey = (int)maxy;
-            ey+=h;
-            s *= s;
+            DrawArea area = new DrawArea(start, end, BrushSize);
+            loopBuffer.Push(area);
+            int h = (int)area.hw;
+            int sx = (int)area.minx;
+            sx -= h;
+            int ex = (int)area.maxx;
+            ex += h;
+            int sy = (int)area.miny;
+            sy -= h;
+            int ey = (int)area.maxy;
+            ey += h;
             var p = Vector2.zero;
             for (int i = sx; i < ex; i++)
             {
                 p.x = i;
                 for (int j = sy; j < ey; j++)
                 {
-                    p.y = j;
-                    var c = p - start;
-                    if(c.x*c.x+c.y*c.y<s)//在圆里面
+                    var pos = new Vector2(i,j);
+                    if(area.CheckPix(pos))
                     {
-                        if (LastBox != null)
-                        {
-                            if (Physics2D.DotToPolygon(back, p))
+                        var a = loopBuffer[0];
+                        if (a != null)
+                            if (a.CheckPix(pos))
                                 goto label;
-                            else if (Physics2D.DotToPolygon(forward, p))
-                                goto label;
-                        }
-                        FillColor(p);
-                        goto label2;
+                        FillColor(pos);
                     }
                 label:;
-                    if (Physics2D.DotToPolygon(box, p))
-                    {
-                        if (LastBox != null)
-                            if (Physics2D.DotToPolygon(LastBox, p))
-                                goto label2;
-                        FillColor(p);
-                    }
-                label2:;
                 }
             }
-            LastBox = box;
-            LastDirect = CurDirect;
-        }
-        Vector2[] CreateBox(ref Vector2 start,ref Vector2 end)
-        {
-            var v = end - start;
-            v.Normalize();
-            CurDirect = v;
-            var n = v.Rotate(90);
-            float h = BrushSize * 0.5f;
-            n = n.Move(h);
-            Vector2[] box = new Vector2[4];
-            box[0] = start-v + n;
-            box[1] = start-v - n;
-            box[2] = end +v  - n;
-            box[3] = end +v + n;
-            return box;
-        }
-        Vector2[] ExtandBoxBack(Vector2[] box)
-        {
-            Vector2[] tmp = new Vector2[4];
-            for (int i = 0; i < 4; i++)
-                tmp[i] = box[i];
-            var v = tmp[1] - tmp[2];
-            v.x *= 1000;
-            v.y *= 1000;
-            tmp[0] += v;
-            tmp[1] += v;
-            return tmp;
-        }
-        Vector2[] ExtandBoxForward(Vector2[] box)
-        {
-            Vector2[] tmp = new Vector2[4];
-            for (int i = 0; i < 4; i++)
-                tmp[i] = box[i];
-            var v = tmp[2] - tmp[1];
-            v.x *= 1000;
-            v.y *= 1000;
-            tmp[2] += v;
-            tmp[3] += v;
-            return tmp;
+
         }
         void FillColor(Vector2 p)
         {
@@ -213,7 +139,7 @@ namespace huqiang.UIComposite
             A1.b = (foreB * alpha) + (backB * (1.0f - alpha));
             A1.g = (foreG * alpha) + (backG * (1.0f - alpha));
             A1.r = (foreR * alpha) + (backR * (1.0f - alpha));
-            A1.a = 1;
+            A1.a +=alpha ;
         }
         void Apply(object obj)
         {
@@ -233,6 +159,80 @@ namespace huqiang.UIComposite
         }
         public void Resize()
         {
+
+        }
+    }
+    public class DrawArea
+    {
+        public float hw;
+        public Vector2 Start;
+        public Vector2 End;
+        public Vector2[] box;
+        public float minx, miny, maxx, maxy;
+        float sqr;
+        public DrawArea(Vector2 s,Vector2 e,float w)
+        {
+            Start = s;
+            End = e;
+            hw = w*0.5f;
+            sqr = hw * hw;
+            if(s!=e)
+            {
+                CreateBox();
+                minx = box[0].x;
+                miny = box[0].y;
+                maxx = box[0].x;
+                maxy = box[0].y;
+                for (int i = 1; i < box.Length; i++)
+                {
+                    if (box[i].x < minx)
+                        minx = box[i].x;
+                    else if (box[i].x > maxx)
+                        maxx = box[i].x;
+                    if (box[i].y < miny)
+                        miny = box[i].y;
+                    else if (box[i].y > maxy)
+                        maxy = box[i].y;
+                }
+                minx -= hw;
+                maxx += hw;
+                miny -= hw;
+                maxy +=  hw;
+            }
+            else
+            {
+                minx = Start.x - hw-1;
+                maxx = Start.x + hw+1;
+                miny = Start.y - hw-1;
+                maxy = Start.y + hw+1;
+            }
+        }
+        void CreateBox()
+        {
+            var v = End - Start;
+            v.Normalize();
+            var n = v.Rotate(90);
+            float h = hw;
+            n = n.Move(h);
+            box = new Vector2[4];
+            box[0] = Start - v + n;
+            box[1] = Start - v - n;
+            box[2] = End + v - n;
+            box[3] = End + v + n;
+        }
+        public bool CheckPix(Vector2 pos)
+        {
+            var dx = pos.x - Start.x;
+            var dy = pos.y - Start.y;
+            if (dx * dx + dy * dy < sqr)
+                return true;
+            dx = pos.x - End.x;
+            dy = pos.y - End.y;
+            if (dx * dx + dy * dy < sqr)
+                return true;
+            if (box != null)
+                return Physics2D.DotToPolygon(box, pos);
+            return false;
 
         }
     }
