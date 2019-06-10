@@ -3,6 +3,7 @@ using huqiang.UIComposite;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UGUI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,8 @@ public static class UICompositeMenu
     private const string ufo = "Ufo";
     private const string circleol = "Circle-Outline";
     private const string circlesm = "Circle-Small";
-    [MenuItem("GameObject/UIComposite/UISliderH", false, 1)]
+
+    [MenuItem("GameObject/UIComposite/UISliderH", false, 0)]
     static public void AddSliderH(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -149,7 +151,10 @@ public static class UICompositeMenu
         fn.SetParent(Scroll.transform);
         fn.localPosition = new Vector3(0, -190, 0);
         fn.localScale = Vector3.one;
-        ss.AddComponent<Image>().type = Image.Type.Sliced;
+        var img = ss.AddComponent<Image>();
+        img.sprite= EditorModelManager.FindSprite(icons, background);
+        img.type = Image.Type.Sliced;
+        img.color = new Color32(152, 152, 152, 255);
         var help = ss.AddComponent<SliderHelper>();
         help.StartOffset.x = 15;
         help.EndOffset.x = 15;
@@ -160,8 +165,8 @@ public static class UICompositeMenu
         fn.SetParent(ss.transform);
         fn.localPosition = new Vector3(-185, 0, 0);
         fn.localScale = Vector3.one;
-        Nob.AddComponent<Image>();
-
+        img = Nob.AddComponent<Image>();
+        img.sprite= EditorModelManager.FindSprite(icons, circlesm);
     }
     [MenuItem("GameObject/UIComposite/ScrollY", false, 4)]
     static public void AddScrollY(MenuCommand menuCommand)
@@ -193,9 +198,12 @@ public static class UICompositeMenu
         fn.SetParent(Scroll.transform);
         fn.localPosition = new Vector3(190, 0, 0);
         fn.localScale = Vector3.one;
-        ss.AddComponent<Image>().type = Image.Type.Sliced;
+        var img=  ss.AddComponent<Image>();
+        img.sprite= EditorModelManager.FindSprite(icons, background);
+        img.type = Image.Type.Sliced;
+        img.color = new Color32(152, 152, 152, 255);
         var help = ss.AddComponent<SliderHelper>();
-        help.direction = huqiang.UIComposite.UISlider.Direction.Vertical;
+        help.direction = UISlider.Direction.Vertical;
         help.StartOffset.y = 15;
         help.EndOffset.y = 15;
 
@@ -205,7 +213,8 @@ public static class UICompositeMenu
         fn.SetParent(ss.transform);
         fn.localPosition = new Vector3(0, -185, 0);
         fn.localScale = Vector3.one;
-        Nob.AddComponent<Image>();
+        img = Nob.AddComponent<Image>();
+        img.sprite = EditorModelManager.FindSprite(icons, circlesm);
     }
     [MenuItem("GameObject/UIComposite/UIRocker", false, 5)]
     static public void AddRocker(MenuCommand menuCommand)
@@ -597,5 +606,19 @@ public static class UICompositeMenu
 
         dt.localPosition = Vector3.zero;
         dt.localScale = Vector3.one;
+    }
+    [MenuItem("GameObject/UIComposite/EmojiText", false, 12)]
+    static public void AddEmojiText(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var ss = new GameObject("EText", typeof(RectTransform));
+        RectTransform rect = ss.transform as RectTransform;
+        rect.sizeDelta = new Vector2(200, 40);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        rect.localPosition = Vector3.zero;
+        rect.localScale = Vector3.one;
+        var et = ss.AddComponent<EmojiText>();
+        et.raycastTarget = false;
     }
 }
