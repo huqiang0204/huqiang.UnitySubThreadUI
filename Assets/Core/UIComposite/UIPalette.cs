@@ -17,7 +17,7 @@ namespace huqiang.UIComposite
         RawImageElement htemp;
         RawImageElement slider;
         Palette palette;
-        public Color SelectColor;
+        public Color SelectColor=Color.white;
         float Alpha;
         public Action<UIPalette> ColorChanged;
         public Action<UIPalette> TemplateChanged;
