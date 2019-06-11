@@ -103,7 +103,10 @@ public class UIPage : UIBase
         DataContext = dat;
         if (parent != null)
             if (model != null)
+            {
                 model.SetParent(parent);
+                model.data.localPosition = Vector3.zero;
+            }
     }
     public virtual void Initial(ModelElement parent, object dat = null, Type back = null, Type pop = null, object backData = null)
     {

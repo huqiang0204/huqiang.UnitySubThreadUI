@@ -439,7 +439,26 @@ namespace huqiang.UIComposite
         {
             if(Left.realLine)
             {
-                if (Left.Left.Count < 2&Left.Right.Count<1)
+                if(Left.Right.Count<1)
+                {
+                    List<LayoutArea> areas = Left.Left;
+                    for(int i=0;i<areas.Count;i++)
+                    {
+                        var area = areas[i];
+                        area.Right = Right;
+                        area.Top.LineEnd = Right;
+                        area.Top.SizeChanged();
+                        area.Down.LineEnd = Right;
+                        area.Down.SizeChanged();
+                        Right.Left.Add(area);
+                        area.SizeChanged();
+                    }
+                    layout.lines.Remove(Left);
+                    Left.Dispose();
+                    return;
+                }
+                else
+                if (Left.Left.Count < 2)
                 {
                     var area = Left.Left[0];
                     area.Right= Right;
@@ -452,7 +471,26 @@ namespace huqiang.UIComposite
             }
             if (Right.realLine)
             {
-                if(Right.Right.Count<2&Right.Left.Count<1)
+                if(Right.Left.Count < 1)
+                {
+                    List<LayoutArea> areas = Right.Right;
+                    for(int i=0;i<areas.Count;i++)
+                    {
+                        var area = areas[i];
+                        area.Left = Left;
+                        area.Top.LineStart = Left;
+                        area.Top.SizeChanged();
+                        area.Down.LineStart = Left;
+                        area.Down.SizeChanged();
+                        Left.Right.Add(area);
+                        area.SizeChanged();
+                    }
+                    layout.lines.Remove(Right);
+                    Right.Dispose();
+                    return;
+                }
+                else
+                if(Right.Right.Count<2)
                 {
                     var area = Right.Right[0];
                     area.Left = Left;
@@ -465,7 +503,26 @@ namespace huqiang.UIComposite
             }
             if(Top.realLine)
             {
-                if(Top.Top.Count<2&Top.Down.Count<1)
+                if(Top.Down.Count < 1)
+                {
+                    List<LayoutArea> areas = Top.Top;
+                    for(int i=0;i<areas.Count;i++)
+                    {
+                        var area =areas[i];
+                        area.Down = Down;
+                        area.Left.LineEnd = Down;
+                        area.Left.SizeChanged();
+                        area.Right.LineEnd = Down;
+                        area.Right.SizeChanged();
+                        Down.Top.Add(area);
+                        area.SizeChanged();
+                    }
+                    layout.lines.Remove(Top);
+                    Top.Dispose();
+                    return;
+                }
+                else
+                if(Top.Top.Count<2)
                 {
                     var area = Top.Top[0];
                     area.Down = Down;
@@ -478,7 +535,26 @@ namespace huqiang.UIComposite
             }
             if(Down.realLine)
             {
-                if(Down.Down.Count<2&Down.Top.Count<1)
+                if(Down.Top.Count < 1)
+                {
+                    List<LayoutArea> areas = Down.Down;
+                    for(int i=0;i<areas.Count;i++)
+                    {
+                        var area = areas[i];
+                        area.Top = Top;
+                        area.Left.LineStart = Top;
+                        area.Left.SizeChanged();
+                        area.Right.LineStart = Top;
+                        area.Right.SizeChanged();
+                        Top.Down.Add(area);
+                        area.SizeChanged();
+                    }
+                    layout.lines.Remove(Down);
+                    Down.Dispose();
+                    return;
+                }
+                else
+                if(Down.Down.Count<2)
                 {
                     var area = Down.Down[0];
                     area.Top = Top;
