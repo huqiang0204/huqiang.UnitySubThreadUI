@@ -1,5 +1,6 @@
 ﻿using huqiang.UI;
 using huqiang.UIComposite;
+using huqiang.UIEvent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ public class DrawPage:UIPage
         public RawImageElement color;
         public TextElement tip;
         public UISlider sizeS;
+        public EventCallBack mod0;
+        public EventCallBack mod1;
+        public EventCallBack mod2;
     }
     View view;
     public override void Initial(ModelElement parent, object dat = null)
@@ -32,5 +36,8 @@ public class DrawPage:UIPage
             view.draw.BrushSize = a;
             view.tip.text = "画笔尺寸:"+a.ToString();
         };
+        view.mod0.Click = (o, e) => { view.draw.drawModel = Paint.DrawModel.Brush; };
+        view.mod1.Click = (o, e) => { view.draw.drawModel = Paint.DrawModel.Scale; };
+        view.mod2.Click = (o, e) => { view.draw.drawModel = Paint.DrawModel.Rotate; };
     }
 }

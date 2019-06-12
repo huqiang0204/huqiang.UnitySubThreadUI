@@ -7,6 +7,10 @@ namespace huqiang.UIComposite
 {
     public class Paint : ModelInital
     {
+        public enum DrawModel
+        {
+            Brush,Scale,Rotate
+        }
         ModelElement model;
         RawImageElement raw;
         Color[] buffer;
@@ -21,10 +25,10 @@ namespace huqiang.UIComposite
         Vector3 LastPos;
         Vector3 CurPos;
         Texture2D texture;
-        Vector2[] LastBox;
         Vector2 LastDirect;
         Vector2 CurDirect;
         LoopBuffer<DrawArea> loopBuffer=new LoopBuffer<DrawArea>(2);
+        public DrawModel drawModel;
         public override void Initial(ModelElement mod)
         {
             base.Initial(mod);
@@ -39,28 +43,52 @@ namespace huqiang.UIComposite
             gesture = EventCallBack.RegEvent<GestureEvent>(model);
             gesture.PointerDown = PointDown;
             gesture.Drag = Drag;
+            gesture.DragEnd = DragEnd;
             gesture.AutoColor = false;
+            gesture.TowFingerMove = TowFingerMove;
             ThreadMission.InvokeToMain(Apply, null);
         }
         void PointDown(EventCallBack callBack, UserAction action)
         {
             Origin = callBack.ScreenToLocal(action.CanPosition);
             LastPos = Origin;
-            LastBox = null;
             loopBuffer.Clear();
         }
         void Drag(EventCallBack callBack, UserAction action,Vector2 v)
         {
-            CurPos = callBack.ScreenToLocal(action.CanPosition);
-            float hx = Width * 0.5f;
-            float hy = Height * 0.5f;
-            if (LastPos.x <= hx & LastPos.x >= -hx)
-                if (LastPos.y <= hy & LastPos.y >= -hy)
-                {
-                    DrawLine(LastPos, CurPos);
-                    ThreadMission.InvokeToMain(Apply,null);
-                    LastPos = CurPos;
-                }
+            if(drawModel==DrawModel.Brush)
+            {
+                CurPos = callBack.ScreenToLocal(action.CanPosition);
+                float hx = Width * 0.5f;
+                float hy = Height * 0.5f;
+                if (LastPos.x <= hx & LastPos.x >= -hx)
+                    if (LastPos.y <= hy & LastPos.y >= -hy)
+                    {
+                        DrawLine(LastPos, CurPos);
+                        ThreadMission.InvokeToMain(Apply, null);
+                        LastPos = CurPos;
+                    }
+            }
+        }
+        void DragEnd(EventCallBack callBack, UserAction action, Vector2 v)
+        {
+
+        }
+        void TowFingerMove(GestureEvent ges)
+        {
+            if(drawModel==DrawModel.Scale)
+            {
+                float s = ges.CurScale;
+                model.data.localScale.x = s;
+                model.data.localScale.y = s;
+                model.data.localScale.y = s;
+                model.IsChanged = true;
+            }else if(drawModel==DrawModel.Rotate)
+            {
+                float a = ges.DeltaAngle;
+                model.data.localRotation*= Quaternion.Euler(0,0,a);
+                model.IsChanged = true;
+            }
         }
         void DrawLine(Vector2 start, Vector2 end)
         {
