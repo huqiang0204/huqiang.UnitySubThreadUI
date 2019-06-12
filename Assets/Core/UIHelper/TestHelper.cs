@@ -1,4 +1,5 @@
 ﻿using huqiang;
+using huqiang.Communication;
 using huqiang.Data;
 using huqiang.UI;
 using System.IO;
@@ -44,6 +45,7 @@ public class TestHelper:UICompositeHelp
     public string AssetName = "baseUI";
     private void Awake()
     {
+        RemoteLog.Instance.Connection("192.168.0.113", 9998);
         LoadBundle();
         InitialUI();
         DataBuffer db = new DataBuffer(1024);
@@ -76,5 +78,6 @@ public class TestHelper:UICompositeHelp
         App.Dispose();
         AssetBundle.UnloadAllAssetBundles(true);
         ElementAsset.bundles.Clear();
+        RemoteLog.Instance.Dispose();
     }
 }

@@ -12,15 +12,15 @@ public class UITest : TestHelper
 #if UNITY_EDITOR
         base.LoadBundle();
 #else
-        var dic = Application.streamingAssetsPath;
-        ElementAsset.bundles.Add(AssetBundle.LoadFromFile(dic+ "/picture.unity3d"));
+        //var dic = Application.streamingAssetsPath;
+        //ElementAsset.bundles.Add(AssetBundle.LoadFromFile(dic+ "/picture.unity3d"));
 #endif
     }
     public override void LoadTestPage()
     {
         Application.targetFrameRate = 60;
 #if UNITY_IPHONE || UNITY_ANDROID
-        Scale.DpiScale = true;
+        //Scale.DpiScale = true;
 #endif
         UIPage.LoadPage<DrawPage>();
         //UIPage.LoadPage<LayoutTestPage>();

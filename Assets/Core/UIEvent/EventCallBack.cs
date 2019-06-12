@@ -101,7 +101,22 @@ namespace huqiang.UIEvent
                 return;
             var root = UIPage.Root;
             if (root != null)
-                DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
+            {
+                var child = root.child;
+                for (int i = child.Count - 1; i >= 0; i--)
+                {
+                    try
+                    {
+                        if (DispatchEvent(child[i], Vector3.zero, Vector3.one, Quaternion.identity, action))
+                            return;
+                    }catch(Exception ex)
+                    {
+                        Debug.Log(ex);
+                    }
+                }
+                //DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
+            }
+                
         }
         public static bool DispatchEvent(ModelElement ui, Vector3 pos, Vector3 scale, Quaternion quate, UserAction action)
         {
