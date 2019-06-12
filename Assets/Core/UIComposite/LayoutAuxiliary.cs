@@ -206,6 +206,7 @@ namespace huqiang.UIComposite
                 if(contents.Count==0)
                 {
                     layoutArea.Dispose();
+                    layout.Refresh();
                     Current = null;
                 }
                 else
@@ -344,7 +345,8 @@ namespace huqiang.UIComposite
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
             var area = layoutArea.AddArea((LayoutArea.Dock)callBack.DataContext);
             area.auxiliary.AddContent(layout.DragContent);
-            area.SizeChanged();
+            //area.SizeChanged();
+            layout.Refresh();
         }
         void LeftPointEntry(EventCallBack callBack, UserAction action)
         {

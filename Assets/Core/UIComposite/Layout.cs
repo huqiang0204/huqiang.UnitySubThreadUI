@@ -140,9 +140,9 @@ namespace huqiang.UIComposite
         /// 底部相邻的区域
         /// </summary>
         public List<LayoutArea> Down = new List<LayoutArea>();
-        public LayoutLine LineStart;//起点相邻的线
-        public LayoutLine LineEnd;//终点相邻的线
-        public List<LayoutLine> AdjacentLines = new List<LayoutLine>();//所有与之相邻的线
+        LayoutLine LineStart;//起点相邻的线
+        LayoutLine LineEnd;//终点相邻的线
+        List<LayoutLine> AdjacentLines = new List<LayoutLine>();//所有与之相邻的线
         public void SizeChanged()
         {
             if(LineStart!=null&LineEnd!=null)
@@ -179,10 +179,102 @@ namespace huqiang.UIComposite
                     Down[i].SizeChanged();
             }
         }
+        public void SetLineStart(LayoutLine line)
+        {
+            if (LineStart != null)
+                LineStart.AdjacentLines.Remove(this);
+            LineStart = line;
+            LineStart.AdjacentLines.Add(this);
+        }
+        public void SetLineEnd(LayoutLine line)
+        {
+            if (LineEnd != null)
+                LineEnd.AdjacentLines.Remove(this);
+            LineEnd = line;
+            LineEnd.AdjacentLines.Add(this);
+        }
         public void Dispose()
         {
+            if (LineStart != null)
+                LineStart.AdjacentLines.Remove(this);
+            if (LineEnd != null)
+                LineEnd.AdjacentLines.Remove(this);
+            layout.lines.Remove(this);
             model.SetParent(null);
             ModelManagerUI.RecycleElement(model);
+        }
+        void Release()
+        {
+            if (LineStart != null)
+                LineStart.AdjacentLines.Remove(this);
+            if (LineEnd != null)
+                LineEnd.AdjacentLines.Remove(this);
+            LineStart = null;
+            LineEnd = null;
+        }
+        public void MergeLeft(LayoutLine line)
+        {
+            line.Release();
+            Left.AddRange(line.Left);
+            var areas = line.Left;
+            for (int i = 0; i < areas.Count; i++)
+                areas[i].Right = this;
+            model.data.localPosition.y = line.model.data.localPosition.y;
+            var al = line.AdjacentLines;
+            int c = al.Count - 1;
+            for (; c >= 0; c--)
+            {
+                var l = al[c];
+                l.SetLineEnd(this);
+            }
+        }
+        public void MergeRight(LayoutLine line)
+        {
+            line.Release();
+            Right.AddRange(line.Right);
+            var areas = line.Right;
+            for (int i = 0; i < areas.Count; i++)
+                areas[i].Left = this;
+            model.data.localPosition.y = line.model.data.localPosition.y;
+            var al = line.AdjacentLines;
+            int c = al.Count - 1;
+            for (; c >= 0; c--)
+            {
+                var l = al[c];
+                l.SetLineStart(this);
+            }
+        }
+        public void MergeTop(LayoutLine line)
+        {
+            line.Release();
+            Top.AddRange(line.Top);
+            var areas = line.Top;
+            for (int i = 0; i < areas.Count; i++)
+                areas[i].Down = this;
+            model.data.localPosition.x = line.model.data.localPosition.x;
+            var al = line.AdjacentLines;
+            int c = al.Count - 1;
+            for (; c >= 0; c--)
+            {
+                var l = al[c];
+                l.SetLineStart(this);
+            }
+        }
+        public void MergeDown(LayoutLine line)
+        {
+            line.Release();
+            Down.AddRange(line.Down);
+            var areas = line.Down;
+            for (int i = 0; i < areas.Count; i++)
+                areas[i].Top = this;
+            model.data.localPosition.x = line.model.data.localPosition.x;
+            var al = line.AdjacentLines;
+            int c = al.Count-1;
+            for (; c>=0;c--)
+            {
+                var l = al[c];
+                l.SetLineEnd(this);
+            }
         }
     }
     public class LayoutArea
@@ -207,19 +299,47 @@ namespace huqiang.UIComposite
         /// <summary>
         /// 左边相邻的线
         /// </summary>
-        public LayoutLine Left;
+        internal LayoutLine Left;
         /// <summary>
         /// 右边相邻的线
         /// </summary>
-        public LayoutLine Right;
+        internal LayoutLine Right;
         /// <summary>
         /// 顶部相邻的线
         /// </summary>
-        public LayoutLine Top;
+        internal LayoutLine Top;
         /// <summary>
         /// 底部相邻的线
         /// </summary>
-        public LayoutLine Down;
+        internal LayoutLine Down;
+        public void SetLeftLine(LayoutLine line)
+        {
+            if (Left != null)
+                Left.Right.Remove(this);
+            Left = line;
+            line.Right.Add(this);
+        }
+        public void SetRightLine(LayoutLine line)
+        {
+            if (Right != null)
+                Right.Left.Remove(this);
+            Right = line;
+            line.Left.Add(this);
+        }
+        public void SetTopLine(LayoutLine line)
+        {
+            if (Top != null)
+                Top.Down.Remove(this);
+            Top = line;
+            line.Down.Add(this);
+        }
+        public void SetDownLine(LayoutLine line)
+        {
+            if (Down != null)
+                Down.Top.Remove(this);
+            Down = line;
+            line.Top.Add(this);
+        }
         public void SizeChanged()
         {
             float hl = Layout.LineWidth*0.5f;
@@ -237,15 +357,22 @@ namespace huqiang.UIComposite
                 dy += hl;
             float w = rx - lx;
             float h = ty - dy;
-
+            bool c = false;
+            if (model.data.sizeDelta.x != w)
+                c = true;
             model.data.sizeDelta.x = w;
+            if (model.data.sizeDelta.y != h)
+                c = true;
             model.data.sizeDelta.y = h;
             model.data.localPosition.x = lx  + w * 0.5f;
             model.data.localPosition.y = dy + h * 0.5f;
             model.IsChanged = true;
-            if (auxiliary != null)
-                auxiliary.SizeChanged();
-            ModelElement.ScaleSize(model);//触发SizeChange事件
+            if(c)
+            {
+                if (auxiliary != null)
+                    auxiliary.SizeChanged();
+                ModelElement.ScaleSize(model);//触发SizeChange事件
+            }
         }
         public LayoutArea AddArea(Dock dock)
         {
@@ -268,50 +395,25 @@ namespace huqiang.UIComposite
         {
             
         }
-        LayoutArea AddLeftArea()
+        LayoutLine AddHorizontalLine()
         {
-            LayoutArea area = new LayoutArea(layout);
-            layout.areas.Add(area);
             var m = new ModelElement();
-            m.Load(Left.model.ModData);
-
-            float ex = Top.model.data.localPosition.y;
-            float sx = Down.model.data.localPosition.y;
-           float w = ex - sx;
+            m.Load(Top.model.ModData);
+            float ex = Right.model.data.localPosition.y;
+            float sx = Left.model.data.localPosition.y;
+            float w = ex - sx;
             if (w < 0)
                 w = -w;
-            LayoutLine line = new LayoutLine(layout,m,Direction.Vertical);
-            line.SetSize(model.data.localPosition, new Vector2(Layout.LineWidth,w));
-
-            area.Left = Left;
-            area.Top = Top;
-            area.Down = Down;
-            area.Right = line;
-
-            line.Right.Add(this);
-            Left.Right.Remove(this);
-            Left.Right.Add(area);
-            Left = line;
-            Top.Down.Add(area);
-            Down.Top.Add(area);
-            line.Left.Add(area);
-
-            Top.AdjacentLines.Add(line);
-            Down.AdjacentLines.Add(line);
-            line.LineStart = Top;
-            line.LineEnd = Down;
-
-            Right.Left.Add(this);
-            ModelElement.ScaleSize(model);
-            return area;
+            LayoutLine line = new LayoutLine(layout, m, Direction.Horizontal);
+            line.SetSize(model.data.localPosition, new Vector2(w, Layout.LineWidth));
+            line.SetLineStart(Left);
+            line.SetLineEnd(Right);
+            return line;
         }
-        LayoutArea AddRightArea()
+        LayoutLine AddVerticalLine()
         {
-            LayoutArea area = new LayoutArea(layout);
-            layout.areas.Add(area);
             var m = new ModelElement();
-            m.Load(Right.model.ModData);
-
+            m.Load(Left.model.ModData);
             float ex = Top.model.data.localPosition.y;
             float sx = Down.model.data.localPosition.y;
             float w = ex - sx;
@@ -319,25 +421,33 @@ namespace huqiang.UIComposite
                 w = -w;
             LayoutLine line = new LayoutLine(layout, m, Direction.Vertical);
             line.SetSize(model.data.localPosition, new Vector2(Layout.LineWidth, w));
-
-            area.Left = line;
-            area.Top = Top;
-            area.Down = Down;
-            area.Right = Right;
-
-            line.Left.Add(this);
-            Right.Left.Remove(this);
-            Right.Left.Add(area);
-            Right = line;
-            Top.Down.Add(area);
-            Down.Top.Add(area);
-            line.Right.Add(area);
-
-            Top.AdjacentLines.Add(line);
-            Down.AdjacentLines.Add(line);
-            line.LineStart = Top;
-            line.LineEnd = Down;
-
+            line.SetLineStart(Down);
+            line.SetLineEnd(Top);
+            return line;
+        }
+        LayoutArea AddLeftArea()
+        {
+            LayoutArea area = new LayoutArea(layout);
+            layout.areas.Add(area);
+            var line = AddVerticalLine();
+            area.SetLeftLine(Left);
+            area.SetRightLine(line);
+            area.SetTopLine(Top);
+            area.SetDownLine(Down);
+            SetLeftLine(line);
+            ModelElement.ScaleSize(model);
+            return area;
+        }
+        LayoutArea AddRightArea()
+        {
+            LayoutArea area = new LayoutArea(layout);
+            layout.areas.Add(area);
+            var line = AddVerticalLine();
+            area.SetLeftLine(line);
+            area.SetRightLine(Right);
+            area.SetTopLine(Top);
+            area.SetDownLine(Down);
+            SetRightLine(line);
             ModelElement.ScaleSize(model);
             return area;
         }
@@ -345,35 +455,12 @@ namespace huqiang.UIComposite
         {
             LayoutArea area = new LayoutArea(layout);
             layout.areas.Add(area);
-            var m = new ModelElement();
-            m.Load(Top.model.ModData);
-
-            float ex = Right.model.data.localPosition.x;
-            float sx = Left.model.data.localPosition.x;
-            float w = ex - sx;
-            if (w < 0)
-                w = -w;
-            LayoutLine line = new LayoutLine(layout, m, Direction.Horizontal);
-            line.SetSize(model.data.localPosition, new Vector2(w, Layout.LineWidth));
-
-            area.Left = Left;
-            area.Top = Top;
-            area.Down = line;
-            area.Right = Right;
-
-            line.Down.Add(this);
-            Top.Down.Remove(this);
-            Top.Down.Add(area);
-            Top= line;
-            Left.Right.Add(area);
-            Right.Left.Add(area);
-            line.Top.Add(area);
-
-            Left.AdjacentLines.Add(line);
-            Right.AdjacentLines.Add(line);
-            line.LineStart = Left;
-            line.LineEnd = Right;
-
+            var line = AddHorizontalLine();
+            area.SetLeftLine(Left);
+            area.SetRightLine(Right);
+            area.SetTopLine(Top);
+            area.SetDownLine(line);
+            SetTopLine(line);
             ModelElement.ScaleSize(model);
             return area;
         }
@@ -381,35 +468,12 @@ namespace huqiang.UIComposite
         {
             LayoutArea area = new LayoutArea(layout);
             layout.areas.Add(area);
-            var m = new ModelElement();
-            m.Load(Down.model.ModData);
-
-            float ex = Right.model.data.localPosition.x;
-            float sx = Left.model.data.localPosition.x;
-            float w = ex - sx;
-            if (w < 0)
-                w = -w;
-            LayoutLine line = new LayoutLine(layout, m, Direction.Horizontal);
-            line.SetSize(model.data.localPosition, new Vector2(w, Layout.LineWidth));
-
-            area.Left = Left;
-            area.Top = line;
-            area.Down = Down;
-            area.Right = Right;
-
-            line.Top.Add(this);
-            Down.Top.Remove(this);
-            Down.Top.Add(area);
-            Down = line;
-            Left.Right.Add(area);
-            Right.Left.Add(area);
-            line.Down.Add(area);
-
-            Left.AdjacentLines.Add(line);
-            Right.AdjacentLines.Add(line);
-            line.LineStart = Left;
-            line.LineEnd = Right;
-
+            var line = AddHorizontalLine();
+            area.SetLeftLine(Left);
+            area.SetRightLine(Right);
+            area.SetTopLine(line);
+            area.SetDownLine(Down);
+            SetDownLine(line);
             ModelElement.ScaleSize(model);
             return area;
         }
@@ -426,109 +490,43 @@ namespace huqiang.UIComposite
         }
         public void Dispose()
         {
-            Left.Right.Remove(this);
-            Right.Left.Remove(this);
-            Top.Down.Remove(this);
-            Down.Top.Remove(this);
-            model.SetParent(null);
-            MergeArea();
-            ModelManagerUI.RecycleElement(model);
-            layout.areas.Remove(this);
+            if(Left.realLine|Right.realLine|Top.realLine|Down.realLine)
+            {
+                Left.Right.Remove(this);
+                Right.Left.Remove(this);
+                Top.Down.Remove(this);
+                Down.Top.Remove(this);
+                model.SetParent(null);
+                MergeArea();
+                ModelManagerUI.RecycleElement(model);
+                layout.areas.Remove(this);
+            }
         }
-       void MergeArea()
+        void MergeArea()
         {
             if(Left.realLine)
             {
                 if(Left.Right.Count<1)
                 {
-                    List<LayoutArea> areas = Left.Left;
-                    for(int i=0;i<areas.Count;i++)
-                    {
-                        var area = areas[i];
-                        area.Right = Right;
-                        area.Top.LineEnd = Right;
-                        area.Top.SizeChanged();
-                        area.Down.LineEnd = Right;
-                        area.Down.SizeChanged();
-                        Right.Left.Add(area);
-                        area.SizeChanged();
-                    }
-                    layout.lines.Remove(Left);
-                    Left.Dispose();
-                    return;
-                }
-                else
-                if (Left.Left.Count < 2)
-                {
-                    var area = Left.Left[0];
-                    area.Right= Right;
-                    Right.Left.Add(area);
-                    area.SizeChanged();
-                    layout.lines.Remove(Left);
+                    Right.MergeLeft(Left);
                     Left.Dispose();
                     return;
                 }
             }
-            if (Right.realLine)
+            if(Right.realLine)
             {
                 if(Right.Left.Count < 1)
                 {
-                    List<LayoutArea> areas = Right.Right;
-                    for(int i=0;i<areas.Count;i++)
-                    {
-                        var area = areas[i];
-                        area.Left = Left;
-                        area.Top.LineStart = Left;
-                        area.Top.SizeChanged();
-                        area.Down.LineStart = Left;
-                        area.Down.SizeChanged();
-                        Left.Right.Add(area);
-                        area.SizeChanged();
-                    }
-                    layout.lines.Remove(Right);
+                    Left.MergeRight(Right);
                     Right.Dispose();
                     return;
-                }
-                else
-                if(Right.Right.Count<2)
-                {
-                    var area = Right.Right[0];
-                    area.Left = Left;
-                    Left.Right.Add(area);
-                    area.SizeChanged();
-                    layout.lines.Remove(Right);
-                    Right.Dispose();
-                    return ;
                 }
             }
             if(Top.realLine)
             {
                 if(Top.Down.Count < 1)
                 {
-                    List<LayoutArea> areas = Top.Top;
-                    for(int i=0;i<areas.Count;i++)
-                    {
-                        var area =areas[i];
-                        area.Down = Down;
-                        area.Left.LineEnd = Down;
-                        area.Left.SizeChanged();
-                        area.Right.LineEnd = Down;
-                        area.Right.SizeChanged();
-                        Down.Top.Add(area);
-                        area.SizeChanged();
-                    }
-                    layout.lines.Remove(Top);
-                    Top.Dispose();
-                    return;
-                }
-                else
-                if(Top.Top.Count<2)
-                {
-                    var area = Top.Top[0];
-                    area.Down = Down;
-                    Down.Top.Add(area);
-                    area.SizeChanged();
-                    layout.lines.Remove(Top);
+                    Down.MergeTop(Top);
                     Top.Dispose();
                     return;
                 }
@@ -537,30 +535,7 @@ namespace huqiang.UIComposite
             {
                 if(Down.Top.Count < 1)
                 {
-                    List<LayoutArea> areas = Down.Down;
-                    for(int i=0;i<areas.Count;i++)
-                    {
-                        var area = areas[i];
-                        area.Top = Top;
-                        area.Left.LineStart = Top;
-                        area.Left.SizeChanged();
-                        area.Right.LineStart = Top;
-                        area.Right.SizeChanged();
-                        Top.Down.Add(area);
-                        area.SizeChanged();
-                    }
-                    layout.lines.Remove(Down);
-                    Down.Dispose();
-                    return;
-                }
-                else
-                if(Down.Down.Count<2)
-                {
-                    var area = Down.Down[0];
-                    area.Top = Top;
-                    Top.Down.Add(area);
-                    area.SizeChanged();
-                    layout.lines.Remove(Down);
+                    Top.MergeDown(Down);
                     Down.Dispose();
                     return;
                 }
@@ -679,5 +654,12 @@ namespace huqiang.UIComposite
         }
         public LayoutContent DragContent;
         public LayoutAuxiliary DragAuxiliary;
+        public void Refresh()
+        {
+            for (int i = 0; i < lines.Count; i++)
+                lines[i].SizeChanged();
+            for (int i = 0; i < areas.Count; i++)
+                areas[i].SizeChanged();
+        }
     }
 }
