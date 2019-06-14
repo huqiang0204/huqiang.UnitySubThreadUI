@@ -20,10 +20,11 @@ namespace huqiang
         {
             int port = startPort;
             bool isAvailable = true;
-
+            #if !UNITY_IPHONE && !UNITY_ANDROID
             var mutex = new Mutex(false,
                 string.Concat("Global/", PortReleaseGuid));
             mutex.WaitOne();
+#endif
             try
             {
                 IPGlobalProperties ipGlobalProperties =
@@ -55,7 +56,9 @@ namespace huqiang
             }
             finally
             {
+                #if !UNITY_IPHONE && !UNITY_ANDROID
                 mutex.ReleaseMutex();
+#endif
             }
         }
 
@@ -69,17 +72,17 @@ namespace huqiang
         {
             int port = startPort;
             bool isAvailable = true;
-
+#if !UNITY_IPHONE && !UNITY_ANDROID
             var mutex = new Mutex(false,
                 string.Concat("Global/", PortReleaseGuid));
             mutex.WaitOne();
+#endif
             try
             {
                 IPGlobalProperties ipGlobalProperties =
                     IPGlobalProperties.GetIPGlobalProperties();
                 IPEndPoint[] endPoints =
                     ipGlobalProperties.GetActiveUdpListeners();
-
                 do
                 {
                     if (!isAvailable)
@@ -105,7 +108,9 @@ namespace huqiang
             }
             finally
             {
+#if !UNITY_IPHONE && !UNITY_ANDROID
                 mutex.ReleaseMutex();
+#endif
             }
         }
     }

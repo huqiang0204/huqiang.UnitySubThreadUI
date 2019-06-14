@@ -23,7 +23,7 @@ namespace huqiang.Communication
         public void Connection(string ip, int port)
         {
             var address = IPAddress.Parse(ip);
-            var kcp = new KcpServer<KcpLink>(9001, 9996);
+            var kcp = new KcpServer<KcpLink>(0, 9996);
             kcp.Run(1);
             link = kcp.FindOrCreateLink(new IPEndPoint(address, port));
             link.Send(new byte[1], 0);
