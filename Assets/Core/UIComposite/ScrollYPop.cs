@@ -163,12 +163,7 @@ namespace huqiang.UIComposite
             a.target.activeSelf = true;
             if (force | a.index != index)
             {
-                if (ItemUpdate != null)
-                {
-                    if (a.obj == null)
-                        ItemUpdate(a.target, dat, index);
-                    else ItemUpdate(a.obj, dat, index);
-                }
+                ItemUpdate(a.obj, dat, index);
                 a.datacontext = dat;
             }
             return false;

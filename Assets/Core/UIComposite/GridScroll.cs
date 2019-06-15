@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace huqiang.UIComposite
 {
-    public class GridScroll:ScrollContent
+    public class GridScroll:ScrollContent 
     {
         public GridScroll()
         {
@@ -183,8 +183,7 @@ namespace huqiang.UIComposite
                 {
                     SetItemPostion(item);
                     if (force)
-                        if (ItemUpdate != null)
-                            ItemUpdate(item.obj, item.datacontext, index);
+                       ItemUpdate(item.obj,item.datacontext, index);
                     return;
                 }
             }
@@ -193,8 +192,7 @@ namespace huqiang.UIComposite
             it.index = index;
             it.datacontext = GetData(index);//dataList[index];
             SetItemPostion(it);
-            if (ItemUpdate != null)
-                ItemUpdate(it.obj, it.datacontext, index);
+            ItemUpdate(it.obj,it.datacontext, index);
         }
         void SetItemPostion(ScrollItem item)
         {

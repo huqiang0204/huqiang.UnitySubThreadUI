@@ -290,12 +290,7 @@ namespace huqiang.UIComposite
                 var dat = GetData(index);
                 a.datacontext = dat;
                 a.index = index;
-                if (ItemUpdate != null)
-                {
-                    if (a.obj == null)
-                        ItemUpdate(a.target, dat, index);
-                    else ItemUpdate(a.obj, dat, index);
-                }
+                ItemUpdate(a.obj, dat, index);
             }
         }
         public void SetSize(Vector2 size)

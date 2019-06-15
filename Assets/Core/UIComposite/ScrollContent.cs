@@ -22,8 +22,30 @@ namespace huqiang.UIComposite
     }
     public class ScrollContent: ModelInital
     {
+        class Constructor
+        {
+            public virtual object Create() { return null; }
+            public virtual void Call(object obj, object dat, int index) { }
+            public bool hotfix;
+            public Action<object,object, int> Update;
+            public Func<ModelElement, object> reflect;
+        }
+        class Middleware<T, U> : Constructor where T : class, new()
+        {
+            public override object Create()
+            {
+                return new T();
+            }
+            public Action<T,U, int> Invoke;
+            public override void Call(object obj, object dat, int index)
+            {
+                if (Invoke != null)
+                {
+                    Invoke(obj as T, (U)dat, index);
+                }
+            }
+        }
         public static float Tolerance = 0.25f;
-        static Type me = typeof(ModelElement);
         public ScrollType scrollType=ScrollType.BounceBack;
         public static readonly Vector2 Center = new Vector2(0.5f, 0.5f);
         public ModelElement ScrollView;
@@ -31,7 +53,7 @@ namespace huqiang.UIComposite
         public Vector2 ActualSize { get; protected set; }//相当于Content的尺寸
         public Vector2 ItemSize;
         FakeStruct model;
-        public Type ItemObject = me;
+        //public Type ItemObject;
         public FakeStruct ItemMod
         {
             set
@@ -55,10 +77,6 @@ namespace huqiang.UIComposite
             get { return model; }
         }
         public ModelElement[] ItemMods;
-        /// <summary>
-        /// 模型,数据,索引
-        /// </summary>
-        public Action<object, object, int> ItemUpdate;
         IList dataList;
         Array array;
         FakeArray fakeStruct;
@@ -118,7 +136,7 @@ namespace huqiang.UIComposite
                 return m_len;
             }
         }
-        protected object GetData(int index)
+        public object GetData(int index)
         {
             if (dataList != null)
                 return dataList[index];
@@ -131,10 +149,6 @@ namespace huqiang.UIComposite
         public List<ScrollItem> Items=new List<ScrollItem>();
         List<ScrollItem> Buffer=new List<ScrollItem>();
         List<ScrollItem> Recycler = new List<ScrollItem>();
-        /// <summary>
-        /// 当无法使用跨域反射时，使用此委托进行间接反射
-        /// </summary>
-        public Action<ScrollItem, ModelElement> Reflection;
         /// <summary>
         /// 当某个ui超出Mask边界，被回收时调用
         /// </summary>
@@ -186,21 +200,49 @@ namespace huqiang.UIComposite
                 Recycler.RemoveAt(0);
                 return it;
             }
-            object obj = null;
-            if (ItemObject != null)
-                if (ItemObject != typeof(ModelElement))
-                    obj = Activator.CreateInstance(ItemObject);
-            ModelElement uI = new ModelElement();
-            uI.Load(model);
-            uI.SetParent(ScrollView);
+            ModelElement me = new ModelElement();
+            me.Load(model);
+            me.SetParent(ScrollView);
             ScrollItem a = new ScrollItem();
-            a.target = uI;
-            a.obj = obj;
-            if (obj != null)
-                ModelManagerUI.ComponentReflection(uI, obj);
-            if (Reflection != null)
-                Reflection(a, a.target);
+            a.target = me;
+            if (creator != null)
+            {
+                if (creator.hotfix)
+                {
+                    if (creator.reflect != null)
+                        a.obj = creator.reflect(me);
+                    else a.obj = me;
+                }
+                else 
+                {
+                    a.obj = creator.Create();
+                    ModelManagerUI.ComponentReflection(me, a.obj);
+                }
+            }
+            else a.obj = me;
             return a;
+        }
+        Constructor creator;
+        public void SetItemUpdate<T,U>(Action<T,U, int> action)where T:class,new()
+        {
+            Clear();
+            var m = new Middleware<T,U>();
+            m.Invoke = action;
+            creator = m;
+        }
+        /// <summary>
+        /// 热更新无法跨域,使用此函数
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="reflect"></param>
+        public void SetItemUpdate(Action<object,object, int> action,Func<ModelElement,object> reflect)
+        {
+            Clear();
+            var m = new Middleware<ModelElement,object>();
+            m.Update = action;
+            m.hotfix = true;
+            m.reflect = reflect;
+            creator = m;
         }
         public virtual void Order(float os, bool force = false)
         {
@@ -394,6 +436,21 @@ namespace huqiang.UIComposite
                 }
             }
             return v;
+        }
+        protected void ItemUpdate(object obj,object dat, int index)
+        {
+            if (creator != null)
+            {
+                if(creator.hotfix)
+                {
+                    if (creator.Update != null)
+                        creator.Update(obj,dat,index);
+                }
+                else
+                {
+                    creator.Call(obj, dat, index);
+                }
+            }
         }
     }
 }

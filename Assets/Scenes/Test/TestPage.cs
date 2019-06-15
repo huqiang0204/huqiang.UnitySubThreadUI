@@ -59,11 +59,8 @@ public class TestPage : UIPage
         //view.Scroll.Refresh();
 
         view.Scroll.BindingData = testData;
-        view.Scroll.ItemObject = typeof(Item);
         view.Scroll.Column = 16;
-        view.Scroll.ItemUpdate = (o, e, i) => {
-            (o as Item).Text.text = i.ToString();
-        };
+        view.Scroll.SetItemUpdate<Item,int> ((o, e, i) => {o.Text.text = i.ToString(); });
         view.Scroll.Refresh();
 
     }

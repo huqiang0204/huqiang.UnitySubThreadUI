@@ -29,7 +29,6 @@ namespace huqiang.UIComposite
                 m_scroll = value;
                 if (value == null)
                     return;
-                m_scroll.ItemObject = typeof(PopItemMod);
                 ItemSize = m_scroll.ItemSize;
                 MaxHeight = m_scroll.ScrollView.data.sizeDelta.y;
                 m_scroll.ScrollView.activeSelf = false;
@@ -92,7 +91,7 @@ namespace huqiang.UIComposite
                 if (ItemMod != null)
                     m_scroll.ItemMod = ItemMod.ModData;
                 m_scroll.BindingData = BindingData;
-                m_scroll.ItemUpdate = ItemUpdate;
+                m_scroll.SetItemUpdate<PopItemMod,object>(ItemUpdate);
                 m_scroll.eventCall.LostFocus = LostFocus;
                 m_scroll.eventCall.DataContext = this;
 
@@ -132,7 +131,7 @@ namespace huqiang.UIComposite
             m_scroll.ScrollView.activeSelf = false;
         }
         ModelElement Checked;
-        void ItemUpdate(object g, object o, int index)
+        void ItemUpdate(PopItemMod g,object o, int index)
         {
             PopItemMod button = g as PopItemMod;
             if (button == null)

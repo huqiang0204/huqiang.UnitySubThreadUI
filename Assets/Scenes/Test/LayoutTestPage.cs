@@ -62,10 +62,9 @@ public class GridTestWindow : PopWindow
         for (int i = 0; i < 33; i++)
             testData.Add(i);
         view.Scroll.BindingData = testData;
-        view.Scroll.ItemObject = typeof(Item);
-        view.Scroll.ItemUpdate = (o, e, i) => {
-            (o as Item).Text.text = i.ToString();
-        };
+        view.Scroll.SetItemUpdate<Item,int>( (o, e,  i) => {
+            o.Text.text = i.ToString();
+        });
         view.Scroll.Refresh();
     }
 }
@@ -90,10 +89,7 @@ public class GridTestWindow2 : PopWindow
         for (int i = 0; i < 44; i++)
             testData.Add(i);
         view.Scroll.BindingData = testData;
-        view.Scroll.ItemObject = typeof(Item);
-        view.Scroll.ItemUpdate = (o, e, i) => {
-            (o as Item).Text.text = i.ToString();
-        };
+        view.Scroll.SetItemUpdate<Item,int>( (o, e, i) => {o.Text.text = i.ToString();});
         view.Scroll.Refresh();
     }
 }

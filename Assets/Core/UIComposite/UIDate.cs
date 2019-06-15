@@ -73,8 +73,7 @@ namespace huqiang.UIComposite
             var y= model.Find("Year");
             Year = new ScrollY();
             Year.Initial(y);
-            Year.ItemObject = typeof(ItemView);
-            Year.ItemUpdate = YearItem;
+            Year.SetItemUpdate<ItemView,int>((o,e,i)=> { o.Item.text = e.ToString(); });
             Year.Scroll = Scrolling;
             Year.ScrollEnd = YearScrollToEnd;
             Year.ItemDockCenter = true;
@@ -85,8 +84,7 @@ namespace huqiang.UIComposite
             var m = model.Find("Month");
             Month = new ScrollY();
             Month.Initial(m);
-            Month.ItemObject = typeof(ItemView);
-            Month.ItemUpdate = MonthItem;
+            Month.SetItemUpdate<ItemView,string>((o,e,i)=> { o.Item.text = e; });
             Month.Scroll = Scrolling;
             Month.ScrollEnd = MonthScrollToEnd;
             Month.ItemDockCenter = true;
@@ -97,8 +95,7 @@ namespace huqiang.UIComposite
             var d = model.Find("Day");
             Day = new ScrollY();
             Day.Initial(d);
-            Day.ItemObject = typeof(ItemView);
-            Day.ItemUpdate = DayItem;
+            Day.SetItemUpdate<ItemView, string>((o,e,i)=> { o.Item.text = e; });
             Day.Scroll = Scrolling;
             Day.ScrollEnd = DayScrollToEnd;
             Day.ItemDockCenter = true;
@@ -165,21 +162,6 @@ namespace huqiang.UIComposite
                 col.a = 1 - angle;
                 txt.color = col;
             }
-        }
-        void YearItem(object obj,object dat,int index)
-        {
-            TextElement txt = (obj as ItemView).Item;
-            txt.text = dat.ToString() + unitY;
-        }
-        void MonthItem(object obj, object dat, int index)
-        {
-            TextElement txt = (obj as ItemView).Item;
-            txt.text = dat.ToString() + unitM;
-        }
-        void DayItem(object obj, object dat, int index)
-        {
-            TextElement txt = (obj as ItemView).Item;
-            txt.text = dat as string + unitD;
         }
         void YearScrollToEnd(ScrollY scroll)
         {
