@@ -40,9 +40,7 @@ namespace huqiang.UIComposite
             public override void Call(object obj, object dat, int index)
             {
                 if (Invoke != null)
-                {
                     Invoke(obj as T, (U)dat, index);
-                }
             }
         }
         public static float Tolerance = 0.25f;
