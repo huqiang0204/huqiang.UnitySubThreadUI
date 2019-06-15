@@ -25,7 +25,11 @@ namespace huqiang.Other
             }
             return at2d;
         }
-        public static Texture2D LoadHTemplate()
+        /// <summary>
+        /// 主线程异步使用此函数
+        /// </summary>
+        /// <returns></returns>
+        public static Texture2D LoadHTemplateAsync()
         {
             if(ht2d==null)
             {
@@ -40,8 +44,28 @@ namespace huqiang.Other
             }
             return ht2d;
         }
+        /// <summary>
+        /// 主线程访问此函数
+        /// </summary>
+        /// <returns></returns>
+        public static Texture2D LoadHTemplate()
+        {
+            if (ht2d == null)
+            {
+                Color[] colors = new Color[360];
+                ht2d = new Texture2D(1, 360, TextureFormat.ARGB32, false);
+                HTemplate(colors);
+                ht2d.SetPixels(colors);
+                ht2d.Apply();
+            }
+            return ht2d;
+        }
         static Texture2D ct2d;
-        public static Texture2D LoadCTemplate()
+        /// <summary>
+        /// 主线程异步使用此函数
+        /// </summary>
+        /// <returns></returns>
+        public static Texture2D LoadCTemplateAsync()
         {
             if (ct2d == null)
             {
@@ -57,26 +81,45 @@ namespace huqiang.Other
             }
             return ct2d;
         }
+        /// <summary>
+        /// 主线程访问此函数
+        /// </summary>
+        /// <returns></returns>
+        public static Texture2D LoadCTemplate()
+        {
+            if (ct2d == null)
+            {
+                Color[] colors = new Color[640 * 640];
+                ct2d = new Texture2D(640, 640, TextureFormat.ARGB32, false);
+                CTemplate(colors);
+                ct2d.SetPixels(colors);
+                ct2d.Apply();
+            }
+            return ct2d;
+        }
         Texture2D t2d;
         public Texture2D texture { get {
                 if(t2d==null)
                   t2d=  new Texture2D(256, 256, TextureFormat.ARGB32, false);
                 return t2d;
             }}
-        public void LoadHSVTAsync(float h)
-        {
-            ThreadMission.AddMission(
-                (o) => {
-                    HSVTemplate(h, buffer);
-                }, this, null,
-                (o) => {
-                    if (t2d == null)
-                        t2d = new Texture2D(256, 256, TextureFormat.ARGB32, false);
-                    t2d.SetPixels(buffer);
-                    t2d.Apply();
-                });
-        }
+        /// <summary>
+        /// 主线程访问此函数
+        /// </summary>
+        /// <returns></returns>
         public void LoadHSVT(float h)
+        {
+            HSVTemplate(h, buffer);
+            if (t2d == null)
+                t2d = new Texture2D(256, 256, TextureFormat.ARGB32, false);
+            t2d.SetPixels(buffer);
+            t2d.Apply();
+        }
+        /// <summary>
+        /// 多线程使用此函数
+        /// </summary>
+        /// <returns></returns>
+        public void LoadHSVTAsync(float h)
         {
             HSVTemplate(h, buffer);
             ThreadMission.InvokeToMain(
@@ -106,6 +149,7 @@ namespace huqiang.Other
                 V += 0.00392156f;
             }
         }
+
         static void HTemplate(Color[] buffer)
         {
             for (int t = 0; t < 360; t++)

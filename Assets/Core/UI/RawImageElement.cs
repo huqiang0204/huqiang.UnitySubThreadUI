@@ -60,9 +60,12 @@ namespace huqiang.UI
             if (img.texture != null)
             {
                 var tn = img.texture.name;
-                var an = ElementAsset.TxtureFormAsset(img.texture.name);
-                data->assetName = buffer.AddData(an);
-                data->textureName = buffer.AddData(tn);
+                if(tn!="")
+                {
+                    var an = ElementAsset.TxtureFormAsset(img.texture.name);
+                    data->assetName = buffer.AddData(an);
+                    data->textureName = buffer.AddData(tn);
+                }
             }
             if (img.material != null)
                 data->shader = buffer.AddData(img.material.shader.name);

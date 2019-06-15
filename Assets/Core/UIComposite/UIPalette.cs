@@ -38,11 +38,11 @@ namespace huqiang.UIComposite
             callBackC.PointerDown = PointDownC;
             htemp = mod.GetComponent<RawImageElement>();
             ThreadMission.InvokeToMain((o)=> {
-                htemp.Context.texture = Palette.LoadCTemplate();
+                htemp.Context.texture = Palette.LoadCTemplateAsync();
                 template.Context.texture = palette.texture;
                 slider.Context.texture = Palette.AlphaTemplate();
             },null);
-            palette.LoadHSVT(1);
+            palette.LoadHSVTAsync(1);
             SelectColor.a = 1;
             var son = mod.Find("Slider");
             slider = son.GetComponent<RawImageElement>();
@@ -71,7 +71,7 @@ namespace huqiang.UIComposite
                 NobA.IsChanged = true;
             }
             float al = MathH.atan(-x, -y);
-            palette.LoadHSVT(al/360);
+            palette.LoadHSVTAsync(al/360);
             Color col = palette.buffer[Index];
             SelectColor.r = col.r;
             SelectColor.g = col.g;

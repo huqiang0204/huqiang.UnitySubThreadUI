@@ -119,9 +119,8 @@ public class TestMenu : MenuWindow
         base.Initial(parent, ui, obj);
         view = model.ComponentReflection<View>();
         view.Menu.Click = (o, e) => {
-            Hide();
+            UIMenu.Instance.HideMenu();
             Context.Cmd("menu",e);
         };
     }
 }
-

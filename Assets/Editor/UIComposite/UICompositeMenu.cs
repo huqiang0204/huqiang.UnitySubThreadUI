@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public static class UICompositeMenu
 {
     private const string icons = "icons";
+    private const string Aim = "Aim";
     private const string background = "Background2";
     private const string file= "Pinned-Notices";
     private const string close = "Close";
@@ -20,6 +21,7 @@ public static class UICompositeMenu
     private const string ufo = "Ufo";
     private const string circleol = "Circle-Outline";
     private const string circlesm = "Circle-Small";
+    private const string magicstick = "Magic-Stick";
 
     [MenuItem("GameObject/UIComposite/UISliderH", false, 0)]
     static public void AddSliderH(MenuCommand menuCommand)
@@ -250,6 +252,7 @@ public static class UICompositeMenu
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
         palette.AddComponent<RawImage>();
+      
 
         var Fill = new GameObject("HTemplate", typeof(RectTransform));
         var fr = Fill.transform as RectTransform;
@@ -265,7 +268,8 @@ public static class UICompositeMenu
         fn.SetParent(rect);
         fn.localPosition = new Vector3(0, -220, 0);
         fn.localScale = Vector3.one;
-        Nob.AddComponent<Image>();
+        var img = Nob.AddComponent<Image>();
+        var aim = img.sprite = EditorModelManager.FindSprite(icons, Aim);
 
         Nob = new GameObject("NobB", typeof(RectTransform));
         fn = Nob.transform as RectTransform;
@@ -273,7 +277,7 @@ public static class UICompositeMenu
         fn.SetParent(rect);
         fn.localPosition = new Vector3(-128, 128, 0);
         fn.localScale = Vector3.one;
-        Nob.AddComponent<Image>();
+        Nob.AddComponent<Image>().sprite = aim;
 
         var Slider = new GameObject("Slider", typeof(RectTransform));
         fn = Slider.transform as RectTransform;
@@ -281,15 +285,19 @@ public static class UICompositeMenu
         fn.SetParent(rect);
         fn.localPosition = new Vector3(0, -285, 0);
         fn.localScale = Vector3.one;
-        Slider.AddComponent<Image>().type = Image.Type.Sliced;
-
+        Slider.AddComponent<RawImage>();
+  
         Nob = new GameObject("Nob", typeof(RectTransform));
         fn = Nob.transform as RectTransform;
         fn.sizeDelta = new Vector2(30, 30);
         fn.SetParent(Slider.transform);
         fn.localPosition = new Vector3(200, 0, 0);
         fn.localScale = Vector3.one;
-        Nob.AddComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+        img = Nob.AddComponent<Image>();
+        img.color = new Color(1, 1, 1,1f);
+        img.sprite = aim;
+
+        palette.AddComponent<PaletteHelper>().Initial();
     }
     [MenuItem("GameObject/UIComposite/UIDate", false, 7)]
     static public void AddDate(MenuCommand menuCommand)
