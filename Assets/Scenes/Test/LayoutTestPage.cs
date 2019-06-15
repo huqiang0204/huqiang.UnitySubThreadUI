@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using huqiang.UI;
 using huqiang.UIComposite;
+using huqiang.UIEvent;
 using UnityEngine;
 
 public class LayoutTestPage : UIPage
@@ -62,10 +63,22 @@ public class GridTestWindow : PopWindow
         for (int i = 0; i < 33; i++)
             testData.Add(i);
         view.Scroll.BindingData = testData;
-        view.Scroll.SetItemUpdate<Item,int>( (o, e,  i) => {
-            o.Text.text = i.ToString();
-        });
+        view.Scroll.SetItemUpdate<Item,int>( (o, e,  i) => { o.Text.text = i.ToString();});
         view.Scroll.Refresh();
+        view.Scroll.eventCall.Click = (o, e) => {
+            if (e.IsRightButtonUp)
+                UIMenu.Instance.ShowMenu<TestMenu>(this,e.CanPosition);
+            Debug.Log("click");
+        };
+    }
+    public override void Cmd(string cmd, object dat)
+    {
+        switch(cmd)
+        {
+            case "menu":
+                Debug.Log(dat);
+                break;
+        }
     }
 }
 public class GridTestWindow2 : PopWindow
@@ -91,6 +104,24 @@ public class GridTestWindow2 : PopWindow
         view.Scroll.BindingData = testData;
         view.Scroll.SetItemUpdate<Item,int>( (o, e, i) => {o.Text.text = i.ToString();});
         view.Scroll.Refresh();
+    }
+}
+public class TestMenu : MenuWindow
+{
+    class View
+    {
+        public EventCallBack Menu;
+    }
+    View view;
+    public override void Initial(ModelElement parent, UIBase ui, object obj = null)
+    {
+        model = ModelManagerUI.CloneModel("baseUI", "Menu");
+        base.Initial(parent, ui, obj);
+        view = model.ComponentReflection<View>();
+        view.Menu.Click = (o, e) => {
+            Hide();
+            Context.Cmd("menu",e);
+        };
     }
 }
 

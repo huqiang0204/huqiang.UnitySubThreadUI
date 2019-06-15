@@ -1,11 +1,12 @@
 ﻿using huqiang.UI;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class UIMenu: UIBase
 {
     public static ModelElement Root { get; set; }
-    public static UIMenu Instance { get; private set; }
+    public static UIMenu Instance { get; set; }
     public static void UpdateData(string cmd, object obj)
     {
         if (Instance != null)
@@ -16,15 +17,12 @@ public class UIMenu: UIBase
         if (Instance != null)
             Instance.Update(time);
     }
-    List<PopWindow> pops;
-    public PopWindow currentPop { get; private set; }
+    List<MenuWindow> pops;
+    public MenuWindow currentPop { get; private set; }
     public UIMenu()
     {
-        pops = new List<PopWindow>();
+        pops = new List<MenuWindow>();
         Instance = this;
-    }
-    public virtual void Show(object dat = null)
-    {
     }
     public override void ReSize()
     {
@@ -44,7 +42,7 @@ public class UIMenu: UIBase
         ModelManagerUI.RecycleElement(model);
         ClearUI();
     }
-    public void HidePopWindow()
+    public void HideMenu()
     {
         for (int i = 0; i < pops.Count; i++)
             pops[i].Hide();
@@ -52,7 +50,7 @@ public class UIMenu: UIBase
     /// <summary>
     /// 释放掉当前未激活的弹窗
     /// </summary>
-    public void ReleasePopWindow()
+    public void ReleaseMune()
     {
         int c = pops.Count - 1;
         for (; c >= 0; c--)
@@ -64,7 +62,7 @@ public class UIMenu: UIBase
             { p.Dispose(); pops.RemoveAt(c); }
         }
     }
-    protected T ShowPopWindow<T>(object obj = null) where T : PopWindow, new()
+    public T ShowMenu<T>(UIBase context, Vector2 pos, object obj = null) where T : MenuWindow, new()
     {
         if (currentPop != null)
         { currentPop.Hide(); currentPop = null; }
@@ -72,17 +70,18 @@ public class UIMenu: UIBase
             if (pops[i] is T)
             {
                 currentPop = pops[i];
-                pops[i].Show(obj);
+                pops[i].Show(context, pos,obj);
                 return pops[i] as T;
             }
         var t = new T();
         pops.Add(t);
         currentPop = t;
-        t.Initial(Root, this, obj);
+        t.Initial(Root, context, obj);
+        t.Show(context,pos,obj);
         t.ReSize();
         return t;
     }
-    public T GetPopWindow<T>() where T : PopWindow
+    public T GetMenu<T>() where T : PopWindow
     {
         for (int i = 0; i < pops.Count; i++)
             if (pops[i] is T)

@@ -55,6 +55,7 @@ namespace huqiang
             menu.Context.SetParent(root.Context);
             menu.SetParent(root);
             UIMenu.Root = menu;
+            UIMenu.Instance = new UIMenu();
 
             var notify = ModelElement.CreateNew("notify");
             notify.Context = new GameObject("notify", typeof(RectTransform)).transform as RectTransform;
@@ -125,10 +126,10 @@ namespace huqiang
                 UIPage.Root.IsChanged = true;
                 if (UIPage.CurrentPage != null)
                     UIPage.CurrentPage.ReSize();
-                if (UINotify.Instance != null)
-                    UINotify.Instance.ReSize();
                 if (UIMenu.Instance != null)
                     UIMenu.Instance.ReSize();
+                if (UINotify.Instance != null)
+                    UINotify.Instance.ReSize();
             }
         }
         public static void Dispose()

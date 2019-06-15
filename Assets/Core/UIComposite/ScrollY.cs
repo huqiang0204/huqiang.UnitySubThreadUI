@@ -72,9 +72,7 @@ namespace huqiang.UIComposite
             eventCall.AutoColor = false;
             Size = ScrollView.data.sizeDelta;
             eventCall.CutRect = true;
-            model.SizeChanged = (o) => {
-                Refresh(0,m_point);
-            };
+            model.SizeChanged = (o) => {  Refresh(0,m_point); };
         }
         public Action<ScrollY, Vector2> Scroll;
         public Action<ScrollY> ScrollStart;
