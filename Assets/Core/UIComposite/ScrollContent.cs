@@ -43,6 +43,9 @@ namespace huqiang.UIComposite
                     Invoke(obj as T, (U)dat, index);
             }
         }
+        /// <summary>
+        /// 滚动公差值
+        /// </summary>
         public static float Tolerance = 0.25f;
         public ScrollType scrollType=ScrollType.BounceBack;
         public static readonly Vector2 Center = new Vector2(0.5f, 0.5f);
@@ -51,7 +54,6 @@ namespace huqiang.UIComposite
         public Vector2 ActualSize { get; protected set; }//相当于Content的尺寸
         public Vector2 ItemSize;
         FakeStruct model;
-        //public Type ItemObject;
         public FakeStruct ItemMod
         {
             set

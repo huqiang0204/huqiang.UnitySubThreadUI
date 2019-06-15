@@ -9,7 +9,7 @@ namespace huqiang
 {
     public class App
     {
-        static void Initial()
+        static void InitialInput()
         {
             if(Application.platform == RuntimePlatform.Android |Application.platform==RuntimePlatform.IPhonePlayer)
             {
@@ -35,27 +35,13 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
         }
-        static RectTransform UIRoot;
-        static ThreadMission mission;
-        static ModelElement root;
-        public static void Initial(Transform uiRoot)
+        static void CreateUI()
         {
-            ThreadMission.SetMianId();
-            Scale.Initial();
-            Initial();
-            InitialUI();
-            UIRoot = uiRoot as RectTransform;
-            if (UIRoot == null)
-            {
-                UIRoot = new GameObject("UI", typeof(Canvas)).transform as RectTransform;
-                UIRoot.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            }
-       
             root = ModelElement.CreateNew("Root");
-            root.Context = new GameObject("Root",typeof(RectTransform)).transform as RectTransform;
+            root.Context = new GameObject("Root", typeof(RectTransform)).transform as RectTransform;
             root.Context.SetParent(UIRoot);
             root.Context.localPosition = Vector3.zero;
-            root.Context.sizeDelta = new Vector2(Screen.width,Screen.height);
+            root.Context.sizeDelta = new Vector2(Screen.width, Screen.height);
             EventCallBack.InsertRoot(root);
 
             var page = ModelElement.CreateNew("page");
@@ -68,19 +54,35 @@ namespace huqiang
             menu.Context = new GameObject("menu", typeof(RectTransform)).transform as RectTransform;
             menu.Context.SetParent(root.Context);
             menu.SetParent(root);
-            UIPage.Root = page;
+            UIMenu.Root = menu;
 
             var notify = ModelElement.CreateNew("notify");
             notify.Context = new GameObject("notify", typeof(RectTransform)).transform as RectTransform;
             notify.SetParent(root);
             notify.Context.SetParent(root.Context);
             UINotify.Root = notify;
-            
-          
+
             var buff = new GameObject("buffer", typeof(RectTransform));
             buff.transform.SetParent(UIRoot);
             buff.SetActive(false);
             ModelManagerUI.CycleBuffer = buff.transform;
+        }
+        static RectTransform UIRoot;
+        static ThreadMission mission;
+        static ModelElement root;
+        public static void Initial(Transform uiRoot)
+        {
+            ThreadMission.SetMianId();
+            Scale.Initial();
+            InitialInput();
+            InitialUI();
+            UIRoot = uiRoot as RectTransform;
+            if (UIRoot == null)
+            {
+                UIRoot = new GameObject("UI", typeof(Canvas)).transform as RectTransform;
+                UIRoot.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            }
+            CreateUI();
             mission = new ThreadMission("UI");
         }
         public static float AllTime;
@@ -123,9 +125,10 @@ namespace huqiang
                 UIPage.Root.IsChanged = true;
                 if (UIPage.CurrentPage != null)
                     UIPage.CurrentPage.ReSize();
-                UINotify.Root.IsChanged = true;
                 if (UINotify.Instance != null)
                     UINotify.Instance.ReSize();
+                if (UIMenu.Instance != null)
+                    UIMenu.Instance.ReSize();
             }
         }
         public static void Dispose()
