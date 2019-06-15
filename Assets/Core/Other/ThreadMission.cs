@@ -215,5 +215,12 @@ namespace huqiang
         {
             MainID = Thread.CurrentThread.ManagedThreadId;
         }
+        public static ThreadMission FindMission(string name)
+        {
+            for (int i = 0; i < threads.Count; i++)
+                if (threads[i].Tag == name)
+                    return threads[i];
+            return null;
+        }
     }
 }
