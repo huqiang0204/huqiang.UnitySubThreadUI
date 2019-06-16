@@ -15,13 +15,6 @@ namespace huqiang
     }
     public class Tool
     {
-        public static double ServerOffsetTime;
-        public static DateTime BaseTime = new DateTime(1970, 1, 1);
-        public static DateTime ServerNow { get { return DateTime.Now.AddMilliseconds(ServerOffsetTime); } }
-        public static string ServerNowDate { get {
-                var dat = DateTime.Now.AddMilliseconds(ServerOffsetTime);
-                return dat.Year.ToString() + "-" + dat.Month.ToString() + "-" + dat.Day.ToString();
-            } }
         public static Vector3 Limit(Vector2 parentSize, Vector3 sonPos, Vector2 sonSize)
         {
             if (sonSize.x >= parentSize.x)
