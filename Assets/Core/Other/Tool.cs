@@ -251,7 +251,7 @@ namespace huqiang
             }
         }
         /// <summary>
-        /// 负责一个纹理，让纹理可读可写
+        /// 复制一个纹理，让纹理可读可写
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -354,6 +354,12 @@ namespace huqiang
                 }
             }
         }
+        /// <summary>
+        /// 获取tranfrom的全局信息
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="Includeroot"></param>
+        /// <returns></returns>
         public static Coordinates GetGlobaInfo(Transform rect, bool Includeroot = true)
         {
             Transform[] buff = new Transform[32];
@@ -404,48 +410,6 @@ namespace huqiang
             coord.quaternion = quate;
             coord.Scale = scale;
             return coord;
-        }
-        /// <summary>
-        /// 暴力枚举速率
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="Rate"></param>
-        /// <returns></returns>
-        public static float DistanceToVelocities(float s, float Rate)
-        {
-            float v = 0.00001f;
-            float r = 1 / Rate;
-            float t = v;
-            float len = v;
-            for (int i = 0; i < 10000; i++)
-            {
-                v *= r;
-                len += v;
-                if (len > s)
-                {
-                    return t;
-                }
-                t = v;
-            }
-            return 0;
-        }
-        /// <summary>
-        /// 获取当前速率和衰减率所行走的路程
-        /// </summary>
-        /// <param name="v"></param>
-        /// <param name="Rate"></param>
-        /// <returns></returns>
-        public static float GetDistance(float v, float Rate)
-        {
-            float l = 0;
-            for (int i = 1; i < 100000; i++)
-            {
-                l += v;
-                v *= Rate;
-                if (v < 0.005)
-                    break;
-            }
-            return l;
         }
         public unsafe static byte[] GetByteArray(byte* p,int len)
         {
