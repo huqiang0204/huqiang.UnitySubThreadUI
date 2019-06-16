@@ -15,141 +15,12 @@ namespace huqiang
     }
     public class Tool
     {
-        public static Vector3 Limit(Vector2 parentSize, Vector3 sonPos, Vector2 sonSize)
-        {
-            if (sonSize.x >= parentSize.x)
-            {
-                sonPos.x = 0;
-                if (sonSize.y >= parentSize.y)
-                {
-                    sonPos.y = 0;
-                    return sonPos;
-                }
-                else
-                {
-                    float y = sonPos.y * -0.5f;
-                    float py = parentSize.y * -0.5f;
-                    if (y + sonPos.y < py)
-                    {
-                        sonPos.y = py - y;
-                    }
-                    else
-                    {
-                        y = -y;
-                        py = -py;
-                        if (y + sonPos.y > py)
-                        {
-                            sonPos.y = py - y;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                float x = sonSize.x * -0.5f;
-                float px = parentSize.x * -0.5f;
-                if (x + sonPos.x < px)
-                {
-                    sonPos.x = px - x;
-                }
-                else
-                {
-                    x = -x;
-                    px = -px;
-                    if (x + sonPos.x > px)
-                    {
-                        sonPos.x = px - x;
-                    }
-                }
-                if (sonSize.y >= parentSize.y)
-                {
-                    sonPos.y = 0;
-                    return sonPos;
-                }
-                else
-                {
-                    float y = sonSize.y * -0.5f;
-                    float py = parentSize.y * -0.5f;
-                    if (y + sonPos.y < py)
-                    {
-                        sonPos.y = py - y;
-                    }
-                    else
-                    {
-                        y = -y;
-                        py = -py;
-                        if (y + sonPos.y > py)
-                        {
-                            sonPos.y = py - y;
-                        }
-                    }
-                }
-            }
-            return sonPos;
-        }
         /// <summary>
-        /// 校正
+        /// 获取时间线上的某个值
         /// </summary>
-        /// <param name="parentSize">父轴尺寸</param>
-        /// <param name="sonPos">子位置</param>
-        /// <param name="sonSize">子尺寸</param>
+        /// <param name="cl"></param>
+        /// <param name="time"></param>
         /// <returns></returns>
-        public static Vector3 Correction(Vector2 parentSize, Vector3 sonPos, Vector2 sonSize)
-        {
-            if (sonSize.x <= parentSize.x)
-            {
-                sonPos.x = 0;
-                if (sonSize.y <= parentSize.y)
-                {
-                    sonPos.y = 0;
-                    return sonPos;
-                }
-            }
-            else
-            {
-                if (sonSize.y <= parentSize.y)
-                {
-                    sonPos.y = 0;
-                }
-            }
-
-            Vector2 dotA = Vector2.zero;
-            if (sonPos.x != 0)
-            {
-                float right = parentSize.x * 0.5f;
-                float left = -right;
-                float w = sonSize.x * 0.5f;
-                float a = sonPos.x - w;
-                if (a > left)
-                {
-                    sonPos.x = left + w;
-                }
-                else
-                {
-                    a = sonPos.x + w;
-                    if (a < right)
-                        sonPos.x = right - w;
-                }
-            }
-            if (sonPos.y != 0)
-            {
-                float top = parentSize.y * 0.5f;
-                float down = -top;
-                float h = sonSize.y * 0.5f;
-                float a = sonPos.y - h;
-                if (a > down)
-                {
-                    sonPos.y = down + h;
-                }
-                else
-                {
-                    a = sonPos.y + h;
-                    if (a < top)
-                        sonPos.y = top - h;
-                }
-            }
-            return sonPos;
-        }
         public static float GetTimeLineValue(Vector2[] cl, float time)
         {
             int len = cl.Length;
@@ -171,6 +42,14 @@ namespace huqiang
                 }
             return cl[last].y;
         }
+        /// <summary>
+        /// 音频编码成wav格式
+        /// </summary>
+        /// <param name="channels"></param>
+        /// <param name="frequency"></param>
+        /// <param name="samples"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static byte[] EncodeToWAV(int channels, int frequency, int samples, byte[] data)
         {
             byte[] bytes = null;

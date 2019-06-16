@@ -259,5 +259,27 @@ namespace huqiang
             }
             return buf;
         }
+        public unsafe static void ReadFrom<T>(this IntPtr ip,byte* src) where T : unmanaged
+        {
+            byte* tp = (byte*)ip;
+            int size = sizeof(T);
+            for (int i = 0; i < size; i++)
+            {
+                *tp = *src;
+                tp++;
+                src++;
+            }
+        }
+        public unsafe static void WriteTo<T>(this IntPtr ip, byte* tar) where T : unmanaged
+        {
+            int size = sizeof(T);
+            byte* bp = (byte*)ip;
+            for (int i = 0; i < size; i++)
+            {
+                *tar = *bp;
+                tar++;
+                bp++;
+            }
+        }
     }
 }
