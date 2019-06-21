@@ -12,9 +12,9 @@ namespace huqiang
 #if UNITY_STANDALONE_WIN ||UNITY_EDITOR
     public class IME
     {
-        private  static bool haveMainWindow = false;
-        private  static IntPtr mainWindowHandle = IntPtr.Zero;
-        private int processId = 0;
+        public  static bool haveMainWindow = false;
+        public  static IntPtr mainWindowHandle = IntPtr.Zero;
+        public int processId = 0;
 
         public delegate bool EnumThreadWindowsCallback(IntPtr hWnd, IntPtr lParam);
 
@@ -65,16 +65,16 @@ namespace huqiang
         [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
         private static extern int ImmGetCompositionStringW(IntPtr hIMC, int dwIndex, byte[] lpBuf, int dwBufLen);
         [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
-        private static extern int ImmSetCompositionStringW(IntPtr himc, int dwIndex, IntPtr lpComp, int dw, int lpRead, int dw2);
+        public static extern int ImmSetCompositionStringW(IntPtr himc, int dwIndex, IntPtr lpComp, int dw, int lpRead, int dw2);
 
-        private const int GCS_COMPSTR = 8;
-        private const int WM_IME_SETCONTEXT = 0x0281;
-        private const int WM_IME_CHAR = 0x0286;
-        private const int WM_CHAR = 0x0102;
-        private const int WM_IME_COMPOSITION = 0x010F;
-        private const int GCS_RESULTSTR = 0x0800;
-        const int SCS_SETRECONVERTSTRING = 0x00010000;
-        const int SCS_QUERYRECONVERTSTRING = 0x00020000;
+        public const int GCS_COMPSTR = 8;
+        public const int WM_IME_SETCONTEXT = 0x0281;
+        public const int WM_IME_CHAR = 0x0286;
+        public const int WM_CHAR = 0x0102;
+        public const int WM_IME_COMPOSITION = 0x010F;
+        public const int GCS_RESULTSTR = 0x0800;
+        public const int SCS_SETRECONVERTSTRING = 0x00010000;
+        public const int SCS_QUERYRECONVERTSTRING = 0x00020000;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECONVERTSTRING
@@ -145,8 +145,8 @@ namespace huqiang
         public static void Initial()
         {
              var pro = Process.GetCurrentProcess();
-             new IME().GetMainWindowHandle(pro.Id);
-            hIMC = ImmGetContext(mainWindowHandle);
+             mainWindowHandle = new IME().GetMainWindowHandle(pro.Id);
+             hIMC = ImmGetContext(mainWindowHandle);
         }
         public static void Dispose()
         {

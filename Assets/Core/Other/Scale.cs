@@ -14,7 +14,7 @@ public enum ScaleType
 }
 public enum SizeType
 {
-    None, Anchor, Margin,MarginRatio
+    None, Anchor, Margin,MarginRatio, MarginX, MarginY, MarginRatioX, MarginRatioY
 }
 public enum AnchorType
 {

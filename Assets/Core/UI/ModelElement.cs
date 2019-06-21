@@ -151,7 +151,7 @@ namespace huqiang.UI
                     return components[i];
             return null;
         }
-        public T GetComponent<T>()where T:DataConversion
+        public T GetComponent<T>() where T : DataConversion
         {
             for (int i = 0; i < components.Count; i++)
             {
@@ -162,7 +162,7 @@ namespace huqiang.UI
             return null;
         }
         public FakeStruct ModData;
-        public unsafe static FakeStruct FindChild(FakeStruct fake,string name)
+        public unsafe static FakeStruct FindChild(FakeStruct fake, string name)
         {
             var data = (ElementData*)fake.ip;
             var buff = fake.buffer;
@@ -175,7 +175,7 @@ namespace huqiang.UI
                     if (fs != null)
                     {
                         var son = (ElementData*)fs.ip;
-                       var n = buff.GetData(son->name) as string;
+                        var n = buff.GetData(son->name) as string;
                         if (n == name)
                             return fs;
                     }
@@ -236,9 +236,9 @@ namespace huqiang.UI
                 Context.SetParent(parent.Context);
                 Context.SetSiblingIndex(parent.child.IndexOf(this));
             }
-            LoadToObject(Context,ref data, this);
+            LoadToObject(Context, ref data, this);
         }
-        static void LoadToObject(RectTransform com,ref ElementData data,ModelElement ui)
+        static void LoadToObject(RectTransform com, ref ElementData data, ModelElement ui)
         {
             var trans = com as RectTransform;
             trans.anchoredPosition = data.anchoredPosition;
@@ -282,10 +282,10 @@ namespace huqiang.UI
             for (int i = 0; i < coms.Length; i++)
             {
                 var rect = coms[i] as RectTransform;
-                if(rect == null)
+                if (rect == null)
                 {
                     var ss = coms[i] as SizeScaling;
-                    if(ss != null)
+                    if (ss != null)
                     {
                         ed->SizeScale = true;
                         ed->scaleType = ss.scaleType;
@@ -294,7 +294,8 @@ namespace huqiang.UI
                         ed->parentType = ss.parentType;
                         ed->margin = ss.margin;
                         ed->DesignSize = ss.DesignSize;
-                    }else if(coms[i] is UICompositeHelp)
+                    }
+                    else if (coms[i] is UICompositeHelp)
                     {
                         ed->ex = buffer.AddData((coms[i] as UICompositeHelp).ToFakeStruct(buffer));
                     }
@@ -387,24 +388,6 @@ namespace huqiang.UI
                     break;
             }
         }
-        public static void Anchor(ModelElement rect, Vector2 pivot, Vector2 offset)
-        {
-            Vector2 p;
-            Vector2 pp = new Vector2(0.5f, 0.5f);
-            if (rect.parent != null)
-            {
-                var t = rect.parent;
-                p = t.data.sizeDelta;
-                pp = t.data.pivot;
-            }
-            else { p = new Vector2(Scale.LayoutWidth, Scale.LayoutHeight); }
-            rect.data.localScale = Vector3.one;
-            float sx = p.x * (pivot.x - 0.5f);
-            float sy = p.y * (pivot.y - 0.5f);
-            float ox = sx + offset.x;
-            float oy = sy + offset.y;
-            rect.data.localPosition = new Vector3(ox, oy, 0);
-        }
         public static void AnchorEx(ModelElement rect, AnchorType type, Vector2 offset, Vector2 p, Vector2 psize)
         {
             AnchorEx(rect, Anchors[(int)type], offset, p, psize);
@@ -455,6 +438,24 @@ namespace huqiang.UI
             float hh = psize.y * 0.5f;
             return new Margin(left - hw, hw - right, hh - top, down - hh);
         }
+        public static void MarginX(ModelElement rect, Margin margin, Vector2 parentPivot, Vector2 parentSize)
+        {
+            float w = parentSize.x - margin.left - margin.right;
+            var m_pivot = rect.data.pivot;
+            float ox = w * m_pivot.x - parentPivot.x * parentSize.x + margin.left;
+            float sx = rect.data.localScale.x;
+            rect.data.sizeDelta.x = w / sx;
+            rect.data.localPosition.x = ox;
+        }
+        public static void MarginY(ModelElement rect, Margin margin, Vector2 parentPivot, Vector2 parentSize)
+        {
+            float h = parentSize.y - margin.top - margin.down;
+            var m_pivot = rect.data.pivot;
+            float oy = h * m_pivot.y - parentPivot.y * parentSize.y + margin.down;
+            float sy = rect.data.localScale.y;
+            rect.data.sizeDelta.y = h / sy;
+            rect.data.localPosition.y = oy;
+        }
         static void Resize(ModelElement ele)
         {
             if (ele == null)
@@ -469,34 +470,48 @@ namespace huqiang.UI
             }
             else
             {
-                size = new Vector2(Scale.LayoutWidth,Scale.LayoutHeight);
+                size = new Vector2(Scale.LayoutWidth, Scale.LayoutHeight);
             }
-
             Docking(ele, ele.data.scaleType, size, ele.data.DesignSize);
-            if (ele.data.sizeType == SizeType.Anchor)
+            var st = ele.data.sizeType;
+            switch (st)
             {
-                AnchorEx(ele, ele.data.anchorType,
-                    new Vector2(ele.data.margin.left, ele.data.margin.right), p, size);
-            }
-            else if (ele.data.sizeType == SizeType.Margin)
-            {
-                var mar = ele.data.margin;
-                if (ele.data.parentType == ParentType.BangsScreen)
-                    if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
-                        mar.top += 88;
-                MarginEx(ele, mar, p, size);
-            }
-            else if (ele.data.sizeType == SizeType.MarginRatio)
-            {
-                var mar = new Margin();
-                mar.left = ele.data.margin.left * size.x;
-                mar.right = ele.data.margin.right * size.x;
-                mar.top = ele.data.margin.top * size.y;
-                mar.down = ele.data.margin.down * size.y;
-                if (ele.data.parentType == ParentType.BangsScreen)
-                    if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
-                        mar.top += 88;
-                MarginEx(ele, mar, p, size);
+                case SizeType.Anchor:
+                    AnchorEx(ele, ele.data.anchorType,
+                   new Vector2(ele.data.margin.left, ele.data.margin.right), p, size);
+                    break;
+                case SizeType.Margin:
+                    var mar = ele.data.margin;
+                    if (ele.data.parentType == ParentType.BangsScreen)
+                        if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
+                            mar.top += 88;
+                    MarginEx(ele, mar, p, size);
+                    break;
+                case SizeType.MarginRatio:
+                    mar = new Margin();
+                    mar.left = ele.data.margin.left * size.x;
+                    mar.right = ele.data.margin.right * size.x;
+                    mar.top = ele.data.margin.top * size.y;
+                    mar.down = ele.data.margin.down * size.y;
+                    if (ele.data.parentType == ParentType.BangsScreen)
+                        if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
+                            mar.top += 88;
+                    MarginEx(ele, mar, p, size);
+                    break;
+                case SizeType.MarginX:
+                    mar = ele.data.margin;
+                    if (ele.data.parentType == ParentType.BangsScreen)
+                        if (Scale.ScreenHeight / Scale.ScreenWidth > 2f)
+                            mar.top += 88;
+                    MarginX(ele, mar, p, size);
+                    break;
+                case SizeType.MarginY:
+                    mar = ele.data.margin;
+                    if (ele.data.parentType == ParentType.BangsScreen)
+                        if (Scale.ScreenHeight / Scale.ScreenWidth > 2f)
+                            mar.top += 88;
+                    MarginY(ele, mar, p, size);
+                    break;
             }
         }
         public static void ScaleSize(ModelElement element)
@@ -515,10 +530,10 @@ namespace huqiang.UI
             }
         }
         #endregion
-        bool _active=true;
-        public bool activeSelf { get { return _active; }set { if (_active == value) return; IsChanged = true; _active = value; } }
+        bool _active = true;
+        public bool activeSelf { get { return _active; } set { if (_active == value) return; IsChanged = true; _active = value; } }
         public EventCallBack baseEvent;
-        public void RegEvent<T>()where T:EventCallBack,new()
+        public void RegEvent<T>() where T : EventCallBack, new()
         {
             if (baseEvent != null)
             {
@@ -533,7 +548,7 @@ namespace huqiang.UI
         }
         public override void Apply()
         {
-            if(activeSelf)
+            if (activeSelf)
             {
                 if (Context == null)
                 {
@@ -543,7 +558,7 @@ namespace huqiang.UI
                 }
                 else
                 {
-                    if(parentChanged)
+                    if (parentChanged)
                     {
                         if (parent != null)
                         {
@@ -558,19 +573,19 @@ namespace huqiang.UI
                         LoadToObject(Context, ref data, this);
                     }
                 }
-                if(mIndex>-1)
+                if (mIndex > -1)
                 {
                     if (mIndex > Context.childCount)
                         Context.SetAsLastSibling();
-                    else  Context.SetSiblingIndex(mIndex);
+                    else Context.SetSiblingIndex(mIndex);
                     mIndex = -1;
                 }
                 for (int i = 0; i < components.Count; i++)
                 {
                     var com = components[i];
-                    if(com!=null)
+                    if (com != null)
                     {
-                        if(com.IsChanged)
+                        if (com.IsChanged)
                         {
                             com.Apply();
                         }
@@ -590,19 +605,19 @@ namespace huqiang.UI
             }
             else
             {
-                if(Context!=null)
+                if (Context != null)
                 {
                     Context.gameObject.SetActive(false);
                 }
             }
         }
-        public T ComponentReflection<T>()where T:class,new()
+        public T ComponentReflection<T>() where T : class, new()
         {
             T t = new T();
             ModelManagerUI.ComponentReflection(this, t);
             return t;
         }
-        int mIndex =-1;
+        int mIndex = -1;
         public void SetSiblingIndex(int index)
         {
             mIndex = index;

@@ -3,6 +3,7 @@ using huqiang.UIEvent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -32,8 +33,21 @@ namespace huqiang.UIComposite
             {
                 callBack = EventCallBack.RegEvent<EventCallBack>(model);
                 callBack.Drag = Drag;
-                callBack.DragEnd = Drag;
+              
                 direction = dir;
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+                callBack.PointerEntry = (o, e) => {
+                    ThreadMission.InvokeToMain((y) => {
+                        Cursor.SetCursor(UnityEngine.Resources.Load<Texture2D>("emoji"),Vector2.zero,CursorMode.Auto);
+                    },null);
+                };
+                callBack.DragEnd = (o, e, v) => {
+                    ThreadMission.InvokeToMain((y) =>
+                    {
+                        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                    }, null);
+                };
+#endif
             }
             else mod.activeSelf = false;
             mod.SetParent(layout.LineLevel);

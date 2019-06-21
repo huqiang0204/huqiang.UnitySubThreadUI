@@ -77,9 +77,12 @@ namespace huqiang.UIComposite
             txt.UseTextSize = true;
 
             close = Head.Find("Close");
-            clo = EventCallBack.RegEvent<EventCallBack>(close);
-            clo.DataContext = this;
-            clo.Click = CloseClick;
+            if(close!=null)
+            {
+                clo = EventCallBack.RegEvent<EventCallBack>(close);
+                clo.DataContext = this;
+                clo.Click = CloseClick;
+            }
         }
         int ac = 0;
         void HeadPointDown(EventCallBack eventCall, UserAction action)
@@ -271,8 +274,11 @@ namespace huqiang.UIComposite
                 float w = it.label.data.sizeDelta.x;
                 float fw = w + 40;
                 it.Head.data.sizeDelta.x = fw;
-                it.close.data.localPosition.x = w * 0.5f+8;
-                it.close.IsChanged = true;
+                if(it.close!=null)
+                {
+                    it.close.data.localPosition.x = w * 0.5f + 8;
+                    it.close.IsChanged = true;
+                }
             }
             panel.Order();
         }
