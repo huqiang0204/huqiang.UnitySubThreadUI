@@ -19,21 +19,21 @@ public class LayoutTestPage : UIPage
         view = model.ComponentReflection<View>();
         var area = view.Layout.MainArea;
         area.auxiliary.AddContent("page0");
-        var d = area.AddArea(LayoutArea.Dock.Down);
+        var d = area.AddArea(LayoutArea.Dock.Down,0.3f);
         var context = d.auxiliary.AddContent("page1");
 
         d.model.GetComponent<ImageElement>().color = Color.red;
-        var one = d.AddArea(LayoutArea.Dock.Right);
+        var one = d.AddArea(LayoutArea.Dock.Right,0.4f);
         context = one.auxiliary.AddContent("page2");
         context.LoadPopWindow<GridTestWindow>();
         d.auxiliary.Refresh();
 
         one.model.GetComponent<ImageElement>().color = Color.green;
-        var top= area.AddArea(LayoutArea.Dock.Top);
+        var top= area.AddArea(LayoutArea.Dock.Top,0.2f);
         top.auxiliary.AddContent("page3");
         top.model.GetComponent<ImageElement>().color = Color.yellow;
 
-        var l= top.AddArea(LayoutArea.Dock.Left);
+        var l= top.AddArea(LayoutArea.Dock.Left,0.4f);
         l.model.GetComponent<ImageElement>().color = Color.blue;
         l.auxiliary.headDock = LayoutAuxiliary.HeadDock.Down;
 

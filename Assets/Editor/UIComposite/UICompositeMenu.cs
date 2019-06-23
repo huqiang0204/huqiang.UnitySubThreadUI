@@ -628,5 +628,7 @@ public static class UICompositeMenu
         rect.localScale = Vector3.one;
         var et = ss.AddComponent<EmojiText>();
         et.raycastTarget = false;
+        et.material = new Material(Shader.Find("Custom/UIEmoji"));
+        et.material.SetTexture("_emoji", Resources.Load<Texture>("emoji"));
     }
 }
