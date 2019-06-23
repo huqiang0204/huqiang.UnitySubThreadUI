@@ -95,26 +95,32 @@ namespace huqiang.UIComposite
         }
         void HeadDrag(EventCallBack eventCall, UserAction action, Vector2 v)
         {
-            if (ac == 0)
+            if(!layout.LockLayout)
             {
-                float y = action.CanPosition.y - eventCall.RawPosition.y;
-                if (y < -30 | y > 30)
+                if (ac == 0)
                 {
-                    layout.ShowAllDocker();
-                    ac = 2;
-                    layout.DragAuxiliary = auxiliary;
-                    layout.DragContent = this;
+                    float y = action.CanPosition.y - eventCall.RawPosition.y;
+                    if (y < -30 | y > 30)
+                    {
+                        layout.ShowAllDocker();
+                        ac = 2;
+                        layout.DragAuxiliary = auxiliary;
+                        layout.DragContent = this;
+                    }
                 }
-            }
-            else if (ac == 2)
-            {
-                layout.Draging(action);
+                else if (ac == 2)
+                {
+                    layout.Draging(action);
+                }
             }
         }
         void HeadDragEnd(EventCallBack eventCall, UserAction action, Vector2 v)
         {
-            layout.HideAllDocker();
-            layout.DragEnd(action);
+            if(!layout.LockLayout)
+            {
+                layout.HideAllDocker();
+                layout.DragEnd(action);
+            }
         }
         void CloseClick(EventCallBack eventCall, UserAction action)
         {

@@ -688,5 +688,9 @@ namespace huqiang.UIComposite
             for (int i = 0; i < areas.Count; i++)
                 areas[i].SizeChanged();
         }
+        /// <summary>
+        /// 锁定布局
+        /// </summary>
+        public bool LockLayout;
     }
 }
