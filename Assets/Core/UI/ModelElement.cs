@@ -161,6 +161,12 @@ namespace huqiang.UI
             }
             return null;
         }
+        public T AddComponent<T>()where T:DataConversion,new()
+        {
+            T t = new T();
+            components.Add(t);
+            return t;
+        }
         public FakeStruct ModData;
         public unsafe static FakeStruct FindChild(FakeStruct fake, string name)
         {
