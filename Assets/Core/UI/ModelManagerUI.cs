@@ -326,14 +326,18 @@ namespace huqiang.UI
                     if(mod.Context!=null)
                     {
                         long type = mod.data.type;
-                        mod.Context.SetParent(CycleBuffer);
                         for (int i = 0; i < models.Count; i++)
                         {
                             if (models[i].type == type)
                             {
-                                var g = mod.Context.gameObject;
+                                var g = mod.Main;
                                 if (models[i].ReCycle(g))
+                                {
                                     g.SetActive(false);
+                                    mod.Context.SetParent(CycleBuffer);
+                                    mod.Context = null;
+                                    mod.Main = null;
+                                }
                                 break;
                             }
                         }

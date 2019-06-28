@@ -17,6 +17,7 @@ public class TestPage : UIPage
         public TextElement Log;
         public GridScroll Scroll;
         public ScrollXS ScrollX;
+        public DragContent Drag;
     }
     class Item
     {

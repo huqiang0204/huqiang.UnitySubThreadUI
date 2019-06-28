@@ -125,6 +125,7 @@ namespace huqiang.UI
             return v;
         }
         public RectTransform Context;
+        public GameObject Main;
         public int regIndex;
         public ElementData data;
         public string name;
@@ -233,6 +234,7 @@ namespace huqiang.UI
         }
         public override void LoadToObject(Component com)
         {
+            Main = com.gameObject;
             for (int i = 0; i < components.Count; i++)
                 if (components[i] != null)
                     components[i].LoadToObject(com);

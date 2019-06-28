@@ -353,6 +353,9 @@ namespace huqiang.UIEvent
         public long stayTime { get; protected set; }
         public bool Pressed { get; internal set; }
         public bool forbid;
+        /// <summary>
+        /// 开启此项,范围外不会把事件传给子组件
+        /// </summary>
         public bool CutRect = false;
         /// <summary>
         /// 强制事件不被子组件拦截
