@@ -49,16 +49,15 @@ namespace huqiang.UIComposite
         public static float Tolerance = 0.25f;
         public ScrollType scrollType=ScrollType.BounceBack;
         public static readonly Vector2 Center = new Vector2(0.5f, 0.5f);
-        public ModelElement ScrollView;
         public Vector2 Size;//scrollView的尺寸
         public Vector2 ActualSize { get; protected set; }//相当于Content的尺寸
         public Vector2 ItemSize;
-        FakeStruct model;
+        FakeStruct modData;
         public FakeStruct ItemMod
         {
             set
             {
-                model = value;
+                modData = value;
                 var c = Items.Count;
                 if (c > 0)
                 {
@@ -74,7 +73,7 @@ namespace huqiang.UIComposite
                     Recycler.Clear();
                 }
             }
-            get { return model; }
+            get { return modData; }
         }
         public ModelElement[] ItemMods;
         IList dataList;
@@ -155,7 +154,7 @@ namespace huqiang.UIComposite
         public Action<ScrollItem> ItemRecycle;
         public override void Initial(ModelElement model)
         {
-            ScrollView = model;
+            Model = model;
             var child = model.child;
             int c = child.Count;
             if(c>0)
@@ -201,8 +200,8 @@ namespace huqiang.UIComposite
                 return it;
             }
             ModelElement me = new ModelElement();
-            me.Load(model);
-            me.SetParent(ScrollView);
+            me.Load(modData);
+            me.SetParent(Model);
             ScrollItem a = new ScrollItem();
             a.target = me;
             if (creator != null)

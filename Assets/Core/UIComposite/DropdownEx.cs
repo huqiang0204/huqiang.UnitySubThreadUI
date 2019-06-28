@@ -30,8 +30,8 @@ namespace huqiang.UIComposite
                 if (value == null)
                     return;
                 ItemSize = m_scroll.ItemSize;
-                MaxHeight = m_scroll.ScrollView.data.sizeDelta.y;
-                m_scroll.ScrollView.activeSelf = false;
+                MaxHeight = m_scroll.Model.data.sizeDelta.y;
+                m_scroll.Model.activeSelf = false;
             }
         }
         public ModelElement ItemMod;
@@ -104,16 +104,16 @@ namespace huqiang.UIComposite
         {
             if (BindingData == null)
                 return;
-            m_scroll.ScrollView.activeSelf = true;
+            m_scroll.Model.activeSelf = true;
             float x = main.data.sizeDelta.x;
             int c = DataList.Count;
             float height = c * ItemSize.y;
             if (height > MaxHeight)
                 height = MaxHeight;
-            scrollY.ScrollView.data.sizeDelta = new Vector2(x, height);
+            scrollY.Model.data.sizeDelta = new Vector2(x, height);
 
             var y = main.data.sizeDelta.y * 0.5f + height * 0.5f;
-            var t = scrollY.ScrollView;
+            var t = scrollY.Model;
             t.SetParent(main);
             if (down)
                 t.data.localPosition = new Vector3(PopOffset, -y, 0);
@@ -128,7 +128,7 @@ namespace huqiang.UIComposite
 
         void LostFocus(EventCallBack eve, UserAction action)
         {
-            m_scroll.ScrollView.activeSelf = false;
+            m_scroll.Model.activeSelf = false;
         }
         ModelElement Checked;
         void ItemUpdate(PopItemMod g,object o, int index)
@@ -190,7 +190,7 @@ namespace huqiang.UIComposite
             }
             if (OnSelectChanged != null)
                 OnSelectChanged(this, mod.data);
-            scrollY.ScrollView.activeSelf = false;
+            scrollY.Model.activeSelf = false;
         }
     }
 }

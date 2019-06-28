@@ -368,6 +368,7 @@ namespace huqiang.UI
     }
     public abstract class ModelInital
     {
+        public ModelElement Model;
         public virtual void Initial(ModelElement mod) { }
     }
     public class TypeContext

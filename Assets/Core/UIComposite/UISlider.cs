@@ -22,11 +22,10 @@ namespace huqiang.UIComposite
         {
             Horizontal, Vertical
         }
-        ModelElement model;
         public ModelElement FillImage;
         ImageElement image;
         public ModelElement Nob;
-        SliderInfo info;
+        public SliderInfo info;
         float ratio;
         EventCallBack callBack;
         Vector2 pos;
@@ -40,13 +39,13 @@ namespace huqiang.UIComposite
             {
                 if (info.direction == Direction.Horizontal)
                 {
-                    float w = model.data.sizeDelta.x;
+                    float w =Model.data.sizeDelta.x;
                     Nob.data.sizeDelta.x = value * w;
                     ApplyValue();
                 }
                 else
                 {
-                    float w = model.data.sizeDelta.y;
+                    float w = Model.data.sizeDelta.y;
                     Nob.data.sizeDelta.y = value * w;
                     ApplyValue();
                 }
@@ -69,8 +68,8 @@ namespace huqiang.UIComposite
         }
         public override void Initial(ModelElement mod)
         {
-            model = mod;
-            callBack = EventCallBack.RegEvent<EventCallBack>(model);
+            Model= mod;
+            callBack = EventCallBack.RegEvent<EventCallBack>(Model);
             callBack.Drag = callBack.DragEnd = Draging;
             callBack.PointerDown = PointDown;
             callBack.AutoColor = false;
@@ -109,7 +108,7 @@ namespace huqiang.UIComposite
         }
         void RatioToPos()
         {
-            var size = model.data.sizeDelta;
+            var size = Model.data.sizeDelta;
             if (info.direction == Direction.Horizontal)
             {
                 float rx = size.x * 0.5f;
@@ -135,7 +134,7 @@ namespace huqiang.UIComposite
         {
             if (Nob == null)
                 return;
-            var size = model.data.sizeDelta;
+            var size = Model.data.sizeDelta;
             if (info.direction==Direction.Horizontal)
             {
                 float rx = size.x * 0.5f;
