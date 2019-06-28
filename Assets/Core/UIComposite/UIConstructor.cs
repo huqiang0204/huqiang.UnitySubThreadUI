@@ -115,5 +115,41 @@ namespace huqiang.UIComposite
             scroll.Initial(mod);
             return scroll;
         }
+        public static ScrollXS CreateScrollXS(string name)
+        {
+            var mod = ModelElement.CreateNew(name);
+
+            var scroll = ModelElement.CreateNew("Scroll");
+            scroll.SetParent(mod);
+            scroll.data.sizeDelta = new Vector2(400, 400);
+            scroll.AddComponent<MaskElement>();
+
+            var Item = ModelElement.CreateNew("Item");
+            Item.data.sizeDelta = new Vector2(80, 80);
+            Item.SetParent(scroll);
+
+            var slider = ModelElement.CreateNew("Slider");
+            slider.data.sizeDelta = new Vector2(400, 20);
+            slider.SetParent(mod);
+            slider.data.localPosition = new Vector3(0, -190, 0);
+
+            var img = slider.AddComponent<ImageElement>();
+            img.textureName = icons;
+            img.spriteName = background;
+            img.data.type = Image.Type.Sliced;
+            img.color = img.data.color = new Color32(152, 152, 152, 255);
+
+            var Nob = ModelElement.CreateNew("Nob");
+            Nob.data.sizeDelta = new Vector2(30, 30);
+            Nob.SetParent(slider);
+            Nob.data.localPosition = new Vector3(-185, 0, 0);
+            img = Nob.AddComponent<ImageElement>();
+            img.textureName = icons;
+            img.spriteName = circlesm;
+
+            ScrollXS xS = new ScrollXS();
+            xS.Initial(mod);
+            return xS;
+        }
     }
 }
