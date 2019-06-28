@@ -216,7 +216,7 @@ namespace huqiang.UIComposite
                 if (Position.x < -ScrollContent.Tolerance)
                 {
                     back.DecayRateX = 0.988f;
-                    float d = -Position.x;
+                    float d = -Position.x-ContentSize.x*0.5f+Size.x*0.5f;
                     back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                 }
                 else
@@ -227,7 +227,7 @@ namespace huqiang.UIComposite
                     if (Position.x + Size.x > max)
                     {
                         back.DecayRateX = 0.988f;
-                        float d = ContentSize.x - Position.x - Size.x;
+                        float d = ContentSize.x*0.5f - Position.x - Size.x*0.5f;
                         back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                     }
                     else
@@ -247,7 +247,7 @@ namespace huqiang.UIComposite
                 if (Position.y < -ScrollContent.Tolerance)
                 {
                     back.DecayRateY = 0.988f;
-                    float d = -Position.y;
+                    float d = -Position.y+Size.y*0.5f;
                     back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
                 }
                 else
@@ -258,7 +258,7 @@ namespace huqiang.UIComposite
                     if (Position.y + Size.y > max)
                     {
                         back.DecayRateY = 0.988f;
-                        float d = ContentSize.y - Position.y - Size.y;
+                        float d = ContentSize.y- Position.y-Size.y*0.5f;
                         back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
                     }
                     //else
