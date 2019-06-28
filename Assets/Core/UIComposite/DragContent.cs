@@ -10,61 +10,6 @@ namespace huqiang.UIComposite
 {
     public class DragContent: ModelInital
     {
-        public static Vector3 Correction(Vector2 parentSize, Vector3 sonPos, Vector2 sonSize)
-        {
-            if (sonSize.x <= parentSize.x)
-            {
-                sonPos.x = 0;
-                if (sonSize.y <= parentSize.y)
-                {
-                    sonPos.y = 0;
-                    return sonPos;
-                }
-            }
-            else
-            {
-                if (sonSize.y <= parentSize.y)
-                {
-                    sonPos.y = 0;
-                }
-            }
-            Vector2 dotA = Vector2.zero;
-            if (sonPos.x != 0)
-            {
-                float right = parentSize.x * 0.5f;
-                float left = -right;
-                float w = sonSize.x * 0.5f;
-                float a = sonPos.x - w;
-                if (a > left)
-                {
-                    sonPos.x = left + w;
-                }
-                else
-                {
-                    a = sonPos.x + w;
-                    if (a < right)
-                        sonPos.x = right - w;
-                }
-            }
-            if (sonPos.y != 0)
-            {
-                float top = parentSize.y * 0.5f;
-                float down = -top;
-                float h = sonSize.y * 0.5f;
-                float a = sonPos.y - h;
-                if (a > down)
-                {
-                    sonPos.y = down + h;
-                }
-                else
-                {
-                    a = sonPos.y + h;
-                    if (a < top)
-                        sonPos.y = top - h;
-                }
-            }
-            return sonPos;
-        }
         protected Vector2 ScrollNone(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
         {
             Vector2 v2 = Vector2.zero;
@@ -201,9 +146,12 @@ namespace huqiang.UIComposite
                     v = BounceBack(back, ref v, ref Position.x, ref Position.y);
                     break;
             }
+            var offset = ContentSize - Size;
+            offset *= 0.5f;
             var p = Position;
-            p.y -= 0.5f * ContentSize.y;
             p.x = - p.x;
+            p.x += offset.x;
+            p.y -= offset.y;
             Content.data.localPosition = p;
             Content.IsChanged = true;
             if (Scroll != null)
@@ -216,7 +164,7 @@ namespace huqiang.UIComposite
                 if (Position.x < -ScrollContent.Tolerance)
                 {
                     back.DecayRateX = 0.988f;
-                    float d = -Position.x-ContentSize.x*0.5f+Size.x*0.5f;
+                    float d = -Position.x;
                     back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                 }
                 else
@@ -227,7 +175,7 @@ namespace huqiang.UIComposite
                     if (Position.x + Size.x > max)
                     {
                         back.DecayRateX = 0.988f;
-                        float d = ContentSize.x*0.5f - Position.x - Size.x*0.5f;
+                        float d = ContentSize.x - Position.x - Size.x;
                         back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                     }
                     else
@@ -247,7 +195,7 @@ namespace huqiang.UIComposite
                 if (Position.y < -ScrollContent.Tolerance)
                 {
                     back.DecayRateY = 0.988f;
-                    float d = -Position.y+Size.y*0.5f;
+                    float d = -Position.y;
                     back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
                 }
                 else
@@ -258,14 +206,14 @@ namespace huqiang.UIComposite
                     if (Position.y + Size.y > max)
                     {
                         back.DecayRateY = 0.988f;
-                        float d = ContentSize.y- Position.y-Size.y*0.5f;
+                        float d = ContentSize.y - Position.y - Size.y;
                         back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
                     }
-                    //else
-                    //{
-                    //    if (ScrollEnd != null)
-                    //        ScrollEnd(this);
-                    //}
+                    else
+                    {
+                        //if (ScrollEnd != null)
+                        //    ScrollEnd(this);
+                    }
                 }
             }
             //else if (ScrollEnd != null)
