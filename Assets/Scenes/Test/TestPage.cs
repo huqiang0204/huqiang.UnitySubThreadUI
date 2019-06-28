@@ -63,6 +63,6 @@ public class TestPage : UIPage
         view.Scroll.Column = 16;
         view.Scroll.SetItemUpdate<Item,int> ((o, e, i) => {o.Text.text = i.ToString(); });
         view.Scroll.Refresh();
-
+        view.Drag.scrollType = ScrollType.None;
     }
 }
