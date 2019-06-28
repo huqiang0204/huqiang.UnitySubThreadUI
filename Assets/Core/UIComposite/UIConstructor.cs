@@ -91,5 +91,29 @@ namespace huqiang.UIComposite
             slider.info.direction = UISlider.Direction.Vertical;
             return slider;
         }
+        static ModelElement CreateScroll(string name)
+        {
+            var mod = ModelElement.CreateNew(name);
+            mod.data.sizeDelta = new Vector2(400, 400);
+            mod.AddComponent<MaskElement>();
+            var Item = ModelElement.CreateNew("Item");
+            Item.data.sizeDelta = new Vector2(80, 80);
+            Item.SetParent(mod);
+            return mod;
+        }
+        public static ScrollX CreateSrollX(string name)
+        {
+            var mod = CreateScroll(name);
+            var scroll = new ScrollX();
+            scroll.Initial(mod);
+            return scroll;
+        }
+        public static ScrollY CreateSrollY(string name)
+        {
+            var mod = CreateScroll(name);
+            var scroll = new ScrollY();
+            scroll.Initial(mod);
+            return scroll;
+        }
     }
 }
