@@ -17,20 +17,20 @@ namespace huqiang.UIComposite
 
         public override void Initial(ModelElement mod)
         {
-            ScrollView = mod;
+            Model = mod;
             eventCall = EventCallBack.RegEvent<EventCallBack>(mod);
             eventCall.Drag = (o, e, s) => { Scrolling(o, s); };
             eventCall.DragEnd = (o, e, s) => { Scrolling(o, s); };
             eventCall.Scrolling = Scrolling;
             eventCall.ForceEvent = true;
-            Size = ScrollView.data.sizeDelta;
+            Size = Model.data.sizeDelta;
             eventCall.CutRect = true;
         }
         public Action<ScrollYPop, Vector2> Scroll;
         public Action<ScrollYPop, Vector2> ScrollEnd;
         void Scrolling(EventCallBack back, Vector2 v)
         {
-            if (ScrollView == null)
+            if (Model == null)
                 return;
             var size = Size;
             float y = Point + v.y;
@@ -185,7 +185,7 @@ namespace huqiang.UIComposite
         public void SetPopWindow(ModelElement obj)
         {
             PopWindow = obj;
-            PopWindow.SetParent(ScrollView);
+            PopWindow.SetParent(Model);
         }
         ModelElement PopWindow;
         public float PopHigh;

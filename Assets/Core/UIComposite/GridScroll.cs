@@ -38,7 +38,7 @@ namespace huqiang.UIComposite
         public Action<GridScroll> ScrollEnd;
         void Calcul()
         {
-            Size = ScrollView.data.sizeDelta;
+            Size = Model.data.sizeDelta;
             if (BindingData == null)
             {
                 Row = 0;
@@ -58,7 +58,7 @@ namespace huqiang.UIComposite
             eventCall.DragEnd = (o, e, s) => { Scrolling(o, s); };
             eventCall.Scrolling = Scrolling;
             eventCall.ForceEvent = true;
-            Size = ScrollView.data.sizeDelta;
+            Size = Model.data.sizeDelta;
             eventCall.CutRect = true;
             eventCall.ScrollEndX = OnScrollEndX;
             eventCall.ScrollEndY = OnScrollEndY;
@@ -68,7 +68,7 @@ namespace huqiang.UIComposite
         }
         void Scrolling(EventCallBack back, Vector2 v)
         {
-            if (ScrollView == null)
+            if (Model == null)
                 return;
             if (BindingData == null)
                 return;
