@@ -44,7 +44,7 @@ namespace huqiang.ModelManager2D
         {
             for (int i = 0; i < point; i++)
             {
-                if (types[i].Compare(com))
+                if (types[i].CompareCom(com))
                 {
                     Int64 a = 1 << i;
                     return a;
@@ -105,7 +105,7 @@ namespace huqiang.ModelManager2D
         public static FakeStruct LoadFromObject(Component com, DataBuffer buffer, ref Int16 type)
         {
             for (int i = 0; i < point; i++)
-                if (types[i].Compare(com))
+                if (types[i].CompareCom(com))
                 {
                     type = (Int16)i;
                     if (types[i].Load != null)

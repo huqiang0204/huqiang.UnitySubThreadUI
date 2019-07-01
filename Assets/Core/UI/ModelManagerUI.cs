@@ -38,12 +38,23 @@ namespace huqiang.UI
             types[point] = context;
             point++;
         }
-        public static Int64 GetTypeIndex(Component com)
+        public static Int64 GetTypeIndex(DataConversion com)
         {
-            string name = com.GetType().Name;
             for (int i = 0; i < point; i++)
             {
-                if (types[i].name==name)
+                if (types[i].CompareData(com))
+                {
+                    Int64 a = 1 << i;
+                    return a;
+                }
+            }
+            return 0;
+        }
+        public static Int64 GetTypeIndex(Component com)
+        {
+            for (int i = 0; i < point; i++)
+            {
+                if (types[i].CompareCom(com))
                 {
                     Int64 a = 1 << i;
                     return a;
@@ -378,7 +389,11 @@ namespace huqiang.UI
         public string name;
         public Type dcType;
         public string dcName;
-        public virtual bool Compare(object obj)
+        public virtual bool CompareCom(object obj)
+        {
+            return false;
+        }
+        public virtual bool CompareData(object obj)
         {
             return false;
         }
@@ -402,6 +417,14 @@ namespace huqiang.UI
             U u= new U();
             u.type = dcName;
             return u;
+        }
+        public override bool CompareCom(object obj)
+        {
+            return obj is T;
+        }
+        public override bool CompareData(object obj)
+        {
+            return obj is U;
         }
     }
     public class PrefabAsset

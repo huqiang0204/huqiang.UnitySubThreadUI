@@ -165,6 +165,7 @@ namespace huqiang.UI
         public T AddComponent<T>()where T:DataConversion,new()
         {
             T t = new T();
+            data.type |= ModelManagerUI.GetTypeIndex(t);
             components.Add(t);
             return t;
         }
