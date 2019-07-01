@@ -103,6 +103,7 @@ namespace huqiang.UI
             mod.data.localRotation = Quaternion.identity;
             mod.data.anchorMax = mod.data.anchorMin =
             mod.data.pivot = new Vector2(0.5f, 0.5f);
+            mod.data.type |= ModelManagerUI.GetTypeIndex(mod);
             return mod;
         }
 
