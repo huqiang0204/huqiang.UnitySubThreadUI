@@ -6,7 +6,7 @@ namespace huqiang.UIEvent
     public class InputCaret
     {
         static CustomRawImage m_Caret;
-        static CustomRawImage Caret
+        public static CustomRawImage Caret
         {
             get
             {
@@ -14,6 +14,7 @@ namespace huqiang.UIEvent
                 {
                     var g = new GameObject("m_caret",typeof(CustomRawImage));
                     m_Caret = g.GetComponent<CustomRawImage>();
+                    m_Caret.transform.SetParent(App.UIRoot);
                     m_Caret.rectTransform.sizeDelta = Vector2.zero;
                     m_Caret.material = new Material(Shader.Find("UI/Default"));
                 }

@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class UITest : TestHelper
 {
-    public Transform Sphere;
-
     public override void LoadTestPage()
     {
         Application.targetFrameRate = 60;
@@ -17,10 +15,6 @@ public class UITest : TestHelper
         //UIPage.LoadPage<DrawPage>();
         //UIPage.LoadPage<LayoutTestPage>();
         UIPage.LoadPage<TestPage>();
-    }
-    public override void CreateTestPage()
-    {
-     
     }
     public override void OnUpdate()
     {

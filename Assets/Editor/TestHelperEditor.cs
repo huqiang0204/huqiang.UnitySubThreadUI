@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 
-[CustomEditor(typeof(TestHelper), true)]
+[CustomEditor(typeof(CreateTestHelper), true)]
 [CanEditMultipleObjects]
 public class TestHelperEditor : Editor
 {
     protected virtual void OnEnable() {
-        (target as TestHelper).Build();
+        (target as CreateTestHelper).Build();
     }
 }

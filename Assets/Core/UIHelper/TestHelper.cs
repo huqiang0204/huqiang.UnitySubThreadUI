@@ -2,6 +2,7 @@
 using huqiang.Communication;
 using huqiang.Data;
 using huqiang.UI;
+using huqiang.UIEvent;
 using System.IO;
 using UGUI;
 using UnityEngine;
@@ -12,7 +13,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TestHelper:UICompositeHelp
 {
-    static void InitialUI()
+    public static void InitialUI()
     {
         ModelManagerUI.RegComponent(new ComponentType<RectTransform, ModelElement>(ModelElement.LoadFromObject));
         ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
@@ -64,18 +65,11 @@ public class TestHelper:UICompositeHelp
             GameObject.Destroy(transform.GetChild(i).gameObject);
         App.Initial(transform);
     }
-    public void Build()
-    {
-        CreateTestPage();
-    }
     
     public virtual void LoadTestPage()
     {
     }
-    public virtual void CreateTestPage()
-    {
 
-    }
     private void Update()
     {
         App.Update();

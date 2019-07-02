@@ -35,7 +35,7 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
         }
-        static UIRoot uiroot;
+        public static UIRoot uiroot;
         static void CreateUI()
         {
             uiroot = new UIRoot("Root");
@@ -50,7 +50,7 @@ namespace huqiang
             buff.SetActive(false);
             ModelManagerUI.CycleBuffer = buff.transform;
         }
-        static RectTransform UIRoot;
+        public static RectTransform UIRoot;
         static ThreadMission mission;
         static ModelElement root;
         public static void Initial(Transform uiRoot)
