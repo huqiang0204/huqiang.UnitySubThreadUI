@@ -35,33 +35,15 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
         }
+        static UIRoot uiroot;
         static void CreateUI()
         {
-            root = ModelElement.CreateNew("Root");
-            root.Context = new GameObject("Root", typeof(RectTransform)).transform as RectTransform;
-            root.Context.SetParent(UIRoot);
-            root.Context.localPosition = Vector3.zero;
-            root.Context.sizeDelta = new Vector2(Screen.width, Screen.height);
-            EventCallBack.InsertRoot(root);
-
-            var page = ModelElement.CreateNew("page");
-            page.Context = new GameObject("page", typeof(RectTransform)).transform as RectTransform;
-            page.Context.SetParent(root.Context);
-            page.SetParent(root);
-            UIPage.Root = page;
-
-            var menu = ModelElement.CreateNew("menu");
-            menu.Context = new GameObject("menu", typeof(RectTransform)).transform as RectTransform;
-            menu.Context.SetParent(root.Context);
-            menu.SetParent(root);
-            UIMenu.Root = menu;
-            UIMenu.Instance = new UIMenu();
-
-            var notify = ModelElement.CreateNew("notify");
-            notify.Context = new GameObject("notify", typeof(RectTransform)).transform as RectTransform;
-            notify.SetParent(root);
-            notify.Context.SetParent(root.Context);
-            UINotify.Root = notify;
+            uiroot = new UIRoot("Root");
+            uiroot.SetCanvas(UIRoot);
+            root = uiroot.model;
+            UIPage.Root = uiroot.AddNode("page");
+            UIMenu.Root = uiroot.AddNode("menu");
+            UINotify.Root = uiroot.AddNode("notify");
 
             var buff = new GameObject("buffer", typeof(RectTransform));
             buff.transform.SetParent(UIRoot);

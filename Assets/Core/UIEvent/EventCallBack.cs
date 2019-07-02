@@ -33,6 +33,12 @@ namespace huqiang.UIEvent
                 index = Roots.Count;
             Roots.Insert(index, ui);
         }
+        public static void RemoveRoot(ModelElement ui)
+        {
+            if (Roots == null)
+                return;
+            Roots.Remove(ui);
+        }
         public static T RegEvent<T>(ModelElement element)where T:EventCallBack,new()
         {
             for(int i=0;i<events.Count;i++)

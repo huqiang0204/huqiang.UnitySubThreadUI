@@ -45,10 +45,15 @@ public class TestHelper:UICompositeHelp
     public string AssetName = "baseUI";
     private void Awake()
     {
+        Initital();
+        LoadTestPage();
+    }
+    public void Initital()
+    {
         LoadBundle();
         InitialUI();
         DataBuffer db = new DataBuffer(1024);
-        db.fakeStruct = ModelElement.LoadFromObject(transform,db);
+        db.fakeStruct = ModelElement.LoadFromObject(transform, db);
         PrefabAsset asset = new PrefabAsset();
         asset.models = new ModelElement();
         asset.models.Load(db.fakeStruct);
@@ -58,10 +63,18 @@ public class TestHelper:UICompositeHelp
         for (int i = 0; i < c; i++)
             GameObject.Destroy(transform.GetChild(i).gameObject);
         App.Initial(transform);
-        LoadTestPage();
     }
+    public void Build()
+    {
+        CreateTestPage();
+    }
+    
     public virtual void LoadTestPage()
     {
+    }
+    public virtual void CreateTestPage()
+    {
+
     }
     private void Update()
     {
