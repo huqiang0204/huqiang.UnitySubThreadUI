@@ -87,13 +87,26 @@ namespace huqiang
         {
             if (Link != null)
                 lock (Link)
-                    Link.Close();
+                {
+#if UNITY_WSA
+                    Link.Dispose();
+#else
+            Link.Close();
+#endif
+                }
+
         }
         public virtual void Dispose()
         {
             if (Link != null)
                 lock (Link)
-                    Link.Close();
+                {
+#if UNITY_WSA
+                    Link.Dispose();
+#else
+            Link.Close();
+#endif
+                }
         }
         public override void Recive(long time)
         {

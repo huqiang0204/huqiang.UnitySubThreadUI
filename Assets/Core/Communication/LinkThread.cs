@@ -94,11 +94,11 @@ namespace huqiang
     }
     public class LinkThread<T> : LinkBuffer<T> where T :NetworkLink, new()
     {
-        Thread thread;
+        ThreadEx thread;
         public LinkThread(int size =2048):base (size)
         {
             running = true;
-            thread = new Thread(Run);
+            thread = new ThreadEx(Run);
             thread.Start();
         }
         void Run()
@@ -118,7 +118,7 @@ namespace huqiang
                 t -= now;
                 t /= 10000;
                 if (t < 10)
-                    Thread.Sleep(1);
+                    ThreadEx.Sleep(1);
             }
         }
     }

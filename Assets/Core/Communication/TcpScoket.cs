@@ -16,7 +16,7 @@ namespace huqiang
     {
         const int bufferSize = 262144;
         TcpEnvelope envelope;
-        Thread thread;
+        ThreadEx thread;
         private Socket client = null;
         public bool isConnection { get { if (client == null) return false; return client.Connected; } }
         IPEndPoint iep;
@@ -44,7 +44,11 @@ namespace huqiang
                     {
                         if (client.Connected)
                             client.Shutdown(SocketShutdown.Both);
-                        client.Close();
+#if UNITY_WSA
+                      client.Dispose();
+#else
+            client.Close();
+#endif
                     }
                     break;
                 }
@@ -57,7 +61,11 @@ namespace huqiang
                         {
                             if (client.Connected)
                                 client.Shutdown(SocketShutdown.Both);
-                            client.Close();
+#if UNITY_WSA
+                            client.Dispose();
+#else
+            client.Close();
+#endif
                             Connect();
                         }
                     }
@@ -65,7 +73,11 @@ namespace huqiang
                     {
                         try
                         {
-                            client.Close();
+#if UNITY_WSA
+                            client.Dispose();
+#else
+            client.Close();
+#endif
                         }
                         catch (Exception ex)
                         {
@@ -104,7 +116,11 @@ namespace huqiang
             catch (Exception ex)
             {
                 reConnect = true;
-                client.Close();
+#if UNITY_WSA
+                client.Dispose();
+#else
+            client.Close();
+#endif
                 if (ConnectFaild != null)
                     ConnectFaild(ex.StackTrace);
             }
@@ -214,7 +230,7 @@ namespace huqiang
             iep = remote;
             if (thread == null)
             {
-                thread = new Thread(Run);
+                thread = new ThreadEx(Run);
                 thread.Start();
             }
         }

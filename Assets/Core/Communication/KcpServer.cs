@@ -33,7 +33,11 @@ namespace huqiang
         }
         public void Close()
         {
+#if UNITY_WSA
+            soc.Dispose();
+#else
             soc.Close();
+#endif
         }
         //设置用户的udp对象用于发送消息
         public T FindOrCreateLink(IPEndPoint ep)
@@ -87,7 +91,11 @@ namespace huqiang
         public override void Dispose()
         {
             base.Dispose();
+#if UNITY_WSA
+            soc.Dispose();
+#else
             soc.Close();
+#endif
             Instance = null;
             for (int i = 0; i < tCount; i++)
                 linkBuff[i].running = false;

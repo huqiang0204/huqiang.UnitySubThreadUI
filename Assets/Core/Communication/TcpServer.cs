@@ -18,7 +18,7 @@ namespace huqiang
         /// </summary>
         public static TcpServer<T> Instance;
 
-        Thread server;
+        ThreadEx server;
         PackType packType;
         IPEndPoint endPoint;
         int tCount;
@@ -58,7 +58,7 @@ namespace huqiang
         {
             if(server==null)
             {
-                server = new Thread(AcceptClient);
+                server = new ThreadEx(AcceptClient);
                 server.Start();
             }
             if(threadTimer==null)
@@ -81,9 +81,10 @@ namespace huqiang
         byte[] nil = { 0 };
         public void Dispose()
         {
-            soc.Disconnect(true);
+#if !UNITY_WSA
+          soc.Disconnect(true);
+#endif
             soc.Dispose();
-            server.Abort();
             Instance = null;
             for (int i = 0; i < tCount; i++)
                 linkBuff[i].running = false;

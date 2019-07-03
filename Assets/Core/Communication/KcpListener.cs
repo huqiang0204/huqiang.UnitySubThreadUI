@@ -11,7 +11,7 @@ namespace huqiang
     {
         public static KcpListener Instance;
         public Socket soc;
-        public Thread thread;
+        public ThreadEx thread;
         protected bool running;
         int remotePort;
         int _port;
@@ -34,7 +34,7 @@ namespace huqiang
             if (thread == null)
             {
                 //创建消息接收线程
-                thread = new Thread(Run);
+                thread = new ThreadEx(Run);
                 thread.Start();
             }
         }
@@ -73,7 +73,11 @@ namespace huqiang
         {
             running = false;
             thread = null;
+#if UNITY_WSA
+            soc.Dispose();
+#else
             soc.Close();
+#endif
         }
         public virtual void Dispatch(byte[] dat, IPEndPoint endPoint)
         {
@@ -90,22 +94,6 @@ namespace huqiang
         }
         public virtual void RemoveLink(KcpLink link)
         {
-        }
-        public void Resume()
-        {
-            if (thread != null)
-            {
-                if (thread.ThreadState == ThreadState.Running)
-                    return;
-                else
-                    try { thread.Abort(); }
-                    catch (Exception ex)
-                    {
-                        UnityEngine.Debug.Log(ex.StackTrace);
-                    }
-            }
-            thread = new Thread(Run);
-            thread.Start();
         }
     }
 }

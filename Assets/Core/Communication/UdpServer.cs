@@ -19,7 +19,7 @@ namespace huqiang
     public class UdpServer
     {
         Socket soc;
-        Thread thread;
+        ThreadEx thread;
         int remotePort;
         Queue<SocData> queue;
         public bool Packaging = true;
@@ -51,7 +51,7 @@ namespace huqiang
             if (thread == null)
             {
                 //创建消息接收线程
-                thread = new Thread(Run);
+                thread = new ThreadEx(Run);
                 thread.Start();
             }
         }
@@ -206,7 +206,11 @@ namespace huqiang
         }
         public void Close()
         {
+#if UNITY_WSA
+            soc.Dispose();
+#else
             soc.Close();
+#endif
             running = false;
         }
         public List<UdpLink> links;
