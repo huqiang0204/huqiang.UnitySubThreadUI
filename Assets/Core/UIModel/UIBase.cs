@@ -39,6 +39,13 @@ public class UIBase
     public ModelElement Parent { get; protected set; }
     public ModelElement model { get; protected set; }
     protected UIBase UIParent;
+    public T LoadUI<T>(string asset, string name) where T : class, new()
+    {
+        model = ModelManagerUI.CloneModel(asset, name);
+        T t = new T();
+        ModelManagerUI.LoadToGame(model, t);
+        return t;
+    }
     public virtual void Initial(huqiang.UI.ModelElement parent, UIBase ui, object obj = null)
     {
         DataContext = obj;

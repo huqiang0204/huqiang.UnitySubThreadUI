@@ -23,13 +23,15 @@ public class TestPage : UIPage
     {
         public TextElement Text;
     }
+    View view;
     public override void Initial(ModelElement parent, object dat = null)
     {
-        model = ModelManagerUI.FindModel("baseUI", "asd");
+        //model = ModelManagerUI.FindModel("baseUI", "asd");
+         view =LoadUI<View>("baseUI","asd");
         base.Initial(parent, dat);
       
         //model.SetParent(UIPage.Root);
-        var view = model.ComponentReflection<View>();
+       // var view = model.ComponentReflection<View>();
         view.Rocker.Radius = 100;
 
         TreeViewNode node = new TreeViewNode();

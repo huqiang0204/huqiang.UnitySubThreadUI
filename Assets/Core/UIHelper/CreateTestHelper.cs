@@ -6,21 +6,24 @@ public class CreateTestHelper:TestHelper
 {
     public void Build()
     {
-        if (App.uiroot != null)
+        if(!Application.isPlaying)
         {
-            App.uiroot.Dispose();
+            if (App.uiroot != null)
+            {
+                App.uiroot.Dispose();
+            }
+            int c = transform.childCount - 1;
+            for (; c >= 0; c--)
+            {
+                GameObject.DestroyImmediate(transform.GetChild(c).gameObject);
+            }
+            var caret = InputCaret.Caret;
+            if (caret != null)
+                GameObject.DestroyImmediate(caret.gameObject);
+            Initital();
+            CreateTestPage();
+            App.Update();
         }
-        int c = transform.childCount - 1;
-        for (; c >= 0; c--)
-        {
-            GameObject.DestroyImmediate(transform.GetChild(c).gameObject);
-        }
-        var caret = InputCaret.Caret;
-        if (caret != null)
-            GameObject.DestroyImmediate(caret.gameObject);
-        Initital();
-        CreateTestPage();
-        App.Update();
     }
     public virtual void CreateTestPage()
     {

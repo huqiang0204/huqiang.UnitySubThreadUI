@@ -275,7 +275,7 @@ namespace huqiang.UI
             for (int i = 0; i < c.Count; i++)
                 LoadToGameR(c[i], reflections, filter);
             if (reflections != null)
-                GetObject( reflections, mod);
+                GetObject(reflections, mod);
         }
         /// <summary>
         /// 对象反射
