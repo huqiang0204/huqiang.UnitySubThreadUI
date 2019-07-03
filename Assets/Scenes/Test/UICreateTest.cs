@@ -13,8 +13,4 @@ public class UICreateTest : CreateTestHelper
     {
   
     }
-    public override void OnUpdate()
-    {
-        base.OnUpdate();
-    }
 }
