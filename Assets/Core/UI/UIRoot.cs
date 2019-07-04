@@ -39,5 +39,45 @@ namespace huqiang.UI
         {
             EventCallBack.RemoveRoot(model);
         }
+        public UserAction[] inputs;
+        public bool PauseEvent;
+        public void SubDispatch()
+        {
+#if DEBUG
+            try
+            {
+#endif
+                //EventCallBack.Rolling();
+#if DEBUG
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.StackTrace);
+            }
+#endif
+            if (PauseEvent)
+                return;
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                if (inputs[i] != null)
+                {
+#if DEBUG
+                    try
+                    {
+#endif
+                        if (inputs[i].IsActive)
+                            inputs[i].Dispatch(model);
+#if DEBUG
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log(ex.StackTrace);
+                    }
+#endif
+                }
+            }
+            //TextInput.SubDispatch();
+            GestureEvent.Dispatch(new List<UserAction>(inputs));
+        }
     }
 }

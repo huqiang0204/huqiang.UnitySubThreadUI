@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,169 @@ namespace huqiang.UIEvent
             OnlyMouse, OnlyTouch, Blend
         }
         public static InputType inputType = InputType.OnlyMouse;
+        public static float Accelerationtime = 60;
+        public static void SubDispatch()
+        {
+#if DEBUG
+            try
+            {
+#endif
+                EventCallBack.Rolling();
+#if DEBUG
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.StackTrace);
+            }
+#endif
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                if (inputs[i] != null)
+                {
+#if DEBUG
+                    try
+                    {
+#endif
+                        if (inputs[i].IsActive)
+                            inputs[i].Dispatch(UIPage.Root);
+#if DEBUG
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log(ex.StackTrace);
+                    }
+#endif
+                }
+            }
+            TextInput.SubDispatch();
+            GestureEvent.Dispatch(new List<UserAction>(inputs));
+        }
+        public static int TimeSlice;
+        public static int LastTime;
+        public static long Ticks;
+        static UserAction[] inputs;
+        public static UserAction GetInput(int id)
+        {
+            if (inputs == null)
+                return null;
+            if (id > inputs.Length)
+                return inputs[inputs.Length - 1];
+            if (id < 0)
+                return inputs[0];
+            return inputs[id];
+        }
+        static void DispatchTouch()
+        {
+            if (inputs == null)
+            {
+                inputs = new UserAction[10];
+                for (int i = 0; i < 10; i++)
+                    inputs[i] = new UserAction(i);
+            }
+            var touches = Input.touches;
+            for (int i = 0; i < 10; i++)
+            {
+                if (touches != null)
+                {
+                    for (int j = 0; j < touches.Length; j++)
+                    {
+                        if (touches[j].fingerId == i)
+                        {
+                            inputs[i].LoadFinger(ref touches[j]);
+                            inputs[i].IsActive = true;
+                            goto label;
+                        }
+                    }
+                }
+                if (inputs[i].isPressed)
+                {
+                    inputs[i].isPressed = false;
+                    inputs[i].IsLeftButtonUp = true;
+                }
+                else inputs[i].IsActive = false;
+                label:;
+            }
+        }
+        static void DispatchMouse()
+        {
+            if (inputs == null)
+            {
+                inputs = new UserAction[1];
+                inputs[0] = new UserAction(0);
+            }
+            var action = inputs[0];
+            action.LoadMouse();
+        }
+        static void DispatchWin()
+        {
+            if (inputs == null)
+            {
+                inputs = new UserAction[10];
+                for (int i = 0; i < 10; i++)
+                    inputs[i] = new UserAction(i);
+            }
+            var touches = Input.touches;
+            for (int i = 0; i < 10; i++)
+            {
+                int id = i;
+                if (touches != null)
+                {
+
+                    for (int j = 0; j < touches.Length; j++)
+                    {
+                        if (touches[j].fingerId == id)
+                        {
+                            inputs[id].LoadFinger(ref touches[j]);
+                            inputs[id].IsActive = true;
+                            goto label;
+                        }
+                    }
+                }
+                if (touches.Length > 0 & inputs[id].isPressed)
+                {
+                    inputs[id].isPressed = false;
+                    inputs[id].IsLeftButtonUp = true;
+                }
+                else inputs[id].IsActive = false;
+                label:;
+            }
+            if (touches.Length == 0)
+            {
+                var action = inputs[0];
+                action.LoadMouse();
+            }
+        }
+        public static void DispatchEvent()
+        {
+            DateTime now = DateTime.Now;
+            Ticks = now.Ticks;
+            int s = now.Millisecond;
+            int t = s - LastTime;
+            if (t < 0)
+                t += 1000;
+            TimeSlice = t;
+            LastTime = s;
+            if (inputType == InputType.OnlyMouse)
+            {
+                DispatchMouse();
+            }
+            else if (inputType == InputType.OnlyTouch)
+            {
+                DispatchTouch();
+            }
+            else
+            {
+                DispatchWin();
+            }
+            InputCaret.UpdateCaret();
+        }
+        public static void ClearAll()
+        {
+            if (inputs != null)
+                for (int i = 0; i < inputs.Length; i++)
+                    inputs[i].Clear();
+        }
+
         public int Id { get; private set; }
         public Vector2 LastPosition;
         public Vector2 CanPosition;
@@ -32,7 +196,6 @@ namespace huqiang.UIEvent
         public float radius { get; set; }
         public float radiusVariance { get; set; }
         public float PressTime { get; private set; }
-        public static float Accelerationtime = 60;
         public long EventTicks { get; private set; }
         Vector3[] FramePos = new Vector3[16];
         int Frame;
@@ -225,45 +388,10 @@ namespace huqiang.UIEvent
             if (Frame >= 16)
                 Frame = 0;
         }
-        public static void SubDispatch()
-        {
-#if DEBUG
-            try
-            {
-#endif
-                EventCallBack.Rolling();
-#if DEBUG
-            }catch(Exception ex)
-            {
-                Debug.Log(ex.StackTrace);
-            }
-#endif
-            for (int i=0;i<inputs.Length;i++)
-            {
-                if (inputs[i] != null)
-                {
-#if DEBUG
-                    try
-                    {
-#endif
-                        if (inputs[i].IsActive)
-                            inputs[i].Dispatch();
-#if DEBUG
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.Log(ex.StackTrace);
-                    }
-#endif
-                }
-            }
-            TextInput.SubDispatch();
-            GestureEvent.Dispatch(new List<UserAction>(inputs));
-        }
         /// <summary>
         /// 子线程
         /// </summary>
-        void Dispatch()
+        public void Dispatch(ModelElement root)
         {
             if (IsLeftButtonDown | IsRightButtonPressed | IsMiddleButtonPressed)
             {
@@ -272,7 +400,7 @@ namespace huqiang.UIEvent
                 MultiFocus = LastFocus;
                 LastFocus = tmp;
             }
-            EventCallBack.DispatchEvent(this);
+            EventCallBack.DispatchEvent(this,root);
             if (IsLeftButtonDown | IsRightButtonPressed | IsMiddleButtonPressed)
             {
                 for (int i = 0; i < LastFocus.Count; i++)
@@ -312,130 +440,6 @@ namespace huqiang.UIEvent
                 }
             }
             CheckMouseLeave();
-        }
-        public static int TimeSlice;
-        public static int LastTime;
-        public static long Ticks;
-        static UserAction[] inputs;
-        public static UserAction GetInput(int id)
-        {
-            if (inputs == null)
-                return null;
-            if (id > inputs.Length)
-                return inputs[inputs.Length - 1];
-            if (id < 0)
-                return inputs[0];
-            return inputs[id];
-        }
-        static void DispatchTouch()
-        {
-            if (inputs == null)
-            {
-                inputs = new UserAction[10];
-                for (int i = 0; i < 10; i++)
-                    inputs[i] = new UserAction(i);
-            }
-            var touches = Input.touches;
-            for (int i = 0; i < 10; i++)
-            {
-                if (touches != null)
-                {
-                    for (int j = 0; j < touches.Length; j++)
-                    {
-                        if (touches[j].fingerId == i)
-                        {
-                            inputs[i].LoadFinger(ref touches[j]);
-                            inputs[i].IsActive = true;
-                            goto label;
-                        }
-                    }
-                }
-                if (inputs[i].isPressed)
-                {
-                    inputs[i].isPressed = false;
-                    inputs[i].IsLeftButtonUp = true;
-                }else inputs[i].IsActive = false;
-            label:;
-            }
-        }
-        static void DispatchMouse()
-        {
-            if (inputs == null)
-            {
-                inputs = new UserAction[1];
-                inputs[0] = new UserAction(0);
-            }
-            var action = inputs[0];
-            action.LoadMouse();
-        }
-        static void DispatchWin()
-        {
-            if (inputs == null)
-            {
-                inputs = new UserAction[10];
-                for (int i = 0; i < 10; i++)
-                    inputs[i] = new UserAction(i);
-            }
-            var touches = Input.touches;
-            for (int i = 0; i < 10; i++)
-            {
-                int id = i;
-                if (touches != null)
-                {
-
-                    for (int j = 0; j < touches.Length; j++)
-                    {
-                        if (touches[j].fingerId == id)
-                        {
-                            inputs[id].LoadFinger(ref touches[j]);
-                            inputs[id].IsActive = true;
-                            goto label;
-                        }
-                    }
-                }
-                if (touches.Length > 0 & inputs[id].isPressed)
-                {
-                    inputs[id].isPressed = false;
-                    inputs[id].IsLeftButtonUp = true;
-                }
-                else inputs[id].IsActive = false;
-                label:;
-            }
-            if (touches.Length == 0)
-            {
-                var action = inputs[0];
-                action.LoadMouse();
-            }
-        }
-        public static void DispatchEvent()
-        {
-            DateTime now = DateTime.Now;
-            Ticks = now.Ticks;
-            int s = now.Millisecond;
-            int t = s - LastTime;
-            if (t < 0)
-                t += 1000;
-            TimeSlice = t;
-            LastTime = s;
-            if (inputType == InputType.OnlyMouse)
-            {
-                DispatchMouse();
-            }
-            else if (inputType == InputType.OnlyTouch)
-            {
-                DispatchTouch();
-            }
-            else
-            {
-                DispatchWin();
-            }
-            InputCaret.UpdateCaret();
-        }
-        public static void ClearAll()
-        {
-            if (inputs != null)
-                for (int i = 0; i < inputs.Length; i++)
-                    inputs[i].Clear();
         }
         void CheckMouseLeave()
         {

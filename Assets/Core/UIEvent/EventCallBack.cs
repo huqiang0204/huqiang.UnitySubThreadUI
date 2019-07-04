@@ -9,6 +9,27 @@ namespace huqiang.UIEvent
 {
     public class EventCallBack
     {
+        static void Reset(EventCallBack eventCall)
+        {
+            eventCall.PointerDown = null;
+            eventCall.PointerUp = null;
+            eventCall.Click = null;
+            eventCall.PointerEntry = null;
+            eventCall.PointerMove = null;
+            eventCall.PointerLeave = null;
+            eventCall.Drag = null;
+            eventCall.DragEnd = null;
+            eventCall.Scrolling = null;
+            eventCall.AutoColor = true;
+            eventCall.forbid = false;
+            eventCall.mVelocity = Vector2.zero;
+            eventCall.maxVelocity = Vector2.zero;
+            eventCall.CutRect = false;
+            eventCall.ForceEvent = false;
+            eventCall.Penetrate = false;
+        }
+        public static long ClickTime = 1800000;
+        public static float ClickArea = 400;
         static List<EventCallBack> events=new List<EventCallBack>();
         static List<ModelElement> Roots;
         public static void InsertRoot(ModelElement ui, int index = 0)
@@ -53,7 +74,6 @@ namespace huqiang.UIEvent
                 }
             }
             T u = new T();
-            u.boxSize = MinBox;
             u.Context = element;
             u.graphic = element.GetComponent<GraphicE>();
             if (u.graphic != null)
@@ -74,7 +94,6 @@ namespace huqiang.UIEvent
                 }
             }
             EventCallBack u = Activator.CreateInstance(type) as EventCallBack;
-            u.boxSize = MinBox;
             u.Context = element;
             u.graphic = element.GetComponent<GraphicE>();
             if (u.graphic != null)
@@ -97,7 +116,6 @@ namespace huqiang.UIEvent
         {
             events.Clear();
         }
-        public static Vector2 MinBox = new Vector2(80, 80);
         public static bool PauseEvent;
         internal static void DispatchEvent(UserAction action)
         {
@@ -121,8 +139,31 @@ namespace huqiang.UIEvent
                     }
                 }
                 //DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
+            }  
+        }
+        internal static void DispatchEvent(UserAction action,ModelElement root)
+        {
+            if (PauseEvent)
+                return;
+            if (events.Count == 0)
+                return;
+            if (root != null)
+            {
+                var child = root.child;
+                for (int i = child.Count - 1; i >= 0; i--)
+                {
+                    try
+                    {
+                        if (DispatchEvent(child[i], Vector3.zero, Vector3.one, Quaternion.identity, action))
+                            return;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log(ex);
+                    }
+                }
+                //DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
             }
-                
         }
         public static bool DispatchEvent(ModelElement ui, Vector3 pos, Vector3 scale, Quaternion quate, UserAction action)
         {
@@ -299,6 +340,7 @@ namespace huqiang.UIEvent
                 if (back.ScrollEndY != null)
                     back.ScrollEndY(back);
         }
+
         public ModelElement Context;
         public GraphicE graphic;
         Vector2 mVelocity;
@@ -349,8 +391,6 @@ namespace huqiang.UIEvent
         public float DecayRateX = 0.998f;
         public float DecayRateY = 0.998f;
         public float speed = 1f;
-        public static long ClickTime = 1800000;
-        public static float ClickArea = 400;
         public Vector2 RawPosition { get; protected set; }
         Vector2 LastPosition;
         public int HoverTime { get; protected set; }
@@ -588,25 +628,6 @@ namespace huqiang.UIEvent
         }
         protected virtual void Initial()
         {
-        }
-        static void Reset(EventCallBack eventCall)
-        {
-            eventCall.PointerDown = null;
-            eventCall.PointerUp = null;
-            eventCall.Click = null;
-            eventCall.PointerEntry = null;
-            eventCall.PointerMove = null;
-            eventCall.PointerLeave = null;
-            eventCall.Drag = null;
-            eventCall.DragEnd = null;
-            eventCall.Scrolling = null;
-            eventCall.AutoColor = true;
-            eventCall.forbid = false;
-            eventCall.mVelocity = Vector2.zero;
-            eventCall.maxVelocity = Vector2.zero;
-            eventCall.CutRect = false;
-            eventCall.ForceEvent = false;
-            eventCall.Penetrate = false;
         }
         public void RemoveFocus()
         {
