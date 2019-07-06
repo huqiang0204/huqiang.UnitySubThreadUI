@@ -11,14 +11,6 @@ namespace huqiang
     {
         static void InitialInput()
         {
-            if(Application.platform == RuntimePlatform.Android |Application.platform==RuntimePlatform.IPhonePlayer)
-            {
-                UserAction.inputType = UserAction.InputType.OnlyTouch;
-            }
-            else
-            {
-                UserAction.inputType = UserAction.InputType.Blend;
-            }
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
             IME.Initial();
 #endif     
@@ -35,10 +27,18 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
         }
-        public static UIRoot uiroot;
+        public static RenderForm uiroot;
         static void CreateUI()
         {
-            uiroot = new UIRoot("Root");
+            uiroot = new RenderForm("Root");
+            if (Application.platform == RuntimePlatform.Android | Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                uiroot.inputType = UserAction.InputType.OnlyTouch;
+            }
+            else
+            {
+                uiroot.inputType = UserAction.InputType.Blend;
+            }
             uiroot.SetCanvas(UIRoot);
             root = uiroot.model;
             UIPage.Root = uiroot.AddNode("page");
@@ -74,8 +74,10 @@ namespace huqiang
         public static void Update()
         {
             Scale.MainUpdate();
-           
-            UserAction.DispatchEvent();
+
+            UserAction.Update();
+            RenderForm.LoadAction();
+            InputCaret.UpdateCaret();
             Keyboard.DispatchEvent();
             root.Apply();//更新UI
             ThreadMission.ExtcuteMain();
@@ -83,11 +85,11 @@ namespace huqiang
             AnimationManage.Manage.Update();
             AllTime += Time.deltaTime;
             mission.AddSubMission(SubThread, null);
-            //DownloadManager.UpdateMission();
         }
         static void SubThread(object obj)
         {
-            UserAction.SubDispatch();
+            EventCallBack.Rolling();
+            RenderForm.DispatchAction();
             Resize();
             UIPage.Refresh(UserAction.TimeSlice);
             UINotify.Refresh(UserAction.TimeSlice);

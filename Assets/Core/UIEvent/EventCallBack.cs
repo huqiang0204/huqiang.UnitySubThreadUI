@@ -30,36 +30,11 @@ namespace huqiang.UIEvent
         }
         public static long ClickTime = 1800000;
         public static float ClickArea = 400;
+        public static void ClearEvent()
+        {
+            events.Clear();
+        }
         static List<EventCallBack> events=new List<EventCallBack>();
-        static List<ModelElement> Roots;
-        public static void InsertRoot(ModelElement ui, int index = 0)
-        {
-            if (ui == null)
-                return;
-            if (Roots == null)
-            {
-                Roots = new List<ModelElement>();
-                Roots.Add(ui);
-                return;
-            }
-            for (int i = 0; i < Roots.Count; i++)
-            {
-                if (ui == Roots[i])
-                {
-                    Roots.RemoveAt(i);
-                    break;
-                }
-            }
-            if (index > Roots.Count)
-                index = Roots.Count;
-            Roots.Insert(index, ui);
-        }
-        public static void RemoveRoot(ModelElement ui)
-        {
-            if (Roots == null)
-                return;
-            Roots.Remove(ui);
-        }
         public static T RegEvent<T>(ModelElement element)where T:EventCallBack,new()
         {
             for(int i=0;i<events.Count;i++)
@@ -112,39 +87,8 @@ namespace huqiang.UIEvent
             }
             events.Add(t);
         }
-        public static void ClearEvent()
-        {
-            events.Clear();
-        }
-        public static bool PauseEvent;
-        internal static void DispatchEvent(UserAction action)
-        {
-            if (PauseEvent)
-                return;
-            if (events.Count == 0)
-                return;
-            var root = UIPage.Root;
-            if (root != null)
-            {
-                var child = root.child;
-                for (int i = child.Count - 1; i >= 0; i--)
-                {
-                    try
-                    {
-                        if (DispatchEvent(child[i], Vector3.zero, Vector3.one, Quaternion.identity, action))
-                            return;
-                    }catch(Exception ex)
-                    {
-                        Debug.Log(ex);
-                    }
-                }
-                //DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
-            }  
-        }
         internal static void DispatchEvent(UserAction action,ModelElement root)
         {
-            if (PauseEvent)
-                return;
             if (events.Count == 0)
                 return;
             if (root != null)
@@ -289,7 +233,7 @@ namespace huqiang.UIEvent
             }
             return false;
         }
-        internal static void Rolling()
+        public static void Rolling()
         {
             for (int i = 0; i < events.Count; i++)
                 if (events[i] != null)
@@ -637,6 +581,11 @@ namespace huqiang.UIEvent
                 FocusAction.RemoveFocus(this);
                 FocusAction = null;
             }
+        }
+        public void Dispose()
+        {
+            RemoveFocus();
+            events.Remove(this);
         }
         #endregion
     }

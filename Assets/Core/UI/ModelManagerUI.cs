@@ -321,6 +321,8 @@ namespace huqiang.UI
             if (model == null)
                 return;
             RecycleQueue.Enqueue(model);
+            if (model.baseEvent != null)
+                model.baseEvent.Dispose();
             var child = model.child;
             for (int i = 0; i < child.Count; i++)
                 RecycleElement(child[i]);

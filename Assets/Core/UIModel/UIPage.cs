@@ -30,7 +30,6 @@ public class UIPage : UIBase
             CurrentPage.Show(dat);
             return;
         }
-        EventCallBack.ClearEvent();
         UIAnimation.Manage.ReleaseAll();
         if (CurrentPage != null)
         {
@@ -52,7 +51,6 @@ public class UIPage : UIBase
                     CurrentPage.Show(dat);
                     return;
                 }
-            EventCallBack.ClearEvent();
             UIAnimation.Manage.ReleaseAll();
             if (CurrentPage != null)
                 CurrentPage.Dispose();
