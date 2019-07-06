@@ -79,7 +79,7 @@ namespace huqiang
             RenderForm.LoadAction();
             InputCaret.UpdateCaret();
             Keyboard.DispatchEvent();
-            root.Apply();//更新UI
+            RenderForm.ApplyAll();
             ThreadMission.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
             AnimationManage.Manage.Update();

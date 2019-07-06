@@ -22,6 +22,11 @@ namespace huqiang.UI
             for (int i = 0; i < forms.Count; i++)
                 forms[i].DispatchUserAction();
         }
+        public static void ApplyAll()
+        {
+            for (int i = 0; i < forms.Count; i++)
+                forms[i].model.Apply();
+        }
         public ModelElement model;
         public ModelElement AddNode(string name)
         {
