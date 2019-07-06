@@ -44,10 +44,9 @@ namespace huqiang.UI
         }
         ~RenderForm()
         {
-            PauseEvent = true;
-            forms.Remove(this);
+            Dispose();
         }
-        public void Dispose()
+        public virtual void Dispose()
         {
             PauseEvent = true;
             forms.Remove(this);

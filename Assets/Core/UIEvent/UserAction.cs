@@ -35,19 +35,19 @@ namespace huqiang.UIEvent
         public Vector2 Motion;
         Vector2 m_Velocities;
         public Vector2 Velocities { get { return m_Velocities; } }
-        public bool IsMoved { get; private set; }
-        public bool FingerStationary { get; private set; }
-        public bool IsLeftButtonDown { get; private set; }
+        public bool IsMoved { get; set; }
+        public bool FingerStationary { get; set; }
+        public bool IsLeftButtonDown { get; set; }
         public bool isPressed { get; set; }
         public bool IsLeftButtonUp { get; set; }
         public Vector2 rawPosition { get; set; }
-        public int tapCount { get; private set; }
-        public float altitudeAngle { get; private set; }
-        public float azimuthAngle { get; private set; }
+        public int tapCount { get; set; }
+        public float altitudeAngle { get; set; }
+        public float azimuthAngle { get; set; }
         public float radius { get; set; }
         public float radiusVariance { get; set; }
-        public float PressTime { get; private set; }
-        public long EventTicks { get; private set; }
+        public float PressTime { get; set; }
+        public long EventTicks { get; set; }
         Vector3[] FramePos = new Vector3[16];
         int Frame;
         List<EventCallBack> LastEntry;
@@ -69,7 +69,7 @@ namespace huqiang.UIEvent
             LastFocus.Clear();
             MultiFocus.Clear();
             IsLeftButtonDown = false;
-            IsRightButtonPressed = false;
+            IsRightButtonDown = false;
             isPressed = false;
             IsLeftButtonUp = false;
             IsRightButtonUp = false;
@@ -84,14 +84,14 @@ namespace huqiang.UIEvent
             LastFocus.Clear();
             MultiFocus.Clear();
         }
-        public float MouseWheelDelta { get; private set; }
-        public bool IsMouseWheel { get; private set; }
-        public bool IsMiddleButtonPressed { get; private set; }
-        public bool IsRightButtonPressed { get; private set; }
-        public bool IsMiddleButtonUp { get; private set; }
-        public bool IsRightButtonUp { get; private set; }
-        public bool IsRightPressed { get; private set; }
-        public bool IsMiddlePressed { get; private set; }
+        public float MouseWheelDelta { get; set; }
+        public bool IsMouseWheel { get; set; }
+        public bool IsMiddleButtonDown { get; set; }
+        public bool IsRightButtonDown { get; set; }
+        public bool IsMiddleButtonUp { get; set; }
+        public bool IsRightButtonUp { get; set; }
+        public bool IsRightPressed { get; set; }
+        public bool IsMiddlePressed { get; set; }
         public bool IsActive { get; set; }
         void CalculVelocities()
         {
@@ -195,15 +195,15 @@ namespace huqiang.UIEvent
                 IsMouseWheel = true;
             else IsMouseWheel = false;
             IsLeftButtonDown = Input.GetMouseButtonDown(0);
-            IsRightButtonPressed = Input.GetMouseButtonDown(1);
-            IsMiddleButtonPressed = Input.GetMouseButtonDown(2);
+            IsRightButtonDown = Input.GetMouseButtonDown(1);
+            IsMiddleButtonDown = Input.GetMouseButtonDown(2);
             IsLeftButtonUp = Input.GetMouseButtonUp(0);
             IsRightButtonUp = Input.GetMouseButtonUp(1);
             IsMiddleButtonUp = Input.GetMouseButtonUp(2);
             isPressed = Input.GetMouseButton(0);
             IsRightPressed = Input.GetMouseButton(1);
             IsMiddlePressed = Input.GetMouseButton(2);
-            if (IsLeftButtonDown | IsRightButtonPressed | IsMiddleButtonPressed)
+            if (IsLeftButtonDown | IsRightButtonDown | IsMiddleButtonDown)
             {
                 EventTicks = Ticks;
                 PressTime = 0;
@@ -239,20 +239,73 @@ namespace huqiang.UIEvent
             if (Frame >= 16)
                 Frame = 0;
         }
+        public void CopyAction(UserAction action, Vector2 FormSize)
+        {
+            LastPosition = CanPosition;
+            IsActive = true;
+            MouseWheelDelta = action.MouseWheelDelta;
+            if (MouseWheelDelta != 0)
+                IsMouseWheel = true;
+            else IsMouseWheel = false;
+            IsLeftButtonDown = action.IsLeftButtonDown;
+            IsRightButtonDown = action.IsRightButtonDown;
+            IsMiddleButtonDown = action.IsMiddleButtonDown;
+            IsLeftButtonUp = action.IsLeftButtonUp;
+            IsRightButtonUp = action.IsRightButtonUp;
+            IsMiddleButtonUp = action.IsMiddleButtonUp;
+            isPressed = action.isPressed;
+            IsRightPressed = action.IsRightPressed;
+            IsMiddlePressed = action.IsMiddlePressed;
+            if (IsLeftButtonDown | IsRightButtonDown | IsMiddleButtonDown)
+            {
+                EventTicks = Ticks;
+                PressTime = 0;
+                rawPosition = action.rawPosition;
+            }
+            else { PressTime += TimeSlice; }
+            IsMoved = false;
+            float x = action.Position.x;
+            Motion.x = x - Position.x;
+            if (Motion.x != 0)
+            {
+                IsMoved = true;
+            }
+            Position.x = x;
+            float y = action.Position.y;
+            Motion.y = y - Position.y;
+            if (Motion.y != 0)
+            {
+                IsMoved = true;
+            }
+            Position.y = y;
+            x = FormSize.x;
+            x *= 0.5f;
+            y = FormSize.y;
+            y *= 0.5f;
+            CanPosition.x = Position.x - x;
+            CanPosition.y = Position.y - y;
+            FramePos[Frame].x = Position.x;
+            FramePos[Frame].y = Position.y;
+            FramePos[Frame].z = TimeSlice;
+            CalculVelocities();
+            Frame++;
+            if (Frame >= 16)
+                Frame = 0;
+        }
         /// <summary>
         /// 子线程
         /// </summary>
         public void Dispatch(ModelElement root)
         {
-            if (IsLeftButtonDown | IsRightButtonPressed | IsMiddleButtonPressed)
+            if (IsLeftButtonDown | IsRightButtonDown | IsMiddleButtonDown)
             {
                 List<EventCallBack> tmp = MultiFocus;
                 LastFocus.Clear();
                 MultiFocus = LastFocus;
                 LastFocus = tmp;
             }
-            EventCallBack.DispatchEvent(this,root);
-            if (IsLeftButtonDown | IsRightButtonPressed | IsMiddleButtonPressed)
+            EventCallBack.DispatchEvent(this, root);
+            if (IsLeftButtonDown | IsRightButtonDown | IsMiddleButtonDown)
             {
                 for (int i = 0; i < LastFocus.Count; i++)
                 {
