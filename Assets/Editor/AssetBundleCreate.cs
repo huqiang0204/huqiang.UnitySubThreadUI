@@ -219,8 +219,8 @@ public class AssetBundleCreate : Editor {
 
     public static void CreateMapInfo(UnityEngine.Object[] sprites, string savepath)
     {
-        CharInfoA[] tmp = new CharInfoA[7];
-        for (int i = 0; i < 7; i++)
+        CharInfoA[] tmp = new CharInfoA[16];
+        for (int i = 0; i < 16; i++)
         {
             tmp[i] = new CharInfoA();
             tmp[i].len = i + 1;
@@ -250,8 +250,8 @@ public class AssetBundleCreate : Editor {
             }
         }
         DataBuffer db = new DataBuffer();
-        FakeStruct fake = new FakeStruct(db, 7);
-        for (int i = 0; i < 7; i++)
+        FakeStruct fake = new FakeStruct(db, 16);
+        for (int i = 0; i < 16; i++)
         {
             var t = tmp[i];
             FakeStruct fs = new FakeStruct(db, 3);

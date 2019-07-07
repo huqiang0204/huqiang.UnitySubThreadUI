@@ -30,6 +30,8 @@ namespace UGUI
             {
                 if (dat == null)
                     return false;
+                if (index + len > vs.Length)
+                    return false;
                 int c = dat.Length / len;
                 for (int i = 0; i < c; i++)
                 {
@@ -61,8 +63,8 @@ namespace UGUI
         {
             var db = new DataBuffer(data);
             var fake = db.fakeStruct;
-            charInfos = new CharInfo[7];
-            for(int i=0;i<7;i++)
+            charInfos = new CharInfo[16];
+            for(int i=0;i<16;i++)
             {
                 FakeStruct fs = fake.GetData<FakeStruct>(i);
                 if(fs!=null)
@@ -79,7 +81,7 @@ namespace UGUI
         {
             if (index >= buff.Length)
                 return 0;
-            for(int i=6;i>=0;i--)
+            for(int i=15;i>=0;i--)
             {
                 var ci = charInfos[i];
                 if(ci!=null)

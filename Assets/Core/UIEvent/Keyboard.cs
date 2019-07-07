@@ -65,7 +65,7 @@ namespace huqiang.UIEvent
                         type = m_touch.type;
 #endif
                         selection = m_touch.selection;
-                        text = m_touch.text;
+                        TouchString = m_touch.text;
                         canGetSelection = m_touch.canGetSelection;
                         status = m_touch.status;
                     }
@@ -94,7 +94,6 @@ namespace huqiang.UIEvent
         public static int targetDisplay { get; set; }
         public  static TouchScreenKeyboardType type { get; private set; }
         public static RangeInt selection { get; set; }
-        public static string text { get; set; }
         public static bool canSetSelection { get; private set; }
         public static bool active { get; set; }
         public static bool canGetSelection { get; private set; }
@@ -126,6 +125,44 @@ namespace huqiang.UIEvent
             if (KeyUps.Contains(key))
                 return true;
             return false;
+        }
+        static string GetDifferentString(string a,string b,ref int index)
+        {
+            if (b.Length < a.Length)
+            {
+                var tmp = a;
+                a = b;
+                b = tmp;
+            }
+            int min = a.Length;
+            int max = b.Length;
+            index = max - 1;
+            for(int i=0;i<min;i++)
+            {
+                if(a[i]!=b[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            int k = max - 1;
+            if (k == index)
+                return "";
+            int e = index;
+            int j=min-1;
+            for(int i=0;i<max;i++)
+            {
+                if(a[j]!=b[k])
+                {
+                    e = k;
+                    break;
+                }
+                j--;
+                if (j < 0)
+                    break;
+                k--;
+            }
+            return b.Substring(index,e-index);
         }
     }
 }

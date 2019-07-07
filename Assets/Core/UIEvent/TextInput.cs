@@ -308,7 +308,19 @@ namespace huqiang.UIEvent
             ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
             return input;
         }
-
+        string TouchInputChanged(string input)
+        {
+            if (input == "")
+                return "";
+            textInfo.buffer= new EmojiString(input);
+            if (OnValueChanged != null)
+                OnValueChanged(this);
+            textInfo.text = textInfo.buffer.FullString;
+            SetShowText();
+            textInfo.CaretStyle = 1;
+            ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
+            return input;
+        }
         void OnClick(EventCallBack eventCall, UserAction action)
         {
             TextInput input = eventCall as TextInput;

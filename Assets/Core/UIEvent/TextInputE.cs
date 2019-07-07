@@ -145,7 +145,7 @@ namespace huqiang.UIEvent
                                 else
                                     InputEvent.OnInputChanged(Keyboard.InputString);
 #else
-                                InputEvent.OnInputChanged(Keyboard.InputString);
+                                   InputEvent.TouchInputChanged(Keyboard.InputString);
 #endif
                             }
                         }
