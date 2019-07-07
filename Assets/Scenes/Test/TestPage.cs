@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using huqiang.UI;
 using huqiang.UIComposite;
+using huqiang.UIEvent;
 
 public class TestPage : UIPage
 {
@@ -14,7 +15,7 @@ public class TestPage : UIPage
         public ImageElement Image;
         public UIDate Date;
         public TreeView TreeView;
-        public TextElement Log;
+        public TextInput Log;
         public GridScroll Scroll;
         public ScrollXS ScrollX;
         public DragContent Drag;
@@ -50,7 +51,8 @@ public class TestPage : UIPage
         }
         view.TreeView.nodes = node;
         view.TreeView.Refresh();
-        view.Log.text = Scale.LayoutWidth.ToString();
+        view.Log.TipString = "input";
+       
         List<int> testData = new List<int>();
         for (int i = 0; i <166; i++)
             testData.Add(i);

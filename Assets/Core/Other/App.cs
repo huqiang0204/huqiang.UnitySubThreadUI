@@ -90,6 +90,7 @@ namespace huqiang
         {
             EventCallBack.Rolling();
             RenderForm.DispatchAction();
+            TextInput.SubDispatch();
             Resize();
             UIPage.Refresh(UserAction.TimeSlice);
             UINotify.Refresh(UserAction.TimeSlice);
