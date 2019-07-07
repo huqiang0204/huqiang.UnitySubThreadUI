@@ -205,7 +205,7 @@ namespace huqiang.UIEvent
                             return true;
                         }
                     }
-                    if (action.IsLeftButtonDown | action.IsRightButtonPressed | action.IsMiddleButtonPressed)
+                    if (action.IsLeftButtonDown | action.IsRightButtonDown | action.IsMiddleButtonDown)
                     {
                         callBack.OnMouseDown(action);
                     }
