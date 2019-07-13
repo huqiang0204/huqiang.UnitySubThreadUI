@@ -34,8 +34,10 @@ namespace huqiang.UIComposite
         public HeadDock headDock = HeadDock.Top;
         float headHigh = 0;
         StackPanel panel;
+        public List<TableContent> contents;
         public override void Initial(ModelElement mod)
         {
+            contents = new List<TableContent>();
             Main = mod;
             Head = mod.Find("Head");
             Items = Head.Find("Items");
@@ -94,6 +96,7 @@ namespace huqiang.UIComposite
             if (txt != null)
             {
                 txt.text = label;
+                txt.UseTextSize = true;
                 UIAnimation.Manage.FrameToDo(2, SetTextSize, null);
             }
             mod.RegEvent<EventCallBack>();
@@ -137,6 +140,7 @@ namespace huqiang.UIComposite
             model.SetParent(Content);
             curContent = content;
             panel.Order();
+            contents.Add(curContent);
         }
         public void AddContent<T>(ModelElement content, T dat,Action<ModelElement, T>callback)
         {
@@ -163,7 +167,7 @@ namespace huqiang.UIComposite
         }
         public void RemoveContent(TableContent table)
         {
-
+            contents.Remove(table);
         }
         public void AddTable(TableContent table)
         {

@@ -12,6 +12,7 @@ namespace UGUI
         public static float NormalDpi = 96;
         public Action<EmojiText, VertexHelper> OnPopulate;
         EmojiString emojiString = new EmojiString();
+
         public override string text {
             get { return emojiString.FullString; }
             set {
@@ -64,18 +65,18 @@ namespace UGUI
         }
         public static List<UIVertex> CreateEmojiMesh(Text text, EmojiString emoji)
         {
-            float s = Screen.dpi / NormalDpi;
+            //float s = Screen.dpi / NormalDpi;
             Vector2 extents = text.rectTransform.rect.size;
-            var settings = text.GetGenerationSettings(extents * s);
+            var settings = text.GetGenerationSettings(extents );//* s
 
             float t = settings.fontSize;
-            t *= s;
+            //t *= s;
             settings.fontSize = (int)t;
             t = settings.resizeTextMinSize;
-            t *= s;
+           // t *= s;
             settings.resizeTextMinSize = (int)t;
             t = settings.resizeTextMaxSize;
-            t *= s;
+            //t *= s;
             settings.resizeTextMaxSize = (int)t;
             string str = emoji.FilterString;
             if (str != null & str != "")
@@ -85,10 +86,10 @@ namespace UGUI
                 IList<UIVertex> verts = text.cachedTextGenerator.verts;
                 if (verts.Count == 0)
                     return null;
-                float unitsPerPixel = 1 / text.pixelsPerUnit / s;
-                Vector2 roundingOffset = new Vector2(verts[0].position.x / s, verts[0].position.y / s) * unitsPerPixel;
+                float unitsPerPixel = 1 / text.pixelsPerUnit ;/// s
+                Vector2 roundingOffset = new Vector2(verts[0].position.x , verts[0].position.y) * unitsPerPixel;/// s
                 roundingOffset = text.PixelAdjustPoint(roundingOffset) - roundingOffset;
-                var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emoji.emojis, text.fontSize*s, unitsPerPixel, roundingOffset);
+                var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emoji.emojis, text.fontSize, unitsPerPixel, roundingOffset);//*s
 
                 if (vs != null)
                 {
@@ -140,6 +141,7 @@ namespace UGUI
                     OnPopulate(this, vertex);
             }
             m_DisableFontTextureRebuiltCallback = false;
+            var tg = cachedTextGenerator;
         }
     }
 }
