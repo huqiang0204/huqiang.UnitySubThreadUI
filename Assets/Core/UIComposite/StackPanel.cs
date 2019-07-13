@@ -11,7 +11,6 @@ namespace huqiang.UIComposite
     public class StackPanel: ModelInital
     {
         public ModelElement model;
-
         public Direction direction = Direction.Vertical;
         public override void Initial(ModelElement mod)
         {

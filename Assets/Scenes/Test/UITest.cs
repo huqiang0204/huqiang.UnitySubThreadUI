@@ -14,7 +14,8 @@ public class UITest : TestHelper
 #endif
         //UIPage.LoadPage<DrawPage>();
         //UIPage.LoadPage<LayoutTestPage>();
-        UIPage.LoadPage<TestPage>();
+        //UIPage.LoadPage<TestPage>();
+        UIPage.LoadPage<TabControlTest>();
     }
     public override void OnUpdate()
     {
