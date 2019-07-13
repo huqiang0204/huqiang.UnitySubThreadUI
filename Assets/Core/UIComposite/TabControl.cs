@@ -11,6 +11,13 @@ namespace huqiang.UIComposite
 {
     public class TabControl:ModelInital
     {
+        public class TableContent
+        {
+            public EventCallBack eventCall;
+            public ModelElement Label;
+            public ModelElement Back;
+            public ModelElement Content;
+        }
         /// <summary>
         /// 选项头停靠方向
         /// </summary>
@@ -20,9 +27,10 @@ namespace huqiang.UIComposite
         }
         public ModelElement Main;
         public ModelElement Head;
+        public ModelElement Items;
         public ModelElement Content;
         public ModelElement Item;
-        public ModelElement curContent;
+        public TableContent curContent;
         public HeadDock headDock = HeadDock.Top;
         float headHigh = 0;
         StackPanel panel;
@@ -30,14 +38,15 @@ namespace huqiang.UIComposite
         {
             Main = mod;
             Head = mod.Find("Head");
-            if(Head!=null)
+            Items = Head.Find("Items");
+            if(Items!=null)
             {
                 panel = new StackPanel();
                 panel.direction = Direction.Horizontal;
-                panel.Initial(Head);
-                headHigh = Head.data.sizeDelta.y;
+                panel.Initial(Items);
+                headHigh = Items.data.sizeDelta.y;
             }
-            Item = mod.Find("Item");
+            Item = Head.Find("Item");
             if (Item != null)
                 Item.activeSelf = false;
             Content = mod.Find("Content");
@@ -71,10 +80,17 @@ namespace huqiang.UIComposite
         {
             if (Item == null)
                 return;
+            TableContent content = new TableContent();
             ModelElement mod = new ModelElement();
             mod.Load(Item.ModData);
-            mod.SetParent(Head);
-            var txt= mod.Find("Label").GetComponent<TextElement>();
+            mod.SetParent(Items);
+            model.SetParent(Content);
+
+            content.Label = mod.Find("Label");
+            content.Back = mod.Find("Back");
+            content.Content = model;
+
+            var txt = mod.Find("Label").GetComponent<TextElement>();
             if (txt != null)
             {
                 txt.text = label;
@@ -83,15 +99,44 @@ namespace huqiang.UIComposite
             mod.RegEvent<EventCallBack>();
             mod.baseEvent.Click = (o, e) => {
                 if (curContent != null)
-                    curContent.activeSelf = false;
-                int index = Head.child.IndexOf(o.Context);
-                curContent = Content.child[index];
-                curContent.activeSelf = true;
+                {
+                    curContent.Content.activeSelf = false;
+                    if (curContent.Back != null)
+                        curContent.Back.activeSelf = false;
+                }
+                curContent = o.DataContext as TableContent;
+                curContent.Content.activeSelf = true;
+                if (curContent.Back != null)
+                    curContent.Back.activeSelf = true;
             };
+            mod.baseEvent.PointerEntry = (o, e) => {
+               var c =  o.DataContext as TableContent;
+                if(c!=null)
+                {
+                    if (c.Back != null)
+                        c.Back.activeSelf = true;
+                }
+            };
+            mod.baseEvent.PointerLeave = (o, e) => {
+                var c = o.DataContext as TableContent;
+                if (c != null)
+                {
+                    if (c != curContent)
+                        if (c.Back != null)
+                            c.Back.activeSelf = false;
+                }
+            };
+            content.eventCall = mod.baseEvent;
+            content.eventCall.DataContext = content;
             if (curContent != null)
-                curContent.activeSelf = false;
+            {
+                curContent.Content.activeSelf = false;
+                if (curContent.Back != null)
+                    curContent.Back.activeSelf = false;
+            }
             model.SetParent(Content);
-            curContent = model;
+            curContent = content;
+            panel.Order();
         }
         public void AddContent<T>(ModelElement content, T dat,Action<ModelElement, T>callback)
         {
@@ -115,6 +160,15 @@ namespace huqiang.UIComposite
         void SetTextSize(object obj)
         {
             panel.Order();
+        }
+        public void RemoveContent(TableContent table)
+        {
+
+        }
+        public void AddTable(TableContent table)
+        {
+            table.Label.SetParent(Head);
+            table.Content.SetParent(Content);
         }
     }
 }
