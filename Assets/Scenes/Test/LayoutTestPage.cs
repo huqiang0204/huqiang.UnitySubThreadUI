@@ -9,7 +9,7 @@ public class LayoutTestPage : UIPage
 {
     class View
     {
-        public Layout Layout;
+        public DockPanel Layout;
     }
     View view;
     public override void Initial(ModelElement parent, object dat = null)
@@ -18,28 +18,28 @@ public class LayoutTestPage : UIPage
         base.Initial(parent, dat);
         view = model.ComponentReflection<View>();
         var area = view.Layout.MainArea;
-        area.auxiliary.AddContent("page0");
-        var d = area.AddArea(LayoutArea.Dock.Down,0.3f);
-        var context = d.auxiliary.AddContent("page1");
+        //area.auxiliary.AddContent("page0");
+        var d = area.AddArea(DockpanelArea.Dock.Down,0.3f);
+        //var context = d.auxiliary.AddContent("page1");
 
         d.model.GetComponent<ImageElement>().color = Color.red;
-        var one = d.AddArea(LayoutArea.Dock.Right,0.4f);
-        context = one.auxiliary.AddContent("page2");
-        context.LoadPopWindow<GridTestWindow>();
-        d.auxiliary.Refresh();
+        var one = d.AddArea(DockpanelArea.Dock.Right,0.4f);
+        //context = one.auxiliary.AddContent("page2");
+        //context.LoadPopWindow<GridTestWindow>();
+        //d.auxiliary.Refresh();
 
         one.model.GetComponent<ImageElement>().color = Color.green;
-        var top= area.AddArea(LayoutArea.Dock.Top,0.2f);
-        top.auxiliary.AddContent("page3");
+        var top= area.AddArea(DockpanelArea.Dock.Top,0.2f);
+        //top.auxiliary.AddContent("page3");
         top.model.GetComponent<ImageElement>().color = Color.yellow;
 
-        var l= top.AddArea(LayoutArea.Dock.Left,0.4f);
+        var l= top.AddArea(DockpanelArea.Dock.Left,0.4f);
         l.model.GetComponent<ImageElement>().color = Color.blue;
-        l.auxiliary.headDock = LayoutAuxiliary.HeadDock.Down;
+        //l.auxiliary.headDock = LayoutAuxiliary.HeadDock.Down;
 
-        context = l.auxiliary.AddContent("page5");
-        context.LoadPopWindow<GridTestWindow2>();
-        l.auxiliary.Refresh();
+        //context = l.auxiliary.AddContent("page5");
+        //context.LoadPopWindow<GridTestWindow2>();
+        //l.auxiliary.Refresh();
     } 
 }
 public class GridTestWindow : PopWindow

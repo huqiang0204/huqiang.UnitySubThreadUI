@@ -317,7 +317,7 @@ namespace huqiang.UIComposite
             tree.Initial(mod);
             return tree;
         }
-        static public Layout CreateLayout(string name)
+        static public DockPanel CreateLayout(string name)
         {
             var mod = ModelElement.CreateNew(name);
             mod.data.sizeDelta = new Vector2(1920, 1080);
@@ -429,7 +429,7 @@ namespace huqiang.UIComposite
             img.textureName = icons;
             img.spriteName = file;
 
-            Layout layout = new Layout();
+            DockPanel layout = new DockPanel();
             layout.Initial(mod);
             return layout;
         }

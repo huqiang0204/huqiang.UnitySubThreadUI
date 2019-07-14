@@ -13,6 +13,7 @@ namespace huqiang.UIComposite
     {
         public class TableContent
         {
+            public ModelElement Item;
             public EventCallBack eventCall;
             public ModelElement Label;
             public ModelElement Back;
@@ -31,10 +32,21 @@ namespace huqiang.UIComposite
         public ModelElement Content;
         public ModelElement Item;
         public TableContent curContent;
+        /// <summary>
+        /// 头部停靠位置
+        /// </summary>
         public HeadDock headDock = HeadDock.Top;
         float headHigh = 0;
         StackPanel panel;
         public List<TableContent> contents;
+        /// <summary>
+        /// 当前被选中项的背景色
+        /// </summary>
+        public Color SelectColor = 0x2656FFff.ToColor();
+        /// <summary>
+        /// 鼠标停靠时的背景色
+        /// </summary>
+        public Color HoverColor = 0x5379FFff.ToColor();
         public override void Initial(ModelElement mod)
         {
             contents = new List<TableContent>();
@@ -78,6 +90,11 @@ namespace huqiang.UIComposite
             Head.IsChanged = true;
             panel.Order();
         }
+        /// <summary>
+        /// 使用默认标签页
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="label"></param>
         public void AddContent(ModelElement model, string label)
         {
             if (Item == null)
@@ -88,6 +105,7 @@ namespace huqiang.UIComposite
             mod.SetParent(Items);
             model.SetParent(Content);
 
+            content.Item = mod;
             content.Label = mod.Find("Label");
             content.Back = mod.Find("Back");
             content.Content = model;
@@ -97,36 +115,36 @@ namespace huqiang.UIComposite
             {
                 txt.text = label;
                 txt.UseTextSize = true;
-                UIAnimation.Manage.FrameToDo(2, SetTextSize, null);
+                UIAnimation.Manage.FrameToDo(2, OrderHeadLabel, null);
             }
             mod.RegEvent<EventCallBack>();
             mod.baseEvent.Click = (o, e) => {
-                if (curContent != null)
-                {
-                    curContent.Content.activeSelf = false;
-                    if (curContent.Back != null)
-                        curContent.Back.activeSelf = false;
-                }
-                curContent = o.DataContext as TableContent;
-                curContent.Content.activeSelf = true;
-                if (curContent.Back != null)
-                    curContent.Back.activeSelf = true;
+                ShowContent(o.DataContext as TableContent);
             };
             mod.baseEvent.PointerEntry = (o, e) => {
                var c =  o.DataContext as TableContent;
+                if (c == curContent)
+                    return;
                 if(c!=null)
                 {
                     if (c.Back != null)
+                    {
+                        c.Back.GetComponent<ImageElement>().color = HoverColor;
                         c.Back.activeSelf = true;
+                    }
                 }
             };
             mod.baseEvent.PointerLeave = (o, e) => {
                 var c = o.DataContext as TableContent;
+                if (c == curContent)
+                    return;
                 if (c != null)
                 {
                     if (c != curContent)
                         if (c.Back != null)
+                        {
                             c.Back.activeSelf = false;
+                        }
                 }
             };
             content.eventCall = mod.baseEvent;
@@ -142,7 +160,14 @@ namespace huqiang.UIComposite
             panel.Order();
             contents.Add(curContent);
         }
-        public void AddContent<T>(ModelElement content, T dat,Action<ModelElement, T>callback)
+        /// <summary>
+        /// 使用自定义标签页,标签模型自行管理
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="content"></param>
+        /// <param name="dat"></param>
+        /// <param name="callback"></param>
+        public void AddContent<T>(ModelElement content, T dat,Func<ModelElement,T, TableContent> callback)
         {
             if (Item == null)
                 return;
@@ -151,9 +176,22 @@ namespace huqiang.UIComposite
             mod.SetParent(Head);
             panel.Order();
             if (callback != null)
-                callback(mod,dat);
-            UIAnimation.Manage.FrameToDo(2, SetTextSize, null);
+            { 
+               contents.Add(callback(mod, dat));
+            }
+            else
+            {
+                TableContent table = new TableContent();
+                table.Item = mod;
+                table.Content = content;
+                contents.Add(table);
+            }
         }
+        /// <summary>
+        /// 添加外部标签页
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="mod"></param>
         public void AddContent(ModelElement content, ModelElement mod)
         {
             if (Head == null)
@@ -161,18 +199,53 @@ namespace huqiang.UIComposite
             mod.SetParent(Head);
             panel.Order();
         }
-        void SetTextSize(object obj)
+        /// <summary>
+        /// 标签页排列
+        /// </summary>
+        /// <param name="obj"></param>
+        public void OrderHeadLabel(object obj)
         {
             panel.Order();
         }
+        /// <summary>
+        /// 移除某个标签和其内容
+        /// </summary>
+        /// <param name="table"></param>
         public void RemoveContent(TableContent table)
         {
             contents.Remove(table);
+        }
+        /// <summary>
+        /// 释放某个标签和其内容,其对象会被回收
+        /// </summary>
+        /// <param name="table"></param>
+        public void ReleseContent(TableContent table)
+        {
+            contents.Remove(table);
+            table.Content.SetParent(null);
+            table.Item.SetParent(null);
+            ModelManagerUI.RecycleElement(table.Content);
+            ModelManagerUI.RecycleElement(table.Item);
         }
         public void AddTable(TableContent table)
         {
             table.Label.SetParent(Head);
             table.Content.SetParent(Content);
+        }
+        public void ShowContent(TableContent content)
+        {
+            if (curContent != null)
+            {
+                curContent.Content.activeSelf = false;
+                curContent.Back.activeSelf = false;
+            }
+            curContent = content;
+            curContent.Content.activeSelf = true;
+            if (curContent.Back != null)
+            {
+                curContent.Back.GetComponent<ImageElement>().color = SelectColor;
+                curContent.Back.activeSelf = true;
+            }
         }
     }
 }

@@ -18,12 +18,12 @@ namespace huqiang.UIComposite
         public string name;
         public ModelElement model;
         public LayoutAuxiliary auxiliary;
-        Layout layout;
+        DesignedDockPanel layout;
         public LayoutContent(LayoutAuxiliary aux,string nam)
         {
             auxiliary = aux;
             name = nam;
-            layout = auxiliary.layoutArea.layout;
+            layout = auxiliary.layoutArea.layout as DesignedDockPanel ;
             model = new ModelElement();
             model.Load(aux.content.ModData);
             model.SetParent(aux.content);
@@ -141,7 +141,7 @@ namespace huqiang.UIComposite
         {
             Top,Down
         }
-        public LayoutArea layoutArea;
+        public DockpanelArea layoutArea;
         public ModelElement model;
         public ModelElement content;
         public ModelElement head;
@@ -155,13 +155,13 @@ namespace huqiang.UIComposite
         float headHigh;
         public HeadDock headDock = HeadDock.Top;
         public StackPanel panel;
-        Layout layout;
-        public LayoutAuxiliary(LayoutArea area)
+        DesignedDockPanel layout;
+        public LayoutAuxiliary(DockpanelArea area)
         {
             layoutArea = area;
-            layout = area.layout;
+            layout = area.layout as DesignedDockPanel;
             model = new ModelElement();
-            model.Load(area.layout.Auxiliary.ModData);
+            model.Load(layout.Auxiliary.ModData);
             head = model.Find("Head");
             headHigh = head.data.sizeDelta.y;
             docker = model.Find("Docker");
@@ -305,28 +305,28 @@ namespace huqiang.UIComposite
             eve.PointerUp = PointUp;
             eve.PointerEntry = LeftPointEntry;
             eve.PointerLeave = PointLeave;
-            eve.DataContext = LayoutArea.Dock.Left;
+            eve.DataContext = DockpanelArea.Dock.Left;
 
             mod = docker.Find("Top");
             eve = EventCallBack.RegEvent<EventCallBack>(mod);
             eve.PointerUp = PointUp;
             eve.PointerEntry = TopPointEntry;
             eve.PointerLeave = PointLeave;
-            eve.DataContext = LayoutArea.Dock.Top;
+            eve.DataContext = DockpanelArea.Dock.Top;
 
             mod = docker.Find("Right");
             eve = EventCallBack.RegEvent<EventCallBack>(mod);
             eve.PointerUp = PointUp;
             eve.PointerEntry = RightPointEntry;
             eve.PointerLeave = PointLeave;
-            eve.DataContext = LayoutArea.Dock.Right;
+            eve.DataContext = DockpanelArea.Dock.Right;
 
             mod = docker.Find("Down");
             eve = EventCallBack.RegEvent<EventCallBack>(mod);
             eve.PointerUp = PointUp;
             eve.PointerEntry = DownPointEntry;
             eve.PointerLeave = PointLeave;
-            eve.DataContext = LayoutArea.Dock.Down;
+            eve.DataContext = DockpanelArea.Dock.Down;
         }
         void CenterPointEntry(EventCallBack callBack, UserAction action)
         {
@@ -355,8 +355,8 @@ namespace huqiang.UIComposite
                 }
             }
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
-            var area = layoutArea.AddArea((LayoutArea.Dock)callBack.DataContext);
-            area.auxiliary.AddContent(layout.DragContent);
+            var area = layoutArea.AddArea((DockpanelArea.Dock)callBack.DataContext);
+            //area.auxiliary.AddContent(layout.DragContent);
             //area.SizeChanged();
             layout.Refresh();
         }
