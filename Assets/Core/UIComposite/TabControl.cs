@@ -13,6 +13,7 @@ namespace huqiang.UIComposite
     {
         public class TableContent
         {
+            public TabControl Parent;
             public ModelElement Item;
             public EventCallBack eventCall;
             public ModelElement Label;
@@ -26,7 +27,6 @@ namespace huqiang.UIComposite
         {
             Top, Down
         }
-        public ModelElement Main;
         public ModelElement Head;
         public ModelElement Items;
         public ModelElement Content;
@@ -50,7 +50,7 @@ namespace huqiang.UIComposite
         public override void Initial(ModelElement mod)
         {
             contents = new List<TableContent>();
-            Main = mod;
+            Model = mod;
             Head = mod.Find("Head");
             Items = Head.Find("Items");
             if(Items!=null)
@@ -66,7 +66,7 @@ namespace huqiang.UIComposite
             Content = mod.Find("Content");
             mod.SizeChanged = SizeChanged;
         }
-        void SizeChanged(ModelElement model)
+        public void SizeChanged(ModelElement model)
         {
             var size = model.data.sizeDelta;
             float y = size.y;
@@ -100,6 +100,7 @@ namespace huqiang.UIComposite
             if (Item == null)
                 return;
             TableContent content = new TableContent();
+            content.Parent = this;
             ModelElement mod = new ModelElement();
             mod.Load(Item.ModData);
             mod.SetParent(Items);
@@ -118,35 +119,9 @@ namespace huqiang.UIComposite
                 UIAnimation.Manage.FrameToDo(2, OrderHeadLabel, null);
             }
             mod.RegEvent<EventCallBack>();
-            mod.baseEvent.Click = (o, e) => {
-                ShowContent(o.DataContext as TableContent);
-            };
-            mod.baseEvent.PointerEntry = (o, e) => {
-               var c =  o.DataContext as TableContent;
-                if (c == curContent)
-                    return;
-                if(c!=null)
-                {
-                    if (c.Back != null)
-                    {
-                        c.Back.GetComponent<ImageElement>().color = HoverColor;
-                        c.Back.activeSelf = true;
-                    }
-                }
-            };
-            mod.baseEvent.PointerLeave = (o, e) => {
-                var c = o.DataContext as TableContent;
-                if (c == curContent)
-                    return;
-                if (c != null)
-                {
-                    if (c != curContent)
-                        if (c.Back != null)
-                        {
-                            c.Back.activeSelf = false;
-                        }
-                }
-            };
+            mod.baseEvent.Click = ItemClick;
+            mod.baseEvent.PointerEntry = ItemPointEntry;
+            mod.baseEvent.PointerLeave = ItemPointLeave;
             content.eventCall = mod.baseEvent;
             content.eventCall.DataContext = content;
             if (curContent != null)
@@ -167,25 +142,12 @@ namespace huqiang.UIComposite
         /// <param name="content"></param>
         /// <param name="dat"></param>
         /// <param name="callback"></param>
-        public void AddContent<T>(ModelElement content, T dat,Func<ModelElement,T, TableContent> callback)
+        public void AddContent(TableContent table)
         {
-            if (Item == null)
-                return;
-            ModelElement mod = new ModelElement();
-            mod.Load(Item.ModData);
-            mod.SetParent(Head);
+            table.Item.SetParent(Items);
+            table.Content.SetParent(Content);
+            contents.Add(table);
             panel.Order();
-            if (callback != null)
-            { 
-               contents.Add(callback(mod, dat));
-            }
-            else
-            {
-                TableContent table = new TableContent();
-                table.Item = mod;
-                table.Content = content;
-                contents.Add(table);
-            }
         }
         /// <summary>
         /// 添加外部标签页
@@ -229,6 +191,9 @@ namespace huqiang.UIComposite
         }
         public void AddTable(TableContent table)
         {
+            table.eventCall.Click = ItemClick;
+            table.eventCall.PointerEntry = ItemPointEntry;
+            table.eventCall.PointerLeave = ItemPointLeave;
             table.Label.SetParent(Head);
             table.Content.SetParent(Content);
         }
@@ -245,6 +210,38 @@ namespace huqiang.UIComposite
             {
                 curContent.Back.GetComponent<ImageElement>().color = SelectColor;
                 curContent.Back.activeSelf = true;
+            }
+        }
+        public void ItemClick(EventCallBack callBack,UserAction action)
+        {
+            ShowContent(callBack.DataContext as TableContent);
+        }
+        public void ItemPointEntry(EventCallBack callBack,UserAction action)
+        {
+            var c = callBack.DataContext as TableContent;
+            if (c == curContent)
+                return;
+            if (c != null)
+            {
+                if (c.Back != null)
+                {
+                    c.Back.GetComponent<ImageElement>().color = HoverColor;
+                    c.Back.activeSelf = true;
+                }
+            }
+        }
+        public void ItemPointLeave(EventCallBack callBack,UserAction action)
+        {
+            var c = callBack.DataContext as TableContent;
+            if (c == curContent)
+                return;
+            if (c != null)
+            {
+                if (c != curContent)
+                    if (c.Back != null)
+                    {
+                        c.Back.activeSelf = false;
+                    }
             }
         }
     }

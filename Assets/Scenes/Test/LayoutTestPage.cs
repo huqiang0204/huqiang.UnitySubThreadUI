@@ -9,7 +9,7 @@ public class LayoutTestPage : UIPage
 {
     class View
     {
-        public DockPanel Layout;
+        public DesignedDockPanel Layout;
     }
     View view;
     public override void Initial(ModelElement parent, object dat = null)
@@ -17,29 +17,29 @@ public class LayoutTestPage : UIPage
         model = ModelManagerUI.CloneModel("baseUI", "layout");
         base.Initial(parent, dat);
         view = model.ComponentReflection<View>();
-        var area = view.Layout.MainArea;
-        //area.auxiliary.AddContent("page0");
+        var area = view.Layout.MainContent;
+        area.AddContent("page0");
         var d = area.AddArea(DockpanelArea.Dock.Down,0.3f);
-        //var context = d.auxiliary.AddContent("page1");
+        var context = d.AddContent("page1");
 
-        d.model.GetComponent<ImageElement>().color = Color.red;
+        d.model.parent.GetComponent<ImageElement>().color = Color.red;
         var one = d.AddArea(DockpanelArea.Dock.Right,0.4f);
-        //context = one.auxiliary.AddContent("page2");
-        //context.LoadPopWindow<GridTestWindow>();
-        //d.auxiliary.Refresh();
+        context = one.AddContent("page2");
+        context.LoadPopWindow<GridTestWindow>();
+        //d.Refresh();
 
-        one.model.GetComponent<ImageElement>().color = Color.green;
-        var top= area.AddArea(DockpanelArea.Dock.Top,0.2f);
-        //top.auxiliary.AddContent("page3");
-        top.model.GetComponent<ImageElement>().color = Color.yellow;
+        one.model.parent.GetComponent<ImageElement>().color = Color.green;
+        var top = area.AddArea(DockpanelArea.Dock.Top, 0.2f);
+        top.AddContent("page3");
 
-        var l= top.AddArea(DockpanelArea.Dock.Left,0.4f);
-        l.model.GetComponent<ImageElement>().color = Color.blue;
-        //l.auxiliary.headDock = LayoutAuxiliary.HeadDock.Down;
+        top.model.parent.GetComponent<ImageElement>().color = Color.yellow;
+        var l = top.AddArea(DockpanelArea.Dock.Left, 0.4f);
+        l.model.parent.GetComponent<ImageElement>().color = Color.blue;
+        l.control.headDock = TabControl.HeadDock.Down;
 
-        //context = l.auxiliary.AddContent("page5");
-        //context.LoadPopWindow<GridTestWindow2>();
-        //l.auxiliary.Refresh();
+        context = l.AddContent("page5");
+        context.LoadPopWindow<GridTestWindow2>();
+        //l.Refresh();
     } 
 }
 public class GridTestWindow : PopWindow
@@ -70,6 +70,7 @@ public class GridTestWindow : PopWindow
                 UIMenu.Instance.ShowMenu<TestMenu>(this,e.CanPosition);
             Debug.Log("click");
         };
+        Debug.Log("ok");
     }
     public override void Cmd(string cmd, object dat)
     {

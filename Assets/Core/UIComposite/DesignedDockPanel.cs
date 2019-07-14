@@ -13,23 +13,30 @@ namespace huqiang.UIComposite
     {
         public ModelElement Auxiliary;
         public ModelElement Drag;
+        public List<DesignedDockContent> contents=new List<DesignedDockContent>();
         public override void Initial(ModelElement mod)
         {
+            contents.Clear();
             base.Initial(mod);
             Auxiliary = mod.Find("Auxiliary");
             Auxiliary.activeSelf = false;
             Drag = mod.Find("Drag");
             Drag.activeSelf = false;
+            ModelElement au = new ModelElement();
+            au.Load(Auxiliary.ModData);
+            MainContent = new DesignedDockContent(this);
+            MainContent.Initial(MainArea, au);
+            contents.Add(MainContent);
         }
         public void ShowAllDocker()
         {
-            //for (int i = 0; i < areas.Count; i++)
-            //    areas[i].ShowAuxiliaryDocker();
+            for (int i = 0; i < contents.Count; i++)
+                contents[i].ShowDocker();
         }
         public void HideAllDocker()
         {
-            //for (int i = 0; i < areas.Count; i++)
-            //    areas[i].HideAuxiliaryDocker();
+            for (int i = 0; i < contents.Count; i++)
+                contents[i].HideDocker();
         }
         public void Draging(UserAction action)
         {
@@ -41,25 +48,56 @@ namespace huqiang.UIComposite
         {
             Drag.activeSelf = false;
         }
-        public LayoutContent DragContent;
-        public LayoutAuxiliary DragAuxiliary;
+        public DesignedDockContent.ItemContent DragContent;
+        public DesignedDockContent DragAuxiliary;
+        public DesignedDockContent MainContent;
     }
     public class DesignedDockContent
     {
+        public class ItemContent : TabControl.TableContent
+        {
+            public ModelElement Close;
+            public PopWindow window;
+            public void LoadPopWindow<T>() where T : PopWindow, new()
+            {
+                if (window != null)
+                    window.Dispose();
+                var t = new T();
+                t.Initial(Content, null);
+                t.model.data.sizeDelta = Content.data.sizeDelta;
+                t.model.IsChanged = true;
+                t.ReSize();
+                window = t;
+            }
+        }
+        public DockpanelArea dockArea;
         public ModelElement model;
         public ModelElement docker;
         public ModelElement tab;
         public TabControl control;
         public ModelElement Cover;
         DesignedDockPanel layout;
-        public void Initial(ModelElement mod)
+        public DesignedDockContent(DesignedDockPanel panel)
         {
+            layout = panel;
+        }
+        public void Initial(DockpanelArea area, ModelElement mod)
+        {
+            dockArea = area;
             model = mod;
             docker = model.Find("Docker");
-            tab = model.Find("Tab");
+            tab = model.Find("DockPanel");
             Cover = model.Find("Cover");
             control = new TabControl();
             control.Initial(tab);
+            mod.SetParent(area.model);
+            Cover.activeSelf = false;
+            docker.activeSelf = false;
+        }
+        public void SetParent(DockpanelArea area)
+        {
+            dockArea = area;
+            model.SetParent(area.model);
         }
         void InitialDocker()
         {
@@ -165,10 +203,76 @@ namespace huqiang.UIComposite
             Cover.data.sizeDelta.y = size.y * 0.5f;
             Cover.activeSelf = true;
         }
-
-        public void AddContent( ModelElement model,string name)
+        int ac;
+        void HeadDrag(EventCallBack eventCall, UserAction action, Vector2 v)
         {
-            control.AddContent(model,name);
+            if (!layout.LockLayout)
+            {
+                if (ac == 0)
+                {
+                    float y = action.CanPosition.y - eventCall.RawPosition.y;
+                    if (y < -30 | y > 30)
+                    {
+                        layout.ShowAllDocker();
+                        ac = 2;
+                        layout.DragAuxiliary = this;
+                        layout.DragContent = eventCall.DataContext as ItemContent;
+                    }
+                }
+                else if (ac == 2)
+                {
+                    layout.Draging(action);
+                }
+            }
+        }
+        void HeadDragEnd(EventCallBack eventCall, UserAction action, Vector2 v)
+        {
+            if (!layout.LockLayout)
+            {
+                layout.HideAllDocker();
+                layout.DragEnd(action);
+            }
+        }
+        void CloseClick(EventCallBack eventCall, UserAction action)
+        {
+            //Head.SetParent(null);
+            //ModelManagerUI.RecycleElement(Head);
+            //model.SetParent(null);
+            //ModelManagerUI.RecycleElement(model);
+            //auxiliary.RemoveContent(this);
+            //auxiliary.panel.Order();
+        }
+        public ItemContent AddContent(string name)
+        {
+            ModelElement item = new ModelElement();
+            item.Load(control.Item.ModData);
+            ItemContent con = new ItemContent();
+            con.Parent = control;
+            con.Item = item;
+            item.RegEvent<EventCallBack>();
+            item.baseEvent.Drag = HeadDrag;
+            item.baseEvent.DragEnd = HeadDragEnd;
+
+            var t =  ModelElement.CreateNew(name);
+            t.data.SizeScale = true;
+            t.data.sizeType = SizeType.Margin;
+            con.Content = t;
+            con.Back = item.Find("Back");
+
+            con.Label = item.Find("Label");
+            con.Label.GetComponent<TextElement>().text = name;
+            con.Close = item.Find("Close");
+            if (con.Close != null)
+            {
+                con.Close.RegEvent<EventCallBack>();
+                con.Close.baseEvent.Click = CloseClick;
+            }
+            control.AddContent(con);
+            return con;
+        }
+        public void AddContent(ItemContent con)
+        {
+
         }
         public void RemoveContent(TabControl.TableContent con)
         {
@@ -185,6 +289,20 @@ namespace huqiang.UIComposite
         public void HideDocker()
         {
             docker.activeSelf = false;
+        }
+        public DesignedDockContent AddArea(DockpanelArea.Dock dock, float r = 0.5f)
+        {
+            var area = dockArea.AddArea(dock,r);
+            ModelElement au = new ModelElement();
+            au.Load(layout.Auxiliary.ModData);
+            var con = new DesignedDockContent(layout);
+            con.Initial(area, au);
+            layout.contents.Add(con);
+            return con;
+        }
+        public void LoadWindow()
+        {
+
         }
     }
 }

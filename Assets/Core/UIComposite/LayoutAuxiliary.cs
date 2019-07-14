@@ -104,8 +104,8 @@ namespace huqiang.UIComposite
                     {
                         layout.ShowAllDocker();
                         ac = 2;
-                        layout.DragAuxiliary = auxiliary;
-                        layout.DragContent = this;
+                        //layout.DragAuxiliary = auxiliary;
+                        //layout.DragContent = this;
                     }
                 }
                 else if (ac == 2)
@@ -338,7 +338,7 @@ namespace huqiang.UIComposite
         {
             Cover.activeSelf = false;
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
-            AddContent(layout.DragContent);
+            //AddContent(layout.DragContent);
         }
         void PointLeave(EventCallBack callBack, UserAction action)
         {
@@ -347,13 +347,13 @@ namespace huqiang.UIComposite
         void PointUp(EventCallBack callBack, UserAction action)
         {
             Cover.activeSelf = false;
-            if(layout.DragAuxiliary==this)
-            {
-                if(contents.Count<2)
-                {
-                    return;
-                }
-            }
+            //if(layout.DragAuxiliary==this)
+            //{
+            //    if(contents.Count<2)
+            //    {
+            //        return;
+            //    }
+            //}
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
             var area = layoutArea.AddArea((DockpanelArea.Dock)callBack.DataContext);
             //area.auxiliary.AddContent(layout.DragContent);
