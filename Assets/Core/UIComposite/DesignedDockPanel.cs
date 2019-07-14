@@ -145,7 +145,7 @@ namespace huqiang.UIComposite
         {
             Cover.activeSelf = false;
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
-            //AddContent(layout.DragContent);
+            AddContent(layout.DragContent);
         }
         void PointLeave(EventCallBack callBack, UserAction action)
         {
@@ -154,17 +154,17 @@ namespace huqiang.UIComposite
         void PointUp(EventCallBack callBack, UserAction action)
         {
             Cover.activeSelf = false;
-            //if (layout.DragAuxiliary == this)
-            //{
-            //    if (contents.Count < 2)
-            //    {
-            //        return;
-            //    }
-            //}
+            if (layout.DragAuxiliary == this)
+            {
+                if (control.contents.Count < 2)
+                {
+                    return;
+                }
+            }
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
-            //var area = layoutArea.AddArea((DockpanelArea.Dock)callBack.DataContext);
-            //area.auxiliary.AddContent(layout.DragContent);
-            //area.SizeChanged();
+            var area = AddArea((DockpanelArea.Dock)callBack.DataContext);
+            area.AddContent(layout.DragContent);
+            area.dockArea.SizeChanged();
             layout.Refresh();
         }
         void LeftPointEntry(EventCallBack callBack, UserAction action)
@@ -204,6 +204,10 @@ namespace huqiang.UIComposite
             Cover.activeSelf = true;
         }
         int ac;
+        void HeadPointDown(EventCallBack eventCall, UserAction action)
+        {
+            ac = 0;
+        }
         void HeadDrag(EventCallBack eventCall, UserAction action, Vector2 v)
         {
             if (!layout.LockLayout)
@@ -250,6 +254,7 @@ namespace huqiang.UIComposite
             con.Parent = control;
             con.Item = item;
             item.RegEvent<EventCallBack>();
+            item.baseEvent.PointerDown = HeadPointDown;
             item.baseEvent.Drag = HeadDrag;
             item.baseEvent.DragEnd = HeadDragEnd;
 
@@ -299,10 +304,6 @@ namespace huqiang.UIComposite
             con.Initial(area, au);
             layout.contents.Add(con);
             return con;
-        }
-        public void LoadWindow()
-        {
-
         }
     }
 }
