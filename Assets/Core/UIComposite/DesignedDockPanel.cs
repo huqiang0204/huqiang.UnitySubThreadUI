@@ -37,6 +37,7 @@ namespace huqiang.UIComposite
         {
             for (int i = 0; i < contents.Count; i++)
                 contents[i].HideDocker();
+            Drag.activeSelf = false;
         }
         public void Draging(UserAction action)
         {
@@ -93,6 +94,7 @@ namespace huqiang.UIComposite
             mod.SetParent(area.model);
             Cover.activeSelf = false;
             docker.activeSelf = false;
+            InitialDocker();
         }
         public void SetParent(DockpanelArea area)
         {
@@ -146,6 +148,7 @@ namespace huqiang.UIComposite
             Cover.activeSelf = false;
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
             AddContent(layout.DragContent);
+            layout.HideAllDocker();
         }
         void PointLeave(EventCallBack callBack, UserAction action)
         {
@@ -165,6 +168,7 @@ namespace huqiang.UIComposite
             var area = AddArea((DockpanelArea.Dock)callBack.DataContext);
             area.AddContent(layout.DragContent);
             area.dockArea.SizeChanged();
+            layout.HideAllDocker();
             layout.Refresh();
         }
         void LeftPointEntry(EventCallBack callBack, UserAction action)
@@ -257,6 +261,7 @@ namespace huqiang.UIComposite
             item.baseEvent.PointerDown = HeadPointDown;
             item.baseEvent.Drag = HeadDrag;
             item.baseEvent.DragEnd = HeadDragEnd;
+            item.baseEvent.DataContext = con;
 
             var t =  ModelElement.CreateNew(name);
             t.data.SizeScale = true;
@@ -277,11 +282,23 @@ namespace huqiang.UIComposite
         }
         public void AddContent(ItemContent con)
         {
-
+            var eve = con.Item.baseEvent;
+            eve.PointerDown = HeadPointDown;
+            eve.Drag = HeadDrag;
+            eve.DragEnd = HeadDragEnd;
+            control.AddContent(con);
         }
         public void RemoveContent(TabControl.TableContent con)
         {
             control.RemoveContent(con);
+            con.Item.SetParent(null);
+            con.Content.SetParent(null);
+            if(control.contents.Count==0)
+            {
+                dockArea.Dispose();
+                layout.contents.Remove(this);
+                layout.Refresh();
+            }
         }
         public void ShowContent(TabControl.TableContent con)
         {

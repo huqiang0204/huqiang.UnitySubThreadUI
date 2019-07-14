@@ -68,9 +68,7 @@ public class GridTestWindow : PopWindow
         view.Scroll.eventCall.Click = (o, e) => {
             if (e.IsRightButtonUp)
                 UIMenu.Instance.ShowMenu<TestMenu>(this,e.CanPosition);
-            Debug.Log("click");
         };
-        Debug.Log("ok");
     }
     public override void Cmd(string cmd, object dat)
     {

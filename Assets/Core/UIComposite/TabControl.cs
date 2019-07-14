@@ -144,6 +144,12 @@ namespace huqiang.UIComposite
         /// <param name="callback"></param>
         public void AddContent(TableContent table)
         {
+            if (curContent != null)
+            {
+                curContent.Content.activeSelf = false;
+                if (curContent.Back != null)
+                    curContent.Back.activeSelf = false;
+            }
             table.Item.SetParent(Items);
             table.Content.SetParent(Content);
             contents.Add(table);
