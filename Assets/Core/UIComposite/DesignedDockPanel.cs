@@ -149,6 +149,8 @@ namespace huqiang.UIComposite
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
             AddContent(layout.DragContent);
             layout.HideAllDocker();
+            layout.Refresh();
+            ModelElement.ScaleSize(layout.DragContent.Content);
         }
         void PointLeave(EventCallBack callBack, UserAction action)
         {
@@ -170,6 +172,7 @@ namespace huqiang.UIComposite
             area.dockArea.SizeChanged();
             layout.HideAllDocker();
             layout.Refresh();
+            ModelElement.ScaleSize(layout.DragContent.Content);
         }
         void LeftPointEntry(EventCallBack callBack, UserAction action)
         {
@@ -243,12 +246,19 @@ namespace huqiang.UIComposite
         }
         void CloseClick(EventCallBack eventCall, UserAction action)
         {
-            //Head.SetParent(null);
-            //ModelManagerUI.RecycleElement(Head);
-            //model.SetParent(null);
-            //ModelManagerUI.RecycleElement(model);
-            //auxiliary.RemoveContent(this);
-            //auxiliary.panel.Order();
+            ItemContent con = eventCall.DataContext as ItemContent;
+            if(con!=null)
+            {
+                if (con.window != null)
+                    con.window.Dispose();
+                control.ReleseContent(con);
+                if (control.contents.Count == 0)
+                {
+                    if (layout.contents.Count > 1)
+                        Dispose();
+                    else layout.MainContent = this;
+                }
+            }
         }
         public ItemContent AddContent(string name)
         {
@@ -276,6 +286,7 @@ namespace huqiang.UIComposite
             {
                 con.Close.RegEvent<EventCallBack>();
                 con.Close.baseEvent.Click = CloseClick;
+                con.Close.baseEvent.DataContext = con;
             }
             control.AddContent(con);
             return con;
@@ -321,6 +332,12 @@ namespace huqiang.UIComposite
             con.Initial(area, au);
             layout.contents.Add(con);
             return con;
+        }
+        public void Dispose()
+        {
+            dockArea.Dispose();
+            layout.contents.Remove(this);
+            layout.Refresh();
         }
     }
 }

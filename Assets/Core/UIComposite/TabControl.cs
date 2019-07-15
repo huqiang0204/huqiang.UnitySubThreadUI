@@ -151,7 +151,14 @@ namespace huqiang.UIComposite
                     curContent.Back.activeSelf = false;
             }
             table.Item.SetParent(Items);
+            table.Item.baseEvent.Click = ItemClick;
+            table.Item.baseEvent.PointerEntry = ItemPointEntry;
+            table.Item.baseEvent.PointerLeave = ItemPointLeave;
             table.Content.SetParent(Content);
+            curContent = table;
+            curContent.Content.activeSelf = true;
+            if (curContent.Back != null)
+                curContent.Back.activeSelf = true;
             contents.Add(table);
             panel.Order();
         }
@@ -182,6 +189,7 @@ namespace huqiang.UIComposite
         public void RemoveContent(TableContent table)
         {
             contents.Remove(table);
+            panel.Order();
         }
         /// <summary>
         /// 释放某个标签和其内容,其对象会被回收
