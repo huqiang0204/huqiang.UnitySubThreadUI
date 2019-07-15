@@ -280,7 +280,9 @@ namespace huqiang.UIComposite
             con.Back = item.Find("Back");
 
             con.Label = item.Find("Label");
-            con.Label.GetComponent<TextElement>().text = name;
+            var txt = con.Label.GetComponent<TextElement>();
+            txt.text = name;
+            txt.UseTextSize = true;
             con.Close = item.Find("Close");
             if (con.Close != null)
             {
@@ -289,7 +291,24 @@ namespace huqiang.UIComposite
                 con.Close.baseEvent.DataContext = con;
             }
             control.AddContent(con);
+            UIAnimation.Manage.FrameToDo(2, OrderHeadLabel, con);
             return con;
+        }
+        /// <summary>
+        /// 标签页排列
+        /// </summary>
+        /// <param name="obj"></param>
+        public void OrderHeadLabel(object obj)
+        {
+            var ic = obj as ItemContent;
+            var w  = ic.Label.data.sizeDelta.x ;
+            ic.Item.data.sizeDelta.x = w + 48;
+            ic.Back.data.sizeDelta.x = w + 48;
+            ic.Close.data.localPosition.x = w * 0.5f;
+            ic.Item.IsChanged = true;
+            ic.Back.IsChanged = true;
+            ic.Close.IsChanged = true;
+            control.panel.Order();
         }
         public void AddContent(ItemContent con)
         {

@@ -37,7 +37,7 @@ namespace huqiang.UIComposite
         /// </summary>
         public HeadDock headDock = HeadDock.Top;
         float headHigh = 0;
-        StackPanel panel;
+        public StackPanel panel;
         public List<TableContent> contents;
         /// <summary>
         /// 当前被选中项的背景色
