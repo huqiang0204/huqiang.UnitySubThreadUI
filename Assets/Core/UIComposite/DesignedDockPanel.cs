@@ -87,7 +87,7 @@ namespace huqiang.UIComposite
             dockArea = area;
             model = mod;
             docker = model.Find("Docker");
-            tab = model.Find("DockPanel");
+            tab = model.Find("TabControl");
             Cover = model.Find("Cover");
             control = new TabControl();
             control.Initial(tab);

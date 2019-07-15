@@ -1,4 +1,5 @@
-﻿using huqiang.Data;
+﻿using huqiang;
+using huqiang.Data;
 using huqiang.UIComposite;
 using System;
 using System.Collections;
@@ -630,5 +631,140 @@ public static class UICompositeMenu
         et.raycastTarget = false;
         et.material = new Material(Shader.Find("Custom/UIEmoji"));
         et.material.SetTexture("_emoji", Resources.Load<Texture>("emoji"));
+    }
+    [MenuItem("GameObject/UIComposite/DockPanel", false, 10)]
+    static public void AddDockPanel(MenuCommand menuCommand)
+    {
+
+    }
+    static GameObject CreateDockPanel(GameObject parent)
+    {
+        var dp = new GameObject("DockPanel", typeof(RectTransform));
+        RectTransform rect = dp.transform as RectTransform;
+        rect.sizeDelta = new Vector2(1920, 1080);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        var sse = dp.AddComponent<SizeScaleEx>();
+        sse.anchorType = AnchorType.Cneter;
+        sse.sizeType = SizeType.Margin;
+        sse.parentType = ParentType.Tranfrom;
+        sse.DesignSize = new Vector2(1920, 1080);
+
+        var AreaLevel = new GameObject("AreaLevel", typeof(RectTransform));
+        AreaLevel.transform.SetParent(rect);
+        var LineLevel = new GameObject("LineLevel", typeof(RectTransform));
+        LineLevel.transform.SetParent(rect);
+        var Line = new GameObject("Line", typeof(RectTransform), typeof(Image));
+        Line.transform.SetParent(rect);
+        Line.GetComponent<Image>().color = new Color32(64, 64, 64, 255);
+        var Area = new GameObject("Area", typeof(RectTransform), typeof(Image));
+        Area.transform.SetParent(rect);
+        return dp;
+    }
+    static void CreateAuxiliary(GameObject parent)
+    {
+        Sprite bk = EditorModelManager.FindSprite(icons, background);
+        var rect = parent.transform;
+        var Auxiliary = new GameObject("Auxiliary", typeof(RectTransform));
+        Auxiliary.transform.SetParent(rect);
+        var tab = new GameObject("TabControl", typeof(RectTransform));
+        tab.transform.SetParent(Auxiliary.transform);
+        var Head = new GameObject("Head", typeof(RectTransform), typeof(RectMask2D));
+        Head.transform.SetParent(Auxiliary.transform);
+        (Head.transform as RectTransform).sizeDelta = new Vector2(100, 60);
+
+        var Cover = new GameObject("Cover", typeof(RectTransform), typeof(RawImage));
+        Cover.transform.SetParent(Auxiliary.transform);
+        Cover.GetComponent<RawImage>().color = new Color32(128, 128, 128, 128);
+
+        var Docker = new GameObject("Docker", typeof(RectTransform));
+        Docker.transform.SetParent(Auxiliary.transform);
+
+        var Center = new GameObject("Center", typeof(RectTransform), typeof(Image));
+        var st = Center.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = Vector3.zero;
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(100, 100);
+        var img = Center.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = bk;
+
+        var Left = new GameObject("Left", typeof(RectTransform), typeof(Image));
+        st = Left.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(-90, 0, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(60, 100);
+        img = Left.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = bk;
+
+        var Top = new GameObject("Top", typeof(RectTransform), typeof(Image));
+        st = Top.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(0, 90, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(100, 60);
+        img = Top.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = bk;
+
+        var Right = new GameObject("Right", typeof(RectTransform), typeof(Image));
+        st = Right.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(90, 0, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(60, 100);
+        img = Right.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = bk;
+
+        var Down = new GameObject("Down", typeof(RectTransform), typeof(Image));
+        st = Down.transform as RectTransform;
+        st.SetParent(Docker.transform);
+        st.localPosition = new Vector3(0, -90, 0);
+        st.localScale = Vector3.one;
+        st.sizeDelta = new Vector2(100, 60);
+        img = Down.GetComponent<Image>();
+        img.color = new Color32(59, 87, 255, 128);
+        img.sprite = bk;
+    }
+    static void CreateTabControl(GameObject parent)
+    {
+        var tab = new GameObject("TabControl", typeof(RectTransform));
+        tab.transform.SetParent(parent.transform);
+        var ss = tab.AddComponent<SizeScaleEx>();
+        ss.sizeType = SizeType.Margin;
+
+        var Head = new GameObject("Head", typeof(RectTransform));
+        Head.transform.SetParent(tab.transform);
+        (Head.transform as RectTransform).sizeDelta = new Vector2(100, 60);
+
+        var Items = new GameObject("Items");
+        Items.transform.SetParent(Head.transform);
+        ss = Items.AddComponent<SizeScaleEx>();
+        ss.sizeType = SizeType.MarginX;
+
+        var Item = new GameObject("Item");
+        Item.transform.SetParent(tab.transform);
+
+        var back = new GameObject("Back");
+        back.transform.SetParent(Item.transform);
+        var img = back.AddComponent<Image>();
+        img.color = 0x2555FFff.ToColor();
+
+        var label = new GameObject("Label");
+        label.transform.SetParent(Item.transform);
+        var txt = label.AddComponent<EmojiText>();
+        txt.alignment = TextAnchor.MiddleLeft;
+        txt.fontSize = 30;
+
+        var clo = new GameObject("Close");
+        clo.transform.SetParent(Item.transform);
+        (clo.transform as RectTransform).sizeDelta = new Vector2(40,40);
+        img = clo.AddComponent<Image>();
+        img.color = Color.white;
+        img.sprite = EditorModelManager.FindSprite(icons, close);
     }
 }
