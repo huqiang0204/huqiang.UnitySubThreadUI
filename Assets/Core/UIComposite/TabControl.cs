@@ -189,6 +189,14 @@ namespace huqiang.UIComposite
         public void RemoveContent(TableContent table)
         {
             contents.Remove(table);
+            if(contents.Count>0)
+            {
+                curContent = contents[0];
+                if (curContent.Content != null)
+                    curContent.Content.activeSelf = true;
+                if (curContent.Back != null)
+                    curContent.Back.activeSelf = true;
+            }
             panel.Order();
         }
         /// <summary>

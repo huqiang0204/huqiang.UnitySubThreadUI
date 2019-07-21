@@ -613,6 +613,9 @@ public static class UICompositeMenu
         var Auxiliary = new GameObject("Auxiliary", typeof(RectTransform));
         Auxiliary.transform.SetParent(rect);
         CreateDockTabControl(Auxiliary);
+        var ss = Auxiliary.AddComponent<SizeScaleEx>();
+        ss.sizeType = SizeType.Margin;
+
 
         var Cover = new GameObject("Cover", typeof(RectTransform), typeof(RawImage));
         Cover.transform.SetParent(Auxiliary.transform);
@@ -682,11 +685,13 @@ public static class UICompositeMenu
         Head.transform.SetParent(tab.transform);
         (Head.transform as RectTransform).sizeDelta = new Vector2(100, 60);
 
-        var Items = new GameObject("Items");
+        var Items = new GameObject("Items", typeof(RectTransform));
         Items.transform.SetParent(Head.transform);
         Items.transform.localPosition = Vector3.zero;
+        (Items.transform as RectTransform).sizeDelta = new Vector2(100,50);
         ss = Items.AddComponent<SizeScaleEx>();
         ss.sizeType = SizeType.MarginX;
+        Items.AddComponent<RectMask2D>();
 
         var Item = new GameObject("Item",typeof(RectTransform));
         Item.transform.SetParent(Head.transform);
@@ -698,7 +703,7 @@ public static class UICompositeMenu
         var img = back.AddComponent<Image>();
         img.color = 0x2555FFff.ToColor();
         ss = back.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.Margin;
+        ss.sizeType = SizeType.MarginY;
 
         var label = new GameObject("Label",typeof(RectTransform));
         label.transform.SetParent(Item.transform);
@@ -722,6 +727,8 @@ public static class UICompositeMenu
         line.transform.localPosition = new Vector3(0,-24,0);
         ss = line.AddComponent<SizeScaleEx>();
         ss.sizeType = SizeType.MarginX;
+        img = line.AddComponent<Image>();
+        img.color = 0x5379FFff.ToColor();
 
         var content = new GameObject("Content",typeof(RectTransform));
         content.transform.SetParent(tab.transform);
