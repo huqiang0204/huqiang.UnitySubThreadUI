@@ -1,0 +1,6 @@
+# huqiang.UnitySubThreadUI
+多线程UI
+访问unityengine的类请使用ThreadMission.InvokeToMain()
+支持表情符输入，请用EmojiText
+使用事件注册eventcallback，弃用eventsystem
+demo介绍有空补上
