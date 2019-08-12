@@ -419,7 +419,7 @@ namespace huqiang.UIComposite
                 {
                     if (v.x > 0)
                     {
-                        rx += y / (Size.x * 0.5f);
+                        rx += x / (Size.x * 0.5f);
                         if (rx < 0)
                             rx = 0;
                         eventCall.VelocityX = 0;
@@ -429,7 +429,7 @@ namespace huqiang.UIComposite
                 {
                     if (v.x < 0)
                     {
-                        rx = 1 - (y - ActualSize.x + Size.x) / (Size.x * 0.5f);
+                        rx = 1 - (x - ActualSize.x + Size.x) / (Size.x * 0.5f);
                         if (rx < 0)
                             rx = 0;
                         else if (rx > 1)
