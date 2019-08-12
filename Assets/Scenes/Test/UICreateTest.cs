@@ -1,15 +1,14 @@
 ﻿using huqiang;
+using huqiang.Data;
 using huqiang.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using huqiang.UIEvent;
 using UnityEngine;
 
-public class UICreateTest : CreateTestHelper
+public partial class UICreateTest : CreateTestHelper
 {
-    public override void CreateTestPage(ModelElement model)
+
+    public override void CreateTestPage(ModelElement parent)
     {
-  
+       
     }
 }

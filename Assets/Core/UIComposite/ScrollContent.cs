@@ -20,29 +20,48 @@ namespace huqiang.UIComposite
         public static int Size = sizeof(ScrollInfo);
         public static int ElementSize = Size / 4;
     }
+    public class Constructor
+    {
+        public virtual object Create() { return null; }
+        public virtual void Call(object obj, object dat, int index) { }
+        public bool hotfix;
+        public Action<object, object, int> Update;
+        public Func<ModelElement, object> reflect;
+    }
+    class MiddleInvoke<U>
+    {
+
+    }
+    public class Middleware<T, U> : Constructor where T : class, new()
+    {
+        //bool v;
+        //public Middleware()
+        //{
+        //    v = typeof(U).IsValueType;
+        //}
+        public override object Create()
+        {
+            return new T();
+        }
+        public Action<T, U, int> Invoke;
+        U u;
+        public override void Call(object obj, object dat, int index)
+        {
+            if (Invoke != null)
+            {
+                try
+                {
+                    u = (U)dat;
+                }
+                catch (Exception ex)
+                {
+                }
+                Invoke(obj as T, u, index);
+            }
+        }
+    }
     public class ScrollContent: ModelInital
     {
-        class Constructor
-        {
-            public virtual object Create() { return null; }
-            public virtual void Call(object obj, object dat, int index) { }
-            public bool hotfix;
-            public Action<object,object, int> Update;
-            public Func<ModelElement, object> reflect;
-        }
-        class Middleware<T, U> : Constructor where T : class, new()
-        {
-            public override object Create()
-            {
-                return new T();
-            }
-            public Action<T,U, int> Invoke;
-            public override void Call(object obj, object dat, int index)
-            {
-                if (Invoke != null)
-                    Invoke(obj as T, (U)dat, index);
-            }
-        }
         /// <summary>
         /// 滚动公差值
         /// </summary>

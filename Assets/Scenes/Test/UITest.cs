@@ -13,9 +13,10 @@ public class UITest : TestHelper
         //Scale.DpiScale = true;
 #endif
         //UIPage.LoadPage<DrawPage>();
-        UIPage.LoadPage<LayoutTestPage>();
+        //UIPage.LoadPage<LayoutTestPage>();
         //UIPage.LoadPage<TestPage>();
         //UIPage.LoadPage<TabControlTest>();
+        UIPage.LoadPage<ScrollExTestPage>();
     }
     public override void OnUpdate()
     {
