@@ -50,9 +50,7 @@ namespace huqiang.UIEvent
             }
             T u = new T();
             u.Context = element;
-            u.graphic = element.GetComponent<GraphicE>();
-            if (u.graphic != null)
-                u.g_color = u.graphic.color;
+            u.g_color = u.Context.color;
             element.baseEvent = u;
             events.Add(u);
             u.Initial();
@@ -70,9 +68,7 @@ namespace huqiang.UIEvent
             }
             EventCallBack u = Activator.CreateInstance(type) as EventCallBack;
             u.Context = element;
-            u.graphic = element.GetComponent<GraphicE>();
-            if (u.graphic != null)
-                u.g_color = u.graphic.color;
+            u.g_color = u.Context.color;
             element.baseEvent = u;
             events.Add(u);
             u.Initial();
@@ -117,7 +113,7 @@ namespace huqiang.UIEvent
             }
             if (!ui.activeSelf)
                 return false;
-            Vector3 p =quate* ui.data.localPosition;
+            Vector3 p = quate* ui.data.localPosition;
             Vector3 o = Vector3.zero;
             o.x = p.x * scale.x;
             o.y = p.y * scale.y;
@@ -286,7 +282,6 @@ namespace huqiang.UIEvent
         }
 
         public ModelElement Context;
-        public GraphicE graphic;
         Vector2 mVelocity;
         public float VelocityX { get { return mVelocity.x; } set { maxVelocity.x = mVelocity.x = value; RefreshRateX(); } }
         public float VelocityY { get { return mVelocity.y; } set { maxVelocity.y = mVelocity.y = value; RefreshRateY(); } }
@@ -438,16 +433,12 @@ namespace huqiang.UIEvent
             RawPosition = action.CanPosition;
             if (AutoColor)
             {
-                var g =Context.GetComponent<GraphicE>();
-                if (graphic != null)
-                {
-                    Color a = Color.white;
-                    a.r = g_color.r * 0.8f;
-                    a.g = g_color.g * 0.8f;
-                    a.b = g_color.b * 0.8f;
-                    a.a = g_color.a;
-                    graphic.color = a;
-                }
+                Color a = Color.white;
+                a.r = g_color.r * 0.8f;
+                a.g = g_color.g * 0.8f;
+                a.b = g_color.b * 0.8f;
+                a.a = g_color.a;
+                Context.color = a;
             }
             if (PointerDown != null)
                 PointerDown(this, action);
@@ -460,9 +451,8 @@ namespace huqiang.UIEvent
             entry = false;
             if (AutoColor)
             {
-                if (graphic != null)
-                    if (!forbid)
-                        graphic.color = g_color;
+                if (!forbid)
+                    Context.color = g_color;
             }
             if (PointerUp != null)
                 PointerUp(this, action);
@@ -518,9 +508,8 @@ namespace huqiang.UIEvent
             entry = false;
             if (AutoColor)
             {
-                if (graphic != null)
-                    if (!forbid)
-                        graphic.color = g_color;
+                if (!forbid)
+                    Context.color = g_color;
             }
             if (PointerLeave != null)
                 PointerLeave(this, action);

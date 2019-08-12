@@ -734,4 +734,32 @@ public static class UICompositeMenu
         content.transform.SetParent(tab.transform);
         content.transform.localPosition = Vector3.zero;
     }
+    [MenuItem("GameObject/UIComposite/ShareImage", false, 15)]
+    static public void AddShareImage(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var ss = new GameObject("ShareImage", typeof(RectTransform));
+        RectTransform rect = ss.transform as RectTransform;
+        rect.sizeDelta = new Vector2(40, 40);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        rect.localPosition = Vector3.zero;
+        rect.localScale = Vector3.one;
+        var et = ss.AddComponent<ShareImage>();
+        et.raycastTarget = false;
+        ss.AddComponent<ShareImageHelper>();
+    }
+    [MenuItem("GameObject/UIComposite/ShareElemet", false, 16)]
+    static public void AddShareElement(MenuCommand menuCommand)
+    {
+        GameObject parent = menuCommand.context as GameObject;
+        var ss = new GameObject("Element", typeof(RectTransform));
+        RectTransform rect = ss.transform as RectTransform;
+        rect.sizeDelta = new Vector2(100, 100);
+        if (parent != null)
+            rect.SetParent(parent.transform);
+        rect.localPosition = Vector3.zero;
+        rect.localScale = Vector3.one;
+        ss.AddComponent<ShareChild>();
+    }
 }

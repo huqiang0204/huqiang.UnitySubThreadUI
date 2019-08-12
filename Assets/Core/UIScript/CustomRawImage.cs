@@ -40,8 +40,8 @@ namespace UGUI
             image.triangle.AddRange(tri_rect);
         }
         public object DataContext;
-        public List<UIVertex> uIVertices { get; set; }
-        public List<int> triangle { get; set; }
+        public List<UIVertex> uIVertices;
+        public List<int> triangle;
         public bool Custom;
         bool fresh;
         public void Refresh()

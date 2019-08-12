@@ -437,7 +437,7 @@ namespace huqiang.Data
             if(obj is byte[])
                return AddData(obj,DataType.ByteArray);
             var dat = obj.ToBytes<T>();
-           return AddData(dat,DataType.ByteArray);
+            return AddData(dat,DataType.ByteArray);
         }
         public T[] GetArray<T>(int index) where T : unmanaged
         {

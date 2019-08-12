@@ -335,22 +335,22 @@ namespace huqiang
         /// <param name="b">bx</param>
         /// <param name="c"></param>
         /// <returns>数组0为实数1为虚数</returns>
-        public static double[] SolutionTowEquation(double a, double b, double c)
+        public static float[] SolutionTowEquation(float a, float b, float c)
         {
-            double delt = b * b - 4 * a * c;
-            double[] v =new double[2];
+            float delt = b * b - 4 * a * c;
+            float[] v =new float[2];
             if (delt >= 0)
             {
                 if (a > 1e-10)
                 {
-                    v[0] = (float)((-b + Math.Sqrt(delt)) / (2 * a));
-                    v[1] = (float)((-b - Math.Sqrt(delt)) / (2 * a));
+                    v[0] = ((-b + Mathf.Sqrt(delt)) / (2 * a));
+                    v[1] = ((-b - Mathf.Sqrt(delt)) / (2 * a));
 
                 }
                 else
                 {
-                    v[0] = (float)((2 * c) / (-b + Math.Sqrt(delt)));
-                    v[1] = (float)((2 * c) / (-b - Math.Sqrt(delt)));
+                    v[0] = ((2 * c) / (-b + Mathf.Sqrt(delt)));
+                    v[1] = ((2 * c) / (-b - Mathf.Sqrt(delt)));
                 }
             }
             return v;
@@ -363,19 +363,19 @@ namespace huqiang
         /// <param name="_c">cx</param>
         /// <param name="_d"></param>
         /// <returns></returns>
-        public static Complex[] ThreeEquationShengjin(double _a, double _b = 0, double _c = 0, double _d = 0)
+        public static Complex[] ThreeEquationShengjin(float _a, float _b = 0, float _c = 0, float _d = 0)
         {
             Shengjin _Shengjin = new Shengjin(_a, _b, _c, _d);
             return _Shengjin.calc();
         }
         class Shengjin
         {
-            double a;
-            double b;
-            double c;
-            double d;
+            float a;
+            float b;
+            float c;
+            float d;
 
-            public Shengjin(double _a, double _b = 0, double _c = 0, double _d = 0)
+            public Shengjin(float _a, float _b = 0, float _c = 0, float _d = 0)
             {
                 Debug.Assert(_a != 0, "三次系数，不能为0");
                 a = _a;
@@ -388,11 +388,11 @@ namespace huqiang
             {
                 Complex[] x = new Complex[3];
 
-                double A = b * b - 3 * a * c;
-                double B = b * c - 9 * a * d;
-                double C = c * c - 3 * b * d;
+                float A = b * b - 3 * a * c;
+                float B = b * c - 9 * a * d;
+                float C = c * c - 3 * b * d;
 
-                double sj = B * B - 4 * A * C;
+                float sj = B * B - 4 * A * C;
 
                 if (A == 0 && B == 0)
                 {
@@ -402,34 +402,34 @@ namespace huqiang
                 else if (sj > 0)
                 {
                     //盛金公式2
-                    double Y1 = A * b + 1.5 * a * (-B + Math.Pow(sj, 0.5));
-                    double Y2 = A * b + 1.5 * a * (-B - Math.Pow(sj, 0.5));
+                    float Y1 = A * b + 1.5f * a * (-B + Mathf.Pow(sj, 0.5f));
+                    float Y2 = A * b + 1.5f * a * (-B - Mathf.Pow(sj, 0.5f));
                     //Y1立方根+Y2立方根
-                    double t1 = Y1 > 0 ? Math.Pow(Y1, 1.0 / 3) : -Math.Pow(-Y1, 1.0 / 3);
-                    double t2 = Y2 > 0 ? Math.Pow(Y2, 1.0 / 3) : -Math.Pow(-Y2, 1.0 / 3);
-                    double Y12 = t1 + t2;
+                    float t1 = Y1 > 0 ? Mathf.Pow(Y1, 1.0f / 3) : -Mathf.Pow(-Y1, 1.0f / 3);
+                    float t2 = Y2 > 0 ? Mathf.Pow(Y2, 1.0f / 3) : -Mathf.Pow(-Y2, 1.0f / 3);
+                    float Y12 = t1 + t2;
                     //Y1立方根-Y2立方根
-                    double _Y12 = t1 - t2;
+                    float _Y12 = t1 - t2;
 
                     x[0] = new Complex((-b - Y12) / (3 * a));
-                    x[1] = new Complex((-b + 0.5 * Y12) / (3 * a), Math.Pow(3, 0.5) * _Y12 / (6 * a));
-                    x[2] = new Complex((-b + 0.5 * Y12) / (3 * a), -Math.Pow(3, 0.5) * _Y12 / (6 * a));
+                    x[1] = new Complex((-b + 0.5f * Y12) / (3 * a), Mathf.Pow(3, 0.5f) * _Y12 / (6 * a));
+                    x[2] = new Complex((-b + 0.5f * Y12) / (3 * a), -Mathf.Pow(3, 0.5f) * _Y12 / (6 * a));
                 }
                 else if (sj == 0)
                 {
                     //盛金公式3
-                    double K = B / A;
+                    float K = B / A;
                     x[0] = new Complex(-b / K);
                     x[1] = x[2] = new Complex(-K / 2);
                 }
                 else
                 {
                     //盛金公式4,sj<0
-                    double T = (2 * A * b - 3 * a * B) / (2 * Math.Pow(A, 1.5));
-                    double o = Math.Acos(T);
-                    x[0] = new Complex((-b - 2 * Math.Pow(A, 0.5) * Math.Cos(o / 3.0)) / (3 * a));
-                    x[1] = new Complex((-b + Math.Pow(A, 0.5) * (Math.Cos(o / 3.0) + Math.Sqrt(3) * Math.Sin(o / 3.0))) / (3 * a));
-                    x[2] = new Complex((-b + Math.Pow(A, 0.5) * (Math.Cos(o / 3.0) - Math.Sqrt(3) * Math.Sin(o / 3.0))) / (3 * a));
+                    float T = (2 * A * b - 3 * a * B) / (2 * Mathf.Pow(A, 1.5f));
+                    float o = Mathf.Acos(T);
+                    x[0] = new Complex((-b - 2 * Mathf.Pow(A, 0.5f) * Mathf.Cos(o / 3.0f)) / (3 * a));
+                    x[1] = new Complex((-b + Mathf.Pow(A, 0.5f) * (Mathf.Cos(o / 3.0f) + Mathf.Sqrt(3) * Mathf.Sin(o / 3.0f))) / (3 * a));
+                    x[2] = new Complex((-b + Mathf.Pow(A, 0.5f) * (Mathf.Cos(o / 3.0f) - Mathf.Sqrt(3) * Mathf.Sin(o / 3.0f))) / (3 * a));
                 }
 
                 return x;
@@ -442,10 +442,10 @@ namespace huqiang
         /// <param name="v">Velocity</param>
         /// <param name="t">time</param>
         /// <returns>最大速率行驶到当前时间产生的距离</returns>
-        public static double PowDistance(double r, double v, int t)
+        public static float PowDistance(float r, float v, int t)
         {
             //S= [a^(n+1) -a]/（a-1)
-            return v * (Math.Pow(r, t + 1) - r) / (r - 1);
+            return v * (Mathf.Pow(r, t + 1) - r) / (r - 1);
         }
         /// <summary>
         /// 
@@ -453,9 +453,9 @@ namespace huqiang
         /// <param name="r">AttenuationRate</param>
         /// <param name="d">Distance</param>
         /// <returns>行驶到指定位置所需的最大速率</returns>
-        public static double DistanceToVelocity(double r, double d)
+        public static float DistanceToVelocity(float r, float d)
         {
-            return d * (r - 1) / (Math.Pow(r, 1000000) - r);
+            return d * (r - 1) / (Mathf.Pow(r, 1000000) - r);
         }
         public static void Cross(ref Vector3 left, ref Vector3 right, ref Vector3 result)
         {
@@ -488,36 +488,36 @@ namespace huqiang
         /// 构造函数
         /// </summary>
         /// <param name="real">实部</param>
-        public Complex(double real) : this(real, 0) { }
+        public Complex(float real) : this(real, 0) { }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="real">实部</param>
         /// <param name="image">虚部</param>
-        public Complex(double real, double image)
+        public Complex(float real, float image)
         {
             this.real = real;
             this.image = image;
         }
 
-        private double real;
+        private float real;
 
         /// <summary>
         /// 实部
         /// </summary>
-        public double Real
+        public float Real
         {
             get { return real; }
             set { real = value; }
         }
 
-        private double image;
+        private float image;
 
         /// <summary>
         /// 虚部
         /// </summary>
-        public double Image
+        public float Image
         {
             get { return image; }
             set { image = value; }
@@ -560,9 +560,9 @@ namespace huqiang
         /// 复数的求模运算
         /// </summary>
         /// <returns></returns>
-        public double ToModul()
+        public float ToModul()
         {
-            return Math.Sqrt(real * real + image * image);
+            return Mathf.Sqrt(real * real + image * image);
         }
 
         public override string ToString()

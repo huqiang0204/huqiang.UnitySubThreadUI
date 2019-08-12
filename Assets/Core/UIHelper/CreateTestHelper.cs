@@ -7,14 +7,27 @@ using UnityEngine;
 
 public class CreateTestHelper: UICompositeHelp
 {
-    
+    //public void Awake()
+    //{
+    //    Build();
+    //}
+    //private void Update()
+    //{
+    //    App.Update();
+    //}
+    //private void OnApplicationQuit()
+    //{
+    //    App.Dispose();
+    //}
     public virtual void LoadBundle()
     {
 #if UNITY_EDITOR
         if (ElementAsset.bundles.Count == 0)
         {
-            //var dic = Application.dataPath + "/StreamingAssets";
-            var dic = Application.streamingAssetsPath;
+            AssetBundle.UnloadAllAssetBundles(true);
+            ElementAsset.bundles.Clear();
+           //var dic = Application.dataPath + "/StreamingAssets";
+           var dic = Application.streamingAssetsPath;
             if (Directory.Exists(dic))
             {
                 var bs = Directory.GetFiles(dic, "*.unity3d");
@@ -37,26 +50,24 @@ public class CreateTestHelper: UICompositeHelp
     }
     public void Build()
     {
-        if(!Application.isPlaying)
+        if (App.uiroot != null)
         {
-            if (App.uiroot != null)
-            {
-                App.uiroot.Dispose();
-            }
-            int c = transform.childCount - 1;
-            for (; c >= 0; c--)
-            {
-                GameObject.DestroyImmediate(transform.GetChild(c).gameObject);
-            }
-            var caret = InputCaret.Caret;
-            if (caret != null)
-                GameObject.DestroyImmediate(caret.gameObject);
-            Initital();
-            CreateTestPage();
-            App.Update();
+            App.uiroot.Dispose();
         }
+        int c = transform.childCount - 1;
+        for (; c >= 0; c--)
+        {
+            GameObject.DestroyImmediate(transform.GetChild(c).gameObject);
+        }
+        var caret = InputCaret.Caret;
+        if (caret != null)
+            GameObject.DestroyImmediate(caret.gameObject);
+        Initital();
+        CreateTestPage(UIPage.Root);
+        RenderForm.VertexCalculationAll();
+        App.Update();
     }
-    public virtual void CreateTestPage()
+    public virtual void CreateTestPage(ModelElement parent)
     {
 
     }

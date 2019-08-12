@@ -63,7 +63,15 @@ namespace huqiang
                     else
                     {
                         subFree = false;
-                        m.action(m.data);
+                        try
+                        {
+                            m.action(m.data);
+                        }catch (Exception ex)
+                        {
+#if DEBUG
+                            Debug.LogError(ex.StackTrace);
+#endif
+                        }
                         if (m.waitAction != null)//如果有等待的任务
                         {
                             if (m.Id == MainID)//交给主线程
@@ -89,7 +97,7 @@ namespace huqiang
                 catch (Exception ex)
                 {
 #if DEBUG
-                    Debug.LogError(ex.StackTrace);
+                    Debug.Log(ex.StackTrace);
 #endif
                 }
             }

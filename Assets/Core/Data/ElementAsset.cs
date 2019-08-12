@@ -176,5 +176,93 @@ namespace huqiang.Data
                 (o) => { result = FindSprites(bundle, tname, names); }, null,
                 (e) => { if (callBack != null) callBack(result); });
         }
+        class SpriteData
+        {
+            public string name;
+            public DataBuffer buffer;
+        }
+        static List<SpriteData> SpriteDatas=new List<SpriteData>();
+        public static void AddSpriteData(string name, byte[] dat)
+        {
+            if (dat == null)
+                return;
+            RemoveSpriteData(name);
+            DataBuffer db = new DataBuffer(dat);
+            SpriteData data = new SpriteData();
+            data.name = name;
+            data.buffer = db;
+            SpriteDatas.Add(data);
+        }
+        public static void RemoveSpriteData(string name)
+        {
+            for(int i=0;i<SpriteDatas.Count;i++)
+            {
+                if (SpriteDatas[i].name == name)
+                {
+                    SpriteDatas.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+        public static void ClearSpriteData()
+        {
+            SpriteDatas.Clear();
+        }
+        public static void FindSpriteUV(string tName, string sName,ref Rect rect, ref Vector2 txtSize,ref Vector2 pivot)
+        {
+            for(int k=0;k<SpriteDatas.Count;k++)
+            {
+                var fs = SpriteDatas[k].buffer.fakeStruct;
+                if(fs!=null)
+                {
+                    var fsa = fs.GetData<FakeStructArray>(1);
+                    if (fsa != null)
+                    {
+                        for (int i = 0; i < fsa.Length; i++)
+                        {
+                            if (fsa.GetData(i, 0) as string == tName)
+                            {
+                                fsa = fsa.GetData(i, 1) as FakeStructArray;
+                                if (fsa != null)
+                                {
+                                    for (int j = 0; j < fsa.Length; j++)
+                                    {
+                                        if (fsa.GetData(j, 0) as string == sName)
+                                        {
+                                            unsafe
+                                            {
+                                                Data.SpriteData.SpriteDataS* sp = (Data.SpriteData.SpriteDataS*)fsa[j];
+                                                txtSize = sp->txtSize;
+                                                rect= sp->rect;
+                                                pivot = sp->pivot;
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public static T LoadAssets<T>(string bundle, string name) where T : UnityEngine.Object
+        {
+            if (bundle == null)
+            {
+                return UnityEngine.Resources.Load<T>(name);
+            }
+            if (bundles == null)
+                return null;
+            for (int i = 0; i < bundles.Count; i++)
+            {
+                var tmp = bundles[i];
+                if (bundle == tmp.name)
+                {
+                    return tmp.LoadAsset<T>(name);
+                }
+            }
+            return null;
+        }
     }
 }

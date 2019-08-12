@@ -124,6 +124,7 @@ public class UIPage : UIBase
                 pops[i].Dispose();
         pops.Clear();
         currentPop = null;
+        model.SetParent(null);
         ModelManagerUI.RecycleElement(model);
         ClearUI();
     }

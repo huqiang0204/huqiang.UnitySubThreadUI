@@ -906,6 +906,17 @@ namespace huqiang
                 return true;
             return false;
         }
+        public static bool DotToEdge(ref Vector2 dot, Vector2[] points)
+        {
+            int a = points.Length;
+            int i = 1;
+            for (; i < a; i++)
+            {
+                if (DotToLine(ref dot, ref points[i - 1], ref points[i]))
+                    return true;
+            }
+            return false;
+        }
         /// <summary>
         /// 线与垂直线相交
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using huqiang.UI;
+﻿using huqiang.Data;
+using huqiang.UI;
 using huqiang.UIEvent;
 using System;
 using UnityEngine;
@@ -80,7 +81,7 @@ namespace huqiang.UIComposite
                 image = FillImage.GetComponent<ImageElement>();
             }
             Nob = mod.Find("Nob");
-            var fake= mod.GetExtand();
+            var fake= mod.GetExtand() as FakeStruct;
             if(fake!=null)
             {
                 unsafe

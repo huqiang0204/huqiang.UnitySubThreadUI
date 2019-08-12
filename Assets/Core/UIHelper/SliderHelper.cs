@@ -16,7 +16,7 @@ public class SliderHelper : UICompositeHelp
     public float MaxScale=1;
     public UISlider.Direction direction;
     UISlider slider;
-    public unsafe override FakeStruct ToFakeStruct(DataBuffer buffer)
+    public unsafe override object ToBufferData(DataBuffer buffer)
     {
         FakeStruct fake = new FakeStruct(buffer, SliderInfo.ElementSize);
         SliderInfo* data = (SliderInfo*)fake.ip;

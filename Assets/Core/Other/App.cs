@@ -15,20 +15,23 @@ namespace huqiang
             IME.Initial();
 #endif     
         }
-        static void InitialUI()
+       public static void RegUI()
         {
             ModelManagerUI.RegComponent(new ComponentType<RectTransform, ModelElement>(ModelElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<EmojiText, EmojiElement>(TextElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Text, TextElement>(TextElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<ShareChild, ShareChildElement>(ShareChildElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<ShareImage, ShareImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<CustomRawImage, RawImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<RawImage, RawImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<RectMask2D, RectMaskElement>(RectMaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
-            ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(ShadowElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<Shadow, ShadowElement>(ShadowElement.LoadFromObject));
         }
         public static RenderForm uiroot;
-        static void CreateUI()
+        static void CreateUI() 
         {
             uiroot = new RenderForm("Root");
             if (Application.platform == RuntimePlatform.Android | Application.platform == RuntimePlatform.IPhonePlayer)
@@ -58,7 +61,7 @@ namespace huqiang
             ThreadMission.SetMianId();
             Scale.Initial();
             InitialInput();
-            InitialUI();
+            RegUI();
             UIRoot = uiRoot as RectTransform;
             if (UIRoot == null)
             {
@@ -95,6 +98,7 @@ namespace huqiang
             UIPage.Refresh(UserAction.TimeSlice);
             UINotify.Refresh(UserAction.TimeSlice);
             UIAnimation.Manage.Update();
+            RenderForm.VertexCalculationAll();
         }
         static void Resize()
         {

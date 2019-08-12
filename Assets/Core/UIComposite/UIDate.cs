@@ -1,4 +1,5 @@
-﻿using huqiang.UI;
+﻿using huqiang.Data;
+using huqiang.UI;
 using huqiang.UIEvent;
 using System;
 using System.Collections.Generic;
@@ -104,7 +105,7 @@ namespace huqiang.UIComposite
             Day.eventCall.boxSize = new Vector2(120, 160);
             Day.eventCall.UseAssignSize = true;
 
-            var fs = mod.GetExtand();
+            var fs = mod.GetExtand()as FakeStruct ;
             if(fs!=null)
             {
                 StartYear = fs[0];

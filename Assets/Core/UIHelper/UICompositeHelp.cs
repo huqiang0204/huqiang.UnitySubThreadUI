@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class UICompositeHelp : MonoBehaviour
 {
+    [HideInInspector]
+    public bool ForbidChild = false;
     // Start is called before the first frame update
-    public virtual FakeStruct ToFakeStruct(DataBuffer data)
+    public virtual object ToBufferData(DataBuffer data)
     {
         return null;
     }
