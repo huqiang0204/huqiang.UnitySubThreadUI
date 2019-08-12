@@ -230,5 +230,14 @@ namespace huqiang
                     return threads[i];
             return null;
         }
+        public static ThreadMission CreateMission(string tag)
+        {
+            for(int i=0;i<threads.Count;i++)
+            {
+                if (threads[i].Tag == tag)
+                    return threads[i];
+            }
+            return new ThreadMission(tag);
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace huqiang.UIComposite
             eventCall = EventCallBack.RegEvent<EventCallBack>(model);
             eventCall.Drag = (o, e, s) => { Scrolling(o, s); };
             eventCall.DragEnd = (o, e, s) => { Scrolling(o, s); };
+            eventCall.ScrollEndY = OnScrollEnd;
             eventCall.Scrolling = Scrolling;
             eventCall.ForceEvent = true;
             Size = Model.data.sizeDelta;
@@ -57,22 +58,39 @@ namespace huqiang.UIComposite
         {
             if ( Model== null)
                 return;
-            var size = Size;
-            float y = Point + v.y;
-            if (y < 0)
+            v.y /= eventCall.Context.data.localScale.y;
+            back.VelocityX = 0;
+            v.x = 0;
+            float x = 0;
+            float y = 0;
+            y = BounceBack(back, ref v, ref x, ref Point).y;
+            Order();
+            if (y != 0)
             {
-                y = 0; back.VelocityY = 0;
+                if (Scroll != null)
+                    Scroll(this, v);
             }
-            if (y + size.y > ActualSize.y)
+        }
+        void OnScrollEnd(EventCallBack back)
+        {
+            if (Point < -ScrollContent.Tolerance)
             {
-                y = ActualSize.y - size.y;
-                back.VelocityY = 0;
+                back.DecayRateY = 0.988f;
+                float d = -Point;
+                back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
             }
-            if (back.VelocityX != 0)
-                back.VelocityX = 0;
-            Order(y);
-            if (Scroll != null)
-                Scroll(this, v);
+            else
+            {
+                float max = height + ScrollContent.Tolerance;
+                if (max < Size.y)
+                    max = Size.y + ScrollContent.Tolerance;
+                if (Point + Size.y > max)
+                {
+                    back.DecayRateY = 0.988f;
+                    float d = ActualSize.y - Point - Size.y;
+                    back.ScrollDistanceY = d * eventCall.Context.data.localScale.y;
+                }
+            }
         }
         public float Space = 0;
         public Vector2 Size;
@@ -107,85 +125,130 @@ namespace huqiang.UIComposite
                 return;
             if (ItemSize.y == 0)
                 return;
-            for (int i = 0; i < Items.Count; i++)
-                Items[i].datacontext = null;
-            float w = Size.x - ItemOffset.x;
-            w /= ItemSize.x;
-            wm = (int)w;
-            if (wm < 1)
-                wm = 1;
-            CalculOffset();
-            if (content_high < Size.y)
-                content_high = Size.y;
-            max_count = (int)(Size.y / ItemSize.y) * wm;
-            int more = (int)(200 / ItemSize.y);
-            if (more < 2)
-                more = 2;
-            max_count += more * wm;
-            if (max_count > data_count)
-                max_count = data_count;
-            PushItems();
-            Order(y, true);
+            CalculSize();
+            Order(true);
 
         }
-        void Order(float y, bool force = false)
+        public void CalculSize()
         {
+            height = 0;
+            if (BindingData == null)
+                return;
+            wm = (int)(ItemSize.x / Size.x);
+            if (wm < 1)
+                wm = 1;
+            int c = BindingData.Count;
+            height += TitleSize.y * c;
+            if (TailMod != null)
+                height += TailSize.y * c;
+            for (int i = 0; i < BindingData.Count; i++)
+            {
+                var dat = BindingData[i].Data;
+                if(dat!=null)
+                {
+                    int n = dat.Count;
+                    int a = n / wm;
+                    if (n % wm > 0)
+                        a++;
+                    var h = BindingData[i].Height = a * ItemSize.y;
+                    if (!BindingData[i].Hide)
+                        height += h;
+                }
+                else
+                {
+                    BindingData[i].Height = 0;
+                }
+            }
+            if (height < Size.y)
+                height = Size.y;
+            ActualSize.y = height;
+        }
+        void Order(bool force=false)
+        {
+            PushItems();
+            float y = Point;
+            float oy = 0;
             for (int i = 0; i < BindingData.Count; i++)
             {
                 var dat = BindingData[i];
-                if (UpdateTitle(y, dat, i, force))
+                OrderTitle(oy - y, dat, i, force);
+                oy += TitleSize.y;
+                if(!dat.Hide)
+                {
+                    for (int c = 0; c < dat.Data.Count; c++)
+                        OrderItem(oy-y, dat.Data[c],c,force);
+                    oy += dat.Height;
+                }
+                if (oy - y > Size.y)
                     break;
-                if (!dat.Hide)
-                    if (UpdateItem(y, dat, i))
+                if(TailMod!=null)
+                {
+                    OrderTail(oy-y,dat,i,force);
+                    oy += TailSize.y;
+                    if (oy - y > Size.y)
                         break;
-                if (TailMod != null)
-                    if (!dat.HideTail)
-                        if (UpdateTail(y, dat, i, force))
-                            break;
+                }
             }
-            Point = y;
             RecycleRemain();
         }
-
-        void CalculOffset()
+        void OrderTitle(float os,DataTemplate dat,int index, bool force)
         {
-            float dy = 0;
-            int s = 0;
-            var count = BindingData.Count;
-            for (int i = 0; i < count; i++)
+            if (os < -TitleSize.y)
+                return;
+            var t = PopItem(TitleBuffer, index);
+            bool u = false;
+            if (t == null)
             {
-                var a = BindingData[i];
-                var dat = a.Data;
-                a.Start = dy;
-                a.Index = s;
-                float h = TitleSize.y;
-                if (!a.HideTail)
-                    h += TailSize.y;
-                if (!a.Hide)
-                    if (dat != null)
-                    {
-                        int c = dat.Count;
-                        if (c > 0)
-                        {
-                            s += c;
-                            int d = c / wm;
-                            if (c % wm > 0)
-                                d++;
-                            h += d * ItemSize.y;
-                        }
-                    }
-                a.Height = h;
-                dy += h;
-                a.End = dy;
-                dy += Space;
+                t = CreateTitle();
+                t.index = index;
+                u = true;
             }
-            if (count > 0)
-                dy -= Space;
-            data_count = s;
-            content_high = dy;
+            Titles.Add(t);
+            t.target.data.localPosition = new Vector3(TitleOffset.x,  Size.y*0.5f -os- TitleOffset.y - TitleSize.y*0.5f, 0);
+            t.target.activeSelf = true;
+            if(force|u)
+            ItemUpdate(t.obj,dat,index,TitleCreator);
         }
-        int data_count;
-        float content_high;
+        void OrderItem(float os, object dat, int index, bool force)
+        {
+            int r = index / wm;
+            os += r * ItemSize.y;
+            if (os < -ItemSize.y)
+                return;
+            if (os > Size.y + ItemSize.y)
+                return;
+            var t = PopItem(ItemBuffer, index);
+            bool u = false;
+            if (t == null)
+            {
+                t = CreateItem();
+                t.index = index;
+                u = true;
+            }
+            Items.Add(t);
+            t.target.data.localPosition = new Vector3(ItemOffset.x,  Size.y * 0.5f - os + ItemOffset.y - ItemSize.y * 0.5f, 0);
+            t.target.activeSelf = true;
+            if(force|u)
+            ItemUpdate(t.obj, dat, index, ItemCreator);
+        }
+        void OrderTail(float os, DataTemplate dat, int index, bool force)
+        {
+            if (os < -TailSize.y)
+                return;
+            var t = PopItem(TailBuffer, index);
+            bool u = false;
+            if (t == null)
+            {
+                t = CreateTail();
+                t.index = index;
+                u = true;
+            }
+            Tails.Add(t);
+            t.target.data.localPosition = new Vector3(TailOffset.x, Size.y * 0.5f - os - TailOffset.y - TitleSize.y * 0.5f, 0);
+            t.target.activeSelf = true;
+            if (force | u)
+                ItemUpdate(t.obj, dat, index, TailCreator);
+        }
         public class DataTemplate
         {
             public object Title;
@@ -202,92 +265,6 @@ namespace huqiang.UIComposite
         {
             Model.data.sizeDelta = size;
             Size = size;
-        }
-        bool UpdateTitle(float oy, DataTemplate dt, int index, bool force = false)
-        {
-            float os = dt.Start - oy;
-            float oe = dt.Start + TitleSize.y;
-            if (oe < 0)
-                return false;
-            if (os > Size.y + TitleSize.y)
-                return true;
-            float ay = os;
-            float st = Size.y * 0.5f;
-            float ht = TitleSize.y * 0.5f;
-            var t = PopItem(TitleBuffer,index);
-            if (t == null)
-                t = CreateTitle();
-            t.target.data.localPosition = new Vector3(TitleOffset.x, ay + st - TitleOffset.y - ht, 0);
-            t.target.activeSelf = true;
-            if (force | t.datacontext != dt.Title)
-            {
-                t.datacontext = dt.Title;
-                ItemUpdate(t.obj, dt, index,TitleCreator);
-            }
-            return false;
-        }
-        bool UpdateTail(float oy, DataTemplate dt, int index, bool force = false)
-        {
-            float oe = dt.End - oy;
-            float os = oe - TailSize.y;
-            if (oe < 0)
-                return false;
-            if (os > Size.y + TailSize.y)
-                return true;
-            float ay = os + TailSize.y * 0.5f;
-            float st = Size.y * 0.5f;
-            float ht = TailSize.y * 0.5f;
-            var t = PopItem(TailBuffer,index);
-            if (t == null)
-                t = CreateTail();
-            t.target.data.localPosition = new Vector3(TitleOffset.x, ay + st - TailOffset.y + ht, 0);
-            t.target.activeSelf = true;
-            if (force | t.datacontext != dt.Title)
-            {
-                t.datacontext = dt.Tail;
-                ItemUpdate(t.obj, dt, index,TailCreator);
-            }
-            return false;
-        }
-        bool UpdateItem(float oy, DataTemplate dt, int index)
-        {
-            var data = dt.Data;
-            if (data == null)
-                return false;
-            float ay = dt.Start + TitleSize.y - oy;
-            int len = data.Count;
-            int c = 0;
-            int r = 0;
-            float ah = ItemSize.y;
-            int j = dt.Index;
-            float oh = ItemSize.y * 0.5f;
-            float st = Size.y * 0.5f;
-
-            for (int i = 0; i < len; i++)
-            {
-                float os = ay + r * ah;
-                float oe = os + ah;
-                if (oe < 0)
-                    goto label;
-                if (os > Size.y)
-                    return true;
-                var t = PopItem(ItemBuffer,index);
-                if (t == null)
-                    t = CreateItem();
-                t.target.activeSelf = true;
-                t.target.data.localPosition = new Vector3(ItemOffset.x + ItemSize.x * c, os - oh + st, 0);
-                var d = data[i];
-                if (t.datacontext != d)
-                {
-                    t.datacontext = d;
-                    ItemUpdate(t.obj, d, i,ItemCreator);
-                }
-            label:;
-                c++;
-                if (c >= wm)
-                { r++; c = 0; }
-            }
-            return false;
         }
         public void Dispose()
         {
@@ -348,7 +325,7 @@ namespace huqiang.UIComposite
         {
             for (int i = 0; i < Items.Count; i++)
                 ModelManagerUI.RecycleElement(Items[i].target);
-            Items.Clear();
+            Tails.Clear();
             var m = new Middleware<ModelElement, object>();
             m.Update = action;
             m.hotfix = true;
@@ -426,18 +403,24 @@ namespace huqiang.UIComposite
         {
             return CreateItem(TailRecycler,TailCreator,TailMod);
         }
-        protected void PushItems()
-        {
-            PushItems(TitleBuffer,Titles);
-            PushItems(ItemBuffer,Items);
-            PushItems(TailBuffer,Tails);
-        }
         protected void PushItems(List<ScrollItem> tar, List<ScrollItem> src)
         {
             for (int i = 0; i < src.Count; i++)
                 src[i].target.activeSelf = false;
             tar.AddRange(src);
             src.Clear();
+        }
+        protected void PushItems()
+        {
+            PushItems(TitleBuffer,Titles);
+            PushItems(ItemBuffer,Items);
+            PushItems(TailBuffer,Tails);
+        }
+        protected void RecycleRemain()
+        {
+            PushItems(TitleRecycler, TitleBuffer);
+            PushItems(ItemRecycler, ItemBuffer);
+            PushItems(TailRecycler, TailBuffer);
         }
         protected ScrollItem PopItem(List<ScrollItem> tar, int index)
         {
@@ -453,11 +436,78 @@ namespace huqiang.UIComposite
             }
             return null;
         }
-        protected void RecycleRemain()
+ 
+        protected Vector2 BounceBack(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
         {
-            PushItems(TitleRecycler,TitleBuffer);
-            PushItems(ItemRecycler,ItemBuffer);
-            PushItems(TailRecycler,TailBuffer);
+            if (eventCall.Pressed)
+            {
+                float r = 1;
+                if (y < 0)
+                {
+                    if (v.y < 0)
+                    {
+                        r += y / (Size.y * 0.5f);
+                        if (r < 0)
+                            r = 0;
+                        eventCall.VelocityY = 0;
+                    }
+                }
+                else if (y + Size.y > height)
+                {
+                    if (v.y > 0)
+                    {
+                        r = 1 - (y - height + Size.y) / (Size.y * 0.5f);
+                        if (r < 0)
+                            r = 0;
+                        else if (r > 1)
+                            r = 1;
+                        eventCall.VelocityY = 0;
+                    }
+                }
+                y += v.y * r;
+            }
+            else
+            {
+                x -= v.x;
+                y += v.y;
+                if (x < 0)
+                {
+                    if (v.x > 0)
+                        if (eventCall.DecayRateX >= 0.99f)
+                        {
+                            eventCall.DecayRateX = 0.9f;
+                            eventCall.VelocityX = eventCall.VelocityX;
+                        }
+                }
+                else if (x + Size.x > ActualSize.x)
+                {
+                    if (v.x < 0)
+                        if (eventCall.DecayRateX >= 0.95f)
+                        {
+                            eventCall.DecayRateX = 0.9f;
+                            eventCall.VelocityX = eventCall.VelocityX;
+                        }
+                }
+                if (y < 0)
+                {
+                    if (v.y < 0)
+                        if (eventCall.DecayRateY >= 0.95f)
+                        {
+                            eventCall.DecayRateY = 0.9f;
+                            eventCall.VelocityY = eventCall.VelocityY;
+                        }
+                }
+                else if (y + Size.y > ActualSize.y)
+                {
+                    if (v.y > 0)
+                        if (eventCall.DecayRateY >= 0.95f)
+                        {
+                            eventCall.DecayRateY = 0.9f;
+                            eventCall.VelocityY = eventCall.VelocityY;
+                        }
+                }
+            }
+            return v;
         }
     }
 }

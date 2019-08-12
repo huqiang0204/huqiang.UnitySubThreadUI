@@ -69,7 +69,7 @@ namespace huqiang
                 UIRoot.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
             }
             CreateUI();
-            mission = new ThreadMission("UI");
+            mission = ThreadMission.CreateMission("UI");
         }
         public static float AllTime;
         public static float FrameTime = 33;

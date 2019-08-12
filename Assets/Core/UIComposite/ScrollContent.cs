@@ -412,14 +412,65 @@ namespace huqiang.UIComposite
         }
         protected Vector2 BounceBack(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
         {
-            x -= v.x;
-            y += v.y;
-            if (!eventCall.Pressed)
+            if (eventCall.Pressed)
             {
+                float rx = 1;
                 if (x < 0)
                 {
                     if (v.x > 0)
-                        if (eventCall.DecayRateX >= 0.99f)
+                    {
+                        rx += y / (Size.x * 0.5f);
+                        if (rx < 0)
+                            rx = 0;
+                        eventCall.VelocityX = 0;
+                    }
+                }
+                else if (x + Size.x > ActualSize.x)
+                {
+                    if (v.x < 0)
+                    {
+                        rx = 1 - (y - ActualSize.x + Size.x) / (Size.x * 0.5f);
+                        if (rx < 0)
+                            rx = 0;
+                        else if (rx > 1)
+                            rx = 1;
+                        eventCall.VelocityX = 0;
+                    }
+                }
+                x -= v.x * rx;
+                float ry = 1;
+                if (y < 0)
+                {
+                    if (v.y < 0)
+                    {
+                        ry += y / (Size.y * 0.5f);
+                        if (ry < 0)
+                            ry = 0;
+                        eventCall.VelocityY = 0;
+                    }
+                }
+                else if (y + Size.y > ActualSize.y)
+                {
+                    if (v.y > 0)
+                    {
+                        ry = 1 - (y - ActualSize.y + Size.y) / (Size.y * 0.5f);
+                        if (ry < 0)
+                            ry= 0;
+                        else if (ry > 1)
+                            ry = 1;
+                        eventCall.VelocityY = 0;
+                    }
+                }
+                y += v.y*ry;
+            }
+            else
+            {
+                x -= v.x;
+                y += v.y;
+                if (x < 0)
+                {
+                    if (v.x > 0)
+                        if (eventCall.DecayRateX >= 0.95f)
                         {
                             eventCall.DecayRateX = 0.9f;
                             eventCall.VelocityX = eventCall.VelocityX;
@@ -428,7 +479,7 @@ namespace huqiang.UIComposite
                 else if (x + Size.x > ActualSize.x)
                 {
                     if (v.x < 0)
-                        if (eventCall.DecayRateX >= 0.99f)
+                        if (eventCall.DecayRateX >= 0.95f)
                         {
                             eventCall.DecayRateX = 0.9f;
                             eventCall.VelocityX = eventCall.VelocityX;
@@ -437,7 +488,7 @@ namespace huqiang.UIComposite
                 if (y < 0)
                 {
                     if (v.y < 0)
-                        if (eventCall.DecayRateY >= 0.99f)
+                        if (eventCall.DecayRateY >= 0.95f)
                         {
                             eventCall.DecayRateY = 0.9f;
                             eventCall.VelocityY = eventCall.VelocityY;
@@ -446,7 +497,7 @@ namespace huqiang.UIComposite
                 else if (y + Size.y > ActualSize.y)
                 {
                     if (v.y > 0)
-                        if (eventCall.DecayRateY >= 0.99f)
+                        if (eventCall.DecayRateY >= 0.95f)
                         {
                             eventCall.DecayRateY = 0.9f;
                             eventCall.VelocityY = eventCall.VelocityY;

@@ -35,6 +35,7 @@ public class ScrollExTestPage : UIPage
         List<string> list = new List<string>();
         for (int i = 0; i < 22; i++)
             list.Add("tttt"+i.ToString());
+        tmp.Hide = true;
         tmp.Data = list;
         datas.Add(tmp);
         view.scroll.BindingData = datas;
