@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class UICreateTest : CreateTestHelper
 {
-    public override void CreateTestPage()
+    public override void CreateTestPage(ModelElement model)
     {
   
     }
