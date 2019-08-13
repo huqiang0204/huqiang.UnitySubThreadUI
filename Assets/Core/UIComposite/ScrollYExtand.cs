@@ -10,14 +10,27 @@ namespace huqiang.UIComposite
     /// <summary>
     /// 带有标题的,可以展开收缩的
     /// </summary>
-    public class ScrollYExtand : ModelInital
+    public class ScrollYExtand : ModelInital,AnimatInterface
     {
+        public class DataTemplate
+        {
+            public object Title;
+            public object Tail;
+            public IList Data;
+            public bool Hide;
+            public bool HideTail;
+            public float Height { internal set; get; }
+            public float ShowOffset = 0;
+            public float aniTime;
+        }
         EventCallBack eventCall;
         protected float height;
         int wm = 1;
         public float Point;
         public Vector2 ActualSize;
         public Action<ScrollYExtand, Vector2> Scroll;
+        ModelElement TitleParent;
+        ModelElement ItemParent;
         public override void Initial(ModelElement model)
         {
             Model = model;
@@ -32,6 +45,10 @@ namespace huqiang.UIComposite
             Titles = new List<ScrollItem>();
             Items = new List<ScrollItem>();
             Tails = new List<ScrollItem>();
+            ItemParent = ModelElement.CreateNew("Items");
+            ItemParent.SetParent(model);
+            TitleParent = ModelElement.CreateNew("Titles");
+            TitleParent.SetParent(model);
             if (model != null)
             {
                 TitleMod = model.Find("Title");
@@ -152,7 +169,10 @@ namespace huqiang.UIComposite
                         a++;
                     var h = BindingData[i].Height = a * ItemSize.y;
                     if (!BindingData[i].Hide)
+                    {
                         height += h;
+                        height -= BindingData[i].ShowOffset;
+                    }
                 }
                 else
                 {
@@ -175,9 +195,11 @@ namespace huqiang.UIComposite
                 oy += TitleSize.y;
                 if(!dat.Hide)
                 {
+                    float so = dat.ShowOffset;
                     for (int c = 0; c < dat.Data.Count; c++)
-                        OrderItem(oy-y, dat.Data[c],c,force);
+                        OrderItem(oy-y-so, dat.Data[c],c,force);
                     oy += dat.Height;
+                    oy -= so;
                 }
                 if (oy - y > Size.y)
                     break;
@@ -249,18 +271,7 @@ namespace huqiang.UIComposite
             if (force | u)
                 ItemUpdate(t.obj, dat, index, TailCreator);
         }
-        public class DataTemplate
-        {
-            public object Title;
-            public object Tail;
-            public IList Data;
-            public bool Hide;
-            public bool HideTail;
-            internal int Index;
-            public float Height { internal set; get; }
-            internal float Start;
-            internal float End;
-        }
+  
         public void SetSize(Vector2 size)
         {
             Model.data.sizeDelta = size;
@@ -277,6 +288,7 @@ namespace huqiang.UIComposite
             Titles.Clear();
             Items.Clear();
             Tails.Clear();
+            UIAnimation.Manage.ReleaseAnimat(this);
         }
         Constructor ItemCreator;
         Constructor TitleCreator;
@@ -356,7 +368,7 @@ namespace huqiang.UIComposite
                 }
             }
         }
-        protected ScrollItem CreateItem(List<ScrollItem> buffer, Constructor con, ModelElement mod)
+        protected ScrollItem CreateItem(List<ScrollItem> buffer, Constructor con, ModelElement mod,ModelElement parent)
         {
             if (buffer.Count > 0)
             {
@@ -368,7 +380,7 @@ namespace huqiang.UIComposite
             }
             ModelElement me = new ModelElement();
             me.Load(mod.ModData);
-            me.SetParent(Model);
+            me.SetParent(parent);
             ScrollItem a = new ScrollItem();
             a.target = me;
             if(con==null)
@@ -393,15 +405,15 @@ namespace huqiang.UIComposite
         }
         ScrollItem CreateTitle()
         {
-            return CreateItem(TitleRecycler,TitleCreator,TitleMod);
+            return CreateItem(TitleRecycler,TitleCreator,TitleMod,TitleParent);
         }
         ScrollItem CreateItem()
         {
-            return CreateItem(ItemRecycler,ItemCreator,ItemMod);
+            return CreateItem(ItemRecycler,ItemCreator,ItemMod,ItemParent);
         }
         ScrollItem CreateTail()
         {
-            return CreateItem(TailRecycler,TailCreator,TailMod);
+            return CreateItem(TailRecycler,TailCreator,TailMod,TitleParent);
         }
         protected void PushItems(List<ScrollItem> tar, List<ScrollItem> src)
         {
@@ -508,6 +520,98 @@ namespace huqiang.UIComposite
                 }
             }
             return v;
+        }
+        DataTemplate hideSect;
+        DataTemplate showSect;
+        public void HideSection(DataTemplate template)
+        {
+            if (template == null)
+                return;
+            template.ShowOffset = template.Height;
+            template.aniTime = 0;
+            hideSect = template;
+        }
+        public void OpenSection(DataTemplate template)
+        {
+            if (template == null)
+                return;
+            template.ShowOffset = 0;
+            template.aniTime = 0;
+            showSect = template;
+            template.Hide = false;
+            CalculSize();
+        }
+        public ScrollYExtand()
+        {
+            UIAnimation.Manage.AddAnimat(this);
+        }
+        void CalculSizeD()
+        {
+            height = 0;
+            wm = (int)(ItemSize.x / Size.x);
+            if (wm < 1)
+                wm = 1;
+            int c = BindingData.Count;
+            height += TitleSize.y * c;
+            if (TailMod != null)
+                height += TailSize.y * c;
+            for (int i = 0; i < BindingData.Count; i++)
+            {
+                if (!BindingData[i].Hide)
+                {
+                    height += BindingData[i].Height;
+                    height -= BindingData[i].ShowOffset;
+                }
+            }
+            if (height < Size.y)
+                height = Size.y;
+            ActualSize.y = height;
+        }
+        public void Update(float time)
+        {
+            bool up = false;
+            float os = 0;
+            if (hideSect != null)
+            {
+                up = true;
+                float a = hideSect.aniTime;
+                hideSect.aniTime += time;
+                if (hideSect.aniTime > 400)
+                    hideSect.aniTime = 400;
+                float r = hideSect.aniTime / 400;
+                hideSect.ShowOffset = hideSect.Height * r;
+                os -= (hideSect.aniTime - a)/400 * hideSect.Height;
+                if (r == 1)
+                {
+                    hideSect.Hide = true;
+                    hideSect = null;
+                }
+            }
+            if (showSect != null)
+            {
+                up = true;
+                float a = showSect.aniTime;
+                showSect.aniTime += time;
+                if (showSect.aniTime > 400)
+                    showSect.aniTime = 400;
+                float r = showSect.aniTime / 400;
+                r = 1 - r;
+                showSect.ShowOffset = showSect.Height * r;
+                os += (showSect.aniTime - a)/400 * showSect.Height;
+                if (r == 0)
+                    showSect = null;
+            }
+            if(up)
+            {
+                if (os < 0)
+                {
+                    Point += os;
+                    if (Point < 0)
+                        Point = 0;
+                }
+                CalculSizeD();
+                Order();
+            }
         }
     }
 }
