@@ -18,9 +18,13 @@ namespace huqiang.UI
                 Scene.ChangedScene<T>(dat);
             }, null);
         }
-        public void Invoke(Action<object> action)
+        public void Invoke(Action<RenderImageElement> action)
         {
-            ThreadMission.InvokeToMain(action, Scene);
+            ThreadMission.InvokeToMain((o) => { action(this); }, null);
+        }
+        public void InvokePage<T>(Action<T> action) where T : ScenePage, new()
+        {
+            ThreadMission.InvokeToMain((o)=> { action(Scene.CurrentPage as T); }, null);
         }
         void ApplyScene()
         {
