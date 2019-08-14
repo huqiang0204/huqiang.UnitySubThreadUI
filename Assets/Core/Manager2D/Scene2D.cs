@@ -11,10 +11,13 @@ namespace huqiang.Manager2D
         public ScenePage CurrentPage;
         public Scene2D()
         {
-            Instance = new GameObject();
+            Instance = new GameObject("root");
             Root = Instance.transform;
-            camera = Instance.AddComponent<Camera>();
+            GameObject cam = new GameObject("cam");
+            camera = cam.AddComponent<Camera>();
             camera.clearFlags = CameraClearFlags.Nothing;
+            cam.transform.localPosition = Vector3.zero;
+            cam.transform.localScale = Vector3.one;
         }
         public RenderTexture texture;
         bool _textureMode;
