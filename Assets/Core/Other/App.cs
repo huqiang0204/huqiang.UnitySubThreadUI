@@ -24,6 +24,7 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<ShareChild, ShareChildElement>(ShareChildElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<ShareImage, ShareImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<CustomRawImage, RawImageElement>(RawImageElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<RenderImage, RenderImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<RawImage, RawImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<RectMask2D, RectMaskElement>(RectMaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));

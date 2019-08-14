@@ -8,7 +8,9 @@ namespace UGUI
 {
     public class PrefabElementM:MonoBehaviour
     {
+        public GameObject prefab;
         public string BundleName;
         public string AssetsName;
+        public SpriteRenderer rende; 
     }
 }
