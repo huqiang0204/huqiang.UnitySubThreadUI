@@ -42,9 +42,6 @@ namespace huqiang.UIComposite
             eventCall.ForceEvent = true;
             Size = Model.data.sizeDelta;
             eventCall.CutRect = true;
-            Titles = new List<ScrollItem>();
-            Items = new List<ScrollItem>();
-            Tails = new List<ScrollItem>();
             ItemParent = ModelElement.CreateNew("Items");
             ItemParent.SetParent(model);
             TitleParent = ModelElement.CreateNew("Titles");
@@ -69,6 +66,8 @@ namespace huqiang.UIComposite
                     TailSize = TailMod.data.sizeDelta;
                     TailMod.activeSelf = false;
                 }
+                Body = model.Find("Body");
+                Body.activeSelf = false;
             }
         }
         void Scrolling(EventCallBack back, Vector2 v)
@@ -117,19 +116,23 @@ namespace huqiang.UIComposite
         public ModelElement TitleMod;
         public ModelElement TailMod;
         public ModelElement ItemMod;
+        public ModelElement Body;
         public List<DataTemplate> BindingData;
         public Vector2 TitleOffset = Vector2.zero;
         public Vector2 TailOffset = Vector2.zero;
         public Vector2 ItemOffset = Vector2.zero;
-        List<ScrollItem> Titles;
-        List<ScrollItem> Tails;
-        List<ScrollItem> Items;
+        List<ScrollItem> Titles=new List<ScrollItem>();
+        List<ScrollItem> Tails=new List<ScrollItem>();
+        List<ScrollItem> Items=new List<ScrollItem>();
+        List<ScrollItem> Bodys=new List<ScrollItem>();
         List<ScrollItem> TitleBuffer = new List<ScrollItem>();
         List<ScrollItem> ItemBuffer = new List<ScrollItem>();
         List<ScrollItem> TailBuffer = new List<ScrollItem>();
         List<ScrollItem> TitleRecycler = new List<ScrollItem>();
         List<ScrollItem> ItemRecycler = new List<ScrollItem>();
         List<ScrollItem> TailRecycler = new List<ScrollItem>();
+        List<ScrollItem> BodyBuffer = new List<ScrollItem>();
+        List<ScrollItem> BodyRecycler = new List<ScrollItem>();
         int max_count;
         /// <summary>
         /// 所有设置完毕或更新数据时刷新
@@ -193,11 +196,10 @@ namespace huqiang.UIComposite
                 var dat = BindingData[i];
                 OrderTitle(oy - y, dat, i, force);
                 oy += TitleSize.y;
-                if(!dat.Hide)
+                if (!dat.Hide)
                 {
                     float so = dat.ShowOffset;
-                    for (int c = 0; c < dat.Data.Count; c++)
-                        OrderItem(oy-y-so, dat.Data[c],c,force);
+                    OrderBody(oy-y,dat,i,force);
                     oy += dat.Height;
                     oy -= so;
                 }
@@ -231,10 +233,35 @@ namespace huqiang.UIComposite
             if(force|u)
             ItemUpdate(t.obj,dat,index,TitleCreator);
         }
-        void OrderItem(float os, object dat, int index, bool force)
+        void OrderBody(float os,DataTemplate dat,int index, bool force)
+        {
+            if (os > Size.y)
+                return;
+            float h = dat.Height - dat.ShowOffset;
+            float oe = os + h;
+            if (oe < 0)
+                return;
+            float oy = os + 0.5f * h;
+            var t = PopItem(BodyBuffer, index);
+            if (t == null)
+            {
+                t =CreateBody();
+                t.index = index;
+            }
+            Bodys.Add(t);
+            t.target.data.localPosition.y =  Size.y * 0.5f - os - h * 0.5f;
+            t.target.data.sizeDelta.y = h;
+            t.target.activeSelf = true;
+            for(int i=0;i<dat.Data.Count;i++)
+            {
+                OrderItem(os, dat.Data[i], i, force,t.target);
+            }
+        }
+        void OrderItem(float os, object dat, int index, bool force,ModelElement parent)
         {
             int r = index / wm;
-            os += r * ItemSize.y;
+            float oy = r * ItemSize.y;
+            os +=oy;
             if (os < -ItemSize.y)
                 return;
             if (os > Size.y + ItemSize.y)
@@ -248,8 +275,10 @@ namespace huqiang.UIComposite
                 u = true;
             }
             Items.Add(t);
-            t.target.data.localPosition = new Vector3(ItemOffset.x,  Size.y * 0.5f - os + ItemOffset.y - ItemSize.y * 0.5f, 0);
+            float h = parent.data.sizeDelta.y*0.5f;
+            t.target.data.localPosition = new Vector3(ItemOffset.x,  h - oy + ItemOffset.y - ItemSize.y * 0.5f, 0);
             t.target.activeSelf = true;
+            t.target.SetParent(parent);
             if(force|u)
             ItemUpdate(t.obj, dat, index, ItemCreator);
         }
@@ -368,7 +397,7 @@ namespace huqiang.UIComposite
                 }
             }
         }
-        protected ScrollItem CreateItem(List<ScrollItem> buffer, Constructor con, ModelElement mod,ModelElement parent)
+        protected ScrollItem CreateItem(List<ScrollItem> buffer, Constructor con, ModelElement mod, ModelElement parent)
         {
             if (buffer.Count > 0)
             {
@@ -415,6 +444,10 @@ namespace huqiang.UIComposite
         {
             return CreateItem(TailRecycler,TailCreator,TailMod,TitleParent);
         }
+        ScrollItem CreateBody()
+        {
+            return CreateItem(BodyRecycler, null, Body, Model);
+        }
         protected void PushItems(List<ScrollItem> tar, List<ScrollItem> src)
         {
             for (int i = 0; i < src.Count; i++)
@@ -427,12 +460,14 @@ namespace huqiang.UIComposite
             PushItems(TitleBuffer,Titles);
             PushItems(ItemBuffer,Items);
             PushItems(TailBuffer,Tails);
+            PushItems(BodyBuffer,Bodys);
         }
         protected void RecycleRemain()
         {
             PushItems(TitleRecycler, TitleBuffer);
             PushItems(ItemRecycler, ItemBuffer);
             PushItems(TailRecycler, TailBuffer);
+            PushItems(BodyRecycler,BodyBuffer);
         }
         protected ScrollItem PopItem(List<ScrollItem> tar, int index)
         {
@@ -597,20 +632,22 @@ namespace huqiang.UIComposite
                 float r = showSect.aniTime / 400;
                 r = 1 - r;
                 showSect.ShowOffset = showSect.Height * r;
-                os += (showSect.aniTime - a)/400 * showSect.Height;
                 if (r == 0)
                     showSect = null;
             }
             if(up)
             {
-                if (os < 0)
-                {
-                    Point += os;
-                    if (Point < 0)
-                        Point = 0;
-                }
+                if (Point + Size.y > height)
+                    Point = height - Size.y;
                 CalculSizeD();
                 Order();
+            }
+            if(eventCall!=null)
+            {
+               if(eventCall.VelocityY==0)
+                {
+                    OnScrollEnd(eventCall);
+                }
             }
         }
     }
