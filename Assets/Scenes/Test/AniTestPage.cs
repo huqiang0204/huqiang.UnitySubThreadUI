@@ -3,9 +3,6 @@ using huqiang.Manager2D;
 using huqiang.UI;
 using huqiang.UIComposite;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 public class AniTestPage:UIPage
@@ -60,6 +57,12 @@ public class RolePage : ScenePage
                 break;
             case UIRocker.Direction.Down:
                 animator.Play("idle");
+                break;
+            case UIRocker.Direction.Left:
+                go.transform.localEulerAngles = Vector3.zero;
+                break;
+            case UIRocker.Direction.Right:
+                go.transform.localEulerAngles = new Vector3(0,180,0);
                 break;
         }
     }
