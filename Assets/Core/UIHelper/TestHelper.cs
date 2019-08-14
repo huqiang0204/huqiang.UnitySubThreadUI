@@ -31,7 +31,7 @@ public class TestHelper:UICompositeHelp
                     ElementAsset.bundles.Add(AssetBundle.LoadFromFile(bs[i]));
                 }
             }
-        }
+        } 
 #endif
     }
     public string AssetName = "baseUI";

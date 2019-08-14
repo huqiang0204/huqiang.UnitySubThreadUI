@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1199401580
+CRC: 1566238133
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4d71d0006f2f410eaffb1ecc51c87faa
+    Hash: 0eb49c994c39f45b3c9395d63288df9a
   TypeTreeHash:
     serializedVersion: 2
     Hash: db5e5a0e8ffd8e66cf9a1ed744aca029
@@ -34,10 +34,24 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/AssetsBundle/png/Right Leg.png
+- Assets/AssetsBundle/png/shadow.png
 - Assets/AssetsBundle/New Render Texture.renderTexture
+- Assets/AssetsBundle/png/Weapon.png
+- Assets/AssetsBundle/png/etc.png
+- Assets/AssetsBundle/png/Body.png
 - Assets/AssetsBundle/Sprites/redboy.png
+- Assets/AssetsBundle/png/Left Arm(Bottom Part).png
+- Assets/AssetsBundle/animation/idle.anim
+- Assets/AssetsBundle/png/Right Arm(upper Part).png
 - Assets/AssetsBundle/Emoji.bytes
 - Assets/AssetsBundle/hjh.bytes
+- Assets/AssetsBundle/png/Left Leg.png
+- Assets/AssetsBundle/animation/sample motion.controller
 - Assets/AssetsBundle/baseUI.bytes
+- Assets/AssetsBundle/animation/walk.anim
+- Assets/AssetsBundle/png/head.png
+- Assets/AssetsBundle/png/Right Arm(Bottom Part).png
 - Assets/AssetsBundle/prefab/Sample.prefab
+- Assets/AssetsBundle/png/Left Arm(upper Part).png
 Dependencies: []
