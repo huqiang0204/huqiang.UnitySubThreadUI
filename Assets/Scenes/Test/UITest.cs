@@ -19,7 +19,6 @@ public class UITest : TestHelper
         //UIPage.LoadPage<TabControlTest>();
         //UIPage.LoadPage<ScrollExTestPage>();
         UIPage.LoadPage<AniTestPage>();
-
 #else
         ElementAsset.LoadAssetsAsync("base.unity3d",(o,e)=> { UIPage.LoadPage<AniTestPage>(); });
 #endif

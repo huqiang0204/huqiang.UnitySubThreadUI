@@ -97,7 +97,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
-      bones: []
+      bones:
+      - name: bone_1
+        position: {x: 48.49742, y: 105.47461, z: 0}
+        rotation: {x: 0, y: 0, z: -0.73505753, w: 0.6780048}
+        length: 92.737816
+        parentId: -1
       spriteID: d53f363e0c5324c45828285020fc9251
       vertices: []
       indices: 
@@ -137,7 +142,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
-      bones: []
+      bones:
+      - name: bone_1
+        position: {x: 96.53602, y: 7.1627197, z: 0}
+        rotation: {x: 0, y: 0, z: 0.7004083, w: 0.71374243}
+        length: 108.86818
+        parentId: -1
       spriteID: ac5fb141695e52c4fa7708c4261002fb
       vertices: []
       indices: 
