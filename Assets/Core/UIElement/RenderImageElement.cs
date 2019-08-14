@@ -34,14 +34,18 @@ namespace huqiang.UI
             {
                 Scene = new Scene2D();
                 Scene.TextureMode = true;
-                Scene.ReSize(w, h);
+                Scene.ReSize(lw, lh);
                 offset += 100;
                 Scene.Root.position = new Vector3(offset,0,0);
+                Context.texture = Scene.texture;
             }
             else
             {
                 if (w != lw | h != lh)
+                {
                     Scene.ReSize(w, h);
+                    Context.texture = Scene.texture;
+                }
             }
             w = lw;
             h = lh;

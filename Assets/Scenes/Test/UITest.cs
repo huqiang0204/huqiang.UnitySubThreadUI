@@ -16,7 +16,8 @@ public class UITest : TestHelper
         //UIPage.LoadPage<LayoutTestPage>();
         //UIPage.LoadPage<TestPage>();
         //UIPage.LoadPage<TabControlTest>();
-        UIPage.LoadPage<ScrollExTestPage>();
+        //UIPage.LoadPage<ScrollExTestPage>();
+        UIPage.LoadPage<AniTestPage>();
     }
     public override void OnUpdate()
     {

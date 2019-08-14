@@ -1,0 +1,43 @@
+ManifestFileVersion: 0
+CRC: 1199401580
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4d71d0006f2f410eaffb1ecc51c87faa
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: db5e5a0e8ffd8e66cf9a1ed744aca029
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/AssetsBundle/New Render Texture.renderTexture
+- Assets/AssetsBundle/Sprites/redboy.png
+- Assets/AssetsBundle/Emoji.bytes
+- Assets/AssetsBundle/hjh.bytes
+- Assets/AssetsBundle/baseUI.bytes
+- Assets/AssetsBundle/prefab/Sample.prefab
+Dependencies: []

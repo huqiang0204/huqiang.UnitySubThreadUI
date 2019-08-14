@@ -15,8 +15,9 @@ namespace huqiang.Manager2D
             Root = Instance.transform;
             GameObject cam = new GameObject("cam");
             camera = cam.AddComponent<Camera>();
-            camera.clearFlags = CameraClearFlags.Nothing;
-            cam.transform.localPosition = Vector3.zero;
+            camera.clearFlags = CameraClearFlags.SolidColor;
+            cam.transform.SetParent(Root);
+            cam.transform.localPosition = new Vector3(0,0,-1);
             cam.transform.localScale = Vector3.one;
         }
         public RenderTexture texture;

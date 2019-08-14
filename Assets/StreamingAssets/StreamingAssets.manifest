@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 403089544
+CRC: 3821457839
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: picture.unity3d
+      Name: base.unity3d
       Dependencies: {}
