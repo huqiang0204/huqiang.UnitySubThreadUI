@@ -14,6 +14,8 @@ public class DrawPage:UIPage
         public EventCallBack mod0;
         public EventCallBack mod1;
         public EventCallBack mod2;
+        public EventCallBack Last;
+        public EventCallBack Next;
     }
     View view;
     public override void Initial(ModelElement parent, object dat = null)
@@ -34,5 +36,7 @@ public class DrawPage:UIPage
         view.mod0.Click = (o, e) => { view.draw.drawModel = Paint.DrawModel.Brush; };
         view.mod1.Click = (o, e) => { view.draw.drawModel = Paint.DrawModel.Scale; };
         view.mod2.Click = (o, e) => { view.draw.drawModel = Paint.DrawModel.Rotate; };
+        view.Last.Click = (o, e) => { LoadPage<LayoutTestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<ScrollExTestPage>(); };
     }
 }

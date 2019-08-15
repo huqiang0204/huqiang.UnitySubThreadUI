@@ -2,6 +2,7 @@
 using huqiang.Manager2D;
 using huqiang.UI;
 using huqiang.UIComposite;
+using huqiang.UIEvent;
 using System;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class AniTestPage:UIPage
     {
         public RenderImageElement render;
         public UIRocker rocker;
+        public EventCallBack Last;
+        public EventCallBack Next;
     }
     View view;
     public override void Initial(ModelElement parent, object dat = null)
@@ -19,7 +22,10 @@ public class AniTestPage:UIPage
         base.Initial(parent, dat);
         view = model.ComponentReflection<View>();
         view.rocker.Rocking = Rocking;
+        view.rocker.Radius = 100;
         view.render.LoadAsync<RolePage>(null);
+        view.Last.Click = (o, e) => { LoadPage<ScrollExTestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<TestPage>(); };
     }
     void Rocking(UIRocker rocker)
     {
@@ -28,6 +34,11 @@ public class AniTestPage:UIPage
     void Rock(RolePage role,UIRocker.Direction direction)
     {
         role.Rocking(direction);
+    }
+    public override void Dispose()
+    {
+        view.render.Scene.InvokeDispose();
+        base.Dispose();
     }
 }
 public class RolePage : ScenePage

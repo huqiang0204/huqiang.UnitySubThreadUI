@@ -39,6 +39,7 @@ namespace huqiang.UI
             if (a == null)
                 return;
             Context = a;
+            Context.enabled = true;
         }
         public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
         {

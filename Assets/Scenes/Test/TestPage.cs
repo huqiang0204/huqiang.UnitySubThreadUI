@@ -11,14 +11,17 @@ public class TestPage : UIPage
 {
     class View
     {
-        public UIRocker Rocker;
         public ImageElement Image;
         public UIDate Date;
         public TreeView TreeView;
         public TextInput Log;
         public GridScroll Scroll;
         public ScrollXS ScrollX;
+        public ScrollYS ScrollY;
         public DragContent Drag;
+        public UISlider Slider;
+        public EventCallBack Last;
+        public EventCallBack Next;
     }
     class Item
     {
@@ -33,7 +36,6 @@ public class TestPage : UIPage
       
         //model.SetParent(UIPage.Root);
        // var view = model.ComponentReflection<View>();
-        view.Rocker.Radius = 100;
 
         TreeViewNode node = new TreeViewNode();
         node.content = "root";
@@ -56,16 +58,23 @@ public class TestPage : UIPage
         List<int> testData = new List<int>();
         for (int i = 0; i <166; i++)
             testData.Add(i);
-        //view.ScrollX.scroll.BindingData = testData;
-        //view.ScrollX.scroll.ItemObject = typeof(Item);
-        //view.ScrollX.scroll.ItemUpdate = (o, e, i) => {
-        //    (o as Item).Text.text = i.ToString();
-        //};
-        //view.Scroll.Refresh();
+        view.ScrollX.scroll.BindingData = testData;
+        view.ScrollX.scroll.SetItemUpdate<Item, int>((o,e,i)=> {
+            o.Text.text = i.ToString();
+        });
+        view.ScrollX.scroll.Refresh();
+
+        view.ScrollY.scroll.BindingData = testData;
+        view.ScrollY.scroll.SetItemUpdate<Item, int>((o, e, i) => {
+            o.Text.text = i.ToString();
+        });
+        view.ScrollY.scroll.Refresh();
 
         view.Scroll.BindingData = testData;
         view.Scroll.Column = 16;
         view.Scroll.SetItemUpdate<Item,int> ((o, e, i) => {o.Text.text = i.ToString(); });
         view.Scroll.Refresh();
+        view.Last.Click = (o, e) => { LoadPage<AniTestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<LayoutTestPage>(); };
     }
 }

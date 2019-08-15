@@ -10,6 +10,8 @@ public class LayoutTestPage : UIPage
     class View
     {
         public DesignedDockPanel Layout;
+        public EventCallBack Last;
+        public EventCallBack Next;
     }
     View view;
     public override void Initial(ModelElement parent, object dat = null)
@@ -40,6 +42,8 @@ public class LayoutTestPage : UIPage
         context = l.AddContent("page5");
         context.LoadPopWindow<GridTestWindow2>();
         //l.Refresh();
+        view.Last.Click = (o, e) => { LoadPage<TestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<DrawPage>(); };
     } 
 }
 public class GridTestWindow : PopWindow

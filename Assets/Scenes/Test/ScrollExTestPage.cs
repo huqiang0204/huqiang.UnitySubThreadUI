@@ -13,6 +13,8 @@ public class ScrollExTestPage : UIPage
     class View
     {
         public ScrollYExtand scroll;
+        public EventCallBack Last;
+        public EventCallBack Next;
     }
     View view;
     class TitleItem
@@ -61,6 +63,9 @@ public class ScrollExTestPage : UIPage
         view.scroll.SetTitleUpdate<TitleItem, ScrollYExtand.DataTemplate>(TitleUpdate);
         view.scroll.SetItemUpdate<SubItem, string>(ItemUpdate);
         view.scroll.Refresh();
+
+        view.Last.Click = (o, e) => { LoadPage<ScrollExTestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<AniTestPage>(); };
     }
     ScrollYExtand.DataTemplate current;
     void TitleUpdate(TitleItem title, ScrollYExtand.DataTemplate data, int index)

@@ -44,6 +44,10 @@ namespace huqiang.Manager2D
                 GameObject.Destroy(Instance);
             Instance = null;
         }
+        public void InvokeDispose()
+        {
+            ThreadMission.InvokeToMain((o)=> { Dispose(); },null);
+        }
         public void ChangedScene<T>(object dat)where T:ScenePage,new()
         {
             if (CurrentPage is T)

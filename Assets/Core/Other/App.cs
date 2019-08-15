@@ -127,6 +127,8 @@ namespace huqiang
             EventCallBack.ClearEvent();
             ThreadMission.DisposeAll();
             RecordManager.ReleaseAll();
+            ElementAsset.bundles.Clear();
+            AssetBundle.UnloadAllAssetBundles(true);
         }
     }
 }
