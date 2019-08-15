@@ -15,6 +15,8 @@ public class ScrollExTestPage : UIPage
         public ScrollYExtand scroll;
         public EventCallBack Last;
         public EventCallBack Next;
+        public DragContent Drag;
+        public DropdownEx Dropdown;
     }
     View view;
     class TitleItem
@@ -64,7 +66,12 @@ public class ScrollExTestPage : UIPage
         view.scroll.SetItemUpdate<SubItem, string>(ItemUpdate);
         view.scroll.Refresh();
 
-        view.Last.Click = (o, e) => { LoadPage<ScrollExTestPage>(); };
+        List<string> rr = new List<string>();
+        for (int i = 0; i < 33; i++)
+            rr.Add(i.ToString());
+        view.Dropdown.BindingData = rr;
+
+        view.Last.Click = (o, e) => { LoadPage<DrawPage>(); };
         view.Next.Click = (o, e) => { LoadPage<AniTestPage>(); };
     }
     ScrollYExtand.DataTemplate current;

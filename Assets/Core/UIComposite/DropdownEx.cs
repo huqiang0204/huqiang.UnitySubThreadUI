@@ -82,6 +82,8 @@ namespace huqiang.UIComposite
                 m_scroll = new ScrollY();
                 m_scroll.Initial(scroll);
                 scroll.activeSelf = false;
+                ItemSize = m_scroll.ItemSize;
+                MaxHeight = m_scroll.Model.data.sizeDelta.y;
             }
         }
         void Show(EventCallBack back, UserAction action)
