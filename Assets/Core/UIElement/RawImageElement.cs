@@ -92,13 +92,17 @@ namespace huqiang.UI
             if(IsChanged)
             {
                 UpdateMaterial();
-                Context.uvRect = data.uvRect;
-                Context.color = _color;
+                if(Context!=null)
+                {
+                    Context.uvRect = data.uvRect;
+                    Context.color = _color;
+                }
                 IsChanged = false;
             }
             if(textureChanged)
             {
                 textureChanged = false;
+                if(Context!=null)
                 (Context as RawImage).texture = ElementAsset.FindTexture(assetName, textureName);
             }
         }

@@ -83,32 +83,35 @@ namespace huqiang.UI
             buff[3].color = data.color;
 
             var q = rect.data.localRotation * quate;
-            buff[0].position = q * new Vector3(left, down) + pos;
-            buff[1].position = q * new Vector3(left, top) + pos;
-            buff[2].position = q * new Vector3(right, top) + pos;
-            buff[3].position = q * new Vector3(right, down) + pos;
-            float tx = data.txtSize.x;
-            float ty = data.txtSize.y;
-            float l = data.rect.x / tx;
-            float d = data.rect.y / ty;
-            float r = l + data.rect.width / tx*data.fillAmountX;
-            float t = d + data.rect.height / ty;
-            buff[0].uv0.x = l;
-            buff[0].uv0.y = d;
-            buff[1].uv0.x = l;
-            buff[1].uv0.y = t;
-            buff[2].uv0.x = r;
-            buff[2].uv0.y = t;
-            buff[3].uv0.x = r;
-            buff[3].uv0.y = d;
-            int s = vertices.Count;
-            vertices.AddRange(buff);
-            tri.Add(s);
-            tri.Add(s + 1);
-            tri.Add(s + 2);
-            tri.Add(s + 2);
-            tri.Add(s + 3);
-            tri.Add(s);
+            if (spriteName!=null)
+            {
+                buff[0].position = q * new Vector3(left, down) + pos;
+                buff[1].position = q * new Vector3(left, top) + pos;
+                buff[2].position = q * new Vector3(right, top) + pos;
+                buff[3].position = q * new Vector3(right, down) + pos;
+                float tx = data.txtSize.x;
+                float ty = data.txtSize.y;
+                float l = data.rect.x / tx;
+                float d = data.rect.y / ty;
+                float r = l + data.rect.width / tx * data.fillAmountX;
+                float t = d + data.rect.height / ty;
+                buff[0].uv0.x = l;
+                buff[0].uv0.y = d;
+                buff[1].uv0.x = l;
+                buff[1].uv0.y = t;
+                buff[2].uv0.x = r;
+                buff[2].uv0.y = t;
+                buff[3].uv0.x = r;
+                buff[3].uv0.y = d;
+                int s = vertices.Count;
+                vertices.AddRange(buff);
+                tri.Add(s);
+                tri.Add(s + 1);
+                tri.Add(s + 2);
+                tri.Add(s + 2);
+                tri.Add(s + 3);
+                tri.Add(s);
+            }
             for (int i = 0; i < rect.child.Count; i++)
             {
                 var help = rect.child[i].GetComponent<ShareChildElement>();

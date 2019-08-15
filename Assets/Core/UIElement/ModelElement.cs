@@ -262,7 +262,7 @@ namespace huqiang.UI
             }
             LoadToObject(Context, ref data, this);
         }
-        static void LoadToObject(RectTransform com, ref ElementData data, ModelElement ui)
+        public static void LoadToObject(RectTransform com, ref ElementData data, ModelElement ui)
         {
             var trans = com as RectTransform;
             trans.anchoredPosition = data.anchoredPosition;
