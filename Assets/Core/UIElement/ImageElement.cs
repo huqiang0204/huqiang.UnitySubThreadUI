@@ -126,6 +126,7 @@ namespace huqiang.UI
                 UpdateMaterial();
                 LoadToObject(Context, ref data, this);
                 IsChanged = false;
+                Context.enabled = true;
             }
             if(msChanged)
             {

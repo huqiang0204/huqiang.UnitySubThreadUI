@@ -131,6 +131,7 @@ namespace huqiang.UI
                 UpdateMaterial();
                 LoadToObject(Context, ref data, this);
                 IsChanged = false;
+                Context.enabled = true;
             }
             else LoadTextSize();
         }
@@ -158,18 +159,22 @@ namespace huqiang.UI
         static Shader es;
         public override void Apply()
         {
-            if (es == null)
-                es = Shader.Find("Custom/UIEmoji");
-            if (Emoji == null)
-                Emoji = UnityEngine.Resources.Load<Texture2D>("emoji");
-            if (material == null)
+            if(IsChanged)
             {
-                material = new Material(es);
-                material.SetTexture("_emoji", Emoji);
+                if (es == null)
+                    es = Shader.Find("Custom/UIEmoji");
+                if (Emoji == null)
+                    Emoji = UnityEngine.Resources.Load<Texture2D>("emoji");
+                if (material == null)
+                {
+                    material = new Material(es);
+                    material.SetTexture("_emoji", Emoji);
+                }
+                UpdateMaterial();
+                LoadToObject(Context, ref data, this);
+                IsChanged = false;
+                Context.enabled = true;
             }
-            UpdateMaterial();
-            LoadToObject(Context, ref data, this);
-            IsChanged = false;
         }
     }
 }

@@ -96,6 +96,7 @@ namespace huqiang.UI
                 {
                     Context.uvRect = data.uvRect;
                     Context.color = _color;
+                    Context.enabled = true;
                 }
                 IsChanged = false;
             }
