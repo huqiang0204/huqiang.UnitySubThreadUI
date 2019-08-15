@@ -40,10 +40,16 @@ namespace huqiang.UI
                 return;
             Context = a;
             Context.enabled = true;
+            IsChanged = true;
         }
         public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
         {
             return null;
+        }
+        public override void Apply()
+        {
+            Context.enabled = true;
+
         }
     }
 }

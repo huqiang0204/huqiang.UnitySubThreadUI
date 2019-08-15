@@ -220,15 +220,13 @@ namespace huqiang.UI
                     i++;
                     int type = coms[i];
                     var fs = buff.GetData(index) as FakeStruct;
-                    if (fs != null)
+                    var dc = ModelManagerUI.Load(type);
+                    if (dc != null)
                     {
-                        var dc = ModelManagerUI.Load(type);
-                        if (dc != null)
-                        {
-                            dc.model = this;
+                        dc.model = this;
+                        if (fs != null)
                             dc.Load(fs);
-                            components.Add(dc);
-                        }
+                        components.Add(dc);
                     }
                 }
             }
