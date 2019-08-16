@@ -101,10 +101,14 @@ namespace HotFix
             _app.DelegateManager.RegisterMethodDelegate<DropdownEx, object>();
             _app.DelegateManager.RegisterMethodDelegate<UIPalette>();
             _app.DelegateManager.RegisterMethodDelegate<UISlider>();
+            _app.DelegateManager.RegisterMethodDelegate<UIRocker>();
+            _app.DelegateManager.RegisterMethodDelegate<RenderImageElement,object>();
 
             _app.DelegateManager.RegisterFunctionDelegate<TextInput>();
             _app.DelegateManager.RegisterFunctionDelegate<TextInput, UserAction>();
             _app.DelegateManager.RegisterFunctionDelegate<TextInput, int, char, char>();
+            _app.DelegateManager.RegisterFunctionDelegate<ModelElement, object>();
+            _app.DelegateManager.RegisterFunctionDelegate<ScenePage>();
         }
         void RegAdaptor()
         {
@@ -220,110 +224,108 @@ namespace HotFix
         public byte[] dll;
         public AssetBundle asset;
     }
-    public class UIPageInheritanceAdaptor : CrossBindingAdaptor
-    {
-        public override Type BaseCLRType => typeof(UIPage);
-
-        public override Type AdaptorType => typeof(UIPageAdaptor);
-
-        public override object CreateCLRInstance(ILRuntime.Runtime.Enviorment.AppDomain appdomain, ILTypeInstance instance)
-        {
-            return new UIPageAdaptor(appdomain,instance);
-        }
-    }
-    public class UIPageAdaptor : UIPage, CrossBindingAdaptorType
-    {
-        ILTypeInstance instance;
-        ILRuntime.Runtime.Enviorment.AppDomain appdomain;
-        IMethod mInitial,mUpdate,mSHow, mChangeLanguage,mCmd,mDispose;
-        bool isTestVirtualInvoking = false;
-        public ILTypeInstance ILInstance => instance;
-        public UIPageAdaptor()
-        {
-        }
-        public UIPageAdaptor(ILRuntime.Runtime.Enviorment.AppDomain app, ILTypeInstance ins)
-        {
-            appdomain = app;
-            instance = ins;
-            mInitial = instance.Type.GetMethod("Initial", 2);
-            mUpdate = instance.Type.GetMethod("Update",1);
-            mSHow= instance.Type.GetMethod("Show", 1);
-            mChangeLanguage = instance.Type.GetMethod("ChangeLanguage");
-            mCmd = instance.Type.GetMethod("Cmd",1);
-            mDispose = instance.Type.GetMethod("Dispose");
-        }
-        public override void Initial(ModelElement parent, object dat = null)
-        {
-            if (mInitial != null && !isTestVirtualInvoking)
-            {
-                isTestVirtualInvoking = true;
-                appdomain.Invoke(mInitial, instance, parent, dat);
-                isTestVirtualInvoking = false;
-            }
-            else
-                base.Initial(parent,dat);
-        }
-        public override void Show(object dat = null)
-        {
-            if (mSHow != null && !isTestVirtualInvoking)
-            {
-                isTestVirtualInvoking = true;
-                appdomain.Invoke(mSHow, instance, dat);
-                isTestVirtualInvoking = false;
-            }
-        }
-        public override void Update(float time)
-        {
-            if (mUpdate != null && !isTestVirtualInvoking)
-            {
-                isTestVirtualInvoking = true;
-                appdomain.Invoke(mUpdate, instance, time);
-                isTestVirtualInvoking = false;
-            }
-        }
-        public override void ChangeLanguage()
-        {
-            if (mChangeLanguage != null && !isTestVirtualInvoking)
-            {
-                isTestVirtualInvoking = true;
-                appdomain.Invoke(mChangeLanguage, instance);
-                isTestVirtualInvoking = false;
-            }
-        }
-        public override void Cmd(DataBuffer dat)
-        {
-            if (mCmd != null && !isTestVirtualInvoking)
-            {
-                isTestVirtualInvoking = true;
-                appdomain.Invoke(mCmd, instance, dat);
-                isTestVirtualInvoking = false;
-            }
-        }
-        public override void Dispose()
-        {
-            base.Dispose();
-            if (mDispose != null && !isTestVirtualInvoking)
-            {
-                isTestVirtualInvoking = true;
-                appdomain.Invoke(mDispose, instance);
-                isTestVirtualInvoking = false;
-            }
-        }
-        public override string ToString()
-        {
-            IMethod m = appdomain.ObjectType.GetMethod("ToString", 0);
-            m = instance.Type.GetVirtualMethod(m);
-            if (m == null || m is ILMethod)
-                return instance.ToString();
-            else
-                return instance.Type.FullName;
-        }
-    }
+    //public class UIPageInheritanceAdaptor : CrossBindingAdaptor
+    //{
+    //    public override Type BaseCLRType => typeof(UIPage);
+    //    public override Type AdaptorType => typeof(UIPageAdaptor);
+    //    public override object CreateCLRInstance(ILRuntime.Runtime.Enviorment.AppDomain appdomain, ILTypeInstance instance)
+    //    {
+    //        return new UIPageAdaptor(appdomain,instance);
+    //    }
+    //}
+    //public class UIPageAdaptor : UIPage, CrossBindingAdaptorType
+    //{
+    //    ILTypeInstance instance;
+    //    ILRuntime.Runtime.Enviorment.AppDomain appdomain;
+    //    IMethod mInitial,mUpdate,mSHow, mChangeLanguage,mCmd,mDispose;
+    //    bool isTestVirtualInvoking = false;
+    //    public ILTypeInstance ILInstance => instance;
+    //    public UIPageAdaptor()
+    //    {
+    //    }
+    //    public UIPageAdaptor(ILRuntime.Runtime.Enviorment.AppDomain app, ILTypeInstance ins)
+    //    {
+    //        appdomain = app;
+    //        instance = ins;
+    //        mInitial = instance.Type.GetMethod("Initial", 2);
+    //        mUpdate = instance.Type.GetMethod("Update",1);
+    //        mSHow= instance.Type.GetMethod("Show", 1);
+    //        mChangeLanguage = instance.Type.GetMethod("ChangeLanguage");
+    //        mCmd = instance.Type.GetMethod("Cmd",1);
+    //        mDispose = instance.Type.GetMethod("Dispose");
+    //    }
+    //    public override void Initial(ModelElement parent, object dat = null)
+    //    {
+    //        if (mInitial != null && !isTestVirtualInvoking)
+    //        {
+    //            isTestVirtualInvoking = true;
+    //            appdomain.Invoke(mInitial, instance, parent, dat);
+    //            isTestVirtualInvoking = false;
+    //        }
+    //        else
+    //            base.Initial(parent,dat);
+    //    }
+    //    public override void Show(object dat = null)
+    //    {
+    //        if (mSHow != null && !isTestVirtualInvoking)
+    //        {
+    //            isTestVirtualInvoking = true;
+    //            appdomain.Invoke(mSHow, instance, dat);
+    //            isTestVirtualInvoking = false;
+    //        }
+    //    }
+    //    public override void Update(float time)
+    //    {
+    //        if (mUpdate != null && !isTestVirtualInvoking)
+    //        {
+    //            isTestVirtualInvoking = true;
+    //            appdomain.Invoke(mUpdate, instance, time);
+    //            isTestVirtualInvoking = false;
+    //        }
+    //    }
+    //    public override void ChangeLanguage()
+    //    {
+    //        if (mChangeLanguage != null && !isTestVirtualInvoking)
+    //        {
+    //            isTestVirtualInvoking = true;
+    //            appdomain.Invoke(mChangeLanguage, instance);
+    //            isTestVirtualInvoking = false;
+    //        }
+    //    }
+    //    public override void Cmd(DataBuffer dat)
+    //    {
+    //        if (mCmd != null && !isTestVirtualInvoking)
+    //        {
+    //            isTestVirtualInvoking = true;
+    //            appdomain.Invoke(mCmd, instance, dat);
+    //            isTestVirtualInvoking = false;
+    //        }
+    //    }
+    //    public override void Dispose()
+    //    {
+    //        base.Dispose();
+    //        if (mDispose != null && !isTestVirtualInvoking)
+    //        {
+    //            isTestVirtualInvoking = true;
+    //            appdomain.Invoke(mDispose, instance);
+    //            isTestVirtualInvoking = false;
+    //        }
+    //    }
+    //    public override string ToString()
+    //    {
+    //        IMethod m = appdomain.ObjectType.GetMethod("ToString", 0);
+    //        m = instance.Type.GetVirtualMethod(m);
+    //        if (m == null || m is ILMethod)
+    //            return instance.ToString();
+    //        else
+    //            return instance.Type.FullName;
+    //    }
+    //}
     public class SceneInheritanceAdaptor : CrossBindingAdaptor
     {
-        public override Type BaseCLRType => typeof(UIPage);
+        public override Type BaseCLRType => typeof(ScenePage);
 
-        public override Type AdaptorType => typeof(UIPageAdaptor);
+        public override Type AdaptorType => typeof(ScenePageAdaptor);
 
         public override object CreateCLRInstance(ILRuntime.Runtime.Enviorment.AppDomain appdomain, ILTypeInstance instance)
         {

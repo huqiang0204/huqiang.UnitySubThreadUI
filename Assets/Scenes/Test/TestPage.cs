@@ -32,7 +32,7 @@ public class TestPage : UIPage
     public override void Initial(ModelElement parent, object dat = null)
     {
         //model = ModelManagerUI.FindModel("baseUI", "asd");
-         view =LoadUI<View>("baseUI","asd");
+         view = LoadUI<View>("baseUI","asd");
         base.Initial(parent, dat);
       
         //model.SetParent(UIPage.Root);

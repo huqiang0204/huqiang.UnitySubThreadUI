@@ -10,6 +10,14 @@ namespace huqiang.UI
         public Scene2D Scene;
         int w;
         int h;
+        public void LoadAsync(Func<ScenePage> FPage,object dat) 
+        {
+            ThreadMission.InvokeToMain((o) => {
+                base.Apply();
+                ApplyScene();
+                Scene.ChangeScene(FPage(),dat);
+            }, null);
+        }
         public void LoadAsync<T>(object dat)where T:ScenePage,new ()
         {
             ThreadMission.InvokeToMain((o) => {
