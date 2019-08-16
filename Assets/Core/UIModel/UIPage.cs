@@ -23,6 +23,23 @@ public class UIPage : UIBase
     }
     public static ModelElement Root { get; set; }
     public static UIPage CurrentPage { get; private set; }
+    public static void LoadPage(UIPage page,object dat=null)
+    {
+        if (CurrentPage ==page)
+        {
+            CurrentPage.Show(dat);
+            return;
+        }
+        UIAnimation.Manage.ReleaseAll();
+        if (CurrentPage != null)
+        {
+            CurrentPage.Save();
+            CurrentPage.Dispose();
+        }
+        page.Show(dat);
+        page.ReSize();
+        CurrentPage = page;
+    }
     public static void LoadPage<T>(object dat = null) where T : UIPage, new()
     {
         if (CurrentPage is T)
@@ -105,13 +122,6 @@ public class UIPage : UIBase
                 model.SetParent(parent);
                 model.data.localPosition = Vector3.zero;
             }
-    }
-    public virtual void Initial(ModelElement parent, object dat = null, Type back = null, Type pop = null, object backData = null)
-    {
-        Initial(parent, dat);
-        BackPage = back;
-        BackPop = pop;
-        BackData = backData;
     }
     public virtual void Show(object dat = null)
     {

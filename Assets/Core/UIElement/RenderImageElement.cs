@@ -15,7 +15,7 @@ namespace huqiang.UI
             ThreadMission.InvokeToMain((o) => {
                 base.Apply();
                 ApplyScene();
-                Scene.ChangedScene<T>(dat);
+                Scene.ChangeScene<T>(dat);
             }, null);
         }
         public void Invoke(Action<RenderImageElement,object> action,object data)
