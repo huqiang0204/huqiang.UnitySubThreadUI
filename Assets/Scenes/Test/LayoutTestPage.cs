@@ -4,6 +4,7 @@ using huqiang.UI;
 using huqiang.UIComposite;
 using huqiang.UIEvent;
 using UnityEngine;
+using huqiang;
 
 public class LayoutTestPage : UIPage
 {

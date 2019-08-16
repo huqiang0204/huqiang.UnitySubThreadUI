@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using huqiang.UI;
 using huqiang.UIComposite;
 using huqiang.UIEvent;
+using huqiang;
 
 public class TestPage : UIPage
 {

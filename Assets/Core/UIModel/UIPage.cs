@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using huqiang.UI;
-using huqiang.UIEvent;
-using System.Reflection;
 
 public class UIPage : UIBase
 {
@@ -23,9 +21,9 @@ public class UIPage : UIBase
     }
     public static ModelElement Root { get; set; }
     public static UIPage CurrentPage { get; private set; }
-    public static void LoadPage(UIPage page,object dat=null)
+    public static void LoadPage(UIPage page, object dat = null)
     {
-        if (CurrentPage ==page)
+        if (CurrentPage == page)
         {
             CurrentPage.Show(dat);
             return;

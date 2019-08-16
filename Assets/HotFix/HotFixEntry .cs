@@ -10,40 +10,27 @@ using ILRuntime.Runtime.Intepreter;
 using System;
 using System.IO;
 using UnityEngine;
+using huqiang;
 
 namespace HotFix
 {
     public class HotFixEntry
     {
         static IlRuntime runtime;
-        public static void Initial(Transform parent, object dat = null)
+        public static void Initial(object dat = null)
         {
-            runtime = new IlRuntime(dat as byte[], parent as RectTransform);
+            runtime = new IlRuntime(dat as byte[]);
         }
-        public static void Cmd(DataBuffer dat)
+        public static void Dispose()
         {
-            runtime.RuntimeCmd(dat);
-        }
-        public void ReSize()
-        {
-            runtime.RuntimeReSize();
-        }
-        public  void Dispose()
-        {
-        }
-        public  void Update(float time)
-        {
-            runtime.RuntimeUpdate(time);
+            runtime.Dispose();
         }
     }
     public class IlRuntime
     {
         ILRuntime.Runtime.Enviorment.AppDomain _app;
         ILType mainScript;
-        IMethod Update;
-        IMethod Cmd;
-        IMethod Resize;
-        public IlRuntime(byte[] dat, RectTransform uiRoot)
+        public IlRuntime(byte[] dat)
         {
             _app = new ILRuntime.Runtime.Enviorment.AppDomain();
             RegDelegate();
@@ -58,16 +45,13 @@ namespace HotFix
             {
                 try
                 {
-                    _app.Invoke(mainScript.FullName, start.Name, mainScript, uiRoot);
+                    _app.Invoke(mainScript.FullName, start.Name, mainScript);
                 }
                 catch (Exception ex)
                 {
                     Debug.Log(ex.StackTrace);
                 }
             }
-            Update = mainScript.GetMethod("Update");
-            Resize = mainScript.GetMethod("Resize");
-            Cmd = mainScript.GetMethod("Cmd");
         }
         void RegDelegate()
         {
@@ -90,54 +74,17 @@ namespace HotFix
             _app.DelegateManager.RegisterFunctionDelegate<GridScroll, Vector2>();
 
              _app.DelegateManager.RegisterFunctionDelegate<DropdownEx, object>();
-    
+            _app.DelegateManager.RegisterFunctionDelegate<UIPalette>();
+
         }
         void RegAdaptor()
         {
             _app.RegisterCrossBindingAdaptor(new UIPageInheritanceAdaptor());
             _app.RegisterCrossBindingAdaptor(new SceneInheritanceAdaptor());
         }
-        public void RuntimeUpdate(float time)
+        public void Dispose()
         {
-            if (Update != null)
-            {
-                try
-                {
-                    _app.Invoke(mainScript.FullName, Update.Name, mainScript);
-                }
-                catch (Exception ex)
-                {
-                    Debug.Log(ex.StackTrace);
-                }
-            }
-        }
-        public void RuntimeReSize()
-        {
-            if (Resize != null)
-            {
-                try
-                {
-                    _app.Invoke(mainScript.FullName, Resize.Name, mainScript);
-                }
-                catch (Exception ex)
-                {
-                    Debug.Log(ex.StackTrace);
-                }
-            }
-        }
-        public void RuntimeCmd(DataBuffer buffer)
-        {
-            if (Cmd != null)
-            {
-                try
-                {
-                    _app.Invoke(mainScript.FullName, Cmd.Name, mainScript, buffer);
-                }
-                catch (Exception ex)
-                {
-                    Debug.Log(ex.StackTrace);
-                }
-            }
+
         }
     }
     public class RuntimeData

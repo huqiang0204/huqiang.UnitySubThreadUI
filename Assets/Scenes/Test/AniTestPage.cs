@@ -5,6 +5,7 @@ using huqiang.UIComposite;
 using huqiang.UIEvent;
 using System;
 using UnityEngine;
+using huqiang;
 
 public class AniTestPage:UIPage
 {

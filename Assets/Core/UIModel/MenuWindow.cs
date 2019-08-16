@@ -18,16 +18,16 @@ public class MenuWindow : UIBase
         var y = pos.y;
         if (y < 0)
             y += size.y * 0.5f;
-       return UIMenu.Root.ScreenToLocal(new Vector3(x,y,0));
+        return UIMenu.Root.ScreenToLocal(new Vector3(x, y, 0));
     }
     protected UIBase Context;
     public virtual void Show(UIBase context, Vector2 pos, object obj = null)
     {
         Context = context;
         var mod = model;
-        if(mod!=null)
+        if (mod != null)
         {
-            mod.data.localPosition = Dock(pos,mod.data.sizeDelta);
+            mod.data.localPosition = Dock(pos, mod.data.sizeDelta);
             mod.data.localScale = Vector3.one;
             mod.activeSelf = true;
         }

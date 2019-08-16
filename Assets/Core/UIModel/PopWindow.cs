@@ -13,8 +13,8 @@ public class PopWindow : UIBase
         base.Initial(parent, page, obj);
         MainPage = page;
         if (model != null)
-            if(page!=null)
-            model.SetParent(page.model);
+            if (page != null)
+                model.SetParent(page.model);
     }
     public virtual void Show(object obj = null) { if (model != null) model.activeSelf = true; }
     public virtual void Hide()
@@ -27,3 +27,4 @@ public class PopWindow : UIBase
         return false;
     }
 }
+
