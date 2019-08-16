@@ -14,14 +14,34 @@ using huqiang;
 
 namespace HotFix
 {
-    public class HotFixEntry
+    public class HotFixEntry:UIPage
     {
-        static IlRuntime runtime;
-        public static void Initial(object dat = null)
+        IlRuntime runtime;
+        public override  void Initial(ModelElement model, object dat = null)
         {
             runtime = new IlRuntime(dat as byte[]);
         }
-        public static void Dispose()
+        public override void Show(object dat = null)
+        {
+            runtime.Show(dat);
+        }
+        public override void Cmd(DataBuffer dat)
+        {
+            runtime.Cmd(dat);
+        }
+        public override void Cmd(string cmd, object dat)
+        {
+            runtime.UpdateData(cmd,dat);
+        }
+        public override void ReSize()
+        {
+            runtime.Resize();
+        }
+        public override void ChangeLanguage()
+        {
+            runtime.ChnageLanguage();
+        }
+        public override  void Dispose()
         {
             runtime.Dispose();
         }
@@ -31,6 +51,7 @@ namespace HotFix
         ILRuntime.Runtime.Enviorment.AppDomain _app;
         ILType mainScript;
         MemoryStream m;
+        IMethod mStart, mUpdate, mShow, mCmd, mUpdateData, mResize, mChangeLanguage, mDispose;
         public IlRuntime(byte[] dat)
         {
             _app = new ILRuntime.Runtime.Enviorment.AppDomain();
@@ -39,12 +60,19 @@ namespace HotFix
                 _app.LoadAssembly(m);
             RegAdaptor();
             mainScript = _app.GetType("Main") as ILType;
-            var start = mainScript.GetMethod("Start");
-            if (start != null)
+            mStart = mainScript.GetMethod("Start");
+            mUpdate = mainScript.GetMethod("Update");
+            mShow = mainScript.GetMethod("Show");
+            mCmd = mainScript.GetMethod("Cmd");
+            mUpdateData = mainScript.GetMethod("UpdateData");
+            mResize = mainScript.GetMethod("Resize");
+            mChangeLanguage = mainScript.GetMethod("ChangeLanguage");
+            mDispose = mainScript.GetMethod("Dispose");
+            if (mStart != null)
             {
                 try
                 {
-                    _app.Invoke(mainScript.FullName, start.Name, mainScript);
+                    _app.Invoke(mainScript.FullName, mStart.Name, mainScript);
                 }
                 catch (Exception ex)
                 {
@@ -80,12 +108,107 @@ namespace HotFix
         }
         void RegAdaptor()
         {
-            _app.RegisterCrossBindingAdaptor(new UIPageInheritanceAdaptor());
-            //_app.RegisterCrossBindingAdaptor(new SceneInheritanceAdaptor());
+            //_app.RegisterCrossBindingAdaptor(new UIPageInheritanceAdaptor());
+            _app.RegisterCrossBindingAdaptor(new SceneInheritanceAdaptor());
+        }
+        public void Show(object dat)
+        {
+            if (mShow != null)
+            {
+                try
+                {
+                    _app.Invoke(mainScript.FullName, mShow.Name, mainScript,dat);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            }
+        }
+        public void Update(float time)
+        {
+            if (mUpdate != null)
+            {
+                try
+                {
+                    _app.Invoke(mainScript.FullName, mUpdate.Name, mainScript,time);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            }
+        }
+        public void Cmd(DataBuffer db)
+        {
+            if (mCmd != null)
+            {
+                try
+                {
+                    _app.Invoke(mainScript.FullName, mCmd.Name, mainScript, db);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            }
+        }
+        public void UpdateData(string cmd, object dat)
+        {
+            if (mUpdateData != null)
+            {
+                try
+                {
+                    _app.Invoke(mainScript.FullName, mUpdateData.Name, mainScript, cmd,dat);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            }
+        }
+        public void Resize()
+        {
+            if (mResize != null)
+            {
+                try
+                {
+                    _app.Invoke(mainScript.FullName, mResize.Name, mainScript);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            }
+        }
+        public void ChnageLanguage()
+        {
+            if (mChangeLanguage != null)
+            {
+                try
+                {
+                    _app.Invoke(mainScript.FullName, mChangeLanguage.Name, mainScript);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            }
         }
         public void Dispose()
         {
-            if(m!=null)
+            if (mDispose != null)
+            {
+                try
+                {
+                    _app.Invoke(mainScript.FullName, mDispose.Name, mainScript);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            }
+            if (m!=null)
             {
                 m.Dispose();
                 m = null;
@@ -219,6 +342,7 @@ namespace HotFix
             appdomain = app;
             instance = ins;
             mInitial = instance.Type.GetMethod("Initial", 2);
+            mSHow = instance.Type.GetMethod("Show", 1);
             mUpdate = instance.Type.GetMethod("Update");
             mCmd = instance.Type.GetMethod("Cmd", 1);
             mDispose = instance.Type.GetMethod("Dispose");

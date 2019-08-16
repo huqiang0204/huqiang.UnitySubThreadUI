@@ -3,6 +3,7 @@ using huqiang.UI;
 using huqiang.UIComposite;
 using System.Collections.Generic;
 using UnityEngine;
+using huqiang;
 
 public class UITest : TestHelper
 {

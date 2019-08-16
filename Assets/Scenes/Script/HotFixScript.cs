@@ -20,7 +20,7 @@ public class HotFixScript : MonoBehaviour
 #endif
         ElementAsset.LoadAssetsAsync("base.unity3d").PlayOver = (o, e) =>
         {
-            HotFixEntry.Initial(hotfix.bytes);
+            UIPage.LoadPage<HotFixEntry>(hotfix.bytes);
         };
     }
 

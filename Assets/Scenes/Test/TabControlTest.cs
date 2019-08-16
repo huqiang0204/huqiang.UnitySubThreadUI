@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using huqiang.UI;
 using huqiang.UIComposite;
 using UnityEngine;
+using huqiang;
 
 public class TabControlTest:UIPage
 {
