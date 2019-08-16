@@ -30,14 +30,13 @@ namespace HotFix
     {
         ILRuntime.Runtime.Enviorment.AppDomain _app;
         ILType mainScript;
+        MemoryStream m;
         public IlRuntime(byte[] dat)
         {
             _app = new ILRuntime.Runtime.Enviorment.AppDomain();
             RegDelegate();
-            using (MemoryStream m = new MemoryStream(dat))
-            {
+            MemoryStream m = new MemoryStream(dat);
                 _app.LoadAssembly(m);
-            }
             RegAdaptor();
             mainScript = _app.GetType("Main") as ILType;
             var start = mainScript.GetMethod("Start");
@@ -61,30 +60,36 @@ namespace HotFix
             _app.DelegateManager.RegisterMethodDelegate<EventCallBack>();
             _app.DelegateManager.RegisterMethodDelegate<EventCallBack, Vector2>();
             _app.DelegateManager.RegisterMethodDelegate<EventCallBack, UserAction, Vector2>();
-            _app.DelegateManager.RegisterFunctionDelegate<TextInput>();
-            _app.DelegateManager.RegisterFunctionDelegate<TextInput, UserAction>();
-            _app.DelegateManager.RegisterFunctionDelegate<TextInput, int, char, char>();
+
             _app.DelegateManager.RegisterMethodDelegate<GestureEvent>();
             _app.DelegateManager.RegisterMethodDelegate<ScrollY>();
             _app.DelegateManager.RegisterMethodDelegate<ScrollY, Vector2>();
             _app.DelegateManager.RegisterMethodDelegate<ScrollX>();
             _app.DelegateManager.RegisterMethodDelegate<ScrollX, Vector2>();
             _app.DelegateManager.RegisterMethodDelegate<DragContent, Vector2>();
-            _app.DelegateManager.RegisterFunctionDelegate<GridScroll>();
-            _app.DelegateManager.RegisterFunctionDelegate<GridScroll, Vector2>();
+            _app.DelegateManager.RegisterMethodDelegate<GridScroll>();
+            _app.DelegateManager.RegisterMethodDelegate<GridScroll, Vector2>();
 
-             _app.DelegateManager.RegisterFunctionDelegate<DropdownEx, object>();
-            _app.DelegateManager.RegisterFunctionDelegate<UIPalette>();
+            _app.DelegateManager.RegisterMethodDelegate<DropdownEx, object>();
+            _app.DelegateManager.RegisterMethodDelegate<UIPalette>();
+            _app.DelegateManager.RegisterMethodDelegate<UISlider>();
 
+            _app.DelegateManager.RegisterFunctionDelegate<TextInput>();
+            _app.DelegateManager.RegisterFunctionDelegate<TextInput, UserAction>();
+            _app.DelegateManager.RegisterFunctionDelegate<TextInput, int, char, char>();
         }
         void RegAdaptor()
         {
             _app.RegisterCrossBindingAdaptor(new UIPageInheritanceAdaptor());
-            _app.RegisterCrossBindingAdaptor(new SceneInheritanceAdaptor());
+            //_app.RegisterCrossBindingAdaptor(new SceneInheritanceAdaptor());
         }
         public void Dispose()
         {
-
+            if(m!=null)
+            {
+                m.Dispose();
+                m = null;
+            }
         }
     }
     public class RuntimeData
@@ -173,6 +178,7 @@ namespace HotFix
         }
         public override void Dispose()
         {
+            base.Dispose();
             if (mDispose != null && !isTestVirtualInvoking)
             {
                 isTestVirtualInvoking = true;
