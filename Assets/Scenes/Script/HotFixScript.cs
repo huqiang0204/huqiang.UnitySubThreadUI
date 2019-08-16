@@ -18,7 +18,7 @@ public class HotFixScript : MonoBehaviour
     void Start()
     {
         Instance = this;
-        KcpDataControll.Instance.Connection("127.0.0.1",8886);
+       // KcpDataControll.Instance.Connection("127.0.0.1",8886);
         App.Initial(transform as RectTransform);
         ModelManagerUI.LoadModels(baseUI.bytes, "baseUI");
 #if UNITY_EDITOR
@@ -27,9 +27,9 @@ public class HotFixScript : MonoBehaviour
         ElementAsset.LoadAssetsAsync("base.unity3d").PlayOver = (o, e) =>
         {
             loadOver = true;
-            if (hotData != null)
-                UIPage.LoadPage<HotFixEntry>(hotData);
-           // UIPage.LoadPage<HotFixEntry>(hotfix);
+            //if (hotData != null)
+            //    UIPage.LoadPage<HotFixEntry>(hotData);
+            UIPage.LoadPage<HotFixEntry>(hotfix);
         };
     }
 
@@ -51,9 +51,9 @@ public class HotFixScript : MonoBehaviour
             switch (fake[Req.Cmd])
             {
                 case 1:
-                    hotData = fake.GetData<byte[]>(Req.Args);
-                    if(loadOver)
-                        UIPage.LoadPage<HotFixEntry>(hotData);
+                    //hotData = fake.GetData<byte[]>(Req.Args);
+                    //if(loadOver)
+                    //    UIPage.LoadPage<HotFixEntry>(hotData);
                     break;
             }
 
