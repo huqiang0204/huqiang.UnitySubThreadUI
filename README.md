@@ -12,5 +12,5 @@
 使用事件注册eventcallback，弃用eventsystem
 </p>
 <p>
-demo介绍有空补上
+Scenes/Demo
 </p>
