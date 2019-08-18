@@ -120,7 +120,7 @@ namespace huqiang.UIEvent
             o.z = p.z * scale.z;
             o += pos;
             Vector3 s = ui.data.localScale;
-            Quaternion q = ui.data.localRotation * quate;
+            Quaternion q =  quate* ui.data.localRotation;
             s.x *= scale.x;
             s.y *= scale.y;
             var callBack = ui.baseEvent;
