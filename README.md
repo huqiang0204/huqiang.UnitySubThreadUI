@@ -14,3 +14,6 @@
 <p>
 Scenes/Demo
 </p>
+<p>
+包含热更新示例, 示例代码https://github.com/huqiang0204/HotFixDemo
+</p>
