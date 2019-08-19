@@ -83,7 +83,7 @@ namespace huqiang.UI
             buff[3].color = data.color;
 
             var q = rect.data.localRotation * quate;
-            if (spriteName!=null)
+            if (model.activeSelf & spriteName!=null)
             {
                 buff[0].position = q * new Vector3(left, down) + pos;
                 buff[1].position = q * new Vector3(left, top) + pos;

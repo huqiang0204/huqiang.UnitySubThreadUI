@@ -10,7 +10,6 @@ public class ShareElementEditor:Editor
     Vector3 angle;
     Vector2 size;
     Vector2 pivot;
-    private Editor editor;
     private void OnEnable()
     {
         var trans = (target as ShareChild).transform as RectTransform;
@@ -46,17 +45,17 @@ public class ShareElementEditor:Editor
         if(trans.localPosition!=pos)
         {
             pos = trans.localPosition;
-            changed = trans;
+            changed = true;
         }
         if(trans.localEulerAngles!=angle)
         {
             angle = trans.localEulerAngles;
-            changed = trans;
+            changed = true;
         }
         if(trans.sizeDelta!=size)
         {
             size = trans.sizeDelta;
-            changed = trans;
+            changed = true;
         }
         if(trans.pivot!=pivot)
         {
