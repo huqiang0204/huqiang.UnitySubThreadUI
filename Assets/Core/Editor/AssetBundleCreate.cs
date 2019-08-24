@@ -283,7 +283,6 @@ public class AssetBundleCreate : Editor {
     {
         SpriteData data = new SpriteData();
         var o = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.DeepAssets);
-        var g = Selection.assetGUIDs;
         for (int i = 0; i < o.Length; i++)
         {
             var p = AssetDatabase.GetAssetPath(o[i]);

@@ -6,6 +6,12 @@ using UnityEngine;
 
 namespace huqiang.Data
 {
+    public struct SpriteRectInfo
+    {
+        public Vector2 txtSize;
+        public Rect rect;
+        public Vector2 pivot;
+    }
     public class ElementAsset
     {
         public static Progress LoadAssetsAsync(string name,Action<Progress,AssetBundleCreateRequest> callback=null)
@@ -246,6 +252,53 @@ namespace huqiang.Data
                 }
             }
         }
+        public static SpriteRectInfo[] FindSpriteUVs(string tName, string[] sns)
+        {
+            SpriteRectInfo[] infos = new SpriteRectInfo[sns.Length];
+            for (int k = 0; k < SpriteDatas.Count; k++)
+            {
+                var fs = SpriteDatas[k].buffer.fakeStruct;
+                if (fs != null)
+                {
+                    var fsa = fs.GetData<FakeStructArray>(1);
+                    if (fsa != null)
+                    {
+                        for (int i = 0; i < fsa.Length; i++)
+                        {
+                            var ts = fsa.GetData(i, 0) as string;
+                            if (ts == tName)
+                            {
+                                fsa = fsa.GetData(i, 1) as FakeStructArray;
+                                if (fsa != null)
+                                {
+                                    for (int t = 0; t < sns.Length; t++)
+                                    {
+                                        var sName = sns[t];
+                                        for (int j = 0; j < fsa.Length; j++)
+                                        {
+                                            if (fsa.GetData(j, 0) as string == sName)
+                                            {
+                                                unsafe
+                                                {
+                                                    Data.SpriteData.SpriteDataS* sp = (Data.SpriteData.SpriteDataS*)fsa[j];
+                                                    infos[t].txtSize = sp->txtSize;
+                                                    infos[t].rect = sp->rect;
+                                                    infos[t].pivot = sp->pivot;
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return infos;
+        }
         public static T LoadAssets<T>(string bundle, string name) where T : UnityEngine.Object
         {
             if (bundle == null)
@@ -264,5 +317,6 @@ namespace huqiang.Data
             }
             return null;
         }
+
     }
 }
