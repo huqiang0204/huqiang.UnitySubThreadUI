@@ -12,7 +12,7 @@ public class SizeScaleEditor : Editor
         serializedObject.Update();
         if (GUILayout.Button("Refresh"))
         {
-            (target as SizeScaleEx).EditorRefresh();
+            (target as SizeScaleEx).EditorRefreshAll();
         }
         serializedObject.ApplyModifiedProperties();
     }

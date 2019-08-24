@@ -2,28 +2,40 @@
 using huqiang.UIEvent;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace huqiang.UIComposite
 {
     public class ScrollX:ScrollContent
     {
-        static void CenterScroll(ScrollX scroll)
+        public static void CenterScroll(ScrollX scroll)
         {
             var eve = scroll.eventCall;
-            var tar = scroll.eventCall.ScrollDistanceX;
-            float tx = scroll.Size.x * 0.5f;
-            float v = scroll.Point + tar + tx;
+            var d = scroll.eventCall.ScrollDistanceX;//滚动距离
+            float tx = scroll.Size.x * 0.5f;//滚动框中心
+            float tar = d - scroll.Point + d;//目标地址
             float sx = scroll.ItemSize.x;
-            float ox = v % sx;
-            tar -= ox;
-            if (ox > sx * 0.5f)
-                tar += sx;
-            tar += sx * 0.5f;
-            scroll.eventCall.ScrollDistanceX = tar;
+            float index = (int)(tar / sx);
+            if (tar%sx < -sx * 0.5f)
+                index--;
+            float offset = (tx - sx * 0.5f) % sx;
+            float qt = -index * sx + offset;
+            d = qt - scroll.Point;
+            scroll.eventCall.ScrollDistanceX = -d;
+        }
+        public static void CenterScrollByIndex(ScrollX scroll,int index)
+        {
+            var eve = scroll.eventCall;
+            var d = scroll.eventCall.ScrollDistanceX;//滚动距离
+            float tx = scroll.Size.x * 0.5f;//滚动框中心
+            float tar = d - scroll.Point + d;//目标地址
+            float sx = scroll.ItemSize.x;
+            if (tar % sx < -sx * 0.5f)
+                index--;
+            float offset = (tx - sx * 0.5f) % sx;
+            float qt = -index * sx + offset;
+            d = qt - scroll.Point;
+            scroll.eventCall.ScrollDistanceX = -d;
         }
         public EventCallBack eventCall;//scrollx自己的按钮
         protected float width;
@@ -96,9 +108,10 @@ namespace huqiang.UIComposite
         public Action<ScrollX> ScrollEnd;
         public Action<ScrollX> ScrollToTop;
         public Action<ScrollX> ScrollToDown;
+        public float DecayRateX = 0.988f;
         void Draging(EventCallBack back, UserAction action, Vector2 v)
         {
-            back.DecayRateX = 0.998f;
+            back.DecayRateX = DecayRateX;
             Scrolling(back, v);
         }
         /// <summarx>
@@ -110,6 +123,7 @@ namespace huqiang.UIComposite
         {
             if (Model == null)
                 return;
+            Vector2 u = v;
             v.x /= eventCall.Context.data.localScale.x;
             back.VelocityY = 0;
             v.y = 0;
@@ -131,7 +145,7 @@ namespace huqiang.UIComposite
             if (x != 0)
             {
                 if (Scroll != null)
-                    Scroll(this, v);
+                    Scroll(this, u);
             }
             else
             {
@@ -145,7 +159,7 @@ namespace huqiang.UIComposite
             {
                 if (m_point < -Tolerance)
                 {
-                    back.DecayRateX = 0.988f;
+                    back.DecayRateX = DecayRateX;
                     float d = -m_point;
                     back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                 }
@@ -156,7 +170,7 @@ namespace huqiang.UIComposite
                         max = Size.x + Tolerance;
                     if (m_point + Size.x > max)
                     {
-                        back.DecayRateX = 0.988f;
+                        back.DecayRateX = DecayRateX;
                         float d = ActualSize.x - m_point - Size.x ;
                         back.ScrollDistanceX = -d * eventCall.Context.data.localScale.x;
                     }
@@ -203,6 +217,7 @@ namespace huqiang.UIComposite
         {
             m_point = x;
             Size = Model.data.sizeDelta;
+         
             ActualSize = Vector2.zero;
             if (DataLength == 0)
             {
@@ -258,11 +273,6 @@ namespace huqiang.UIComposite
                 if (er >= len)
                 {
                     er -= len;
-                    RecycleInside(er, sr);
-                }
-                else
-                {
-                    RecycleOutside(sr, er);
                 }
             }
             else
@@ -272,7 +282,6 @@ namespace huqiang.UIComposite
                 if (er >= len)
                     er = len;
                 e = er - sr;
-                RecycleOutside(sr, er);
             }
 
             PushItems();//将未被回收的数据压入缓冲区
@@ -302,6 +311,7 @@ namespace huqiang.UIComposite
             var a = PopItem(index);
             a.target.data.localPosition = new Vector3(dx, os, 0);
             a.target.data.localScale = new Vector3(ctScale,ctScale,ctScale);
+            a.target.IsChanged = true;
             Items.Add(a);
             if (a.index < 0 | force)
             {
@@ -311,11 +321,24 @@ namespace huqiang.UIComposite
                 ItemUpdate(a.obj,dat, index);
             }
         }
-        public void SetSize(Vector2 size)
+        public static ScrollItem GetCenterItem(List<ScrollItem> items)
         {
-            Size = size;
-            Model.data.sizeDelta = size;
-            Refresh();
+            if (items.Count < 1)
+                return null;
+            float min = 100;
+            ScrollItem item = items[0];
+            for (int i = 1; i < items.Count; i++)
+            {
+                float x = items[i].target.data.localPosition.x;
+                if (x < 0)
+                    x = -x;
+                if (x < min)
+                {
+                    min = x;
+                    item = items[i];
+                }
+            }
+            return item;
         }
     }
 }

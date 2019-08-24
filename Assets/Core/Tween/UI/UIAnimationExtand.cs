@@ -12,16 +12,40 @@ namespace huqiang
                 return null;
             return UIAnimation.Manage.FindAni<UIMove>((o) => { return o.Target == trans ? true : false; });
         }
-        public static void MoveTo(this ModelElement trans, Vector3 pos, float time, bool hide = false, float delay = 0, Action<UIMove> over = null, bool cover = true)
+        public static UIMove MoveTo(this UIMove ani, Vector3 pos)
+        {
+            ani.StartPosition = ani.Target.data.localPosition;
+            ani.EndPosition = pos;
+            return ani;
+        }
+        public static UIMove ScaleTo(this UIMove ani, Vector3 pos)
+        {
+            ani.StartScale = ani.Target.data.localScale;
+            ani.EndScale= pos;
+            return ani;
+        }
+        public static UIMove AngleTo(this UIMove ani, Vector3 pos)
+        {
+            ani.StartAngle = ani.Target.data.localRotation.eulerAngles;
+            ani.EndAngle = pos;
+            return ani;
+        }
+        public static UIMove SizeTo(this UIMove ani, Vector2 pos)
+        {
+            ani.StartSize = ani.Target.data.sizeDelta;
+            ani.EndSize = pos;
+            return ani;
+        }
+        public static UIMove MoveTo(this ModelElement trans, Vector3 pos, float time, bool hide = false, float delay = 0, Action<UIMove> over = null, bool cover = true)
         {
             if (trans == null)
-                return;
+                return null;
             trans.activeSelf = true;
             var ani = UIAnimation.Manage.FindAni<UIMove>((o) => { return o.Target == trans ? true : false; });
             if (ani == null)
                 ani = new UIMove(trans);
             else if (!cover)
-                return;
+                return null;
             ani.StartPosition = trans.data.localPosition;
             ani.EndPosition = pos;
             ani.Time = time;
@@ -31,6 +55,7 @@ namespace huqiang
                 ani.PlayOver = (o) => { o.Dispose(); };
             else ani.PlayOver = over;
             ani.Play();
+            return ani;
         }
         public static UISprites FindSpritesAni(this ImageElement img)
         {

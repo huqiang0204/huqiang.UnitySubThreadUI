@@ -275,7 +275,7 @@ namespace huqiang.UIComposite
 
             var t =  ModelElement.CreateNew(name);
             t.data.SizeScale = true;
-            t.data.sizeType = SizeType.Margin;
+            t.data.marginType = MarginType.Margin;
             con.Content = t;
             con.Back = item.Find("Back");
 

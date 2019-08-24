@@ -437,7 +437,7 @@ public static class UICompositeMenu
         var tab = new GameObject("TabControl", typeof(RectTransform));
         tab.transform.SetParent(parent.transform);
         var ss = tab.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.Margin;
+        ss.marginType = MarginType.Margin;
 
         var Head = new GameObject("Head", typeof(RectTransform));
         Head.transform.SetParent(tab.transform);
@@ -447,7 +447,7 @@ public static class UICompositeMenu
         Items.transform.SetParent(Head.transform);
         Items.transform.localPosition = Vector3.zero;
         ss = Items.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.MarginX;
+        ss.marginType = MarginType.MarginX;
 
         var Item = new GameObject("Item", typeof(RectTransform));
         Item.transform.SetParent(Head.transform);
@@ -459,7 +459,7 @@ public static class UICompositeMenu
         var img = back.AddComponent<Image>();
         img.color = 0x2555FFff.ToColor();
         ss = back.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.Margin;
+        ss.marginType = MarginType.Margin;
 
         var label = new GameObject("Label", typeof(RectTransform));
         label.transform.SetParent(Item.transform);
@@ -474,7 +474,7 @@ public static class UICompositeMenu
         (line.transform as RectTransform).sizeDelta = new Vector2(100, 4);
         line.transform.localPosition = new Vector3(0, -24, 0);
         ss = line.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.MarginX;
+        ss.marginType = MarginType.MarginX;
 
         var content = new GameObject("Content", typeof(RectTransform));
         content.transform.SetParent(tab.transform);
@@ -590,8 +590,8 @@ public static class UICompositeMenu
         if (parent != null)
             rect.SetParent(parent.transform);
         var sse = dp.AddComponent<SizeScaleEx>();
-        sse.anchorType = AnchorType.Cneter;
-        sse.sizeType = SizeType.Margin;
+        sse.anchorPointType = AnchorPointType.Cneter;
+        sse.marginType = MarginType.Margin;
         sse.parentType = ParentType.Tranfrom;
         sse.DesignSize = new Vector2(1920, 1080);
 
@@ -614,7 +614,7 @@ public static class UICompositeMenu
         Auxiliary.transform.SetParent(rect);
         CreateDockTabControl(Auxiliary);
         var ss = Auxiliary.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.Margin;
+        ss.marginType = MarginType.Margin;
 
 
         var Cover = new GameObject("Cover", typeof(RectTransform), typeof(RawImage));
@@ -679,7 +679,7 @@ public static class UICompositeMenu
         var tab = new GameObject("TabControl", typeof(RectTransform));
         tab.transform.SetParent(parent.transform);
         var ss = tab.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.Margin;
+        ss.marginType = MarginType.Margin;
 
         var Head = new GameObject("Head", typeof(RectTransform));
         Head.transform.SetParent(tab.transform);
@@ -690,7 +690,7 @@ public static class UICompositeMenu
         Items.transform.localPosition = Vector3.zero;
         (Items.transform as RectTransform).sizeDelta = new Vector2(100,50);
         ss = Items.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.MarginX;
+        ss.marginType = MarginType.MarginX;
         Items.AddComponent<RectMask2D>();
 
         var Item = new GameObject("Item",typeof(RectTransform));
@@ -703,7 +703,7 @@ public static class UICompositeMenu
         var img = back.AddComponent<Image>();
         img.color = 0x2555FFff.ToColor();
         ss = back.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.MarginY;
+        ss.marginType = MarginType.MarginY;
 
         var label = new GameObject("Label",typeof(RectTransform));
         label.transform.SetParent(Item.transform);
@@ -726,7 +726,7 @@ public static class UICompositeMenu
         (line.transform as RectTransform).sizeDelta = new Vector2(100,4);
         line.transform.localPosition = new Vector3(0,-24,0);
         ss = line.AddComponent<SizeScaleEx>();
-        ss.sizeType = SizeType.MarginX;
+        ss.marginType = MarginType.MarginX;
         img = line.AddComponent<Image>();
         img.color = 0x5379FFff.ToColor();
 

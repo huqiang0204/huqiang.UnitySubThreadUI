@@ -14,12 +14,23 @@ namespace huqiang
         {
             Target = t;
             UIAnimation.Manage.AddAnimat(this);
+            EndPosition = StartPosition = t.data.localPosition;
+            StartAngle = EndAngle = t.data.localRotation.eulerAngles;
+            StartScale = EndScale = t.data.localScale;
+            StartSize = EndSize = t.data.sizeDelta;
         }
         public ModelElement Target;
         public Vector3 StartPosition;
         public Vector3 EndPosition;
+        public Vector3 StartAngle;
+        public Vector3 EndAngle;
+        public Vector2 StartSize;
+        public Vector2 EndSize;
+        public Vector3 StartScale;
+        public Vector3 EndScale;
         public Action<UIMove> PlayStart;
         public Action<UIMove> PlayOver;
+        public Action<UIMove> Playing;
         public void Update(float timeslice)
         {
             if (playing)
@@ -41,6 +52,9 @@ namespace huqiang
                     {
                         playing = false;
                         Target.data.localPosition = EndPosition;
+                        Target.data.localRotation = Quaternion.Euler(EndAngle);
+                        Target.data.localScale = EndScale;
+                        Target.data.sizeDelta = EndSize;
                         if (PlayOver != null)
                             PlayOver(this);
                         Target.IsChanged = true;
@@ -54,7 +68,19 @@ namespace huqiang
                             r = Linear(this, r);
                         Vector3 v = EndPosition - StartPosition;
                         Target.data.localPosition = StartPosition + v * r;
+
+                        Vector3 a = EndAngle - StartAngle;
+                        Target.data.localRotation = Quaternion.Euler(StartAngle + a * r);
+
+                        Vector3 s = EndScale - StartScale;
+                        Target.data.localScale = StartScale - s * r;
+
+                        Vector2 d = EndSize - StartSize;
+                        Target.data.sizeDelta = StartSize + d * r;
+
                         Target.IsChanged = true;
+                        if (Playing != null)
+                            Playing(this);
                     }
                 }
             }

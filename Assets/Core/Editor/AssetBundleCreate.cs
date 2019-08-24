@@ -278,58 +278,32 @@ public class AssetBundleCreate : Editor {
         Marshal.Copy(Marshal.UnsafeAddrOfPinnedArrayElement(array, 0), tmp, 0, len);
         stream.Write(tmp, 0, len);
     }
-    public static UnityEngine.Object[] LoadSprite(string name)
-    {
-        string path = null;
-        var fs = AssetDatabase.FindAssets(name);
-        if (fs != null)
-        {
-            HashSet<string> hash = new HashSet<string>();
-            for (int i = 0; i < fs.Length; i++)
-                hash.Add(fs[i]);
-            var list = hash.ToArray();
-            for (int i = 0; i < list.Length; i++)
-            {
-                path = AssetDatabase.GUIDToAssetPath(list[i]);
-                var ss = path.Split('/');
-                var str = ss[ss.Length - 1];
-                ss = str.Split('.');
-                var sp = AssetDatabase.LoadAllAssetsAtPath(path);
-                if (sp != null)
-                    if (sp.Length > 0)
-                    {
-                        return sp;
-                    }
-            }
-        }
-        return null;
-    }
     [MenuItem("Assets/CreateSpriteInfo")]
     public static void GetAllSprite()
     {
         SpriteData data = new SpriteData();
         var o = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.DeepAssets);
+        var g = Selection.assetGUIDs;
         for (int i = 0; i < o.Length; i++)
         {
-            if (o[i] is Texture2D)
+            var p = AssetDatabase.GetAssetPath(o[i]);
+            var sp = AssetDatabase.LoadAllAssetsAtPath(p);
+            if (sp != null)
             {
-                var sp = LoadSprite(o[i].name);
-                if(sp!=null)
+                if (sp.Length > 0)
                 {
-                    if(sp.Length>0)
+                    for (int j = 0; j < sp.Length; j++)
                     {
-                       for(int j=0;j<sp.Length;j++)
-                        {
-                            data.AddSprite(sp[j] as Sprite);
-                        }
+                        data.AddSprite(sp[j] as Sprite);
                     }
                 }
             }
         }
+
         string path = Application.dataPath + "/AssetsBundle/SpriteInfo.bytes";
-        data.Save("spriteInfo",path);
+        data.Save("spriteInfo", path);
         data.Clear();
-        Debug.Log("create done : "+path);
+        Debug.Log("create done : " + path);
     }
 }
 

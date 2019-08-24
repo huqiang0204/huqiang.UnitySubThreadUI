@@ -25,20 +25,12 @@ namespace huqiang.UIComposite
         public virtual object Create() { return null; }
         public virtual void Call(object obj, object dat, int index) { }
         public bool hotfix;
+        public bool create;
         public Action<object, object, int> Update;
         public Func<ModelElement, object> reflect;
     }
-    class MiddleInvoke<U>
-    {
-
-    }
     public class Middleware<T, U> : Constructor where T : class, new()
     {
-        //bool v;
-        //public Middleware()
-        //{
-        //    v = typeof(U).IsValueType;
-        //}
         public override object Create()
         {
             return new T();
@@ -220,6 +212,7 @@ namespace huqiang.UIComposite
             }
             ModelElement me = new ModelElement();
             me.Load(modData);
+            me.data.sizeDelta = ItemSize;
             me.SetParent(Model);
             ScrollItem a = new ScrollItem();
             a.target = me;
@@ -231,22 +224,25 @@ namespace huqiang.UIComposite
                         a.obj = creator.reflect(me);
                     else a.obj = me;
                 }
-                else 
+                else if (creator.create)
                 {
                     a.obj = creator.Create();
                     ModelManagerUI.ComponentReflection(me, a.obj);
                 }
+                else a.obj = me;
             }
             else a.obj = me;
+            me.IsChanged = true;
             return a;
         }
         Constructor creator;
-        public void SetItemUpdate<T,U>(Action<T,U, int> action)where T:class,new()
+        public void SetItemUpdate<T,U>(Action<T,U, int> action,bool reflect = true)where T:class,new()
         {
             Clear();
             var m = new Middleware<T,U>();
             m.Invoke = action;
             creator = m;
+            m.create = reflect;
         }
         /// <summary>
         /// 热更新无法跨域,使用此函数

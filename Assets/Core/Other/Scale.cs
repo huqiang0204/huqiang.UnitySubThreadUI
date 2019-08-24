@@ -12,11 +12,13 @@ public enum ScaleType
     FillXY,
     Cover,
 }
-public enum SizeType
-{
-    None, Anchor, Margin,MarginRatio, MarginX, MarginY, MarginRatioX, MarginRatioY
-}
 public enum AnchorType
+{
+    None,
+    Anchor,
+    Alignment
+}
+public enum AnchorPointType
 {
     Cneter,
     Left,
@@ -27,6 +29,16 @@ public enum AnchorType
     LeftTop,
     RightDown,
     RightTop
+}
+public enum MarginType
+{
+    None,
+    Margin,
+    MarginRatio,
+    MarginX,
+    MarginY,
+    MarginRatioX,
+    MarginRatioY
 }
 public enum ParentType
 {

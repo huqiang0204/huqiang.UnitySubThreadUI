@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 public class PopWindow : UIBase
 {
     public Func<bool> Back { get; set; }
-    protected UIPage MainPage;
+    protected UIPage mainPage;
     public virtual void Initial(huqiang.UI.ModelElement parent, UIPage page, object obj = null)
     {
         base.Initial(parent, page, obj);
-        MainPage = page;
+        mainPage = page;
         if (model != null)
             if(page!=null)
-            model.SetParent(page.model);
+            model.SetParent(parent);
     }
     public virtual void Show(object obj = null) { if (model != null) model.activeSelf = true; }
     public virtual void Hide()

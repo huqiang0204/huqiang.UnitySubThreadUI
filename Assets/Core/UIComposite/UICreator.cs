@@ -321,8 +321,8 @@ namespace huqiang.UIComposite
         {
             var mod = ModelElement.CreateNew(name);
             mod.data.sizeDelta = new Vector2(1920, 1080);
-            mod.data.anchorType = AnchorType.Cneter;
-            mod.data.sizeType = SizeType.Margin;
+            mod.data.anchorpointType = AnchorPointType.Cneter;
+            mod.data.marginType = MarginType.Margin;
             mod.data.parentType = ParentType.Tranfrom;
             mod.data.DesignSize = new Vector2(1920, 1080);
             mod.data.SizeScale = true;

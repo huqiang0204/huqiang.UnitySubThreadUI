@@ -140,7 +140,10 @@ public class UIPage : UIBase
     protected T ShowPopWindow<T>(object obj = null, huqiang.UI.ModelElement parent = null) where T : PopWindow, new()
     {
         if (currentPop != null)
-        { currentPop.Hide(); currentPop = null; }
+        {
+            currentPop.Hide();
+            currentPop = null;
+        }
         for (int i = 0; i < pops.Count; i++)
             if (pops[i] is T)
             {

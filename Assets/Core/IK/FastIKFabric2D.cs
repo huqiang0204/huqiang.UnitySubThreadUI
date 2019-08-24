@@ -231,10 +231,9 @@ namespace Assets.Core.IK
             else
                 current.rotation = Root.rotation * rotation;
         }
-
+#if UNITY_EDITOR
         void OnDrawGizmos()
         {
-#if UNITY_EDITOR
             var current = End;
             for (int i = 0; i < ChainLength && current != null && current.parent != null; i++)
             {

@@ -25,8 +25,9 @@ namespace huqiang.UI
         public Vector2 sizeDelta;
         public bool SizeScale;
         public ScaleType scaleType;
-        public SizeType sizeType;
         public AnchorType anchorType;
+        public MarginType marginType;
+        public AnchorPointType anchorpointType;
         public ParentType parentType;
         public Margin margin;
         public Vector2 DesignSize;
@@ -311,8 +312,9 @@ namespace huqiang.UI
                     {
                         ed->SizeScale = true;
                         ed->scaleType = ss.scaleType;
-                        ed->sizeType = ss.sizeType;
                         ed->anchorType = ss.anchorType;
+                        ed->marginType = ss.marginType;
+                        ed->anchorpointType = ss.anchorPointType;
                         ed->parentType = ss.parentType;
                         ed->margin = ss.margin;
                         ed->DesignSize = ss.DesignSize;
@@ -366,8 +368,9 @@ namespace huqiang.UI
                     if (scale == null)
                         scale = Main.AddComponent<SizeScaleEx>();
                     scale.scaleType = data.scaleType;
-                    scale.sizeType = data.sizeType;
                     scale.anchorType = data.anchorType;
+                    scale.anchorPointType = data.anchorpointType;
+                    scale.marginType = data.marginType;
                     scale.parentType = data.parentType;
                     scale.margin = data.margin;
                     scale.DesignSize = data.DesignSize;
@@ -379,7 +382,7 @@ namespace huqiang.UI
         #region 尺寸自适应
         public static Vector2[] Anchors = new[] { new Vector2(0.5f, 0.5f), new Vector2(0, 0.5f),new Vector2(1, 0.5f),
         new Vector2(0.5f, 1),new Vector2(0.5f, 0), new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0), new Vector2(1, 1)};
-        public static void Docking(ModelElement rect, ScaleType dock, Vector2 pSize, Vector2 ds)
+        public static void Scaling(ModelElement rect, ScaleType dock, Vector2 pSize, Vector2 ds)
         {
             switch (dock)
             {
@@ -410,18 +413,69 @@ namespace huqiang.UI
                     break;
             }
         }
-        public static void AnchorEx(ModelElement rect, AnchorType type, Vector2 offset, Vector2 p, Vector2 psize)
+        public static void Anchoring(ModelElement ele,AnchorType type,ref Vector2 p,ref Vector2 psize)
         {
-            AnchorEx(rect, Anchors[(int)type], offset, p, psize);
+            switch(type)
+            {
+                case AnchorType.Anchor:
+                    AnchorEx(ele, ele.data.anchorpointType, new Vector2(ele.data.margin.left, ele.data.margin.right), p, psize);
+                    break;
+                case AnchorType.Alignment:
+                    AlignmentEx(ele, ele.data.anchorpointType, new Vector2(ele.data.margin.left, ele.data.margin.right), p, psize);
+                    break;
+            }
         }
-        public static void AnchorEx(ModelElement rect, Vector2 pivot, Vector2 offset, Vector2 parentPivot, Vector2 parentSize)
+        public static void AnchorEx(ModelElement rect, AnchorPointType type, Vector2 offset, Vector2 p, Vector2 psize)
         {
-            float ox = (parentPivot.x - 1) * parentSize.x;//原点x
-            float oy = (parentPivot.y - 1) * parentSize.y;//原点y
-            float tx = ox + pivot.x * parentSize.x;//锚点x
-            float ty = oy + pivot.y * parentSize.y;//锚点y
+            var pivot = Anchors[(int)type];
+            float ox = (p.x - 1) * psize.x;//原点x
+            float oy = (p.y - 1) * psize.y;//原点y
+            float tx = ox + pivot.x * psize.x;//锚点x
+            float ty = oy + pivot.y * psize.y;//锚点y
             offset.x += tx;//偏移点x
             offset.y += ty;//偏移点y
+            rect.data.localPosition = new Vector3(offset.x, offset.y, 0);
+        }
+        public static void AlignmentEx(ModelElement rect, AnchorPointType type, Vector2 offset, Vector2 p, Vector2 psize)
+        {
+            Vector2 pivot = Anchors[(int)type];
+            float ox = (p.x - 1) * psize.x;//原点x
+            float oy = (p.y - 1) * psize.y;//原点y
+            float tx = ox + pivot.x * psize.x;//锚点x
+            float ty = oy + pivot.y * psize.y;//锚点y
+            offset.x += tx;//偏移点x
+            offset.y += ty;//偏移点y
+            switch (type)
+            {
+                case AnchorPointType.Left:
+                    offset.x += rect.data.sizeDelta.x * 0.5f;
+                    break;
+                case AnchorPointType.Right:
+                    offset.x -= rect.data.sizeDelta.x * 0.5f;
+                    break;
+                case AnchorPointType.Top:
+                    offset.y -= rect.data.sizeDelta.y * 0.5f;
+                    break;
+                case AnchorPointType.Down:
+                    offset.y += rect.data.sizeDelta.y * 0.5f;
+                    break;
+                case AnchorPointType.LeftDown:
+                    offset.x += rect.data.sizeDelta.x * 0.5f;
+                    offset.y += rect.data.sizeDelta.y * 0.5f;
+                    break;
+                case AnchorPointType.LeftTop:
+                    offset.x += rect.data.sizeDelta.x * 0.5f;
+                    offset.y -= rect.data.sizeDelta.y * 0.5f;
+                    break;
+                case AnchorPointType.RightDown:
+                    offset.x -= rect.data.sizeDelta.x * 0.5f;
+                    offset.y += rect.data.sizeDelta.y * 0.5f;
+                    break;
+                case AnchorPointType.RightTop:
+                    offset.x -= rect.data.sizeDelta.x * 0.5f;
+                    offset.y -= rect.data.sizeDelta.y * 0.5f;
+                    break;
+            }
             rect.data.localPosition = new Vector3(offset.x, offset.y, 0);
         }
         public static void MarginEx(ModelElement rect, Margin margin, Vector2 parentPivot, Vector2 parentSize)
@@ -435,30 +489,6 @@ namespace huqiang.UI
             float sy = rect.data.localScale.y;
             rect.data.sizeDelta = new Vector2(w / sx, h / sy);
             rect.data.localPosition = new Vector3(ox, oy, 0);
-        }
-        public static Vector2 AntiAnchorEx(Vector2 tp, AnchorType type, Vector2 p, Vector2 psize)
-        {
-            return AntiAnchorEx(tp, Anchors[(int)type], p, psize);
-        }
-        public static Vector2 AntiAnchorEx(Vector2 tp, Vector2 pivot, Vector2 parentPivot, Vector2 parentSize)
-        {
-            float ox = (parentPivot.x - 1) * parentSize.x;//原点x
-            float oy = (parentPivot.y - 1) * parentSize.y;//原点y
-            float tx = ox + pivot.x * parentSize.x;//锚点x
-            float ty = oy + pivot.y * parentSize.y;//锚点y
-            return new Vector2(tx - tp.x, ty - tp.y);
-        }
-        public static Margin AntiMarginEx(Vector3 p, Vector2 tp, Vector2 tsize, Vector3 ts, Vector2 psize)
-        {
-            float w = tsize.x * ts.x;
-            float h = tsize.y * ts.y;
-            float left = (tp.x - 1) * w;
-            float right = (1 - tp.x) * w;
-            float down = (tp.y - 1) * h;
-            float top = (1 - tp.y) * h;
-            float hw = psize.x * 0.5f;
-            float hh = psize.y * 0.5f;
-            return new Margin(left - hw, hw - right, hh - top, down - hh);
         }
         public static void MarginX(ModelElement rect, Margin margin, Vector2 parentPivot, Vector2 parentSize)
         {
@@ -482,57 +512,54 @@ namespace huqiang.UI
         {
             if (ele == null)
                 return;
-            Vector2 size;
+            Vector2 psize;
             Vector2 p = Anchors[0];
             if (ele.data.parentType == ParentType.Tranfrom)
             {
                 var t = ele.parent;
-                size = t.data.sizeDelta;
+                psize = t.data.sizeDelta;
                 p = t.data.pivot;
             }
             else
             {
-                size = new Vector2(Scale.LayoutWidth, Scale.LayoutHeight);
+                psize = new Vector2(Scale.LayoutWidth, Scale.LayoutHeight);
             }
-            Docking(ele, ele.data.scaleType, size, ele.data.DesignSize);
-            var st = ele.data.sizeType;
+            Scaling(ele, ele.data.scaleType, psize, ele.data.DesignSize);
+            Anchoring(ele,ele.data.anchorType,ref p,ref psize);
+            var st = ele.data.marginType;
             switch (st)
             {
-                case SizeType.Anchor:
-                    AnchorEx(ele, ele.data.anchorType,
-                   new Vector2(ele.data.margin.left, ele.data.margin.right), p, size);
-                    break;
-                case SizeType.Margin:
+                case MarginType.Margin:
                     var mar = ele.data.margin;
                     if (ele.data.parentType == ParentType.BangsScreen)
                         if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
                             mar.top += 88;
-                    MarginEx(ele, mar, p, size);
+                    MarginEx(ele, mar, p, psize);
                     break;
-                case SizeType.MarginRatio:
+                case MarginType.MarginRatio:
                     mar = new Margin();
-                    mar.left = ele.data.margin.left * size.x;
-                    mar.right = ele.data.margin.right * size.x;
-                    mar.top = ele.data.margin.top * size.y;
-                    mar.down = ele.data.margin.down * size.y;
+                    mar.left = ele.data.margin.left * psize.x;
+                    mar.right = ele.data.margin.right * psize.x;
+                    mar.top = ele.data.margin.top * psize.y;
+                    mar.down = ele.data.margin.down * psize.y;
                     if (ele.data.parentType == ParentType.BangsScreen)
                         if (Scale.LayoutHeight / Scale.LayoutWidth > 2f)
                             mar.top += 88;
-                    MarginEx(ele, mar, p, size);
+                    MarginEx(ele, mar, p, psize);
                     break;
-                case SizeType.MarginX:
+                case MarginType.MarginX:
                     mar = ele.data.margin;
                     if (ele.data.parentType == ParentType.BangsScreen)
                         if (Scale.ScreenHeight / Scale.ScreenWidth > 2f)
                             mar.top += 88;
-                    MarginX(ele, mar, p, size);
+                    MarginX(ele, mar, p, psize);
                     break;
-                case SizeType.MarginY:
+                case MarginType.MarginY:
                     mar = ele.data.margin;
                     if (ele.data.parentType == ParentType.BangsScreen)
                         if (Scale.ScreenHeight / Scale.ScreenWidth > 2f)
                             mar.top += 88;
-                    MarginY(ele, mar, p, size);
+                    MarginY(ele, mar, p, psize);
                     break;
             }
         }

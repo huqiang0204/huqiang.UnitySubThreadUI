@@ -10,7 +10,7 @@ namespace huqiang.UIComposite
 {
     public class ScrollY : ScrollContent
     {
-        static void CenterScroll(ScrollY scroll)
+        public static void CenterScroll(ScrollY scroll)
         {
             var eve = scroll.eventCall;
             var tar = scroll.eventCall.ScrollDistanceY;
@@ -72,7 +72,7 @@ namespace huqiang.UIComposite
             eventCall.AutoColor = false;
             Size = Model.data.sizeDelta;
             eventCall.CutRect = true;
-            model.SizeChanged = (o) => {  Refresh(0,m_point); };
+            model.SizeChanged = (o) => { Refresh(0,m_point); };
         }
         public Action<ScrollY, Vector2> Scroll;
         public Action<ScrollY> ScrollStart;
@@ -91,6 +91,7 @@ namespace huqiang.UIComposite
         {
             if (Model == null)
                 return;
+            Vector2 u = v;
             v.y /= eventCall.Context.data.localScale.y;
             back.VelocityX = 0;
             v.x = 0;
@@ -112,7 +113,7 @@ namespace huqiang.UIComposite
             if (y != 0)
             {
                 if (Scroll != null)
-                    Scroll(this, v);
+                    Scroll(this, u);
             }
             else
             {
@@ -290,12 +291,6 @@ namespace huqiang.UIComposite
                 a.index = index;
                 ItemUpdate(a.obj, dat, index);
             }
-        }
-        public void SetSize(Vector2 size)
-        {
-            Size = size;
-            Model.data.sizeDelta = size;
-            Refresh();
         }
         public static ScrollItem GetCenterItem(List<ScrollItem> items)
         {

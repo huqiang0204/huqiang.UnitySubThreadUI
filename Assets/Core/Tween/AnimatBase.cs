@@ -116,7 +116,6 @@ namespace huqiang
                 a = (a - 0.5f) * 2;
                 return MathH.BezierPoint(a, ref tmp[2], ref tmp[3], ref tmp[4]).y;
             }
-
         }
     }
 }
