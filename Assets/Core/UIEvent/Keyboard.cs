@@ -21,8 +21,10 @@ namespace huqiang.UIEvent
         static TouchScreenKeyboard m_touch;
         static bool _touch = false;
         public static IMECompositionMode iME;
+        public static string systemCopyBuffer;
         public static void DispatchEvent()
         {
+            systemCopyBuffer = GUIUtility.systemCopyBuffer;
             if (keys == null)
             {
                 if (Application.platform == RuntimePlatform.Android |

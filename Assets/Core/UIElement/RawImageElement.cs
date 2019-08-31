@@ -104,7 +104,7 @@ namespace huqiang.UI
             {
                 textureChanged = false;
                 if(Context!=null)
-                (Context as RawImage).texture = ElementAsset.FindTexture(assetName, textureName);
+                Context.texture = ElementAsset.FindTexture(assetName, textureName);
             }
         }
     }

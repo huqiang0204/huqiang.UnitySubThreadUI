@@ -454,11 +454,12 @@ namespace huqiang.UIEvent
                 if (!forbid)
                     Context.color = g_color;
             }
+            bool press = Pressed;
+            Pressed = false;
             if (PointerUp != null)
                 PointerUp(this, action);
-            if(Pressed)
+            if(press)
             {
-                Pressed = false;
                 long r = DateTime.Now.Ticks - pressTime;
                 if (r <= ClickTime)
                 {

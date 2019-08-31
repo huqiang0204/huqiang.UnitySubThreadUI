@@ -1,8 +1,7 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UGUI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -112,13 +111,51 @@ namespace huqiang.UIEvent
                     return EditState.Done;
                 }
             }
-            else if (Keyboard.GetKeyDown(KeyCode.Return) | Keyboard.GetKeyDown(KeyCode.KeypadEnter))
+            if (Keyboard.GetKeyDown(KeyCode.X))//剪切
             {
-                if (InputEvent.lineType != LineType.MultiLineNewline)
+                if (Keyboard.GetKey(KeyCode.LeftControl) | Keyboard.GetKey(KeyCode.RightControl))
                 {
-                    return EditState.Finish;
+                    if (InputEvent != null)
+                    {
+                        string str = InputEvent.SelectString;
+                        InputEvent.Delete(-1);
+                        ThreadMission.InvokeToMain((o) => { GUIUtility.systemCopyBuffer = str; },null);
+                    }
+                    return EditState.Done;
                 }
-                else return EditState.NewLine;
+            }
+            if (Keyboard.GetKeyDown(KeyCode.C))//复制
+            {
+                if (Keyboard.GetKey(KeyCode.LeftControl) | Keyboard.GetKey(KeyCode.RightControl))
+                {
+                    if (InputEvent != null)
+                    {
+                        string str = InputEvent.SelectString;
+                        ThreadMission.InvokeToMain((o) => { GUIUtility.systemCopyBuffer = str; }, null);
+                    }
+                    return EditState.Done;
+                }
+            }
+            if (Keyboard.GetKeyDown(KeyCode.V))//粘贴
+            {
+                if (Keyboard.GetKey(KeyCode.LeftControl) | Keyboard.GetKey(KeyCode.RightControl))
+                {
+                    if (InputEvent != null)
+                    {
+                        InputEvent.OnInputChanged(Keyboard.systemCopyBuffer);
+                    }
+                    return EditState.Done;
+                }
+            }
+            if (Keyboard.GetKeyDown(KeyCode.Return) | Keyboard.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                if (InputEvent.lineType == LineType.MultiLineNewline)
+                {
+                    if (Keyboard.GetKey(KeyCode.RightControl))
+                        return EditState.Finish;
+                    return EditState.NewLine;
+                }
+                else return EditState.Finish;
             }
             if (Keyboard.GetKeyDown(KeyCode.Escape))
             {
@@ -133,7 +170,8 @@ namespace huqiang.UIEvent
                 if (!InputEvent.ReadOnly)
                     if (!InputEvent.Pressed)
                     {
-                        if (KeyPressed() == EditState.Continue)
+                        var state = KeyPressed();
+                        if (state == EditState.Continue)
                         {
                             if (Keyboard.InputChanged)
                             {
@@ -148,53 +186,58 @@ namespace huqiang.UIEvent
                                    InputEvent.TouchInputChanged(Keyboard.InputString);
 #endif
                             }
+                        }else if(state==EditState.Finish)
+                        {
+                            if (InputEvent.OnSubmit != null)
+                                InputEvent.OnSubmit(InputEvent);
+                        }else if(state==EditState.NewLine)
+                        {
+                            InputEvent.OnInputChanged(Environment.NewLine);
                         }
                     }
+                if(InputEvent.textInfo.LineChange>0)
+                {
+                    InputEvent.textInfo.LineChange = 0;
+                    if (InputEvent.LineChanged != null)
+                        InputEvent.LineChanged(InputEvent);
+                }
+            }
+        }
+        internal static void MainDispath()
+        {
+            var input = InputEvent;
+            if(input!=null)
+            {
+                input.Update();
             }
         }
         public static bool GetIndexPoint(TextInfo info, int index, ref Vector3 point)
         {
             ///仅可见区域的顶点 0=左上1=右上2=右下3=左下
-            UIVertex[] vertex = info.vertex;
+            UIVertex[] vertex = info.filterVertex;
             if (vertex == null)
                 return false;
-            ///仅可见区域的行数
-            UILineInfo[] lines = info.lines;
-            float top = lines[lines.Length - 1].topY;
-            float high = lines[lines.Length- 1].height;
-            for (int i = 0; i < lines.Length; i++)
+            var line = info.filterLines;
+            int max = line.Length - 1;
+            for(int i=max;i>=0;i--)
             {
-                int a = lines[i].startCharIdx;
-                if ( a >= index)
+                if(line[i].startCharIdx<=index)
                 {
-                    if(i>0)
-                    {
-                        top = lines[i - 1].topY;
-                        high = lines[i - 1].height;
-                    }
+                    max = i;
                     break;
                 }
             }
             index *= 4;
-            if (info.startDock == 1)
-                index -= 2;
             if (index >= vertex.Length)
-                index -= 4;
+                index -= 2;
             point.x = vertex[index].position.x;
-            float y = vertex[index].position.y;
-            float down = top - high;
-            point.z = high;
-            point.y = top - high * 0.5f;
-            if (down > y)
-            {
-                point.y -= high;
-                return false;
-            }
+            point.y = line[max].topY - 0.5f * line[max].height;
+            point.z = line[max].height;
             return true;
         }
-        static void ChangePoint(TextInfo info)
+        static void ChangePoint(TextInfo info,TextInput input)
         {
-            int index = info.startSelect;
+            int index = info.startSelect-info.StartIndex;
             if (index < 0)
                 index = 0;
             var text = info.buffer.FilterString;
@@ -210,8 +253,8 @@ namespace huqiang.UIEvent
             tri.Clear();
             if (o)
             {
-                float left = Point.x - 0.5f;
-                float right = Point.x + 0.5f;
+                float left = Point.x - 1;
+                float right = Point.x + 1;
                 float h = Point.z;
                 h *= 0.4f;
                 float top = Point.y + h;
@@ -256,11 +299,11 @@ namespace huqiang.UIEvent
                 return 0;
             if (info.text == "" | info.text == null)
                 return 0;
-            IList<UILineInfo> lines = info.lines;
+            IList<UILineInfo> lines = info.filterLines;
             if (lines == null)
                 return 0;
      
-            IList<UIVertex> verts = info.vertex;
+            IList<UIVertex> verts = info.filterVertex;
             float lx = verts[0].position.x;
             float ty = verts[0].position.y;
             float dy = verts[verts.Count - 1].position.y;
@@ -349,82 +392,6 @@ namespace huqiang.UIEvent
             if (e2 > e1)
                 e2 = e1;
             return 1;
-        }
-        static void GetChoiceArea(TextInfo info)
-        {
-            if (info == null)
-                return;
-            IList<UILineInfo> lines = info.lines;
-            if (lines == null)
-                return;
-            IList<UIVertex> vertex = info.vertex;
-            if (vertex == null)
-                return;
-            float top = 0;
-            float down = 0;
-            int end = info.characterCount;
-            int max = lines.Count;
-            int se = max - 1;
-            var vert = info.selectVertex;
-            var color = info.areaColor;
-            var tri = info.selectTri;
-            int s = info.startSelect;
-            int e = info.endSelect;
-            if(e<s)
-            {
-                int t = s;
-                s = e;
-                e = t;
-            }
-            for (int i = 0; i < lines.Count; i++)
-            {
-                int start = lines[i].startCharIdx;
-                if (i < se)
-                {
-                    end = lines[i + 1].startCharIdx - 1;
-                }
-                else
-                {
-                    end = info.visibleCount;
-                }
-                int state = CommonArea(s, e, ref start, ref end);
-                if (state == 2)
-                {
-                    break;
-                }
-                else
-                if (state == 1)
-                {
-                    top = lines[i].topY;
-                    down = top - lines[i].height;
-                    bool warp = end < e ? true : false;
-                    var w = GetLineRect(vertex, start, end,warp);
-                    int st = vert.Count;
-                    var v = new UIVertex();
-                    v.position.x = w.x;
-                    v.position.y = down;
-                    v.color = color;
-                    vert.Add(v);
-                    v.position.x = w.x;
-                    v.position.y = top;
-                    v.color = color;
-                    vert.Add(v);
-                    v.position.x = w.y;
-                    v.position.y = down;
-                    v.color = color;
-                    vert.Add(v);
-                    v.position.x = w.y;
-                    v.position.y = top;
-                    v.color = color;
-                    vert.Add(v);
-                    tri.Add(st);
-                    tri.Add(st + 1);
-                    tri.Add(st + 2);
-                    tri.Add(st + 2);
-                    tri.Add(st + 1);
-                    tri.Add(st + 3);
-                }
-            }
         }
         static readonly char[] Separators = { ' ', '.', ',', '\t', '\r', '\n' };
         const string EmailCharacters = "!#$%&'*+-/=?^_`{|}~";
@@ -582,33 +549,205 @@ namespace huqiang.UIEvent
             info.CaretStyle = 1;
             return true;
         }
-        static void Populate(Text text, string str)
+        static void GetPreferredHeight(TextElement text,TextInfo info)
         {
-            Vector2 extents = text.rectTransform.rect.size;
-            var settings = text.GetGenerationSettings(extents);
-            //settings.fontSize = 1;
-            text.cachedTextGenerator.PopulateWithErrors(str, settings, text.gameObject);
+            string str = info.buffer.FilterString;
+            TextGenerationSettings settings = new TextGenerationSettings();
+            settings.resizeTextMinSize = 2;
+            settings.resizeTextMaxSize = 40;
+            settings.scaleFactor = 1;
+            settings.textAnchor = TextAnchor.UpperLeft;
+            settings.color = Color.white;
+            settings.generationExtents = new Vector2(text.model.data.sizeDelta.x, 0);
+            settings.pivot = new Vector2(0.5f, 0.5f);
+            settings.richText = true;
+            settings.font = text.Context.font;
+            settings.fontSize = text.data.fontSize;
+            settings.fontStyle = FontStyle.Normal;
+            settings.alignByGeometry = false;
+            settings.updateBounds = false;
+            settings.lineSpacing = 1;
+            settings.horizontalOverflow = HorizontalWrapMode.Wrap;
+            settings.verticalOverflow = VerticalWrapMode.Overflow;
+            TextGenerator generator = new TextGenerator();
+            float h = generator.GetPreferredHeight(str, settings);
+            info.HeightChange = info.PreferredHeight - h;
+            info.PreferredHeight = h;
+            info.fullVertex = generator.verts.ToArray();
+            info.fullLines = generator.lines.ToArray();
+            info.characterCount = generator.characterCount;
+     
+            int lc = info.fullLines.Length;
+            info.LineChange = lc - info.LineCount;
+            info.LineCount = lc;
+        }
+        static void FilterPopulate(TextElement txt,TextInfo info)
+        {
+            if (info.StartLine < 0)
+                info.StartLine = 0;
+            Vector2 size = txt.model.data.sizeDelta;
+    
+            var lines = info.fullLines;
+            int max = lines.Length - 1;
+            info.EndLine = max;
+            float dd = lines[max].topY - lines[max].height;
+            int a = 0;
+            for (int i = max; i >= 0; i--)
+            {
+                if (lines[i].topY - dd > size.y)
+                {
+                    a = i + 1;//允许下滑的最大行数
+                    break;
+                }
+            }
+            if (info.StartLine > a)
+                info.StartLine = a;
+            float tt = lines[info.StartLine].topY;
+            for (int i = info.StartLine + 1; i < lines.Length; i++)
+            {
+                if (tt - lines[i].topY + lines[i].height > size.y)
+                {
+                    info.EndLine = i - 1;//下滑的结束行
+                    break;
+                }
+            }
+            int startIndex = lines[info.StartLine].startCharIdx;
+            int endIndex = info.buffer.FilterString.Length;
+            if (info.EndLine != lines.Length - 1)
+                endIndex = lines[info.EndLine + 1].startCharIdx;
+            info.StartIndex = startIndex;
+            info.EndIndex = endIndex;
+            info.ShowString.FullString = info.buffer.SubString(startIndex,endIndex-startIndex);
+
+            var text = txt.Context;
+            var settings = text.GetGenerationSettings(size);
+            var generator = text.cachedTextGenerator;
+            generator.Populate(info.ShowString.FilterString, settings);
+            info.filterVertex = generator.verts.ToArray();
+            info.filterLines = generator.lines.ToArray();
+            info.visibleCount = generator.characterCountVisible;
+        }
+        static void GetChoiceArea(TextInfo info, int startSelect, int endSelect)
+        {
+            if (info == null)
+                return;
+            IList<UILineInfo> lines = info.filterLines;
+            if (lines == null)
+                return;
+            IList<UIVertex> vertex = info.filterVertex;
+            if (vertex == null)
+                return;
+            float top = 0;
+            float down = 0;
+            int end = info.characterCount;
+            int max = lines.Count;
+            int se = max - 1;
+            var vert = info.selectVertex;
+            var color = info.areaColor;
+            var tri = info.selectTri;
+            int s = startSelect;
+            int e = endSelect;
+            if (e < s)
+            {
+                int t = s;
+                s = e;
+                e = t;
+            }
+            for (int i = 0; i < lines.Count; i++)
+            {
+                int start = lines[i].startCharIdx;
+                if (i < se)
+                {
+                    end = lines[i + 1].startCharIdx - 1;
+                }
+                else
+                {
+                    end = info.visibleCount;
+                }
+                int state = CommonArea(s, e, ref start, ref end);
+                if (state == 2)
+                {
+                    break;
+                }
+                else
+                if (state == 1)
+                {
+                    top = lines[i].topY;
+                    down = top - lines[i].height;
+                    bool warp = end < e ? true : false;
+                    var w = GetLineRect(vertex, start, end, warp);
+                    int st = vert.Count;
+                    var v = new UIVertex();
+                    v.position.x = w.x;
+                    v.position.y = down;
+                    v.color = color;
+                    vert.Add(v);
+                    v.position.x = w.x;
+                    v.position.y = top;
+                    v.color = color;
+                    vert.Add(v);
+                    v.position.x = w.y;
+                    v.position.y = down;
+                    v.color = color;
+                    vert.Add(v);
+                    v.position.x = w.y;
+                    v.position.y = top;
+                    v.color = color;
+                    vert.Add(v);
+                    tri.Add(st);
+                    tri.Add(st + 1);
+                    tri.Add(st + 2);
+                    tri.Add(st + 2);
+                    tri.Add(st + 1);
+                    tri.Add(st + 3);
+                }
+            }
+        }
+        static void FilterChoiceArea(TextElement txt,TextInfo info)
+        {
+            int len = info.ShowString.FilterString.Length;
+            int start =info.startSelect - info.StartIndex;
+            if (start < 0)
+                start = 0;
+            if (start > len)
+                start = len;
+            int end = info.endSelect - info.StartIndex;
+            if (end < 0)
+                end = 0;
+            if (end > len)
+                end = len;
+            GetChoiceArea(info,start,end);
         }
     }
     public class TextInfo
     {
-        //public StringBuilder buffer = new StringBuilder();
         public EmojiString buffer = new EmojiString();
         public string text;
         public float fontSize;
-        public UILineInfo[] lines;
-        public UIVertex[] vertex;
+        public UILineInfo[] fullLines;
+        public UIVertex[] fullVertex;
+        public UILineInfo[] filterLines;
+        public UIVertex[] filterVertex;
         public int characterCount;
         public int visibleCount;
         public int startSelect;
-        public int startDock;
+        public int startDock;//光标停靠的索引
         public int endSelect;
-        public int endDock;
+        public int endDock;//光标停靠的索引
         public List<UIVertex> selectVertex=new List<UIVertex>();
         public List<int> selectTri=new List<int>();
         public Color color;
         public int CaretStyle;
         public Color caretColor = new Color(1, 1, 1, 0.8f);
         public Color areaColor = new Color(0.65882f, 0.8078f, 1, 0.4f);
+        public float PreferredHeight;
+        public float HeightChange=0;
+        public int LineCount;
+        public int LineChange = 0;
+        public int StartLine;
+        public int EndLine;
+        public int StartIndex;
+        public int EndIndex;
+        public EmojiString ShowString = new EmojiString();
     }
 }

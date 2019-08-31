@@ -81,20 +81,31 @@ namespace huqiang.Http
                 }
             }
         }
+        static List<string> Paths = new List<string>();
         public static async void DownloadAsync(string url, string filePath, Action<HttpResult> start,Action<HttpResult> done,object context = null, HttpMessageHandler handler = null)
         {
+            if (Paths.Contains(filePath))
+                return;
+            Paths.Add(filePath);
             HttpClient client=null;
             FileStream fs = null;
             try
             {
                 long totalBytes = 0;
                 await Task.Run(()=> {
-                    HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(url);
-                    //向服务器请求，获得服务器的回应数据流
-                    Myrq.Method = "GET";
-                    HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
-                    //获取文件的大小
-                    totalBytes = myrp.ContentLength;
+                    try
+                    {
+                        HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(url);
+                        //向服务器请求，获得服务器的回应数据流
+                        Myrq.Method = "GET";
+                        HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
+                        //获取文件的大小
+                        totalBytes = myrp.ContentLength;
+                        myrp.Dispose();
+                    }catch(Exception ex)
+                    {
+                        Debug.Log(ex.StackTrace);
+                    }
                 });
                 if (handler != null)
                     client = new HttpClient(handler);
@@ -137,6 +148,7 @@ namespace huqiang.Http
             {
                 Debug.Log(ex.StackTrace);
             }
+            Paths.Remove(filePath);
             if (client != null)
                 client.Dispose();
             if (fs != null)

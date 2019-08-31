@@ -1,6 +1,7 @@
 ﻿using huqiang.Data;
 using System;
 using System.Collections.Generic;
+using UGUI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,12 +43,52 @@ namespace huqiang.UI
                 TextElement.fonts.Add(Font.CreateDynamicFontFromOSFont("Arial", 16));
             return fonts[0];
         }
+        public static void AsyncGetSize(string fontName,Vector2 designSize,int fontSize,EmojiString txt, FontStyle style, Action<Vector2> callback)
+        {
+            string str = txt.FilterString;
+            Vector2 v = Vector2.zero;
+            ThreadMission.InvokeToMain((o) => {
+                var font = FindFont(fontName);
+                if (font != null)
+                {
+                    TextGenerationSettings settings = new TextGenerationSettings();
+                    settings.resizeTextMinSize = 2;
+                    settings.resizeTextMaxSize = 40;
+                    settings.scaleFactor = 1;
+                    settings.textAnchor = TextAnchor.UpperLeft;
+                    settings.color = Color.red;
+                    settings.generationExtents = new Vector2(designSize.x, 0);
+                    settings.pivot = new Vector2(0.5f,0.5f);
+                    settings.richText = true;
+                    settings.font = font;
+                    settings.fontSize = fontSize;
+                    settings.fontStyle = FontStyle.Normal;
+                    settings.alignByGeometry = false;
+                    settings.updateBounds = false;
+                    settings.lineSpacing = 1;
+                    settings.horizontalOverflow = HorizontalWrapMode.Wrap;
+                    settings.verticalOverflow = VerticalWrapMode.Overflow;
+                    TextGenerator generator = new TextGenerator();
+                    v.y = generator.GetPreferredHeight(str, settings);
+                    v.x = designSize.x;
+                   if(generator.lineCount==1)
+                    {
+                        v.x = generator.verts[generator.vertexCount-1].position.x - generator.verts[0].position.x+0.1f;//加0.1增加容错率
+                    }
+                }
+            }, 
+            null,
+            (o)=> {
+                if (callback != null)
+                    callback(v);
+            });
+        }
         public Text Context;
         public TextData data;
         public Vector2 preferredSize;
         public bool UseTextSize;
         bool textChanged;
-        protected string fontName;
+        public string fontName;
         protected string mtext;
         public string text { set {
                 if (mtext != null)

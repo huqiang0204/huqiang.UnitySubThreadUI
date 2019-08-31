@@ -27,6 +27,7 @@ namespace huqiang.UI
         public ScaleType scaleType;
         public AnchorType anchorType;
         public MarginType marginType;
+        public Vector2 anchorOffset;
         public AnchorPointType anchorpointType;
         public ParentType parentType;
         public Margin margin;
@@ -313,8 +314,9 @@ namespace huqiang.UI
                         ed->SizeScale = true;
                         ed->scaleType = ss.scaleType;
                         ed->anchorType = ss.anchorType;
-                        ed->marginType = ss.marginType;
                         ed->anchorpointType = ss.anchorPointType;
+                        ed->anchorOffset = ss.anchorOffset;
+                        ed->marginType = ss.marginType;
                         ed->parentType = ss.parentType;
                         ed->margin = ss.margin;
                         ed->DesignSize = ss.DesignSize;
@@ -387,7 +389,6 @@ namespace huqiang.UI
             switch (dock)
             {
                 case ScaleType.None:
-                    rect.data.localScale = Vector3.one;
                     break;
                 case ScaleType.FillX:
                     float sx = pSize.x / ds.x;
@@ -418,10 +419,10 @@ namespace huqiang.UI
             switch(type)
             {
                 case AnchorType.Anchor:
-                    AnchorEx(ele, ele.data.anchorpointType, new Vector2(ele.data.margin.left, ele.data.margin.right), p, psize);
+                    AnchorEx(ele, ele.data.anchorpointType, ele.data.anchorOffset, p, psize);
                     break;
                 case AnchorType.Alignment:
-                    AlignmentEx(ele, ele.data.anchorpointType, new Vector2(ele.data.margin.left, ele.data.margin.right), p, psize);
+                    AlignmentEx(ele, ele.data.anchorpointType, ele.data.anchorOffset, p, psize);
                     break;
             }
         }

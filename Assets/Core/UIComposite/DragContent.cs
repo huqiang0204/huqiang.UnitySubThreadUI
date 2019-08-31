@@ -10,6 +10,10 @@ namespace huqiang.UIComposite
 {
     public class DragContent: ModelInital
     {
+        public enum FreezeDirection
+        {
+            None,X,Y
+        }
         protected Vector2 ScrollNone(EventCallBack eventCall, ref Vector2 v, ref float x, ref float y)
         {
             Vector2 v2 = Vector2.zero;
@@ -99,6 +103,7 @@ namespace huqiang.UIComposite
         public Vector2 Size;
         public Vector2 Position;
         public Vector2 ContentSize;
+        public FreezeDirection freeze = FreezeDirection.None;
         public ScrollType scrollType = ScrollType.BounceBack;
         public ModelElement view;
         public ModelElement Content;
@@ -131,27 +136,47 @@ namespace huqiang.UIComposite
     
         void Scrolling(EventCallBack back, Vector2 v)
         {
+            v.x /= view.data.localScale.x;
+            v.y /= view.data.localScale.y;
+            Move(v);
+        }
+        public void Move(Vector2 v)
+        {
             if (view == null)
                 return;
             if (Content == null)
                 return;
+            ContentSize = Content.data.sizeDelta;
             v.x /= view.data.localScale.x;
             v.y /= view.data.localScale.y;
             switch (scrollType)
             {
                 case ScrollType.None:
-                    v = ScrollNone(back, ref v, ref Position.x, ref Position.y);
+                    v = ScrollNone(eventCall, ref v, ref Position.x, ref Position.y);
                     break;
                 case ScrollType.BounceBack:
-                    v = BounceBack(back, ref v, ref Position.x, ref Position.y);
+                    v = BounceBack(eventCall, ref v, ref Position.x, ref Position.y);
                     break;
             }
             var offset = ContentSize - Size;
             offset *= 0.5f;
             var p = Position;
-            p.x = - p.x;
-            p.x += offset.x;
-            p.y -= offset.y;
+            switch (freeze)
+            {
+                case FreezeDirection.None:
+                    p.x = -p.x;
+                    p.x += offset.x;
+                    p.y -= offset.y;
+                    break;
+                case FreezeDirection.X:
+
+                    p.y -= offset.y;
+                    break;
+                case FreezeDirection.Y:
+                    p.x = -p.x;
+                    p.x += offset.x;
+                    break;
+            }
             Content.data.localPosition = p;
             Content.IsChanged = true;
             if (Scroll != null)

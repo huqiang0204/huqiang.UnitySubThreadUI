@@ -42,16 +42,16 @@ public class SizeScaleEx : SizeScaling
             DesignSize.x = 1;
         if (DesignSize.y == 0)
             DesignSize.y = 1;
-        Docking(rect, scaleType, psize, DesignSize);
+        Scaling(rect, scaleType, psize, DesignSize);
         switch(anchorType)
         {
             case AnchorType.None:
                 break;
             case AnchorType.Anchor:
-                AnchorEx(rect, anchorPointType, new Vector2(margin.left, margin.top), pp, psize);
+                AnchorEx(rect, anchorPointType, anchorOffset, pp, psize);
                 break;
             case AnchorType.Alignment:
-                AlignmentEx(rect, anchorPointType, new Vector2(margin.left, margin.top), pp, psize);
+                AlignmentEx(rect, anchorPointType, anchorOffset, pp, psize);
                 break;
         }
         switch(marginType)
@@ -150,52 +150,15 @@ public class SizeScaleEx : SizeScaling
         var cam = Camera.main;
         float x = cam.pixelWidth;
         float y = cam.pixelHeight;
-        //if (x != Width | y != Height)
-        //{
-        //    Width = x;
-        //    Height = y;
-        //    Scale.ScreenWidth = x;
-        //    Scale.ScreenHeight = y;
-        //    RefreshAll();
-        //}
-        //else
-        //{
-        //    if (sizeType == SizeType.Margin | sizeType == SizeType.MarginRatio)
-        //    {
-        //        if (lastmargin.left != margin.left | lastmargin.right != margin.right |
-        //      lastmargin.top != margin.top | lastmargin.down != margin.down)
-        //        {
-        //            Resize();
-        //            for (int i = 0; i < transform.childCount; i++)
-        //            {
-        //                var t = transform.GetChild(i);
-        //                var ss = t.GetComponent<SizeScaleEx>();
-        //                if (ss != null)
-        //                    ss.EditorRefresh();
-        //            }
-        //        }
-        //    }
-        //    else if (sizeType == SizeType.Anchor)
-        //    {
-        //        lastAnchorType = anchorType;
-        //        Resize();
-        //    }
-        //    else if (lastScaleType != scaleType)
-        //    {
-        //        lastScaleType = scaleType;
-        //        Resize();
-        //    }
-        //}
     }
 
     public static Vector2[] Anchors = new[] { new Vector2(0.5f, 0.5f), new Vector2(0, 0.5f),new Vector2(1, 0.5f),
         new Vector2(0.5f, 1),new Vector2(0.5f, 0), new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0), new Vector2(1, 1)};
-    public static void Docking(RectTransform rect, ScaleType dock, Vector2 pSize, Vector2 ds)
+    public static void Scaling(RectTransform rect, ScaleType type, Vector2 pSize, Vector2 ds)
     {
-        switch (dock)
+        switch (type)
         {
             case ScaleType.None:
-                rect.localScale = Vector3.one;
                 break;
             case ScaleType.FillX:
                 float sx = pSize.x / ds.x;
@@ -257,40 +220,40 @@ public class SizeScaleEx : SizeScaling
         float oy = (p.y - 1) * psize.y;//原点y
         float tx = ox + pivot.x * psize.x;//锚点x
         float ty = oy + pivot.y * psize.y;//锚点y
-        offset.x += tx;//偏移点x
-        offset.y += ty;//偏移点y
+        float x = offset.x + tx;
+        float y = offset.y + ty;
         switch(type)
         {
             case AnchorPointType.Left:
-                offset.x += rect.sizeDelta.x * 0.5f;
+                x += rect.sizeDelta.x * 0.5f;
                 break;
             case AnchorPointType.Right:
-                offset.x -= rect.sizeDelta.x * 0.5f;
+                x -= rect.sizeDelta.x * 0.5f;
                 break;
             case AnchorPointType.Top:
-                offset.y -= rect.sizeDelta.y * 0.5f;
+                y -= rect.sizeDelta.y * 0.5f;
                 break;
             case AnchorPointType.Down:
-                offset.y += rect.sizeDelta.y * 0.5f;
+                y += rect.sizeDelta.y * 0.5f;
                 break;
             case AnchorPointType.LeftDown:
-                offset.x += rect.sizeDelta.x * 0.5f;
-                offset.y += rect.sizeDelta.y * 0.5f;
+                x += rect.sizeDelta.x * 0.5f;
+                y += rect.sizeDelta.y * 0.5f;
                 break;
             case AnchorPointType.LeftTop:
-                offset.x += rect.sizeDelta.x * 0.5f;
-                offset.y -= rect.sizeDelta.y * 0.5f;
+                x += rect.sizeDelta.x * 0.5f;
+                y -= rect.sizeDelta.y * 0.5f;
                 break;
             case AnchorPointType.RightDown:
-                offset.x -= rect.sizeDelta.x * 0.5f;
-                offset.y += rect.sizeDelta.y * 0.5f;
+                x -= rect.sizeDelta.x * 0.5f;
+                y += rect.sizeDelta.y * 0.5f;
                 break;
             case AnchorPointType.RightTop:
-                offset.x -= rect.sizeDelta.x * 0.5f;
-                offset.y -= rect.sizeDelta.y * 0.5f;
+                x -= rect.sizeDelta.x * 0.5f;
+                y -= rect.sizeDelta.y * 0.5f;
                 break;
         }
-        rect.localPosition = new Vector3(offset.x, offset.y, 0);
+        rect.localPosition = new Vector3(x, y, 0);
     }
     public static void MarginEx(RectTransform rect, Margin margin, Vector2 parentPivot, Vector2 parentSize)
     {

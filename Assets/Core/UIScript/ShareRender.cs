@@ -12,7 +12,7 @@ public class ShareRender:MonoBehaviour
     MeshFilter filter;
     MeshRenderer render;
     Mesh mesh;
-    public List<ShareElement> elements = new List<ShareElement>();
+    public List<ShareChild3D> Child = new List<ShareChild3D>();
     public Texture2D texture;
     public string textureName;
     private void Awake()
@@ -26,7 +26,6 @@ public class ShareRender:MonoBehaviour
             textureName = texture.name;
             render.material.mainTexture = texture;
         }
-       
     }
     List<Vector3> Vertex = new List<Vector3>();
     List<Vector2> UV = new List<Vector2>();
@@ -39,8 +38,8 @@ public class ShareRender:MonoBehaviour
         List<Vector2> uv = new List<Vector2>();
         List<Color> colors = new List<Color>();
         List<int> tri = new List<int>();
-        for (int i = 0; i < elements.Count; i++)
-            elements[i].GetUVInfo(vert,uv,colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
+        for (int i = 0; i < Child.Count; i++)
+            Child[i].GetUVInfo(vert,uv,colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
         Vertex = vert;
         UV = uv;
         Colors = colors;
@@ -53,8 +52,8 @@ public class ShareRender:MonoBehaviour
         List<Vector2> uv = new List<Vector2>();
         List<Color> colors = new List<Color>();
         List<int> tri = new List<int>();
-        for (int i = 0; i < elements.Count; i++)
-            elements[i].GetUVInfo(vert, uv, colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
+        for (int i = 0; i < Child.Count; i++)
+            Child[i].GetUVInfo(vert, uv, colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
         Vertex = vert;
         UV = uv;
         Colors = colors;
@@ -83,11 +82,11 @@ public enum CollisionType
 {
     None, Circle, Rectangle, Polygon
 }
-public class ShareElement
+public class ShareChild3D
 {
     public object DataContext;
     public bool activeSelf = true;
-    public List<ShareElement> Child = new List<ShareElement>();
+    public List<ShareChild3D> Child = new List<ShareChild3D>();
     public ShareRender Render;
     public Vector3 localPosition;
     public Vector3 localScale = Vector3.one;
@@ -340,7 +339,7 @@ public class ShareElement
 }
 public class ElementCollider
 {
-    public ShareElement Target;
+    public ShareChild3D Target;
     public Vector3 Position;
     public CollisionType collisionType;
     public float Radius;
