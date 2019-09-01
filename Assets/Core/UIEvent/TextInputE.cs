@@ -87,6 +87,36 @@ namespace huqiang.UIEvent
                 }
                 return EditState.Done;
             }
+            if (Keyboard.GetKey(KeyCode.UpArrow))
+            {
+                if (KeyPressTime <= 0)
+                {
+                    if (InputEvent != null)
+                    {
+                        InputEvent.MoveUp();
+                    }
+                    KeySpeed *= 0.7f;
+                    if (KeySpeed < MaxSpeed)
+                        KeySpeed = MaxSpeed;
+                    KeyPressTime = KeySpeed;
+                }
+                return EditState.Done;
+            }
+            if (Keyboard.GetKey(KeyCode.DownArrow))
+            {
+                if (KeyPressTime <= 0)
+                {
+                    if (InputEvent != null)
+                    {
+                        InputEvent.MoveDown();
+                    }
+                    KeySpeed *= 0.7f;
+                    if (KeySpeed < MaxSpeed)
+                        KeySpeed = MaxSpeed;
+                    KeyPressTime = KeySpeed;
+                }
+                return EditState.Done;
+            }
             KeySpeed = 220f;
             if (Keyboard.GetKeyDown(KeyCode.Home))
             {
@@ -351,6 +381,7 @@ namespace huqiang.UIEvent
                     ox = tx;
                     index += 4;
                 }
+                info.lineIndex = info.visibleCount - lines[lines.Count - 1].startCharIdx;
                 return info.visibleCount;
             lable:;
                 float ax = verts[index].position.x;
@@ -362,9 +393,13 @@ namespace huqiang.UIEvent
                     index++;
                     dock = 1;
                 }
+                info.lineIndex = index - lines[r].startCharIdx;
                 return index;
             }
-            else return lines[r].startCharIdx;
+            else {
+                info.lineIndex = 0;
+                return lines[r].startCharIdx;
+            }
         }
 
         static Vector2 GetLineRect(IList<UIVertex> vertex, int start, int end,bool warp)
@@ -730,6 +765,7 @@ namespace huqiang.UIEvent
         public UIVertex[] filterVertex;
         public int characterCount;
         public int visibleCount;
+        public int lineIndex;
         public int startSelect;
         public int startDock;//光标停靠的索引
         public int endSelect;

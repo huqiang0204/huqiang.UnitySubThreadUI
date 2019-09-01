@@ -193,8 +193,8 @@ namespace huqiang.UIEvent
         public CharacterValidation characterValidation = CharacterValidation.None;
         public TouchScreenKeyboardType touchType = TouchScreenKeyboardType.Default;
         public int CharacterLimit = 0;
-        float dragDistance;
-        float overDistance = 10000;
+        float overDistance = 500;
+        float overTime = 0;
         public TextInput()
         {
             Click = OnClick;
@@ -209,7 +209,7 @@ namespace huqiang.UIEvent
         public TextElement TextCom { get; private set; }
         public override void OnMouseDown(UserAction action)
         {
-            dragDistance = 0;
+            overTime = 0;
             if (TextCom != null)
             {
                 textInfo.startSelect = GetPressIndex(textInfo, this, action,ref textInfo.startDock)+textInfo.StartIndex;
@@ -240,40 +240,37 @@ namespace huqiang.UIEvent
                     {
                         float oy = action.CanPosition.y - GlobalPosition.y;
                         float py = GlobalScale.y * TextCom.model.data.sizeDelta.y * 0.5f;
-                        if (oy>0)
-                        {
+                        if (oy > 0)
                             oy -= py;
-                            if (oy > overDistance)
-                                oy = overDistance;
-                            dragDistance += oy;
-                            if(dragDistance>overDistance)
+                        else oy += py;
+                        if (oy > overDistance)
+                            oy = overDistance;
+                        float per = 50000 / oy;
+                        if (per < 0)
+                            per = -per;
+                        overTime += UserAction.TimeSlice;
+                        if (overTime >= per)
+                        {
+                            overTime -= per;
+                            if(oy>0)
                             {
-                                dragDistance -=overDistance;
                                 textInfo.StartLine--;
                             }
-                        }
-                        else
-                        {
-                            oy += py;
-                            if (oy < -overDistance)
-                                oy = -overDistance;
-                            dragDistance += oy;
-                            if (dragDistance<-overDistance)
+                            else
                             {
-                                dragDistance += overDistance;
                                 textInfo.StartLine++;
                             }
+                            int end = textInfo.endSelect;
+                            textInfo.endSelect = GetPressIndex(textInfo, this, action, ref textInfo.endDock) + textInfo.StartIndex;
+                            if (end != textInfo.endSelect)
+                            {
+                                Selected();
+                                if (OnSelectChanged != null)
+                                    OnSelectChanged(this, action);
+                                selectChanged = true;
+                            }
+                            lineChanged = true;
                         }
-                        int end = textInfo.endSelect;
-                        textInfo.endSelect = GetPressIndex(textInfo, this, action, ref textInfo.endDock) + textInfo.StartIndex;
-                        if (end != textInfo.endSelect)
-                        {
-                            Selected();
-                            if (OnSelectChanged != null)
-                                OnSelectChanged(this, action);
-                            selectChanged = true;
-                        }
-                        lineChanged = true;
                     }
                 }
             base.OnDrag(action);
@@ -456,6 +453,94 @@ namespace huqiang.UIEvent
                 lineChanged = true;
             }
             selectChanged = true;
+            var lines = textInfo.fullLines;
+            if(lines!=null)
+            {
+                int i = lines.Length - 1;
+                int start = textInfo.startSelect;
+                for (; i >= 0; i--)
+                {
+                    int t = lines[i].startCharIdx;
+                    if (t <= start)
+                    {
+                        textInfo.lineIndex = start - t;
+                        break;
+                    }
+                }
+            }
+        }
+        void MoveUp()
+        {
+            var lines = textInfo.fullLines;
+            if (lines != null)
+            {
+                int start = textInfo.startSelect;
+                int i = lines.Length - 1;
+                for (; i >=1; i--)
+                {
+                    int t = lines[i].startCharIdx;
+                    if (t<=start)
+                    {
+                        if (i > 0)
+                        {
+                            int a = lines[i - 1].startCharIdx + textInfo.lineIndex;
+                            if (a >= t)
+                                a = t - 1;
+                            if (a < textInfo.StartIndex)
+                            {
+                                textInfo.StartLine--;
+                                lineChanged = true;
+                            }
+                            textInfo.startSelect = a;
+                            selectChanged = true;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        void MoveDown()
+        {
+            var lines = textInfo.fullLines;
+            if (lines != null)
+            {
+                int start = textInfo.startSelect;
+                int c= lines.Length - 1;
+                for (int i=c-1; i >= 0; i--)
+                {
+                    int t = lines[i].startCharIdx;
+                    if (t <= start)
+                    {
+                        if (i <c)
+                        {
+                            int a = lines[i + 1].startCharIdx + textInfo.lineIndex;
+                            if (a >= textInfo.buffer.Length)
+                                a = textInfo.buffer.Length;
+                            else if (i < c - 1)
+                            {
+                                int s = lines[i + 2].startCharIdx;
+                                if (a >= s)
+                                    a = s - 1;
+                            }
+                            if (a > textInfo.EndIndex)
+                            {
+                                textInfo.StartLine++;
+                                lineChanged = true;
+                            }
+                            textInfo.startSelect = a;
+                            selectChanged = true;
+                        }
+                        else
+                        {
+                            textInfo.StartLine++;
+                            lineChanged = true;
+                            textInfo.startSelect = textInfo.buffer.Length;
+                            selectChanged = true;
+                        }
+                        break;
+                    }
+                }
+            }
         }
         void Delete(int dir)
         {
@@ -501,6 +586,21 @@ namespace huqiang.UIEvent
                     textInfo.StartLine += textInfo.LineChange;
                     textInfo.EndLine += textInfo.LineChange;
                     lineChanged = true;
+                    var lines = textInfo.fullLines;
+                    if (lines != null)
+                    {
+                        int i = lines.Length - 1;
+                        int start = textInfo.startSelect;
+                        for (; i >= 0; i--)
+                        {
+                            int t = lines[i].startCharIdx;
+                            if (t <= start)
+                            {
+                                textInfo.lineIndex = start - t;
+                                break;
+                            }
+                        }
+                    }
                 }
                 if(lineChanged)
                 {
