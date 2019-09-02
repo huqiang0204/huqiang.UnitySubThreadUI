@@ -1,13 +1,23 @@
-﻿using huqiang.UI;
+﻿using huqiang.Data;
+using huqiang.UI;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using UGUI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace huqiang.UIEvent
 {
+    public unsafe struct TextInputData
+    {
+        public Color inputColor;
+        public Color tipColor;
+        public Color pointColor;
+        public Color selectColor;
+        public Int32 inputString;
+        public Int32 tipString;
+        public static int Size = sizeof(TextInputData);
+        public static int ElementSize = Size / 4;
+    }
     public partial class TextInput:EventCallBack
     {
         public enum ContentType
@@ -70,13 +80,13 @@ namespace huqiang.UIEvent
         {
             if (textInfo.text == ""|textInfo.text==null)
             {
+                TextCom.color = TipColor;
                 TextCom.text = m_TipString;
-                TextCom.data.color = TipColor;
             }
             else
             {
+                TextCom.color = textColor;
                 TextCom.text = textInfo.ShowString.FullString;
-                TextCom.data.color = textColor;
             }
         }
         public bool ReadOnly;
@@ -202,9 +212,23 @@ namespace huqiang.UIEvent
         }
         protected override void Initial()
         {
-            var txt= TextCom = Context.GetComponent<TextElement>();
+            var txt = TextCom = Context.GetComponent<TextElement>();
             InputString = txt.text;
             textColor = txt.data.color;
+            var fake = txt.model.GetExtand() as FakeStruct;
+            if(fake!=null)
+            {
+                unsafe
+                {
+                    TextInputData* tp = (TextInputData*)fake.ip;
+                    textColor = tp->inputColor;
+                    m_tipColor = tp->tipColor;
+                    InputString =fake.buffer.GetData(tp->inputString)as string;
+                    TipString = fake.buffer.GetData(tp->tipString)as string;
+                    PointColor = tp->pointColor;
+                    SelectionColor = tp->selectColor;
+                }
+            }
         }
         public TextElement TextCom { get; private set; }
         public override void OnMouseDown(UserAction action)
