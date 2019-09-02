@@ -556,6 +556,11 @@ namespace huqiang.UIEvent
             if (LostFocus != null)
                 LostFocus(this, action);
         }
+        internal virtual void OnMouseWheel(UserAction action)
+        {
+            if (MouseWheel != null)
+                MouseWheel(this,action);
+        }
         public virtual void Reset()
         {
             Reset(this);

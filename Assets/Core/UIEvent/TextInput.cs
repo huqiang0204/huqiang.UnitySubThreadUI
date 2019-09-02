@@ -275,6 +275,20 @@ namespace huqiang.UIEvent
                 }
             base.OnDrag(action);
         }
+        internal override void OnMouseWheel(UserAction action)
+        {
+            float oy = action.MouseWheelDelta;
+            if (oy > 0)
+            {
+                textInfo.StartLine--;
+            }
+            else
+            {
+                textInfo.StartLine++;
+            }
+            lineChanged = true;
+            base.OnMouseWheel(action);
+        }
         internal override void OnDragEnd(UserAction action)
         {
             long r = action.EventTicks - pressTime;

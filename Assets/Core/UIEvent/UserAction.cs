@@ -339,8 +339,7 @@ namespace huqiang.UIEvent
                 for (int i = 0; i < MultiFocus.Count; i++)
                 {
                     var f = MultiFocus[i];
-                    if (f.MouseWheel != null)
-                        f.MouseWheel(f, this);
+                    f.OnMouseWheel(this);
                 }
             }
             CheckMouseLeave();
