@@ -294,6 +294,8 @@ namespace huqiang.UIEvent
                                 selectChanged = true;
                             }
                             lineChanged = true;
+                            if (LineChanged != null)
+                                LineChanged(this);
                         }
                     }
                 }
@@ -311,6 +313,8 @@ namespace huqiang.UIEvent
                 textInfo.StartLine++;
             }
             lineChanged = true;
+            if (LineChanged != null)
+                LineChanged(this);
             base.OnMouseWheel(action);
         }
         internal override void OnDragEnd(UserAction action)
@@ -485,10 +489,15 @@ namespace huqiang.UIEvent
             {
                 textInfo.StartLine--;
                 lineChanged = true;
-            }else if(index > textInfo.EndIndex)
+                if (LineChanged != null)
+                    LineChanged(this);
+            }
+            else if(index > textInfo.EndIndex)
             {
                 textInfo.StartLine++;
                 lineChanged = true;
+                if (LineChanged != null)
+                    LineChanged(this);
             }
             selectChanged = true;
             var lines = textInfo.fullLines;
@@ -528,6 +537,8 @@ namespace huqiang.UIEvent
                             {
                                 textInfo.StartLine--;
                                 lineChanged = true;
+                                if (LineChanged != null)
+                                    LineChanged(this);
                             }
                             textInfo.startSelect = a;
                             selectChanged = true;
@@ -564,6 +575,8 @@ namespace huqiang.UIEvent
                             {
                                 textInfo.StartLine++;
                                 lineChanged = true;
+                                if (LineChanged != null)
+                                    LineChanged(this);
                             }
                             textInfo.startSelect = a;
                             selectChanged = true;

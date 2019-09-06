@@ -561,8 +561,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1920, y: 1080}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 1
   margin:
@@ -570,7 +572,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1920, y: 1080}
 --- !u!1 &122223305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,8 +1138,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -1146,7 +1149,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!1 &158014362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,8 +1432,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -1439,7 +1443,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!1 &240533132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,8 +1495,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1920, y: 1080}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -1501,7 +1506,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1920, y: 1080}
 --- !u!222 &240533135
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1598,8 +1602,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -1607,7 +1613,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!1 &262754243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,8 +1664,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -1668,7 +1675,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!114 &262754246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2219,8 +2225,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -2228,7 +2236,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!1 &376867322
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,8 +2819,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -2821,7 +2830,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!1 &529899171
 GameObject:
   m_ObjectHideFlags: 0
@@ -2984,6 +2992,7 @@ RectTransform:
   - {fileID: 1929824026}
   - {fileID: 224719396}
   - {fileID: 1094062124}
+  - {fileID: 1653978344}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4700,8 +4709,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1920, y: 1080}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -4709,7 +4720,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1920, y: 1080}
 --- !u!222 &1022266611
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5162,8 +5172,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -5171,7 +5183,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!222 &1094062126
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5258,6 +5269,106 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115164114}
+  m_CullTransparentMesh: 0
+--- !u!1 &1119371680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1119371681}
+  - component: {fileID: 1119371684}
+  - component: {fileID: 1119371683}
+  - component: {fileID: 1119371682}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1119371681
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119371680}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1569609611}
+  m_Father: {fileID: 1653978344}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1119371682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119371680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61abd668d4d85f94b95f3393a082d7ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleType: 0
+  DesignSize: {x: 1, y: 1}
+  anchorType: 2
+  anchorPointType: 1
+  anchorOffset: {x: 0, y: 0}
+  marginType: 0
+  parentType: 0
+  margin:
+    left: 0
+    down: 0
+    right: 0
+    top: 0
+--- !u!114 &1119371683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119371680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &1119371684
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119371680}
   m_CullTransparentMesh: 0
 --- !u!1 &1124379419
 GameObject:
@@ -6097,8 +6208,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -6106,7 +6219,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!222 &1337326796
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6396,8 +6508,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -6405,7 +6519,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!1 &1407397017
 GameObject:
   m_ObjectHideFlags: 0
@@ -6570,8 +6683,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1920, y: 1080}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -6579,7 +6694,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1920, y: 1080}
 --- !u!1 &1467437848
 GameObject:
   m_ObjectHideFlags: 0
@@ -6816,6 +6930,85 @@ MonoBehaviour:
   m_Script: {fileID: -146154839, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1569609610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569609611}
+  - component: {fileID: 1569609613}
+  - component: {fileID: 1569609612}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1569609611
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569609610}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1119371681}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 29.5, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1569609612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569609610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &1569609613
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569609610}
+  m_CullTransparentMesh: 0
 --- !u!1 &1573577117
 GameObject:
   m_ObjectHideFlags: 0
@@ -7413,8 +7606,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -7422,7 +7617,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!1 &1633565792
 GameObject:
   m_ObjectHideFlags: 0
@@ -7627,6 +7821,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642023165}
   m_CullTransparentMesh: 0
+--- !u!1 &1653978343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1653978344}
+  - component: {fileID: 1653978345}
+  - component: {fileID: 1653978346}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1653978344
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653978343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1119371681}
+  m_Father: {fileID: 529987369}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 166}
+  m_SizeDelta: {x: 30, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1653978345
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653978343}
+  m_CullTransparentMesh: 0
+--- !u!114 &1653978346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653978343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -146154839, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1657496985
 GameObject:
   m_ObjectHideFlags: 0
@@ -8911,8 +9163,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 1
   margin:
@@ -8920,7 +9174,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!222 &1929824028
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9127,8 +9380,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -9136,7 +9391,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!222 &1965239753
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9196,8 +9450,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -9205,7 +9461,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!114 &1966593769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9434,8 +9689,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleType: 0
+  DesignSize: {x: 1, y: 1}
   anchorType: 0
   anchorPointType: 0
+  anchorOffset: {x: 0, y: 0}
   marginType: 0
   parentType: 0
   margin:
@@ -9443,7 +9700,6 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
-  DesignSize: {x: 1, y: 1}
 --- !u!114 &2029823205
 MonoBehaviour:
   m_ObjectHideFlags: 0

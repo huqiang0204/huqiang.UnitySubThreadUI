@@ -349,5 +349,44 @@ namespace huqiang
             fs.Write(buf, 0, buf.Length);
             fs.Dispose();
         }
+        public static string ReadObject(string str, ref int start)
+        {
+            int ss = start;
+            int a = 0;
+            int b = 0;
+            for (int i = start; i < str.Length; i++)
+            {
+                if (str[i] == '{')
+                {
+                    if (a == 0)
+                    {
+                        ss = i;
+                    }
+                    a++;
+                }
+                else if (str[i] == '}')
+                {
+                    b++;
+                    if (b == a)
+                    {
+                        start = i + 1;
+                        return str.Substring(ss, start - ss);
+                    }
+                }
+            }
+            return "";
+        }
+        public static List<T> ReadJsonList<T>(string str) where T : class, new()
+        {
+            List<T> list = new List<T>();
+            int s = 0;
+            string t = ReadObject(str, ref s);
+            while (t != "")
+            {
+                list.Add(JsonUtility.FromJson<T>(t));
+                t = ReadObject(str, ref s);
+            }
+            return list;
+        }
     }
 }

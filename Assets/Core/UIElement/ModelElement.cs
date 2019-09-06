@@ -579,6 +579,23 @@ namespace huqiang.UI
                 ScaleSize(child[i]);
             }
         }
+        public static void ScaleSize(ModelElement element,int level)
+        {
+            if (element.data.SizeScale)
+            {
+                Resize(element);
+                if (element.SizeChanged != null)
+                    element.SizeChanged(element);
+                element.IsChanged = true;
+            }
+            level--;
+            if (level > 0)
+            {
+                var child = element.child;
+                for (int i = 0; i < child.Count; i++)
+                    ScaleSize(child[i], level);
+            }
+        }
         #endregion
         /// <summary>
         /// 当此物体为非实体时,不予创建GameObject
