@@ -15,7 +15,20 @@ namespace huqiang.UI
             ThreadMission.InvokeToMain((o) => {
                 base.Apply();
                 ApplyScene();
-                Scene.ChangedScene<T>(dat);
+                Scene.ChangeScene<T>(dat);
+            }, null);
+        }
+        /// <summary>
+        /// 热更新使用此方法
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="dat"></param>
+        public void LoadAsync(Func<ScenePage> func, object dat)
+        {
+            ThreadMission.InvokeToMain((o) => {
+                base.Apply();
+                ApplyScene();
+                Scene.ChangeScene(func(), dat);
             }, null);
         }
         public void Invoke(Action<RenderImageElement,object> action,object data)

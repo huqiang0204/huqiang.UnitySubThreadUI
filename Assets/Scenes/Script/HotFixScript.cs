@@ -29,7 +29,7 @@ public class HotFixScript : MonoBehaviour
             loadOver = true;
             //if (hotData != null)
             //    UIPage.LoadPage<HotFixEntry>(hotData);
-            UIPage.LoadPage<HotFixEntry>(hotfix);
+            UIPage.LoadPage<HotFixEntry>(hotfix.bytes);
         };
     }
 

@@ -48,7 +48,7 @@ namespace huqiang.Manager2D
         {
             ThreadMission.InvokeToMain((o)=> { Dispose(); },null);
         }
-        public void ChangedScene<T>(object dat)where T:ScenePage,new()
+        public void ChangeScene<T>(object dat)where T:ScenePage,new()
         {
             if (CurrentPage is T)
             {
@@ -64,6 +64,14 @@ namespace huqiang.Manager2D
             t.Scene = this;
             t.Initial(Root, dat);
             CurrentPage = t;
+        }
+        public void ChangeScene(ScenePage page, object dat)
+        {
+            if (CurrentPage != null)
+                CurrentPage.Dispose();
+            page.Scene = this;
+            page.Initial(Root, dat);
+            CurrentPage = page;
         }
         public void Update()
         {
