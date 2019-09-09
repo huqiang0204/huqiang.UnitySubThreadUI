@@ -388,5 +388,28 @@ namespace huqiang
             }
             return list;
         }
+        private static char[] HexChar = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+        /// <summary>
+        /// 字节数组转16进制字符串
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static String bytesToHexString(byte[] b)
+        {
+            int len = b.Length;
+            char[] result = new char[len * 2];
+            int s = 0;
+            for (int i = 0; i < len; i++)
+            {
+                int a = b[i];
+                int h = a >> 4;
+                int l = a & 0xf;
+                result[s] = HexChar[h];
+                s++;
+                result[s] = HexChar[l];
+                s++;
+            }
+            return new string(result);
+        }
     }
 }
