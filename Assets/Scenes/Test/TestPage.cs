@@ -75,7 +75,7 @@ public class TestPage : UIPage
         view.Scroll.Column = 16;
         view.Scroll.SetItemUpdate<Item,int> ((o, e, i) => {o.Text.text = i.ToString(); });
         view.Scroll.Refresh();
-        view.Last.Click = (o, e) => { LoadPage<AniTestPage>(); };
+        view.Last.Click = (o, e) => { LoadPage<ShowGifPage>(); };
         view.Next.Click = (o, e) => { LoadPage<LayoutTestPage>(); };
     }
 }
