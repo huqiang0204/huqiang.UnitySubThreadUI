@@ -82,5 +82,6 @@ namespace huqiang
             ani.Interval = inter;
             ani.Play(sprites);
         }
+
     }
 }

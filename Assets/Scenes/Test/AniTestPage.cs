@@ -26,7 +26,7 @@ public class AniTestPage:UIPage
         view.rocker.Radius = 100;
         view.render.LoadAsync<RolePage>(null);
         view.Last.Click = (o, e) => { LoadPage<ScrollExTestPage>(); };
-        view.Next.Click = (o, e) => { LoadPage<TestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<ShowGifPage>(); };
     }
     void Rocking(UIRocker rocker)
     {

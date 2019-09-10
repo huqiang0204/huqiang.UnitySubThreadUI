@@ -24,7 +24,7 @@ public class GifData
     public int globalColorTableSize;
     public int backgroundColorIndex;
     public int pixelAspectRatio;
-    public GifColor[] globalColorTable;
+    public Color[] globalColorTable;
 
     public List<GifGraphicsControlExtension> graphicsControlExtensions;
     public List<GifImageDescriptor> imageDescriptors;

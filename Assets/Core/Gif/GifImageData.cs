@@ -20,22 +20,20 @@ public class GifImageData
     private GifData _gifData;
     private BitArray _blockBits;
     private int _currentCodeSize;
-    private Dictionary<int, GifColor> _colors;
 
     public int lzwMinimumCodeSize;
     public int endingOffset;
     public List<byte> blockBytes;
-    public Dictionary<int, int[]> codeTable;
+    public List<int[]> codeTable;
     public List<int> colorIndices;
     public GifGraphicsControlExtension graphicsControlExt;
     public GifImageDescriptor imageDescriptor;
-
+    public Color[] colors;
     public GifImageData(GifData gifData)
     {
         _gifData = gifData;
-        _colors = new Dictionary<int, GifColor>(256);
 
-        codeTable = new Dictionary<int, int[]>(4096);
+        codeTable = new List<int[]>(4096);
         colorIndices = new List<int>(256);
         blockBytes = new List<byte>(255);
     }
@@ -44,13 +42,9 @@ public class GifImageData
     {
         // Convert bytes to bits
         _blockBits = new BitArray(blockBytes.ToArray());
-        //Debug.Log("Converted " + blockBytes.Count + " bytes into " + _blockBits.Length + " bits.");
 
         // Translate block
         translateBlock();
-
-        // Prepare colors
-        prepareColors();
     }
 
     private void translateBlock()
@@ -63,27 +57,41 @@ public class GifImageData
         int cc = 1 << lzwMinimumCodeSize;
         int eoi = cc + 1;
 
-        //Debug.Log("Starting to translate block. Current code size: " + _currentCodeSize +", CC: " + cc + ", EOI: " + eoi);
-
         initializeCodeTable();
         currentCode = getCode(_blockBits, bitOffset, _currentCodeSize);
-        addToColorIndices(getCodeValues(currentCode));
+        colorIndices.AddRange(codeTable[currentCode]);
         previousCode = currentCode;
         bitOffset += _currentCodeSize;
 
         while (true)
         {
-            currentCode = getCode(_blockBits, bitOffset, _currentCodeSize);
+
+            // Calculate value
+            currentCode = 0;
+            for (int i = 0; i < _currentCodeSize; i++)
+            {
+                int index = bitOffset + i;
+                if (_blockBits[index])
+                    currentCode += (1 << i);
+            }
             bitOffset += _currentCodeSize;
 
-            // Handle special codes
             if (currentCode == cc)
             {
-                //Debug.Log("Encountered CC. Reinitializing code table...");
                 _currentCodeSize = lzwMinimumCodeSize + 1;
-                initializeCodeTable();
-                currentCode = getCode(_blockBits, bitOffset, _currentCodeSize);
-                addToColorIndices(getCodeValues(currentCode));
+                int initialCodeTableSize = (1 << lzwMinimumCodeSize) + 1;
+                codeTable.Clear();
+                for (int i = 0; i <= initialCodeTableSize; i++)
+                    codeTable.Add(new int[] { i });
+                
+                currentCode = 0;
+                for (int i = 0; i < _currentCodeSize; i++)
+                {
+                    int index = bitOffset + i;
+                    if (_blockBits[index])
+                        currentCode += (1 << i);
+                }
+                colorIndices.AddRange(codeTable[currentCode]);
                 previousCode = currentCode;
                 bitOffset += _currentCodeSize;
                 continue;
@@ -92,17 +100,16 @@ public class GifImageData
             {
                 break;
             }
-
-            // Does code table contain the current code
-            if (codeTable.ContainsKey(currentCode))
+            int c = codeTable.Count;
+            if (currentCode < c)
             {
                 int[] newEntry;
                 int[] previousValues;
                 int[] currentValues;
-                
-                addToColorIndices(getCodeValues(currentCode));
-                previousValues = getCodeValues(previousCode);
-                currentValues = getCodeValues(currentCode);
+
+                colorIndices.AddRange(codeTable[currentCode]);
+                previousValues = codeTable[previousCode];
+                currentValues = codeTable[currentCode];
                 newEntry = new int[previousValues.Length + 1];
 
                 for (int i = 0; i < previousValues.Length; i++)
@@ -111,12 +118,16 @@ public class GifImageData
                 }
                 newEntry[newEntry.Length - 1] = currentValues[0];
 
-                addToCodeTable(newEntry);
+                if (codeTable.Count == (1 << _currentCodeSize) - 1)
+                {
+                    _currentCodeSize++;
+                }
+                codeTable.Add(newEntry);
                 previousCode = currentCode;
             }
             else
             {
-                int[] previousValues = getCodeValues(previousCode);
+                int[] previousValues = codeTable[previousCode];
                 int[] indices = new int[previousValues.Length + 1];
 
                 for (int i = 0; i < previousValues.Length; i++)
@@ -125,59 +136,27 @@ public class GifImageData
                 }
                 indices[indices.Length - 1] = previousValues[0];
 
-                addToCodeTable(indices);
-                addToColorIndices(indices);
+                if (codeTable.Count == (1 << _currentCodeSize) - 1)
+                {
+                    _currentCodeSize++;
+                }
+                codeTable.Add(indices);
+                colorIndices.AddRange(indices);
                 previousCode = currentCode;
             }
-
             iteration++;
-
-            // Infinite loop exit check
-            if (iteration > 999999)
-            {
-                throw new Exception("Too many iterations. Infinite loop.");
-            }
         }
     }
 
     private void addToCodeTable(int[] entry)
     {
-        string indices = "";
-
-        for (int i = 0; i < entry.Length; i++)
-        {
-            indices += entry[i];
-            indices += (i < entry.Length - 1) ? ", " : "";
-        }
-
-        //Debug.Log("Adding code " + codeTable.Count + " to code table with values: " + indices);
-
         if (codeTable.Count == (1 << _currentCodeSize) - 1)
         {
             _currentCodeSize++;
-            //Debug.Log("Increasing current code size to: " + _currentCodeSize);
-
-            if (_currentCodeSize > 12)
-            {
-                throw new NotImplementedException("Code size larger than max (12). Figure out how to handle this.");
-            }
         }
-
-        if (codeTable.Count >= 4096)
-        {
-            throw new Exception("Exceeded max number of entries in code table.");
-        }
-
-        codeTable.Add(codeTable.Count, entry);
+        codeTable.Add(entry);
     }
 
-    private void addToColorIndices(int[] indices)
-    {
-        for (int i = 0; i < indices.Length; i++)
-        {
-            colorIndices.Add(indices[i]);
-        }
-    }
 
     private bool isMaxCodeValue(int currentCode, int currentCodeSize)
     {
@@ -191,24 +170,13 @@ public class GifImageData
         codeTable.Clear();
         for (int i = 0; i <= initialCodeTableSize; i++)
         {
-            codeTable.Add(i, new int[] { i });
+            codeTable.Add(new int[] { i });
         }
-
-        //Debug.Log("Initialized code table. Highest index: " + (codeTable.Count - 1));
     }
 
     private int getCode(BitArray bits, int bitOffset, int currentCodeSize)
     {
         int value = 0;
-        string debugValue = "";
-
-        // Max code size check
-        if (currentCodeSize > 12)
-        {
-            throw new ArgumentOutOfRangeException("currentCodeSize", "Max code size is 12");
-        }
-
-        // Calculate value
         for (int i = 0; i < currentCodeSize; i++)
         {
             int index = bitOffset + i;
@@ -216,46 +184,9 @@ public class GifImageData
             if (bits[index])
             {
                 value += (1 << i);
-                debugValue += "1";
-            }
-            else
-            {
-                debugValue += "0";
             }
         }
-
-        //Debug.Log("Read code [" + value + "(" + debugValue + ")] at bit offset [" + bitOffset + "] using code size [" + currentCodeSize + "]");
-
         return value;
     }
 
-    private int[] getCodeValues(int code)
-    {
-        if (codeTable.ContainsKey(code))
-        {
-            return codeTable[code];
-        }
-        else
-        {
-            throw new Exception("Code " + code + " does not exist. Code table size: " + codeTable.Count + ". Aborting...");
-        }
-    }
-
-    private void prepareColors()
-    {
-        GifColor[] colorTable = imageDescriptor.localColorTableFlag ? imageDescriptor.localColorTable : _gifData.globalColorTable;
-
-        foreach (int index in colorIndices)
-        {
-            if (!_colors.ContainsKey(index))
-            {
-                _colors.Add(index, colorTable[index]);
-            }
-        }
-    }
-
-    public GifColor getColor(int index)
-    {
-        return _colors[index];
-    }
 }

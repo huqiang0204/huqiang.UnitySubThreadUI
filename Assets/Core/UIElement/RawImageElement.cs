@@ -23,7 +23,8 @@ namespace huqiang.UI
         public RawImageData data;
         public string assetName;
         public string textureName;
-        bool textureChanged;
+        bool needLoad;
+        bool t2dChanged;
         public unsafe override void Load(FakeStruct fake)
         {
             data = *(RawImageData*)fake.ip;
@@ -31,7 +32,7 @@ namespace huqiang.UI
             shader = fake.buffer.GetData(data.shader) as string;
             assetName = fake.buffer.GetData(data.assetName) as string;
             textureName = fake.buffer.GetData(data.textureName) as string;
-            textureChanged = true;
+            needLoad = true;
         }
         public override void LoadToObject(Component game)
         {
@@ -79,13 +80,13 @@ namespace huqiang.UI
         public void ChangeTexture(string tName)
         {
             textureName = tName;
-            textureChanged = true;
+            needLoad = true;
         }
         public void ChangeTexture(string tName, string aName)
         {
             assetName = aName;
             textureName = tName;
-            textureChanged = true;
+            needLoad = true;
         }
         public override void Apply()
         {
@@ -100,12 +101,19 @@ namespace huqiang.UI
                 }
                 IsChanged = false;
             }
-            if(textureChanged)
+            if(needLoad)
             {
-                textureChanged = false;
-                if(Context!=null)
-                Context.texture = ElementAsset.FindTexture(assetName, textureName);
+                needLoad = false;
+                t2d = ElementAsset.FindTexture(assetName, textureName);
+                t2dChanged = true;
+            }
+            if(t2dChanged)
+            {
+                t2dChanged = false;
+                Context.texture = t2d;
             }
         }
+        Texture t2d;
+        public Texture texture { get { return t2d; } set { t2d = value;t2dChanged = true; } }
     }
 }

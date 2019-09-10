@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1566238133
+CRC: 705677672
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0eb49c994c39f45b3c9395d63288df9a
+    Hash: f28c24d8fe6570401d18921292540aa3
   TypeTreeHash:
     serializedVersion: 2
     Hash: db5e5a0e8ffd8e66cf9a1ed744aca029
@@ -40,13 +40,14 @@ Assets:
 - Assets/AssetsBundle/png/Weapon.png
 - Assets/AssetsBundle/png/etc.png
 - Assets/AssetsBundle/png/Body.png
+- Assets/AssetsBundle/HotFixDemo.bytes
 - Assets/AssetsBundle/Sprites/redboy.png
 - Assets/AssetsBundle/png/Left Arm(Bottom Part).png
 - Assets/AssetsBundle/animation/idle.anim
 - Assets/AssetsBundle/png/Right Arm(upper Part).png
 - Assets/AssetsBundle/Emoji.bytes
-- Assets/AssetsBundle/hjh.bytes
 - Assets/AssetsBundle/png/Left Leg.png
+- Assets/AssetsBundle/Sprites/gif.bytes
 - Assets/AssetsBundle/animation/sample motion.controller
 - Assets/AssetsBundle/baseUI.bytes
 - Assets/AssetsBundle/animation/walk.anim

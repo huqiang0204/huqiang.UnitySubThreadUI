@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -226,18 +227,18 @@ namespace huqiang
             }
             ani.Play();
         }
-        public static GifAnimat Findt2dsAni(this RawImage raw)
+        public static GifAnimat Findt2dsAni(this RawImageElement raw)
         {
             if (raw == null)
                 return null;
-            raw.gameObject.SetActive(true);
+            raw.model.activeSelf = true;
            return AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
         }
-        public static void Play(this RawImage raw, List<Texture2D> t2ds,float inter, Action<GifAnimat> over = null,bool hide=true,bool cover=true)
+        public static void Play(this RawImageElement raw, List<Texture2D> t2ds, bool loop=true, int inter = 66, Action<GifAnimat> over = null,bool hide=true,bool cover=true)
         {
             if (raw == null)
                 return;
-            raw.gameObject.SetActive(true);
+            raw.model.activeSelf = true;
             var ani = AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
             if (ani == null)
             {
@@ -249,6 +250,8 @@ namespace huqiang
             else if (!cover)
                 return;
             ani.Play(t2ds);
+            ani.Loop = loop;
+            ani.Interval = inter;
         }
     }
 }

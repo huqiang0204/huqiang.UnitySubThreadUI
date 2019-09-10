@@ -27,7 +27,7 @@ public class GifImageDescriptor
     public int localColorTableSize;
     public GifGraphicsControlExtension graphicsControlExt;
     public GifImageData imageData;
-    public GifColor[] localColorTable;
+    public Color[] localColorTable;
 
     public GifImageDescriptor(GifData gifData)
     {

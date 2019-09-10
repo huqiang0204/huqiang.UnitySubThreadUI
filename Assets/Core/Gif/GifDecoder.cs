@@ -1,16 +1,4 @@
-﻿/*  Copyright © 2016 Graeme Collins. All Rights Reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-3. The name of the author may not be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY GRAEME COLLINS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -38,20 +26,20 @@ public class GifDecoder
             gifData.globalColorTable = readColorTable(bytes, 13, 1 << (gifData.globalColorTableSize + 1));
         }
         readBlocks(gifData, bytes);
-
         return gifData;
     }
 
-    static GifColor[] readColorTable(byte[] bytes, int offset, int size)
+    static Color[] readColorTable(byte[] bytes, int offset, int size)
     {
-        GifColor[] colorTable = new GifColor[size];
+        Color[] colorTable = new Color[size];
 
         for (int i = 0; i < size; i++)
         {
             int startIndex = offset + i * 3;
-            GifColor color = new GifColor(bytes[startIndex], bytes[startIndex + 1], bytes[startIndex + 2], 1);
-
-            colorTable[i] = color;
+            colorTable[i].r = ((float)bytes[startIndex])/255;
+            colorTable[i].g = ((float)bytes[startIndex+1])/255;
+            colorTable[i].b = ((float)bytes[startIndex+2])/255;
+            colorTable[i].a = 1;
         }
 
         return colorTable;
@@ -96,7 +84,9 @@ public class GifDecoder
                 }
 
                 // Image data
+
                 imageData = readImageData(gifData, bytes, currentOffset);
+
                 gifData.imageDatas.Add(imageData);
 
                 // Connect graphics control extension, image descriptor, and image data
@@ -109,7 +99,6 @@ public class GifDecoder
 
                 // Decode image data
                 imageData.decode();
-
                 // Advance
                 currentOffset = imageData.endingOffset;
             }
@@ -183,9 +172,6 @@ public class GifDecoder
             }
         }
         imgData.endingOffset = subblockOffset;
-
-        //Debug.Log("Number of subblocks read: " + subblockCount);
-
         return imgData;
     }
 
@@ -195,7 +181,7 @@ public class GifDecoder
         Color[] previousFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
         Color[] currentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
         Color[] transparentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
-
+        
         // Create sprites
         for (int i = 0; i < gifData.graphicsControlExtensions.Count; i++)
         {
@@ -208,6 +194,7 @@ public class GifDecoder
             Texture2D texture = new Texture2D(gifData.canvasWidth, gifData.canvasHeight);
             int transparencyIndex = graphicsControlExt.transparentColorFlag ? graphicsControlExt.transparentColorIndex : -1;
 
+            Color[] colorTabel = imageData.imageDescriptor.localColorTableFlag ? imageData.imageDescriptor.localColorTable : gifData.globalColorTable;
             // Determine base pixels
             if (i == 0)
             {
@@ -241,9 +228,7 @@ public class GifDecoder
 
                     if (colorIndex != transparencyIndex)
                     {
-                        GifColor gifColor = imageData.getColor(colorIndex);
-
-                        currentFrame[pixelOffset] = new Color(gifColor.r / 255f, gifColor.g / 255f, gifColor.b / 255f);
+                        currentFrame[pixelOffset] = colorTabel[colorIndex];//imageData.getColor(colorIndex);
                     }
                 }
             }
@@ -268,7 +253,7 @@ public class GifDecoder
     {
         public string tag;
         public byte[] dat;
-        public Action<object> CallBack;
+        public Action<Mission> CallBack;
         public GifData gifdata;
         public List<Texture2D> texture2Ds;
     }
@@ -278,7 +263,7 @@ public class GifDecoder
     /// <param name="dat"></param>
     /// <param name="tag"></param>
     /// <param name="callback">返回Mission</param>
-    public static void AsyncDecode(byte[] dat,string tag,Action<object> callback)
+    public static void AsyncDecode(byte[] dat,string tag,Action<Mission> callback)
     {
         Mission m = new Mission();
         m.dat = dat;
