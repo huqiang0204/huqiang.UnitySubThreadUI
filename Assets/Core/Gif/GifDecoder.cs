@@ -12,8 +12,8 @@ public class GifDecoder
         GifData gifData = new GifData();
 
         gifData.header = Encoding.UTF8.GetString(bytes, 0, 6);
-        gifData.canvasWidth = BitHelper.getInt16FromBytes(bytes, 6);
-        gifData.canvasHeight = BitHelper.getInt16FromBytes(bytes, 8);
+        gifData.canvasWidth = bytes.ReadInt16(6); //BitHelper.getInt16FromBytes(bytes, 6);
+        gifData.canvasHeight = bytes.ReadInt16(8); //BitHelper.getInt16FromBytes(bytes, 8);
         gifData.globalColorTableFlag = BitHelper.getIntFromPackedByte(bytes[10], 0, 1) == 1;
         gifData.bitsPerPixel = BitHelper.getIntFromPackedByte(bytes[10], 1, 4) + 1;
         gifData.sortFlag = BitHelper.getIntFromPackedByte(bytes[10], 4, 5) == 1;
@@ -115,7 +115,7 @@ public class GifDecoder
 
         gce.disposalMethod = BitHelper.getIntFromPackedByte(bytes[offset + 3], 3, 6);
         gce.transparentColorFlag = BitHelper.getIntFromPackedByte(bytes[offset + 3], 7, 8) == 1;
-        gce.delayTime = BitHelper.getInt16FromBytes(bytes, offset + 4);
+        gce.delayTime = bytes.ReadInt16(offset+4); //BitHelper.getInt16FromBytes(bytes, offset + 4);
         gce.transparentColorIndex = bytes[offset + 6];
 
         return gce;
@@ -125,10 +125,10 @@ public class GifDecoder
     {
         GifImageDescriptor id = new GifImageDescriptor(gifData);
 
-        id.imageLeft = BitHelper.getInt16FromBytes(bytes, offset + 1);
-        id.imageTop = BitHelper.getInt16FromBytes(bytes, offset + 3);
-        id.imageWidth = BitHelper.getInt16FromBytes(bytes, offset + 5);
-        id.imageHeight = BitHelper.getInt16FromBytes(bytes, offset + 7);
+        id.imageLeft = bytes.ReadInt16(offset + 1); //BitHelper.getInt16FromBytes(bytes, offset + 1);
+        id.imageTop = bytes.ReadInt16(offset + 3);  //BitHelper.getInt16FromBytes(bytes, offset + 3);
+        id.imageWidth = bytes.ReadInt16(offset + 5);  //BitHelper.getInt16FromBytes(bytes, offset + 5);
+        id.imageHeight = bytes.ReadInt16(offset + 7); //BitHelper.getInt16FromBytes(bytes, offset + 7);
         id.localColorTableFlag = BitHelper.getIntFromPackedByte(bytes[offset + 9], 0, 1) == 1;
         id.interlaceFlag = BitHelper.getIntFromPackedByte(bytes[offset + 9], 1, 2) == 1;
         id.sortFlag = BitHelper.getIntFromPackedByte(bytes[offset + 9], 2, 3) == 1;

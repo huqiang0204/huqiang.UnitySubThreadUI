@@ -127,6 +127,11 @@ namespace huqiang
             for (int i = 0; i < size; i++)
             { stream.WriteByte(*p); p++; }
         }
+        public unsafe static Int32 ReadInt16(this byte[] buff, Int32 offset)
+        {
+            fixed (byte* bp = &buff[0])
+                return *(Int16*)(bp + offset);
+        }
         public unsafe static Int32 ReadInt32(this byte[] buff, Int32 offset)
         {
             fixed (byte* bp = &buff[0])
