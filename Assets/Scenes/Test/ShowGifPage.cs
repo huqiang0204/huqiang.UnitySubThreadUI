@@ -36,8 +36,8 @@ public class ShowGifPage:UIPage
     }
     void DecodOver(GifDecoder.Mission obj)
     {
-        List<Texture2D> t2d = obj.texture2Ds;
+        List<Texture2D> t2d = obj.gifdata.textures;
         if (CurrentPage == this)
-            view.txt.Play(t2d, true);
+            view.txt.Play(t2d, true, obj.count, 66, null, false, false);
     }
 }

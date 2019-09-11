@@ -98,7 +98,7 @@ public class GifDecoder
                 imageDescriptor.imageData = imageData;
 
                 // Decode image data
-                imageData.decode();
+                //imageData.decode();
                 // Advance
                 currentOffset = imageData.endingOffset;
             }
@@ -175,79 +175,6 @@ public class GifDecoder
         return imgData;
     }
 
-    static List<Texture2D> createAnimator(GifData gifData)
-    {
-        List<Texture2D> sprites = new List<Texture2D>();
-        Color[] previousFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
-        Color[] currentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
-        Color[] transparentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
-        
-        // Create sprites
-        for (int i = 0; i < gifData.graphicsControlExtensions.Count; i++)
-        {
-            GifGraphicsControlExtension graphicsControlExt = gifData.graphicsControlExtensions[i];
-            GifImageDescriptor imageDescriptor = graphicsControlExt.imageDescriptor;
-            GifImageData imageData = imageDescriptor.imageData;
-            int top = imageDescriptor.imageTop;
-            int left = imageDescriptor.imageLeft;
-            int disposalMethod = graphicsControlExt.disposalMethod;
-            Texture2D texture = new Texture2D(gifData.canvasWidth, gifData.canvasHeight);
-            int transparencyIndex = graphicsControlExt.transparentColorFlag ? graphicsControlExt.transparentColorIndex : -1;
-
-            Color[] colorTabel = imageData.imageDescriptor.localColorTableFlag ? imageData.imageDescriptor.localColorTable : gifData.globalColorTable;
-            // Determine base pixels
-            //if (i == 0)
-            //{
-            //    texture.SetPixels(transparentFrame);
-            //}
-            //else
-            //{
-            //    if (disposalMethod == 1)
-            //    {
-            //        texture.SetPixels(previousFrame);
-            //    }
-            //    else if (disposalMethod == 2)
-            //    {
-            //        texture.SetPixels(transparentFrame);
-            //    }
-            //    else if (disposalMethod == 3)
-            //    {
-            //        throw new NotImplementedException("Disposal method 3 is not implemented.");
-            //    }
-            //}
-
-            // Set pixels from image data
-            for (int j = 0; j < imageDescriptor.imageWidth; j++)
-            {
-                for (int k = 0; k < imageDescriptor.imageHeight; k++)
-                {
-                    int x = left + j;
-                    int y = (gifData.canvasHeight - 1) - (top + k);
-                    int colorIndex = imageData.colorIndices[j + k * imageDescriptor.imageWidth];
-                    int pixelOffset = x + y * gifData.canvasWidth;
-
-                    if (colorIndex != transparencyIndex)
-                    {
-                        currentFrame[pixelOffset] = colorTabel[colorIndex];//imageData.getColor(colorIndex);
-                    }
-                }
-            }
-
-            // Set texture pixels and create sprite
-            texture.SetPixels(currentFrame);
-            texture.Apply();
-            texture.filterMode = FilterMode.Point;
-            sprites.Add(texture);
-
-            // Store current frame as previous before continuing, and reset current frame
-            currentFrame.CopyTo(previousFrame, 0);
-            if (disposalMethod == 0 || disposalMethod == 2)
-            {
-                currentFrame = new Color[currentFrame.Length];
-            }
-        }
-        return sprites;
-    }
     static void CalculColors(GifData gifData)
     {
         Color[] previousFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
@@ -283,7 +210,6 @@ public class GifDecoder
                 }
             }
             // Set texture pixels and create sprite
-           
             // Store current frame as previous before continuing, and reset current frame
             currentFrame.CopyTo(previousFrame, 0);
             if (disposalMethod == 0 || disposalMethod == 2)
@@ -322,6 +248,7 @@ public class GifDecoder
     {
         public string tag;
         public byte[] dat;
+        public int count;
         public Action<Mission> CallBack;
         public GifData gifdata;
         public List<Texture2D> texture2Ds;
@@ -345,14 +272,24 @@ public class GifDecoder
     {
         Mission m = mis as Mission;
         m.gifdata = parseGifData(m.dat);
-        CalculColors(m.gifdata);
-        ThreadMission.InvokeToMain(DataToTexture,m);
+        m.count = m.gifdata.graphicsControlExtensions.Count;
+        while(m.gifdata.DecodeNext())
+        {
+            //ThreadMission.AddMission();
+            ThreadMission.InvokeToMain(DataToTexture,m);
+        }
+        //CalculColors(m.gifdata);
+        //ThreadMission.InvokeToMain(DataToTexture,m);
     }
     static void DataToTexture(object mis)
     {
         Mission m = mis as Mission;
-        m.texture2Ds= CreateAnimator(m.gifdata);
-        if (m.CallBack != null)
-            m.CallBack(m);
+        m.gifdata.CreateNextTexture();
+
+        ThreadMission.AddMission((o) =>
+        {
+            if (m.CallBack != null)
+                m.CallBack(m);
+        }, mis, "UI");
     }
 }

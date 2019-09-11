@@ -17,6 +17,7 @@ namespace huqiang
             AnimationManage.Manage.AddAnimat(this);
         }
         List<Texture2D> texture2s;
+        public int gifCount;
         public void Play(List<Texture2D> gif)
         {
             lifetime = 0;
@@ -26,6 +27,7 @@ namespace huqiang
                 image.texture = texture2s[0];
                 Playing = true;
             }
+            gifCount = gif.Count;
         }
         public void Pause()
         {
@@ -41,11 +43,11 @@ namespace huqiang
         {
             if (Playing)
             {
-                lifetime += time;
+                float a = lifetime + time;
                 if (texture2s != null)
                 {
-                    int c = (int)lifetime / Interval;
-                    if (c >= texture2s.Count)
+                    int c = (int)a / Interval;
+                    if (c >= gifCount)
                     {
                         if (Loop)
                         {
@@ -61,7 +63,11 @@ namespace huqiang
                     }
                     else
                     {
-                        image.texture = texture2s[c];
+                        if (c < texture2s.Count )
+                        {
+                            image.texture = texture2s[c];
+                            lifetime = a;
+                        }
                     }
                 }
             }
