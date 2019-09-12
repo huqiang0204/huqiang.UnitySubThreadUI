@@ -227,33 +227,6 @@ namespace huqiang
             }
             ani.Play();
         }
-        public static GifAnimat Findt2dsAni(this RawImageElement raw)
-        {
-            if (raw == null)
-                return null;
-            raw.model.activeSelf = true;
-           return AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
-        }
-        public static void Play(this RawImageElement raw, List<Texture2D> t2ds, bool loop = true, int count=0, int inter = 66, Action<GifAnimat> over = null,bool hide=true,bool cover=true)
-        {
-            if (raw == null)
-                return;
-            raw.model.activeSelf = true;
-            var ani = AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
-            if (ani == null)
-            {
-                ani = new GifAnimat(raw);
-                if (over == null)
-                    ani.PlayOver = (o) => { o.Dispose(); };
-                else ani.PlayOver = over;
-            }
-            else if (!cover)
-                return;
-            ani.Play(t2ds);
-            ani.Loop = loop;
-            ani.Interval = inter;
-            if (count > 0)
-                ani.gifCount = count;
-        }
+      
     }
 }

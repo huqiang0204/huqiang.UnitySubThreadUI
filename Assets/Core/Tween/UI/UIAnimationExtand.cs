@@ -1,5 +1,6 @@
 ﻿using huqiang.UI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace huqiang
@@ -82,6 +83,54 @@ namespace huqiang
             ani.Interval = inter;
             ani.Play(sprites);
         }
-
+        public static UIMove SizeTo(this ModelElement trans, Vector2 size, float time, bool hide = false, float delay = 0, Action<UIMove> over = null, bool cover = true)
+        {
+            if (trans == null)
+                return null;
+            trans.activeSelf = true;
+            var ani = UIAnimation.Manage.FindAni<UIMove>((o) => { return o.Target == trans ? true : false; });
+            if (ani == null)
+                ani = new UIMove(trans);
+            else if (!cover)
+                return null;
+            ani.StartSize = ani.Target.data.sizeDelta;
+            ani.EndSize = size;
+            ani.Time = time;
+            ani.Delay = delay;
+            ani.AutoHide = hide;
+            if (over == null)
+                ani.PlayOver = (o) => { o.Dispose(); };
+            else ani.PlayOver = over;
+            ani.Play();
+            return ani;
+        }
+        public static GifAnimat Findt2dsAni(this RawImageElement raw)
+        {
+            if (raw == null)
+                return null;
+            raw.model.activeSelf = true;
+            return AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
+        }
+        public static void Play(this RawImageElement raw, List<Texture2D> t2ds, bool loop = true, int count = 0, int inter = 66, Action<GifAnimat> over = null, bool hide = true, bool cover = true)
+        {
+            if (raw == null)
+                return;
+            raw.model.activeSelf = true;
+            var ani = AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
+            if (ani == null)
+            {
+                ani = new GifAnimat(raw);
+                if (over == null)
+                    ani.PlayOver = (o) => { o.Dispose(); };
+                else ani.PlayOver = over;
+            }
+            else if (!cover)
+                return;
+            ani.Play(t2ds);
+            ani.Loop = loop;
+            ani.Interval = inter;
+            if (count > 0)
+                ani.gifCount = count;
+        }
     }
 }
