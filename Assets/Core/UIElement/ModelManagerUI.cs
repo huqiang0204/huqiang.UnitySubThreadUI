@@ -84,6 +84,8 @@ namespace huqiang.UI
         }
         public static FakeStruct LoadFromObject(Component com, DataBuffer buffer, ref Int16 type)
         {
+            if (com == null)
+                return null;
             string name = com.GetType().Name;
             for (int i = 0; i < point; i++)
             {

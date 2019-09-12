@@ -83,27 +83,6 @@ namespace huqiang
             ani.Interval = inter;
             ani.Play(sprites);
         }
-        public static UIMove SizeTo(this ModelElement trans, Vector2 size, float time, bool hide = false, float delay = 0, Action<UIMove> over = null, bool cover = true)
-        {
-            if (trans == null)
-                return null;
-            trans.activeSelf = true;
-            var ani = UIAnimation.Manage.FindAni<UIMove>((o) => { return o.Target == trans ? true : false; });
-            if (ani == null)
-                ani = new UIMove(trans);
-            else if (!cover)
-                return null;
-            ani.StartSize = ani.Target.data.sizeDelta;
-            ani.EndSize = size;
-            ani.Time = time;
-            ani.Delay = delay;
-            ani.AutoHide = hide;
-            if (over == null)
-                ani.PlayOver = (o) => { o.Dispose(); };
-            else ani.PlayOver = over;
-            ani.Play();
-            return ani;
-        }
         public static GifAnimat Findt2dsAni(this RawImageElement raw)
         {
             if (raw == null)
@@ -131,6 +110,27 @@ namespace huqiang
             ani.Interval = inter;
             if (count > 0)
                 ani.gifCount = count;
+        }
+        public static UIMove SizeTo(this ModelElement trans, Vector2 size, float time, bool hide = false, float delay = 0, Action<UIMove> over = null, bool cover = true)
+        {
+            if (trans == null)
+                return null;
+            trans.activeSelf = true;
+            var ani = UIAnimation.Manage.FindAni<UIMove>((o) => { return o.Target == trans ? true : false; });
+            if (ani == null)
+                ani = new UIMove(trans);
+            else if (!cover)
+                return null;
+            ani.StartSize = ani.Target.data.sizeDelta;
+            ani.EndSize = size;
+            ani.Time = time;
+            ani.Delay = delay;
+            ani.AutoHide = hide;
+            if (over == null)
+                ani.PlayOver = (o) => { o.Dispose(); };
+            else ani.PlayOver = over;
+            ani.Play();
+            return ani;
         }
     }
 }

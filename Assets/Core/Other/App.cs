@@ -30,6 +30,7 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(ShadowElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Shadow, ShadowElement>(ShadowElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<UILayout, huqiang.UI.LayoutElement>(huqiang.UI.LayoutElement.LoadFromObject));
         }
         public static RenderForm uiroot;
         static void CreateUI() 

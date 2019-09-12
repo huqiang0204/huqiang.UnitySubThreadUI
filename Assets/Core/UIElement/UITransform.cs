@@ -22,4 +22,5 @@ namespace huqiang.UI
     {
         Color color { get; set; }
     }
+    
 }

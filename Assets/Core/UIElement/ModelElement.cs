@@ -44,6 +44,10 @@ namespace huqiang.UI
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
+    public interface UpdateInterface
+    {
+        void Update();
+    }
     public class ModelElement : DataConversion,UITransform
     {
         public static Coordinates GetGlobaInfo(ModelElement rect, bool Includeroot = true)
@@ -132,7 +136,7 @@ namespace huqiang.UI
         public RectTransform Context;
         public GameObject Main;
         public Coloring ColorController;
-        public GraphicE graphic;
+        public UpdateInterface updating;
         public int regIndex;
         public ElementData data;
         public string name;
@@ -334,6 +338,9 @@ namespace huqiang.UI
                             tmp.Add((Int16)buffer.AddData(fs));
                             tmp.Add(type);
                         }
+#if UNITY_EDITOR
+                        else Debug.Log(com.name);
+#endif
                     }
                 }
             }
@@ -630,12 +637,15 @@ namespace huqiang.UI
             }
             baseEvent = EventCallBack.RegEvent<T>(this);
         }
-        public void VertexCalculation()
+        public void Update()
         {
-            if (graphic != null)
-                graphic.VertexCalculation();
-            for (int i = 0; i < child.Count; i++)
-                child[i].VertexCalculation();
+            if(_active)
+            {
+                if (updating != null)
+                    updating.Update();
+                for (int i = 0; i < child.Count; i++)
+                    child[i].Update();
+            }
         }
         public override void Apply()
         {

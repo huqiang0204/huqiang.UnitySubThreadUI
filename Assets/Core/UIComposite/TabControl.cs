@@ -37,7 +37,7 @@ namespace huqiang.UIComposite
         /// </summary>
         public HeadDock headDock = HeadDock.Top;
         float headHigh = 0;
-        public StackPanel panel;
+        public LayoutElement panel;
         public List<TableContent> contents;
         /// <summary>
         /// 当前被选中项的背景色
@@ -55,9 +55,7 @@ namespace huqiang.UIComposite
             Items = Head.Find("Items");
             if(Items!=null)
             {
-                panel = new StackPanel();
-                panel.direction = Direction.Horizontal;
-                panel.Initial(Items);
+                panel = Items.GetComponent<LayoutElement>();
                 headHigh = Items.data.sizeDelta.y;
             }
             Item = Head.Find("Item");
@@ -88,7 +86,7 @@ namespace huqiang.UIComposite
             }
             Content.IsChanged = true;
             Head.IsChanged = true;
-            panel.Order();
+            panel.IsChanged = true;
         }
         /// <summary>
         /// 使用默认标签页
@@ -132,7 +130,7 @@ namespace huqiang.UIComposite
             }
             model.SetParent(Content);
             curContent = content;
-            panel.Order();
+            panel.IsChanged = true;
             contents.Add(curContent);
         }
         /// <summary>
@@ -160,7 +158,7 @@ namespace huqiang.UIComposite
             if (curContent.Back != null)
                 curContent.Back.activeSelf = true;
             contents.Add(table);
-            panel.Order();
+            panel.IsChanged = true;
         }
         /// <summary>
         /// 添加外部标签页
@@ -172,7 +170,7 @@ namespace huqiang.UIComposite
             if (Head == null)
                 return;
             mod.SetParent(Head);
-            panel.Order();
+            panel.IsChanged = true;
         }
         /// <summary>
         /// 标签页排列
@@ -180,7 +178,7 @@ namespace huqiang.UIComposite
         /// <param name="obj"></param>
         public void OrderHeadLabel(object obj)
         {
-            panel.Order();
+            panel.IsChanged = true;
         }
         /// <summary>
         /// 移除某个标签和其内容
@@ -197,7 +195,7 @@ namespace huqiang.UIComposite
                 if (curContent.Back != null)
                     curContent.Back.activeSelf = true;
             }
-            panel.Order();
+            panel.IsChanged = true;
         }
         /// <summary>
         /// 释放某个标签和其内容,其对象会被回收

@@ -308,7 +308,7 @@ namespace huqiang.UIComposite
             ic.Item.IsChanged = true;
             ic.Back.IsChanged = true;
             ic.Close.IsChanged = true;
-            control.panel.Order();
+            control.panel.IsChanged = true;
         }
         public void AddContent(ItemContent con)
         {

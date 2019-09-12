@@ -121,7 +121,7 @@ public class SizeScaleEx : SizeScaling
             }
         }
     }
-    static void RefreshChild(Transform t)
+    public static void RefreshChild(Transform t)
     {
         var ss = t.GetComponent<SizeScaleEx>();
         if (ss != null)

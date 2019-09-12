@@ -25,7 +25,7 @@ namespace huqiang.UI
         public static void VertexCalculationAll()
         {
             for (int i = 0; i < forms.Count; i++)
-                forms[i].model.VertexCalculation();
+                forms[i].model.Update();
         }
         public static void ApplyAll()
         {

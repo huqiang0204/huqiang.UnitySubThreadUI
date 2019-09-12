@@ -129,7 +129,7 @@ namespace huqiang.UIComposite
             model.SetParent(null);
             ModelManagerUI.RecycleElement(model);
             auxiliary.RemoveContent(this);
-            auxiliary.panel.Order();
+            auxiliary.panel.IsChanged = true;
         }
     }
     public class LayoutAuxiliary
@@ -154,7 +154,7 @@ namespace huqiang.UIComposite
         LayoutContent Current;
         float headHigh;
         public HeadDock headDock = HeadDock.Top;
-        public StackPanel panel;
+        public LayoutElement panel;
         DesignedDockPanel layout;
         public LayoutAuxiliary(DockpanelArea area)
         {
@@ -163,6 +163,7 @@ namespace huqiang.UIComposite
             model = new ModelElement();
             model.Load(layout.Auxiliary.ModData);
             head = model.Find("Head");
+            panel = head.GetComponent<LayoutElement>();
             headHigh = head.data.sizeDelta.y;
             docker = model.Find("Docker");
             docker.activeSelf = false;
@@ -172,9 +173,6 @@ namespace huqiang.UIComposite
             Item.activeSelf = false;
             Cover = model.Find("Cover");
             Cover.activeSelf = false;
-            panel =new StackPanel();
-            panel.direction = Direction.Horizontal;
-            panel.Initial(head);
             InitialDocker();
         }
         public LayoutContent AddContent(string name)
@@ -199,7 +197,7 @@ namespace huqiang.UIComposite
             con.Head.IsChanged = true;
             contents.Add(con);
             Current = con;
-            panel.Order();
+            panel.IsChanged = true;
             con.model.data.sizeDelta = content.data.sizeDelta;
             ModelElement.ScaleSize(con.model);
             con.model.IsChanged = true;
@@ -270,7 +268,7 @@ namespace huqiang.UIComposite
                 mod.data.sizeDelta = content.data.sizeDelta;
                 mod.IsChanged = true;
             }
-            panel.Order();
+            panel.IsChanged = true;
         }
         void SetTextSize(object obj)
         {
@@ -286,11 +284,11 @@ namespace huqiang.UIComposite
                     it.close.IsChanged = true;
                 }
             }
-            panel.Order();
+            panel.IsChanged = true;
         }
         public void Refresh()
         {
-            panel.Order();
+            panel.IsChanged = true;
         }
         void InitialDocker()
         {
