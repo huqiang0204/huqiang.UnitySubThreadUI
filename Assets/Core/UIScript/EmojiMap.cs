@@ -111,13 +111,12 @@ namespace UGUI
                 UInt16 v = (UInt16)c;
                 if (v < 0x8cff)
                 {
-                    i++;
                     if (v >= 0x2600 & v <= 0x27bf)
                     {
                         var pst = new EmojiInfo();
                         pst.chr = new string(c, 1);
                         pst.uv = new Vector2[4];
-                        FindEmoji(cc,i, pst.uv);
+                        FindEmoji(cc, i, pst.uv);
                         pst.pos = pos;
                         list.Add(pst);
                         sb.Append(emSpace);
@@ -126,6 +125,7 @@ namespace UGUI
                     {
                         sb.Append(c);
                     }
+                    i++;
                 }
                 else
                 {
