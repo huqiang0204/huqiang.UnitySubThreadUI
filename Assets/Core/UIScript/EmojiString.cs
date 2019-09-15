@@ -99,7 +99,7 @@ namespace UGUI
             string str = emoji.FilterString;
             builder.Insert(index, str);
             int l = str.Length;
-            for (int i = 0; i < emojis.Count; i++)
+            for (int i = 0; i < emojis.Count; i++)//将后面的表情符位置往后移
                 if (emojis[i].pos >= index)
                     emojis[i].pos += l;
             emojis.AddRange(list);

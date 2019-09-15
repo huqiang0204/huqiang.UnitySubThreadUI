@@ -121,12 +121,10 @@ namespace UGUI
                         pst.pos = pos;
                         list.Add(pst);
                         sb.Append(emSpace);
-                        pos++;
                     }
                     else
                     {
                         sb.Append(c);
-                        pos++;
                     }
                 }
                 else
@@ -141,13 +139,13 @@ namespace UGUI
                         i += a;
                         list.Add(pst);
                         sb.Append(emSpace);
-                        pos++;
                     }
                     else {
                         i++;
                         sb.Append(c);
                     }
                 }
+                pos++;
             }
             return sb.ToString();
         }
