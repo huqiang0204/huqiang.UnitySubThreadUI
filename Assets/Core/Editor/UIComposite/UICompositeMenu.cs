@@ -691,7 +691,9 @@ public static class UICompositeMenu
         (Items.transform as RectTransform).sizeDelta = new Vector2(100,50);
         ss = Items.AddComponent<SizeScaleEx>();
         ss.marginType = MarginType.MarginX;
+        Items.AddComponent<UILayout>().type = huqiang.UI.LayoutType.StackPanelH;
         Items.AddComponent<RectMask2D>();
+       
 
         var Item = new GameObject("Item",typeof(RectTransform));
         Item.transform.SetParent(Head.transform);
