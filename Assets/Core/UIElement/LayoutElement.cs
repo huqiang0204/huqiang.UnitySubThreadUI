@@ -94,7 +94,7 @@ namespace huqiang.UI
                 element.model.data.sizeDelta.x = w;
             }
             float y = element.model.data.sizeDelta.y;
-            float sx = element.model.data.sizeDelta.y * -0.5f;
+            float sx = element.model.data.sizeDelta.x * -0.5f;
             for (int i = 0; i < c; i++)
             {
                 var o = child[i];

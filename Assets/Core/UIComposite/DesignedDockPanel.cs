@@ -146,6 +146,8 @@ namespace huqiang.UIComposite
         void CenterPointUp(EventCallBack callBack, UserAction action)
         {
             Cover.activeSelf = false;
+            if (control.ExistContent(layout.DragContent))
+                return;
             layout.DragAuxiliary.RemoveContent(layout.DragContent);
             AddContent(layout.DragContent);
             layout.HideAllDocker();
@@ -308,7 +310,8 @@ namespace huqiang.UIComposite
             ic.Item.IsChanged = true;
             ic.Back.IsChanged = true;
             ic.Close.IsChanged = true;
-            control.panel.IsChanged = true;
+            if (control.panel != null)
+                control.panel.IsChanged = true;
         }
         public void AddContent(ItemContent con)
         {

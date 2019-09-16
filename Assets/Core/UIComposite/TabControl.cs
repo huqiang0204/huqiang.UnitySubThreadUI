@@ -86,7 +86,8 @@ namespace huqiang.UIComposite
             }
             Content.IsChanged = true;
             Head.IsChanged = true;
-            panel.IsChanged = true;
+            if (panel != null)
+                panel.IsChanged = true;
         }
         /// <summary>
         /// 使用默认标签页
@@ -158,7 +159,8 @@ namespace huqiang.UIComposite
             if (curContent.Back != null)
                 curContent.Back.activeSelf = true;
             contents.Add(table);
-            panel.IsChanged = true;
+            if (panel != null)
+                panel.IsChanged = true;
         }
         /// <summary>
         /// 添加外部标签页
@@ -231,6 +233,10 @@ namespace huqiang.UIComposite
                 curContent.Back.GetComponent<ImageElement>().color = SelectColor;
                 curContent.Back.activeSelf = true;
             }
+        }
+        public bool ExistContent(TableContent content)
+        {
+            return contents.Contains(content);
         }
         public void ItemClick(EventCallBack callBack,UserAction action)
         {
