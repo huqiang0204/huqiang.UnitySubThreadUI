@@ -34,7 +34,7 @@ public class TestPage : UIPage
         //model = ModelManagerUI.FindModel("baseUI", "asd");
          view = LoadUI<View>("baseUI","asd");
         base.Initial(parent, dat);
-      
+
         //model.SetParent(UIPage.Root);
        // var view = model.ComponentReflection<View>();
 
