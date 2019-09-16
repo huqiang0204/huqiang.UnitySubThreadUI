@@ -43,7 +43,43 @@ namespace huqiang.UI
                 TextElement.fonts.Add(Font.CreateDynamicFontFromOSFont("Arial", 16));
             return fonts[0];
         }
-        public static void AsyncGetSize(string fontName,Vector2 designSize,int fontSize,EmojiString txt, FontStyle style, Action<Vector2> callback)
+        public static void AsyncGetSizeX(string fontName, Vector2 designSize, int fontSize, EmojiString txt, FontStyle style, Action<Vector2> callback)
+        {
+            string str = txt.FilterString;
+            Vector2 v = Vector2.zero;
+            ThreadMission.InvokeToMain((o) => {
+                var font = FindFont(fontName);
+                if (font != null)
+                {
+                    TextGenerationSettings settings = new TextGenerationSettings();
+                    settings.resizeTextMinSize = 2;
+                    settings.resizeTextMaxSize = 40;
+                    settings.scaleFactor = 1;
+                    settings.textAnchor = TextAnchor.UpperLeft;
+                    settings.color = Color.red;
+                    settings.generationExtents = new Vector2(designSize.x, 0);
+                    settings.pivot = new Vector2(0.5f, 0.5f);
+                    settings.richText = true;
+                    settings.font = font;
+                    settings.fontSize = fontSize;
+                    settings.fontStyle = FontStyle.Normal;
+                    settings.alignByGeometry = false;
+                    settings.updateBounds = false;
+                    settings.lineSpacing = 1;
+                    settings.horizontalOverflow = HorizontalWrapMode.Wrap;
+                    settings.verticalOverflow = VerticalWrapMode.Overflow;
+                    TextGenerator generator = new TextGenerator();
+                    v.x = generator.GetPreferredWidth(str, settings);
+                    v.y = designSize.y;
+                }
+            },
+            null,
+            (o) => {
+                if (callback != null)
+                    callback(v);
+            });
+        }
+        public static void AsyncGetSizeY(string fontName,Vector2 designSize,int fontSize,EmojiString txt, FontStyle style, Action<Vector2> callback)
         {
             string str = txt.FilterString;
             Vector2 v = Vector2.zero;
@@ -83,6 +119,38 @@ namespace huqiang.UI
                     callback(v);
             });
         }
+        public void AsyncGetTextSizeX(Action<TextElement, Vector2> callback)
+        {
+            if (callback != null)
+                AsyncGetSizeX(fontName, model.data.sizeDelta, data.fontSize, new EmojiString(mtext), data.fontStyle, (o) => { callback(this, o); });
+        }
+        public void AsyncGetTextSizeY(Action<TextElement, Vector2> callback)
+        {
+            if (callback != null)
+                AsyncGetSizeY(fontName,model.data.sizeDelta,data.fontSize,new EmojiString(mtext),data.fontStyle,(o)=> { callback(this,o); });
+        }
+        public void AsyncApplyTextSizeX(Action<TextElement> callback)
+        {
+            if (callback != null)
+            {
+                AsyncGetSizeX(fontName, model.data.sizeDelta, data.fontSize, new EmojiString(mtext), data.fontStyle, (o) => {
+                    model.data.sizeDelta = o;
+                    model.IsChanged = true;
+                    callback(this);
+                });
+            }
+        }
+        public void AsyncApplyTextSizeY(Action<TextElement> callback)
+        {
+            if (callback != null)
+            {
+                AsyncGetSizeY(fontName, model.data.sizeDelta, data.fontSize, new EmojiString(mtext), data.fontStyle, (o) => {
+                    model.data.sizeDelta = o;
+                    model.IsChanged = true;
+                    callback(this);
+                });
+            }
+        }
         public Text Context;
         public TextData data;
         public Vector2 preferredSize;
@@ -94,7 +162,6 @@ namespace huqiang.UI
                 if (mtext != null)
                     IsChanged = true;
                  mtext = value;
-                textChanged = true;
             }
             get { return mtext; } }
         public unsafe override void Load(FakeStruct fake)
@@ -173,6 +240,7 @@ namespace huqiang.UI
                 LoadToObject(Context, ref data, this);
                 IsChanged = false;
                 Context.enabled = true;
+                textChanged = true;
             }
             else LoadTextSize();
         }

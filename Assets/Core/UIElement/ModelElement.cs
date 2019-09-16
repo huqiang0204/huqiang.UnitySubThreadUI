@@ -339,7 +339,7 @@ namespace huqiang.UI
                             tmp.Add(type);
                         }
 #if UNITY_EDITOR
-                        else Debug.Log(com.name);
+                        else if (com.name != "Canvas") Debug.Log(com.name);
 #endif
                     }
                 }

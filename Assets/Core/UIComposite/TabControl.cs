@@ -114,8 +114,9 @@ namespace huqiang.UIComposite
             if (txt != null)
             {
                 txt.text = label;
-                txt.UseTextSize = true;
-                UIAnimation.Manage.FrameToDo(2, OrderHeadLabel, null);
+                txt.AsyncApplyTextSizeY((o)=> {
+                    panel.IsChanged = true;
+                });
             }
             mod.RegEvent<EventCallBack>();
             mod.baseEvent.Click = ItemClick;
@@ -172,14 +173,6 @@ namespace huqiang.UIComposite
             if (Head == null)
                 return;
             mod.SetParent(Head);
-            panel.IsChanged = true;
-        }
-        /// <summary>
-        /// 标签页排列
-        /// </summary>
-        /// <param name="obj"></param>
-        public void OrderHeadLabel(object obj)
-        {
             panel.IsChanged = true;
         }
         /// <summary>
