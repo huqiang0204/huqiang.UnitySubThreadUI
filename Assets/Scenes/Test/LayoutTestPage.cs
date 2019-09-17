@@ -70,19 +70,6 @@ public class GridTestWindow : PopWindow
         view.Scroll.BindingData = testData;
         view.Scroll.SetItemUpdate<Item,int>( (o, e,  i) => { o.Text.text = i.ToString();});
         view.Scroll.Refresh();
-        view.Scroll.eventCall.Click = (o, e) => {
-            if (e.IsRightButtonUp)
-                UIMenu.Instance.ShowMenu<TestMenu>(this,e.CanPosition);
-        };
-    }
-    public override void Cmd(string cmd, object dat)
-    {
-        switch(cmd)
-        {
-            case "menu":
-                Debug.Log(dat);
-                break;
-        }
     }
 }
 public class GridTestWindow2 : PopWindow

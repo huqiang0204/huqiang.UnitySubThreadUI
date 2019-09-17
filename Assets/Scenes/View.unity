@@ -1340,7 +1340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 287294050}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2877,6 +2877,7 @@ GameObject:
   - component: {fileID: 519466903}
   - component: {fileID: 519466905}
   - component: {fileID: 519466904}
+  - component: {fileID: 519466906}
   m_Layer: 0
   m_Name: Items
   m_TagString: Untagged
@@ -2939,6 +2940,24 @@ MonoBehaviour:
     down: 0
     right: 0
     top: 0
+--- !u!114 &519466906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519466902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479381f6c39b19b43af08b5356de89f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  minBox: {x: 400, y: 400}
+  minSize: {x: 100, y: 100}
+  interval: {x: 0, y: 0}
+  fillSize: 0
+  extandSize: 0
 --- !u!1 &529899171
 GameObject:
   m_ObjectHideFlags: 0
