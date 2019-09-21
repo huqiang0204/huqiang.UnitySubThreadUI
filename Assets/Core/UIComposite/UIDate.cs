@@ -74,7 +74,7 @@ namespace huqiang.UIComposite
             var y= model.Find("Year");
             Year = new ScrollY();
             Year.Initial(y);
-            Year.SetItemUpdate<ItemView,int>((o,e,i)=> { o.Item.text = e.ToString(); });
+            Year.SetItemUpdate<ItemView,int>((o,e,i)=> { o.Item.text = e.ToString()+unitY; });
             Year.Scroll = Scrolling;
             Year.ScrollEnd = YearScrollToEnd;
             Year.ItemDockCenter = true;
@@ -85,7 +85,7 @@ namespace huqiang.UIComposite
             var m = model.Find("Month");
             Month = new ScrollY();
             Month.Initial(m);
-            Month.SetItemUpdate<ItemView,string>((o,e,i)=> { o.Item.text = e; });
+            Month.SetItemUpdate<ItemView,string>((o,e,i)=> { o.Item.text = e+unitM; });
             Month.Scroll = Scrolling;
             Month.ScrollEnd = MonthScrollToEnd;
             Month.ItemDockCenter = true;
@@ -96,7 +96,7 @@ namespace huqiang.UIComposite
             var d = model.Find("Day");
             Day = new ScrollY();
             Day.Initial(d);
-            Day.SetItemUpdate<ItemView, string>((o,e,i)=> { o.Item.text = e; });
+            Day.SetItemUpdate<ItemView, string>((o,e,i)=> { o.Item.text = e+unitD; });
             Day.Scroll = Scrolling;
             Day.ScrollEnd = DayScrollToEnd;
             Day.ItemDockCenter = true;
