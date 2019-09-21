@@ -64,7 +64,11 @@ namespace huqiang.UIEvent
                 value = ValidateString(value);
                 textInfo.buffer.FullString = value;
                 textInfo.text = value;
+                textInfo.startSelect = 0;
+                textInfo.endSelect = -1;
                 SetShowText();
+                textChanged = true;
+                selectChanged = true;
             } }
         public string TipString
         {
@@ -229,6 +233,7 @@ namespace huqiang.UIEvent
                     SelectionColor = tp->selectColor;
                 }
             }
+            AutoColor = false;
         }
         public TextElement TextCom { get; private set; }
         public override void OnMouseDown(UserAction action)
@@ -367,7 +372,10 @@ namespace huqiang.UIEvent
             }
             Editing = false;
             SetShowText();
-            ThreadMission.InvokeToMain((o) => { Keyboard.EndInput(); }, null);
+            ThreadMission.InvokeToMain((o) => {
+                Keyboard.EndInput();
+                InputCaret.Hide();
+            }, null);
         }
         string ValidateString(string input)
         {
@@ -621,7 +629,6 @@ namespace huqiang.UIEvent
             textInfo.text = textInfo.buffer.FullString;
             textInfo.CaretStyle = 1;
             textChanged = true;
-            //ChangePoint(textInfo);
             selectChanged = true;
         }
         void Update()

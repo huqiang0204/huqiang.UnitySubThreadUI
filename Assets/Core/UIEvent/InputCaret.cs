@@ -86,6 +86,7 @@ namespace huqiang.UIEvent
         }
         public static void Hide()
         {
+            CaretStyle = 0;
             if (m_Caret != null)
             {
                 m_Caret.gameObject.SetActive(false);

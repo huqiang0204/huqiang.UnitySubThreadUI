@@ -73,7 +73,7 @@ public class ScrollExTestPage : UIPage
         view.Dropdown.BindingData = rr;
 
         view.Last.Click = (o, e) => { LoadPage<DrawPage>(); };
-        view.Next.Click = (o, e) => { LoadPage<AniTestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<ChatBoxPage>(); };
     }
     ScrollYExtand.DataTemplate current;
     void TitleUpdate(TitleItem title, ScrollYExtand.DataTemplate data, int index)
