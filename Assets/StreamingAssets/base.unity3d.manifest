@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 705677672
+CRC: 17280698
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f28c24d8fe6570401d18921292540aa3
+    Hash: 087ca8bc7cd05ae4d84f738e5f018256
   TypeTreeHash:
     serializedVersion: 2
     Hash: db5e5a0e8ffd8e66cf9a1ed744aca029
@@ -46,6 +46,7 @@ Assets:
 - Assets/AssetsBundle/animation/idle.anim
 - Assets/AssetsBundle/png/Right Arm(upper Part).png
 - Assets/AssetsBundle/Emoji.bytes
+- Assets/AssetsBundle/png/slider.png
 - Assets/AssetsBundle/png/Left Leg.png
 - Assets/AssetsBundle/Sprites/gif.bytes
 - Assets/AssetsBundle/animation/sample motion.controller
