@@ -19,7 +19,6 @@ public class TestPage : UIPage
         public GridScroll Scroll;
         public ScrollXS ScrollX;
         public ScrollYS ScrollY;
-        public DragContent Drag;
         public UISlider Slider;
         public EventCallBack Last;
         public EventCallBack Next;
