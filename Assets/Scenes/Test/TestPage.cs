@@ -24,7 +24,7 @@ public class TestPage : UIPage
         public EventCallBack Next;
     }
     class Item
-    {
+    { 
         public TextElement Text;
     }
     View view;
