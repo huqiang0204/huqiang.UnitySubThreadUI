@@ -102,7 +102,6 @@ namespace huqiang.UIEvent
                         Debug.Log(ex);
                     }
                 }
-                //DispatchEvent(root, Vector3.zero, Vector3.one, Quaternion.identity, action);
             }
         }
         public static bool DispatchEvent(ModelElement ui, Vector3 pos, Vector3 scale, Quaternion quate, UserAction action)
@@ -172,17 +171,19 @@ namespace huqiang.UIEvent
                 }
                 else
                 {
-                    float x1 = 0.5f * w;
-                    float x0 = -x1;
-                    float y1 = 0.5f * h;
-                    float y0 = -y1;
+                    float px= ui.data.pivot.x;
+                    float py = ui.data.pivot.y;
+                    float lx = -px * w;
+                    float rx = lx+w;
+                    float dy = -py * h;
+                    float ty = dy+h;
 
                     var v = action.CanPosition;
                     var Rectangular = callBack.Rectangular;
-                    Rectangular[0] = q * new Vector3(x0, y0) + o;
-                    Rectangular[1] = q * new Vector3(x0, y1) + o;
-                    Rectangular[2] = q * new Vector3(x1, y1) + o;
-                    Rectangular[3] = q * new Vector3(x1, y0) + o;
+                    Rectangular[0] = q * new Vector3(lx, dy) + o;
+                    Rectangular[1] = q * new Vector3(lx, ty) + o;
+                    Rectangular[2] = q * new Vector3(rx, ty) + o;
+                    Rectangular[3] = q * new Vector3(rx, dy) + o;
                     inside = Physics2D.DotToPolygon(Rectangular, v);
                 }
                 if (inside)
