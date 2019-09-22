@@ -393,7 +393,7 @@ public static class UICompositeMenu
         txt.alignment = TextAnchor.MiddleLeft;
         txt.fontSize = 24;
     }
-    [MenuItem("GameObject/UIComposite/DropDownEx", false, 9)]
+    [MenuItem("GameObject/UIComposite/DropDown", false, 9)]
     static public void AddDropDown(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;

@@ -44,10 +44,6 @@ namespace huqiang.UI
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
-    public interface UpdateInterface
-    {
-        void Update();
-    }
     public class ModelElement : DataConversion,UITransform
     {
         public static Coordinates GetGlobaInfo(ModelElement rect, bool Includeroot = true)
@@ -136,7 +132,7 @@ namespace huqiang.UI
         public RectTransform Context;
         public GameObject Main;
         public Coloring ColorController;
-        public UpdateInterface updating;
+        public Action updating;
         public int regIndex;
         public ElementData data;
         public string name;
@@ -642,7 +638,7 @@ namespace huqiang.UI
             if(_active)
             {
                 if (updating != null)
-                    updating.Update();
+                    updating();
                 for (int i = 0; i < child.Count; i++)
                     child[i].Update();
             }

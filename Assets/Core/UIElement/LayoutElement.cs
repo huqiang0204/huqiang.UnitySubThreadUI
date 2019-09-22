@@ -23,9 +23,9 @@ namespace huqiang.UI
         public static int Size = sizeof(LayoutData);
         public static int ElementSize = Size / 4;
     }
-    public class LayoutElement : DataConversion, UpdateInterface
+    public class LayoutElement : DataConversion
     {
-        public override ModelElement model { get => base.model; set { base.model = value; value.updating = this; } }
+        public override ModelElement model { get => base.model; set { base.model = value; value.updating = Update; } }
         LayoutData data;
         public unsafe override void Load(FakeStruct fake)
         {

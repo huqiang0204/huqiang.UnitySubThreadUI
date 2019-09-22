@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace huqiang.UI
 {
-    public class GraphicE : DataConversion,Coloring,UpdateInterface
+    public class GraphicE : DataConversion,Coloring
     {
         struct FloatValue
         {
@@ -28,7 +28,7 @@ namespace huqiang.UI
         }
         protected Material material;
         protected Color _color=Color.white;
-        public override ModelElement model { get => base.model; set { base.model = value; value.ColorController = this;  value.updating = this; } }
+        public override ModelElement model { get => base.model; set { base.model = value; value.ColorController = this;  value.updating = Update; } }
         public Color color { get { return _color; } set { _color = value;IsChanged = true; } }
         string mShader;
         bool shderChanged;
