@@ -25,7 +25,7 @@ public class AniTestPage:UIPage
         view.rocker.Rocking = Rocking;
         view.rocker.Radius = 100;
         view.render.LoadAsync<RolePage>(null);
-        view.Last.Click = (o, e) => { LoadPage<ChatBoxPage>(); };
+        view.Last.Click = (o, e) => { LoadPage<ShareImagePage>(); };
         view.Next.Click = (o, e) => { LoadPage<ShowGifPage>(); };
     }
     void Rocking(UIRocker rocker)

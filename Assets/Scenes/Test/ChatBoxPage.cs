@@ -70,7 +70,7 @@ public class ChatBoxPage:UIPage
         view.hero.Click = (o, e) => { index = 1; };
         view.supporter.Click = (o, e) => { index = 2; };
         view.Last.Click = (o, e) => { LoadPage<ScrollExTestPage>(); };
-        view.Next.Click = (o, e) => { LoadPage<AniTestPage>(); };
+        view.Next.Click = (o, e) => { LoadPage<ShareImagePage>(); };
     }
 
     float y = 0;
