@@ -192,20 +192,5 @@ namespace huqiang.UI
                 o.IsChanged = true;
             }
         }
-        public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
-        {
-            var img = com as UILayout;
-            if (img == null)
-                return null;
-            FakeStruct fake = new FakeStruct(buffer, LayoutData.ElementSize);
-            LayoutData* data = (LayoutData*)fake.ip;
-            data->type = img.type;
-            data->minBox = img.minBox;
-            data->minSize = img.minSize;
-            data->interval = img.interval;
-            data->fillSize = img.fillSize;
-            data->extandSize = img.extandSize;
-            return fake;
-        }
     }
 }

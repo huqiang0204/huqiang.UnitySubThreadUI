@@ -1,8 +1,13 @@
 ﻿using huqiang.Data;
+using System;
 using UnityEngine;
 
 namespace huqiang.UI
 {
+    public interface DataStorage
+    {
+        FakeStruct ToBufferData(DataBuffer data);
+    }
     public class DataConversion
     {
         public virtual void Reset() { }

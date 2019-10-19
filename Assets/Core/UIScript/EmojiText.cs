@@ -11,7 +11,7 @@ namespace UGUI
     {
         public static float NormalDpi = 96;
         public Action<EmojiText, VertexHelper> OnPopulate;
-        EmojiString emojiString = new EmojiString();
+        protected EmojiString emojiString = new EmojiString();
 
         public override string text {
             get { return emojiString.FullString; }
@@ -63,7 +63,7 @@ namespace UGUI
             }
             return buf;
         }
-        public static List<UIVertex> CreateEmojiMesh(Text text, EmojiString emoji)
+        public static UIVertex[] CreateEmojiMesh(Text text, EmojiString emoji)
         {
             //float s = Screen.dpi / NormalDpi;
             Vector2 extents = text.rectTransform.rect.size;
@@ -91,10 +91,25 @@ namespace UGUI
                 roundingOffset = text.PixelAdjustPoint(roundingOffset) - roundingOffset;
                 var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emoji.emojis, text.fontSize, unitsPerPixel, roundingOffset);//*s
 
-                if (vs != null)
-                {
-                    return new List<UIVertex>(vs);
-                }
+                return vs;
+            }
+            return null;
+        }
+        public static UIVertex[] CreateEmojiMesh(Text text, EmojiString emoji,ref TextGenerationSettings settings)
+        {
+            string str = emoji.FilterString;
+            if (str != null & str != "")
+            {
+                text.cachedTextGenerator.Populate(str, settings);
+                IList<UIVertex> verts = text.cachedTextGenerator.verts;
+                if (verts.Count == 0)
+                    return null;
+                float unitsPerPixel = 1 / text.pixelsPerUnit;/// s
+                Vector2 roundingOffset = new Vector2(verts[0].position.x, verts[0].position.y) * unitsPerPixel;/// s
+                roundingOffset = text.PixelAdjustPoint(roundingOffset) - roundingOffset;
+                var vs = CreateEmojiMesh(text.cachedTextGenerator.verts, emoji.emojis, text.fontSize, unitsPerPixel, roundingOffset);//*s
+
+                return vs;
             }
             return null;
         }
@@ -135,8 +150,9 @@ namespace UGUI
             var vert = CreateEmojiMesh(this,emojiString);
             if(vert!=null)
             {
-                var tri = CreateTri(vert.Count);
-                vertex.AddUIVertexStream(vert, new List<int>(tri));
+                var v = new List<UIVertex>(vert);
+                var tri = CreateTri(vert.Length);
+                vertex.AddUIVertexStream(v, new List<int>(tri));
                 if (OnPopulate != null)
                     OnPopulate(this, vertex);
             }

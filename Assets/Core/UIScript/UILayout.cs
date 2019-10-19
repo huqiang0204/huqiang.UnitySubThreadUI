@@ -1,4 +1,5 @@
-﻿using huqiang.UI;
+﻿using huqiang.Data;
+using huqiang.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using UnityEngine;
 namespace UGUI
 {
     [RequireComponent(typeof(RectTransform))]
-    public class UILayout:MonoBehaviour
+    public class UILayout:MonoBehaviour,DataStorage
     {
         public LayoutType type;
         public Vector2 minBox = new Vector2(400,400);
@@ -178,6 +179,19 @@ namespace UGUI
                 o.sizeDelta = size;
                 o.localPosition = new Vector3(ox,oy,0);
             }
+        }
+
+        public unsafe FakeStruct ToBufferData(DataBuffer data)
+        {
+            FakeStruct fake = new FakeStruct(data, LayoutData.ElementSize);
+            LayoutData* dat = (LayoutData*)fake.ip;
+            dat->type = type;
+            dat->minBox = minBox;
+            dat->minSize = minSize;
+            dat->interval = interval;
+            dat->fillSize = fillSize;
+            dat->extandSize = extandSize;
+            return fake;
         }
     }
 }

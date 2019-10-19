@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ShareChild), true)]
+[CustomEditor(typeof(ShareImageChild), true)]
 [CanEditMultipleObjects]
 public class ShareElementEditor:Editor
 {
@@ -12,7 +12,7 @@ public class ShareElementEditor:Editor
     Vector2 pivot;
     private void OnEnable()
     {
-        var trans = (target as ShareChild).transform as RectTransform;
+        var trans = (target as ShareImageChild).transform as RectTransform;
         pos = trans.localPosition;
         angle = trans.localEulerAngles;
         size = trans.sizeDelta;
@@ -20,7 +20,7 @@ public class ShareElementEditor:Editor
     }
     public override void OnInspectorGUI()
     {
-        var help = target as ShareChild;
+        var help = target as ShareImageChild;
         if(help!=null)
         {
             var col = help.color;

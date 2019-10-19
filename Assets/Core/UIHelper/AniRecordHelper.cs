@@ -44,10 +44,10 @@ public class AniRecordHelper : UICompositeHelp
     void Apply(RectTransform transform, ModelElement model)
     {
         ModelElement.LoadToObject(transform,ref model.data,model);
-        var sc = transform.GetComponent<ShareChild>();
+        var sc = transform.GetComponent<ShareImageChild>();
         if(sc!=null)
         {
-            var sce= model.GetComponent<ShareChildElement>();
+            var sce= model.GetComponent<ShareImageChildElement>();
             if(sce!=null)
             {
                 sc.color = sce.data.color;

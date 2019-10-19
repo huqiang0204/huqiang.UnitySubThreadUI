@@ -92,6 +92,8 @@ namespace huqiang.UI
                 if (types[i].name==name)
                 {
                     type = (Int16)i;
+                    if (com is DataStorage)
+                        return (com as DataStorage).ToBufferData(buffer);
                     if (types[i].Load != null)
                         return types[i].Load(com, buffer);
                     return null;

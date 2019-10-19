@@ -98,11 +98,14 @@ namespace huqiang.Http
                         HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(url);
                         //向服务器请求，获得服务器的回应数据流
                         Myrq.Method = "GET";
+#if !UNITY_WSA_10_0
                         HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
                         //获取文件的大小
                         totalBytes = myrp.ContentLength;
                         myrp.Dispose();
-                    }catch(Exception ex)
+#endif
+                    }
+                    catch (Exception ex)
                     {
                         Debug.Log(ex.StackTrace);
                     }

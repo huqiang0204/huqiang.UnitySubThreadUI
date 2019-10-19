@@ -17,7 +17,7 @@ namespace huqiang.UI
                 for (int i = 0; i < model.child.Count; i++)
                 {
                     var c = model.child[i];
-                    var help = c.GetComponent<ShareChildElement>();
+                    var help = c.GetComponent<ShareImageChildElement>();
                     if (help != null)
                         help.GetUVInfo(vert, tri, Vector3.zero, Quaternion.identity, Vector3.one);
                 }
