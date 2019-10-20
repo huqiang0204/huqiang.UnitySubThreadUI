@@ -11,7 +11,7 @@ namespace huqiang.UIComposite
     {
         class ItemView
         {
-            public TextElement Item;
+            public ShareTextChildElement Item;
         }
         ModelElement model;
         EventCallBack callBack;

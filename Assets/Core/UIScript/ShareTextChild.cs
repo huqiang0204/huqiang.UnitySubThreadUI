@@ -26,7 +26,7 @@ namespace UGUI
         public FontStyle fontStyle = FontStyle.Normal;
         public bool richText;
         public float lineSpacing = 1;
-        private int fontSize = 14;
+        public int fontSize=14;
         public Color color = Color.white;
         public bool alignByGeometry;
 

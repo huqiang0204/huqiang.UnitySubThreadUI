@@ -13,10 +13,10 @@ public class ShareTextChildEditor:Editor
         var tar = target as ShareTextChild;
         if(tar!=null)
         {
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Font Size");
-            tar.FontSize = EditorGUILayout.IntField(tar.FontSize);
-            EditorGUILayout.EndHorizontal();
+            //EditorGUILayout.BeginHorizontal();
+            //EditorGUILayout.LabelField("Font Size");
+            //tar.FontSize = EditorGUILayout.IntField(tar.FontSize);
+            //EditorGUILayout.EndHorizontal();
             tar.text = GUILayout.TextArea(tar.text);
             if(GUI.changed)
             {
