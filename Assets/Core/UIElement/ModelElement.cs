@@ -44,7 +44,7 @@ namespace huqiang.UI
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
-    public class ModelElement : DataConversion,UITransform
+    public class ModelElement : DataConversion
     {
         public static Coordinates GetGlobaInfo(ModelElement rect, bool Includeroot = true)
         {
