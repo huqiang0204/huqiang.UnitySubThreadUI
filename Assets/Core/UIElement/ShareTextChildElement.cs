@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using huqiang.Data;
+using UGUI;
 using UnityEngine;
 
 namespace huqiang.UI
@@ -27,13 +28,17 @@ namespace huqiang.UI
     public class ShareTextChildElement:DataConversion, Coloring
     {
         public ShareTextChildData data;
-        public string text { get; set; }
+        private string m_str;
+        public string text { get=>m_str; set { m_str = value;emojiString.FullString = value; IsChanged = true; } }
+        public EmojiString emojiString = new EmojiString();
+        public UIVertex[] buffer;
         public unsafe override void Load(FakeStruct fake)
         {
             data = *(ShareTextChildData*)fake.ip;
             text = fake.buffer.GetData(data.text) as string;
+            model.Entity = false;
         }
-        public Color color { get => data.color; set => data.color = value; }
+        public Color color { get => data.color; set => data.color = value;}
         public override ModelElement model { get => base.model; set { base.model = value; value.ColorController = this; } }
         public override void Reset()
         {

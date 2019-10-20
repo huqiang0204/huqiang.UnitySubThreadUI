@@ -16,7 +16,7 @@ namespace huqiang.UIComposite
     public class TreeViewItem
     {
         public ModelElement target;
-        public TextElement text;
+        public ShareTextChildElement text;
         public EventCallBack callBack;
         public TreeViewNode node;
     }
@@ -156,7 +156,7 @@ namespace huqiang.UIComposite
             mod.IsChanged = true;
             TreeViewItem a = new TreeViewItem();
             a.target = mod;
-            a.text = mod.GetComponent<TextElement>();
+            a.text = mod.GetComponent<ShareTextChildElement>();
             a.callBack = EventCallBack.RegEvent<EventCallBack>(mod);
             a.callBack.Click = (o, e) => {
                 var item = o.DataContext as TreeViewItem;

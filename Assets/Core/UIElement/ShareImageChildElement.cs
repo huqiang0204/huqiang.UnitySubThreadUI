@@ -24,7 +24,6 @@ namespace huqiang.UI
     {
         public ShareImageChildData data;
         public string spriteName;
-
         public Color color { get => data.color; set => data.color = value; }
         public override ModelElement model { get => base.model; set { base.model = value; value.ColorController = this; } }
         UIVertex[] buff = new UIVertex[4];

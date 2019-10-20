@@ -46,7 +46,7 @@ namespace UGUI
                     value = 0;
                 else if (value > 300)
                     value = 300;
-                fontSize = Mathf.Clamp(value, 0, 300);
+                fontSize = value;
                 resizeTextMinSize = fontSize;//Mathf.Clamp(0,resizeTextMinSize, fontSize);
                 resizeTextMaxSize = fontSize; //Mathf.Clamp(resizeTextMaxSize, fontSize, 300);
             } }

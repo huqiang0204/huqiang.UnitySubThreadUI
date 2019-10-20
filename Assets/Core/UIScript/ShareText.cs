@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,27 +11,33 @@ namespace UGUI
 {
     public class ShareText:EmojiText
     {
-#if UNITY_EDITOR
+        public ShareTextElement context;
         protected override void OnPopulateMesh(VertexHelper vertex)
         {
             if (font == null)
                 return;
-            var vert = new List<UIVertex>();
-            for (int i = 0; i < transform.childCount; i++)
+            if(context!=null)
             {
-                var c = transform.GetChild(i);
-                var help = c.GetComponent<ShareTextChild>();
-                if (help != null)
-                    help.GetUVInfo(this, vert, Vector3.zero, Quaternion.identity, Vector3.one);
+                context.OnPopulateMesh(vertex);
             }
-            var tri = CreateTri(vert.Count);
-            vertex.Clear();
-            vertex.AddUIVertexStream(vert, new List<int>(tri));
+            else
+            {
+                var vert = new List<UIVertex>();
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    var c = transform.GetChild(i);
+                    var help = c.GetComponent<ShareTextChild>();
+                    if (help != null)
+                        help.GetUVInfo(this, vert, Vector3.zero, Quaternion.identity, Vector3.one);
+                }
+                var tri = CreateTri(vert.Count);
+                vertex.Clear();
+                vertex.AddUIVertexStream(vert, new List<int>(tri));
+            }
         }
         public void Refresh()
         {
             SetVerticesDirty();
         }
-#endif
     }
 }

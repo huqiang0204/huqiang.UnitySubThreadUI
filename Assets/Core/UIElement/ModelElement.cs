@@ -682,7 +682,8 @@ namespace huqiang.UI
                         var com = components[i];
                         if (com != null)
                         {
-                            com.Apply();
+                            if (com.Entity)
+                                com.Apply();
                         }
                     }
                     for (int i = 0; i < child.Count; i++)
