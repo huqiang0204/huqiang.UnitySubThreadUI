@@ -71,7 +71,8 @@ namespace huqiang.UIComposite
         public override void Initial(ModelElement mod)
         {
             model = mod;
-            var y= model.Find("Year");
+            var mask = model.Find("mask");
+            var y= mask.Find("Year");
             Year = new ScrollY();
             Year.Initial(y);
             Year.SetItemUpdate<ItemView,int>((o,e,i)=> { o.Item.text = e.ToString()+unitY; });
@@ -82,7 +83,7 @@ namespace huqiang.UIComposite
             Year.eventCall.boxSize = new Vector2(120,160);
             Year.eventCall.UseAssignSize = true;
 
-            var m = model.Find("Month");
+            var m = mask.Find("Month");
             Month = new ScrollY();
             Month.Initial(m);
             Month.SetItemUpdate<ItemView,string>((o,e,i)=> { o.Item.text = e+unitM; });
@@ -93,7 +94,7 @@ namespace huqiang.UIComposite
             Month.eventCall.boxSize = new Vector2(120, 160);
             Month.eventCall.UseAssignSize = true;
 
-            var d = model.Find("Day");
+            var d = mask.Find("Day");
             Day = new ScrollY();
             Day.Initial(d);
             Day.SetItemUpdate<ItemView, string>((o,e,i)=> { o.Item.text = e+unitD; });
