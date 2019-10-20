@@ -101,7 +101,6 @@ namespace huqiang.UI
         {
             var mod = new ModelElement();
             mod.name = name;
-       
             return mod;
         }
         public ModelElement()
@@ -149,6 +148,7 @@ namespace huqiang.UI
         public List<DataConversion> components = new List<DataConversion>();
         public List<ModelElement> child = new List<ModelElement>();
         bool parentChanged;
+        internal Int64 EnityType = 1;
         public virtual void SetParent(ModelElement element)
         {
             if (element == this)
@@ -229,6 +229,8 @@ namespace huqiang.UI
                         if (fs != null)
                             dc.Load(fs);
                         components.Add(dc);
+                        if (dc.Entity)
+                            EnityType |= ((long)1 << type);
                     }
                 }
             }
@@ -601,10 +603,6 @@ namespace huqiang.UI
         }
         #endregion
         /// <summary>
-        /// 当此物体为非实体时,不予创建GameObject
-        /// </summary>
-        public bool Entity = true;
-        /// <summary>
         /// 自动回收
         /// </summary>
         public bool AutoRecycle = true;
@@ -651,7 +649,7 @@ namespace huqiang.UI
                 {
                     if (Context == null)
                     {
-                        var obj = ModelManagerUI.CreateNew(data.type);
+                        var obj = ModelManagerUI.CreateNew(EnityType);
                         if (obj != null)
                             LoadToObject(obj.transform);
                     }

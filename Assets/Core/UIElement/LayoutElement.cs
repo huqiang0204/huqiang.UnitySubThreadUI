@@ -25,6 +25,10 @@ namespace huqiang.UI
     }
     public class LayoutElement : DataConversion
     {
+        public LayoutElement()
+        {
+            Entity = false;
+        }
         public override ModelElement model { get => base.model; set { base.model = value; value.updating = Update; } }
         LayoutData data;
         public unsafe override void Load(FakeStruct fake)

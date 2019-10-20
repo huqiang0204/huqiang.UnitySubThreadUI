@@ -22,5 +22,9 @@ namespace huqiang.UI
         {
             return type;
         }
+        /// <summary>
+        /// 当此物体为非实体时,不予创建GameObject
+        /// </summary>
+        public bool Entity = true;
     }
 }

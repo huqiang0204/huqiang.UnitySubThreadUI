@@ -344,7 +344,7 @@ namespace huqiang.UI
                     {
                         if(mod.AutoRecycle)
                         {
-                            long type = mod.data.type;
+                            long type = mod.EnityType;
                             for (int i = 0; i < models.Count; i++)
                             {
                                 if (models[i].type == type)
