@@ -78,10 +78,6 @@ namespace huqiang.UIComposite
             Limit(back, v.y);
             Refresh();
         }
-        void OnScrollEnd(EventCallBack back)
-        {
-
-        }
         float hy;
         public void Refresh()
         {
