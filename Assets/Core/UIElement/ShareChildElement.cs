@@ -134,7 +134,7 @@ namespace huqiang.UI
         }
         public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
         {
-            var share = com as ShareChild;
+            var share = com as ShareImageChild;
             if (share == null)
                 return null;
             FakeStruct fake = new FakeStruct(buffer, ShareChildData.ElementSize);
