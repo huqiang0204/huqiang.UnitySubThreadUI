@@ -63,13 +63,13 @@ public class TestPage : UIPage
         for (int i = 0; i <166; i++)
             testData.Add(i);
         view.ScrollX.scroll.BindingData = testData;
-        view.ScrollX.scroll.SetItemUpdate<Item, int>((o,e,i)=> {
+        view.ScrollX.scroll.SetItemUpdate<ShareItem, int>((o,e,i)=> {
             o.Text.text = i.ToString();
         });
         view.ScrollX.scroll.Refresh();
 
         view.ScrollY.scroll.BindingData = testData;
-        view.ScrollY.scroll.SetItemUpdate<Item, int>((o, e, i) => {
+        view.ScrollY.scroll.SetItemUpdate<ShareItem, int>((o, e, i) => {
             o.Text.text = i.ToString();
         });
         view.ScrollY.scroll.Refresh();

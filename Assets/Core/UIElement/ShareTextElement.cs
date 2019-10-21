@@ -30,7 +30,7 @@ namespace huqiang.UI
         public override void Apply()
         {
             base.Apply();
-            if (CheckChanged(model))
+            //if (CheckChanged(model))
                 shareText.Refresh();
         }
         static bool CheckChanged(ModelElement mod)

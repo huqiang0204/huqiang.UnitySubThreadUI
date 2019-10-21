@@ -94,7 +94,6 @@ namespace UGUI
                     vertices.AddRange(vert);
                 }
             }
-
             for (int i = 0; i < rect.childCount; i++)
             {
                 var help = rect.GetChild(i).GetComponent<ShareTextChild>();
