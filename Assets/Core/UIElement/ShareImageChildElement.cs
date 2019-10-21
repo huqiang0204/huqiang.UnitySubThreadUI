@@ -26,8 +26,8 @@ namespace huqiang.UI
         public string spriteName;
         public Color color { get => data.color; set => data.color = value; }
         public override ModelElement model { get => base.model; set { base.model = value; value.ColorController = this; } }
-        UIVertex[] buff = new UIVertex[4];
-        Vector2[] uvs = new Vector2[4];
+        public UIVertex[] buff = new UIVertex[4];
+        public Vector2[] uvs = new Vector2[4];
         public override void Reset()
         {
             model.Entity = false;
@@ -58,68 +58,6 @@ namespace huqiang.UI
             uvs[2].y = t;
             uvs[3].x = r;
             uvs[3].y = y;
-        }
-        public void GetUVInfo(List<UIVertex> vertices, List<int> tri, Vector3 position, Quaternion quate, Vector3 scale)
-        {
-            var rect = model;
-            float w = rect.data.localScale.x * rect.data.sizeDelta.x;
-            float h = rect.data.localScale.y * rect.data.sizeDelta.y;
-            var pos = rect.data.localPosition;
-            pos = quate * pos + position;
-            float left = -rect.data.pivot.x * w;
-            float right = left + w * data.fillAmountX;
-            float down = -rect.data.pivot.y * h;
-            float top = down + h;
-            Vector3 ls = rect.data.localScale;
-            ls.x *= scale.x;
-            ls.y *= scale.y;
-            right *= ls.x;
-            left *= ls.x;
-            down *= ls.y;
-            top *= ls.y;
-            buff[0].color = data.color;
-            buff[1].color = data.color;
-            buff[2].color = data.color;
-            buff[3].color = data.color;
-
-            var q = rect.data.localRotation * quate;
-            if (model.activeSelf & spriteName!=null)
-            {
-                buff[0].position = q * new Vector3(left, down) + pos;
-                buff[1].position = q * new Vector3(left, top) + pos;
-                buff[2].position = q * new Vector3(right, top) + pos;
-                buff[3].position = q * new Vector3(right, down) + pos;
-                float tx = data.txtSize.x;
-                float ty = data.txtSize.y;
-                float l = data.rect.x / tx;
-                float d = data.rect.y / ty;
-                float r = l + data.rect.width / tx * data.fillAmountX;
-                float t = d + data.rect.height / ty;
-                buff[0].uv0.x = l;
-                buff[0].uv0.y = d;
-                buff[1].uv0.x = l;
-                buff[1].uv0.y = t;
-                buff[2].uv0.x = r;
-                buff[2].uv0.y = t;
-                buff[3].uv0.x = r;
-                buff[3].uv0.y = d;
-                int s = vertices.Count;
-                vertices.AddRange(buff);
-                tri.Add(s);
-                tri.Add(s + 1);
-                tri.Add(s + 2);
-                tri.Add(s + 2);
-                tri.Add(s + 3);
-                tri.Add(s);
-            }
-            for (int i = 0; i < rect.child.Count; i++)
-            {
-                var help = rect.child[i].GetComponent<ShareImageChildElement>();
-                if (help != null)
-                {
-                    help.GetUVInfo(vertices, tri, pos, q, ls);
-                }
-            }
         }
         public void SetNactiveSize()
         {
