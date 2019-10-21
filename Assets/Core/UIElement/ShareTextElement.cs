@@ -26,7 +26,7 @@ namespace huqiang.UI
             shareText = Context as ShareText;
             shareText.context = this;
         }
-        public void OnPopulateMesh(VertexHelper vertex)
+        public List<UIVertex> OnPopulateMesh(ShareText shareText)
         {
             var vert = new List<UIVertex>();
             var child =  model.child;
@@ -36,9 +36,7 @@ namespace huqiang.UI
             {
                 GetChildUVInfo(child[i], shareText, vert, Vector3.zero, Quaternion.identity, Vector3.one);
             }
-            var tri = EmojiText.CreateTri(vert.Count);
-            vertex.Clear();
-            vertex.AddUIVertexStream(vert, new List<int>(tri));
+            return vert;
         }
         public override void Apply()
         {
@@ -46,20 +44,26 @@ namespace huqiang.UI
             //if (CheckChanged(model))
                 shareText.Refresh();
         }
-        //static bool CheckChanged(ModelElement mod)
-        //{
-        //    var stc = mod.GetComponent<ShareTextChildElement>();
-        //    if (stc != null)
-        //        if (stc.IsChanged)
-        //            return true;
-        //    for (int i = 0; i < mod.child.Count; i++)
-        //    {
-        //        var b=CheckChanged(mod.child[i]);
-        //        if (b)
-        //            return b;
-        //    }
-        //    return false;
-        //}
+        public static bool CheckChanged(ShareTextElement ste)
+        {
+            if (ste.Collector == null)
+                return CheckChanged(ste.model);
+            else return CheckChanged(ste.Collector);
+        }
+        static bool CheckChanged(ModelElement mod)
+        {
+            var stc = mod.GetComponent<ShareTextChildElement>();
+            if (stc != null)
+                if (stc.IsChanged)
+                    return true;
+            for (int i = 0; i < mod.child.Count; i++)
+            {
+                var b = CheckChanged(mod.child[i]);
+                if (b)
+                    return b;
+            }
+            return false;
+        }
         static void GetChildUVInfo(ModelElement child, ShareText ori, List<UIVertex> vertices, Vector3 position, Quaternion quate, Vector3 scale)
         {
             float w = child.data.localScale.x *child.data.sizeDelta.x;
