@@ -27,6 +27,10 @@ public class TestPage : UIPage
     { 
         public TextElement Text;
     }
+    class ShareItem
+    {
+        public ShareTextChildElement Text;
+    }
     View view;
     public override void Initial(ModelElement parent, object dat = null)
     {
@@ -72,7 +76,7 @@ public class TestPage : UIPage
 
         view.Scroll.BindingData = testData;
         view.Scroll.Column = 16;
-        view.Scroll.SetItemUpdate<Item,int> ((o, e, i) => {o.Text.text = i.ToString(); });
+        view.Scroll.SetItemUpdate<ShareItem,int> ((o, e, i) => {o.Text.text = i.ToString(); });
         view.Scroll.Refresh();
         view.Last.Click = (o, e) => { LoadPage<ShowGifPage>(); };
         view.Next.Click = (o, e) => { LoadPage<LayoutTestPage>(); };

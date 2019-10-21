@@ -37,9 +37,9 @@ namespace huqiang.UI
                 var sic = mod.GetComponent<ShareImageChildElement>();
                 if(sic!=null)
                 {
-                    if(sic.IsChanged & sic.spriteName != null)//需要重新计算顶点
+                    UIVertex[] buff = sic.buff;
+                    if (sic.IsChanged)//需要重新计算顶点
                     {
-                        UIVertex[] buff = sic.buff;
                         float w = mod.data.localScale.x * mod.data.sizeDelta.x;
                         float h = mod.data.localScale.y * mod.data.sizeDelta.y;
                         float left = -mod.data.pivot.x * w;
@@ -69,27 +69,23 @@ namespace huqiang.UI
                         buff[3].uv0.x = r;
                         buff[3].uv0.y = d;
                     }
-                    if (sic.spriteName != null)
-                    {
-                        UIVertex[] buff = sic.buff;
-                        buff[0].color = sic.data.color;
-                        buff[1].color = sic.data.color;
-                        buff[2].color = sic.data.color;
-                        buff[3].color = sic.data.color;
-                        int s = vertices.Count;
-                        vertices.AddRange(buff);
-                        tri.Add(s);
-                        tri.Add(s + 1);
-                        tri.Add(s + 2);
-                        tri.Add(s + 2);
-                        tri.Add(s + 3);
-                        tri.Add(s);
-                    }
+                    buff[0].color = sic.data.color;
+                    buff[1].color = sic.data.color;
+                    buff[2].color = sic.data.color;
+                    buff[3].color = sic.data.color;
+                    int s = vertices.Count;
+                    vertices.AddRange(buff);
+                    tri.Add(s);
+                    tri.Add(s + 1);
+                    tri.Add(s + 2);
+                    tri.Add(s + 2);
+                    tri.Add(s + 3);
+                    tri.Add(s);
                 }
-            }
-            for (int i = 0; i < mod.child.Count; i++)
-            {
-                GetUVInfo(mod.child[i],vertices, tri, pos, q, ls);
+                for (int i = 0; i < mod.child.Count; i++)
+                {
+                    GetUVInfo(mod.child[i], vertices, tri, pos, q, ls);
+                }
             }
         }
     }

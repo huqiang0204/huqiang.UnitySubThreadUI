@@ -63,48 +63,50 @@ namespace huqiang.UI
             if (child.activeSelf)
             {
                 var stc = child.GetComponent<ShareTextChildElement>();
-                if(stc.text!=null& stc.text!="")
+                if(stc!=null)
                 {
-                    if(stc.IsChanged)
+                    if (stc.text != null & stc.text != "")
                     {
-                        TextGenerationSettings settings = new TextGenerationSettings();
-                        settings.font = ori.font;
-                        settings.pivot = child.data.pivot;
-                        settings.generationExtents = child.data.sizeDelta;
-                        settings.horizontalOverflow = stc.data.horizontalOverflow;
-                        settings.verticalOverflow = stc.data.verticalOverflow;
-                        settings.resizeTextMaxSize = stc.data.fontSize;
-                        settings.resizeTextMinSize = stc.data.fontSize;
-                        settings.generateOutOfBounds = stc.data.generateOutOfBounds;
-                        settings.resizeTextForBestFit = false;
-                        settings.textAnchor = stc.data.textAnchor;
-                        settings.fontStyle = stc.data.fontStyle;
-                        settings.scaleFactor = 1;
-                        settings.richText = stc.data.richText;
-                        settings.lineSpacing = stc.data.lineSpacing;
-                        settings.fontSize = stc.data.fontSize;
-                        settings.color = stc.data.color;
-                        settings.alignByGeometry = stc.data.alignByGeometry;
-                        stc.buffer = ShareText.CreateEmojiMesh(ori, stc.emojiString, ref settings);
-                        stc.IsChanged = false;
+                        if (stc.IsChanged)
+                        {
+                            TextGenerationSettings settings = new TextGenerationSettings();
+                            settings.font = ori.font;
+                            settings.pivot = child.data.pivot;
+                            settings.generationExtents = child.data.sizeDelta;
+                            settings.horizontalOverflow = stc.data.horizontalOverflow;
+                            settings.verticalOverflow = stc.data.verticalOverflow;
+                            settings.resizeTextMaxSize = stc.data.fontSize;
+                            settings.resizeTextMinSize = stc.data.fontSize;
+                            settings.generateOutOfBounds = stc.data.generateOutOfBounds;
+                            settings.resizeTextForBestFit = false;
+                            settings.textAnchor = stc.data.textAnchor;
+                            settings.fontStyle = stc.data.fontStyle;
+                            settings.scaleFactor = 1;
+                            settings.richText = stc.data.richText;
+                            settings.lineSpacing = stc.data.lineSpacing;
+                            settings.fontSize = stc.data.fontSize;
+                            settings.color = stc.data.color;
+                            settings.alignByGeometry = stc.data.alignByGeometry;
+                            stc.buffer = ShareText.CreateEmojiMesh(ori, stc.emojiString, ref settings);
+                            stc.IsChanged = false;
+                        }
+                    }
+                    var buf = stc.buffer;
+                    if (buf != null)
+                    {
+                        UIVertex[] vert = new UIVertex[buf.Length];
+                        Array.Copy(buf, vert, buf.Length);
+                        for (int i = 0; i < vert.Length; i++)
+                        {
+                            vert[i].position = q * vert[i].position + pos;
+                        }
+                        vertices.AddRange(vert);
                     }
                 }
-                var buf = stc.buffer;
-                if (buf != null)
+                for (int i = 0; i < child.child.Count; i++)
                 {
-                    UIVertex[] vert = new UIVertex[buf.Length];
-                    Array.Copy(buf,vert,buf.Length);
-                    for (int i = 0; i < vert.Length; i++)
-                    {
-                        vert[i].position = q * vert[i].position + pos;
-                    }
-                    vertices.AddRange(vert);
+                    GetChildUVInfo(child.child[i], ori, vertices, pos, q, ls);
                 }
-            }
-
-            for (int i = 0; i < child.child.Count; i++)
-            {
-                GetChildUVInfo(child.child[i], ori, vertices, pos, q, ls);
             }
         }
     }
