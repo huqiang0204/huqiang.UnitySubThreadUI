@@ -17,7 +17,7 @@ public class ShareTextChildEditor:Editor
             //EditorGUILayout.LabelField("Font Size");
             //tar.FontSize = EditorGUILayout.IntField(tar.FontSize);
             //EditorGUILayout.EndHorizontal();
-            tar.text = GUILayout.TextArea(tar.text);
+            //tar.text = GUILayout.TextArea(tar.text);
             if(GUI.changed)
             {
                 Refresh(tar.transform);

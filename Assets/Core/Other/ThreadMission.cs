@@ -42,7 +42,6 @@ namespace huqiang
             thread = new Thread(Run);
             are = new AutoResetEvent(false);
             run = true;
-            thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             Id = thread.ManagedThreadId;
 #endif

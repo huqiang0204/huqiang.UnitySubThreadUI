@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace huqiang.UI
 {
+    public class AssociatedInstance
+    {
+        public Int32 id;
+        public ModelElement target;
+    }
     public unsafe struct ElementData
     {
         public Int64 type;
@@ -41,6 +46,7 @@ namespace huqiang.UI
         /// </summary>
         public Int32 child;
         public Int32 ex;
+        public Int32 instanceID;
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
@@ -208,6 +214,52 @@ namespace huqiang.UI
             }
             return null;
         }
+        unsafe public void Clone(FakeStruct fake,List<AssociatedInstance> table)
+        {
+            data = *(ElementData*)fake.ip;
+            ModData = fake;
+            var buff = fake.buffer;
+            Int16[] coms = buff.GetData(data.coms) as Int16[];
+            if (coms != null)
+            {
+                for (int i = 0; i < coms.Length; i++)
+                {
+                    int index = coms[i];
+                    i++;
+                    int type = coms[i];
+                    var fs = buff.GetData(index) as FakeStruct;
+                    var dc = ModelManagerUI.Load(type);
+                    if (dc != null)
+                    {
+                        dc.model = this;
+                        if (fs != null)
+                            dc.Load(fs);
+                        components.Add(dc);
+                        if (dc.Entity)
+                            EnityType |= ((long)1 << type);
+                    }
+                }
+            }
+            Int16[] chi = fake.buffer.GetData(data.child) as Int16[];
+            if (chi != null)
+                for (int i = 0; i < chi.Length; i++)
+                {
+                    var fs = buff.GetData(chi[i]) as FakeStruct;
+                    if (fs != null)
+                    {
+                        ModelElement model = new ModelElement();
+                        model.Clone(fs,table);
+                        child.Add(model);
+                        model.parent = this;
+                        AssociatedInstance instance = new AssociatedInstance();
+                        instance.id = model.data.instanceID;
+                        instance.target = model;
+                        table.Add(instance);
+                    }
+                }
+            name = buff.GetData(data.name) as string;
+            tag = buff.GetData(data.tag) as string;
+        }
         unsafe public override void Load(FakeStruct fake)
         {
             data = *(ElementData*)fake.ip;
@@ -300,6 +352,7 @@ namespace huqiang.UI
             ed->offsetMin = trans.offsetMin;
             ed->pivot = trans.pivot;
             ed->sizeDelta = trans.sizeDelta;
+            ed->instanceID = trans.GetInstanceID();
             ed->name = buffer.AddData(trans.name);
             ed->tag = buffer.AddData(trans.tag);
             var coms = com.GetComponents<Component>();

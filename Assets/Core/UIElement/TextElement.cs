@@ -24,6 +24,7 @@ namespace huqiang.UI
         public Int32 font;
         public Int32 text;
         public Int32 shader;
+        public Int32 ex;
         public static int Size = sizeof(TextData);
         public static int ElementSize = Size / 4;
     }

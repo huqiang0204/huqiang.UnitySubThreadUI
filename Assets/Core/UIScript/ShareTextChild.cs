@@ -31,16 +31,7 @@ namespace UGUI
         public bool alignByGeometry;
 
         protected EmojiString emojiString = new EmojiString();
-        string m_Text;
-        public string text
-        {
-            get { return m_Text; }
-            set
-            {
-                m_Text =
-                emojiString.FullString = value;
-            }
-        }
+        public string text;
         public int FontSize { get => fontSize;set {
                 if (value < 0)
                     value = 0;
@@ -64,7 +55,7 @@ namespace UGUI
             ///注意顺序quate要放前面
             var q = quate * rect.localRotation;
             
-            if (gameObject.activeSelf & m_Text != null&m_Text!="")
+            if (gameObject.activeSelf & text != null&text!="")
             {
                 TextGenerationSettings settings = new TextGenerationSettings();
                 settings.font = ori.font;
@@ -84,6 +75,7 @@ namespace UGUI
                 settings.fontSize = fontSize;
                 settings.color = color;
                 settings.alignByGeometry = alignByGeometry;
+                emojiString.FullString = text;
                 var vert = ShareText.CreateEmojiMesh(ori, emojiString,ref settings);
                 if(vert!=null)
                 {
@@ -118,7 +110,7 @@ namespace UGUI
             dat->richText = richText;
             dat->textAnchor = textAnchor;
             dat->verticalOverflow = verticalOverflow;
-            dat->text = data.AddData(m_Text);
+            dat->text = data.AddData(text);
             return fake;
         }
     }

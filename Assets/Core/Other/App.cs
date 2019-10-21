@@ -20,7 +20,7 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<RectTransform, ModelElement>(ModelElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<ShareTextChild, ShareTextChildElement>(null));
-            ModelManagerUI.RegComponent(new ComponentType<ShareText, ShareTextElement>(TextElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<ShareText, ShareTextElement>(null));
             ModelManagerUI.RegComponent(new ComponentType<EmojiText, EmojiElement>(TextElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Text, TextElement>(TextElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<ShareImageChild, ShareImageChildElement>(null));

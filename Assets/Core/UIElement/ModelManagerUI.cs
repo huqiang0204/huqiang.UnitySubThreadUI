@@ -171,14 +171,25 @@ namespace huqiang.UI
                     var mod= models.Find(name);
                     if(mod!=null)
                     {
+                        List<AssociatedInstance> table = new List<AssociatedInstance>();
                         ModelElement model = new ModelElement();
-                        model.Load(mod.ModData);
+                        model.Clone(mod.ModData,table);
+                        RestoringRelationships(model,table);
                         return model;
                     }
                     return null;
                 }
             }
             return null;
+        }
+        static void RestoringRelationships(ModelElement model,List<AssociatedInstance> table)
+        {
+            var coms = model.components;
+            for (int i = 0; i < coms.Count; i++)
+                coms[i].RestoringRelationships(table);
+            var child = model.child;
+            for (int i = 0; i < child.Count; i++)
+                RestoringRelationships(child[i], table);
         }
         static ModelBuffer CreateModelBuffer(Int64 type, Int32 size = 32)
         {

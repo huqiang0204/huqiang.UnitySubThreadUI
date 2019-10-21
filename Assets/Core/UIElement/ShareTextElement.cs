@@ -8,7 +8,18 @@ namespace huqiang.UI
 {
     public class ShareTextElement:EmojiElement
     {
+        public ModelElement Collector;
         ShareText shareText;
+        public override void RestoringRelationships(List<AssociatedInstance> table)
+        {
+            var id = data.ex;
+            if(id!=0)
+            {
+                var ins = table.Find((o) => { return o.id == id; });
+                if (ins != null)
+                    Collector = ins.target;
+            }
+        }
         public override void LoadToObject(Component game)
         {
             base.LoadToObject(game);
@@ -18,7 +29,9 @@ namespace huqiang.UI
         public void OnPopulateMesh(VertexHelper vertex)
         {
             var vert = new List<UIVertex>();
-            var child = model.child;
+            var child =  model.child;
+            if (Collector != null)
+                child = Collector.child;
             for (int i = 0; i < child.Count; i++)
             {
                 GetChildUVInfo(child[i], shareText, vert, Vector3.zero, Quaternion.identity, Vector3.one);
@@ -33,20 +46,20 @@ namespace huqiang.UI
             //if (CheckChanged(model))
                 shareText.Refresh();
         }
-        static bool CheckChanged(ModelElement mod)
-        {
-            var stc = mod.GetComponent<ShareTextChildElement>();
-            if (stc != null)
-                if (stc.IsChanged)
-                    return true;
-            for (int i = 0; i < mod.child.Count; i++)
-            {
-                var b=CheckChanged(mod.child[i]);
-                if (b)
-                    return b;
-            }
-            return false;
-        }
+        //static bool CheckChanged(ModelElement mod)
+        //{
+        //    var stc = mod.GetComponent<ShareTextChildElement>();
+        //    if (stc != null)
+        //        if (stc.IsChanged)
+        //            return true;
+        //    for (int i = 0; i < mod.child.Count; i++)
+        //    {
+        //        var b=CheckChanged(mod.child[i]);
+        //        if (b)
+        //            return b;
+        //    }
+        //    return false;
+        //}
         static void GetChildUVInfo(ModelElement child, ShareText ori, List<UIVertex> vertices, Vector3 position, Quaternion quate, Vector3 scale)
         {
             float w = child.data.localScale.x *child.data.sizeDelta.x;
