@@ -390,7 +390,25 @@ namespace huqiang.UI
                             tmp.Add(type);
                         }
 #if UNITY_EDITOR
-                        else if (com.name != "Canvas") Debug.Log(com.name);
+                        else if (com.name != "Canvas")
+                        {
+                            var t= com.transform;
+                            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                            for (int j = 0; j < 32; j++)
+                            {
+                                if (t.parent == null)
+                                {
+                                    sb.Insert(0, t.name);
+                                    break;
+                                }
+                                else
+                                {
+                                    sb.Insert(0, "/" + t.name);
+                                }
+                                t = t.parent;
+                            }
+                            Debug.Log(sb.ToString());
+                        }
 #endif
                     }
                 }
