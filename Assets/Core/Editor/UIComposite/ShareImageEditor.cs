@@ -3,12 +3,12 @@ using UGUI;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ShareImageHelper), true)]
+[CustomEditor(typeof(ShareImage), true)]
 [CanEditMultipleObjects]
 public class ShareImageEditor : Editor
 {
     public void OnEnable()
     {
-        (target as ShareImageHelper).Refresh();
+        (target as ShareImage).Refresh();
     }
 }

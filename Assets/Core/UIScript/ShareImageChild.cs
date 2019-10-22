@@ -9,9 +9,9 @@ public class ShareImageChild : MonoBehaviour,DataStorage
     public float fillAmountX = 1;
     public float fillAmountY = 1;
     public Color color = Color.white;
-    UIVertex[] buff = new UIVertex[4];
+    public UIVertex[] buff = new UIVertex[4];
     public Sprite sprite;
-    Vector2[] uvs = new Vector2[4];
+    public Vector2[] uvs = new Vector2[4];
     public void SetSprite(Sprite sp)
     {
         sprite = sp;

@@ -1,4 +1,5 @@
 ﻿using System;
+using UGUI;
 using UnityEditor;
 using UnityEngine;
 
@@ -69,7 +70,7 @@ public class ShareElementEditor:Editor
     }
     bool RefreshParent(Transform trans)
     {
-        var help = trans.GetComponent<ShareImageHelper>();
+        var help = trans.GetComponent<ShareImage>();
         if(help!=null)
         {
             help.Refresh();

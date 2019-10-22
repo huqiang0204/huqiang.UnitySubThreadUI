@@ -749,7 +749,6 @@ public static class UICompositeMenu
         rect.localScale = Vector3.one;
         var et = ss.AddComponent<ShareImage>();
         et.raycastTarget = false;
-        ss.AddComponent<ShareImageHelper>();
     }
     [MenuItem("GameObject/UIComposite/ShareElemet", false, 16)]
     static public void AddShareElement(MenuCommand menuCommand)

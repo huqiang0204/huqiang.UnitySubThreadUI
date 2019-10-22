@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UGUI;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class AniRecordEditor:Editor
             if (GUILayout.Button("Apply"))
             {
                 help.Apply(i);
-                var si = help.GetComponent<ShareImageHelper>();
+                var si = help.GetComponent<ShareImage>();
                 if (si != null)
                     si.Refresh();
             }

@@ -8,7 +8,7 @@ namespace Assets.Core.IK
 {
     public class FastIKFabric2D : MonoBehaviour
     {
-        public ShareImageHelper shareImage;
+        public ShareImage shareImage;
         /// <summary>
         /// Chain length of bones
         /// </summary>
