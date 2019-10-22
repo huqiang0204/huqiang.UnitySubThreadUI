@@ -129,7 +129,6 @@ namespace huqiang.UIComposite
                                 item.text.text = "▷ " + node.content;
                             else item.text.text = node.content;
                         }
-
                     }
                     var m = item.callBack.Context;
                     m.data.localPosition = new Vector3(node.offset.x, hy - dy - ItemHigh * 0.5f, 0);
