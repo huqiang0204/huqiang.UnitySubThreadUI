@@ -69,6 +69,13 @@ namespace huqiang.Data
             }
         }
         public static int[] BoxLine = new int[] { 0,1,1,2,2,3,3,0,4,5,5,6,6,7,7,4,0,4,1,5,2,6,3,7};
+        /// <summary>
+        /// 将世界坐标的顶点投射到屏幕坐标
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="camera"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         public static Vector3[] BoxToScreenPoint(Transform transform,Camera camera,Vector3 size)
         {
             var c = transform.position;
