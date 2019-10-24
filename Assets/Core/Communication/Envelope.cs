@@ -401,8 +401,11 @@ namespace huqiang
             List<EnvelopePart> parts = new List<EnvelopePart>();
             for (int i = 0; i < c; i++)
             {
+                var dat = datas[i].data;
+                if (dat.Length == 0)
+                    continue;
                 EnvelopePart part = new EnvelopePart();
-                var buf = ReadPart(datas[i].data, out part.head);
+                var buf = ReadPart(dat, out part.head);
                 if (buf != null)
                 {
                     part.data = buf;
