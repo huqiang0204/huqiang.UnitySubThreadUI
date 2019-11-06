@@ -8,7 +8,6 @@ namespace huqiang
 {
     public class FreePort
     {
-        private const string PortReleaseGuid = "8875BD8E-4D5B-11DE-B2F4-691756D89593";
 
         /// <summary> 
         /// Check if startPort is available, incrementing and 
@@ -20,11 +19,6 @@ namespace huqiang
         {
             int port = startPort;
             bool isAvailable = true;
-            #if !UNITY_IPHONE && !UNITY_ANDROID
-            var mutex = new Mutex(false,
-                string.Concat("Global/", PortReleaseGuid));
-            mutex.WaitOne();
-#endif
             try
             {
                 IPGlobalProperties ipGlobalProperties =
@@ -54,11 +48,9 @@ namespace huqiang
 
                 return port;
             }
-            finally
+            catch
             {
-                #if !UNITY_IPHONE && !UNITY_ANDROID
-                mutex.ReleaseMutex();
-#endif
+                return port;
             }
         }
 
@@ -72,11 +64,6 @@ namespace huqiang
         {
             int port = startPort;
             bool isAvailable = true;
-#if !UNITY_IPHONE && !UNITY_ANDROID
-            var mutex = new Mutex(false,
-                string.Concat("Global/", PortReleaseGuid));
-            mutex.WaitOne();
-#endif
             try
             {
                 IPGlobalProperties ipGlobalProperties =
@@ -106,11 +93,9 @@ namespace huqiang
 
                 return port;
             }
-            finally
+            catch
             {
-#if !UNITY_IPHONE && !UNITY_ANDROID
-                mutex.ReleaseMutex();
-#endif
+                return port;
             }
         }
     }
