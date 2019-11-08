@@ -87,10 +87,8 @@ namespace huqiang
                     }
 
                 } while (!isAvailable && port < IPEndPoint.MaxPort);
-
                 if (!isAvailable)
                     throw new ApplicationException("Not able to find a free UDP port.");
-
                 return port;
             }
             catch
