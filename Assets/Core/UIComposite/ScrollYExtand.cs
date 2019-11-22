@@ -279,7 +279,6 @@ namespace huqiang.UIComposite
             t.target.data.localPosition = new Vector3(ItemOffset.x,  h - oy + ItemOffset.y - ItemSize.y * 0.5f, 0);
             t.target.activeSelf = true;
             t.target.SetParent(parent);
-            if(force|u)
             ItemUpdate(t.obj, dat, index, ItemCreator);
         }
         void OrderTail(float os, DataTemplate dat, int index, bool force)
