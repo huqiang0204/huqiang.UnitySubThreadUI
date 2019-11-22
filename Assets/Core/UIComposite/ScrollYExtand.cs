@@ -267,12 +267,10 @@ namespace huqiang.UIComposite
             if (os > Size.y + ItemSize.y)
                 return;
             var t = PopItem(ItemBuffer, index);
-            bool u = false;
             if (t == null)
             {
                 t = CreateItem();
                 t.index = index;
-                u = true;
             }
             Items.Add(t);
             float h = parent.data.sizeDelta.y*0.5f;
