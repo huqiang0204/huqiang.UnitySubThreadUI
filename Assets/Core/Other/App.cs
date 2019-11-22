@@ -93,6 +93,7 @@ namespace huqiang
             ThreadMission.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
             AnimationManage.Manage.Update();
+            UIPage.MainRefresh(UserAction.TimeSlice);
             AllTime += Time.deltaTime;
             mission.AddSubMission(SubThread, null);
         }

@@ -115,6 +115,8 @@ namespace huqiang.UI
                         Array.Copy(buf, vert, buf.Length);
                         for (int i = 0; i < vert.Length; i++)
                         {
+                            vert[i].position.x *= ls.x;
+                            vert[i].position.y *= ls.y;
                             vert[i].position = q * vert[i].position + pos;
                         }
                         vertices.AddRange(vert);
