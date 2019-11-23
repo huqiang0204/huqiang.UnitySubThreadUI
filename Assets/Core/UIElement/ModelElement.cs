@@ -166,6 +166,16 @@ namespace huqiang.UI
             parent = element;
             parentChanged = true;
         }
+        public void ClearChild(bool recycle=true)
+        {
+            for(int i=0;i<child.Count;i++)
+            {
+                child[i].parent = null;
+                if (recycle)
+                    ModelManagerUI.RecycleElement(child[i]);
+            }
+            child.Clear();
+        }
         public DataConversion GetComponent(string type)
         {
             for (int i = 0; i < components.Count; i++)

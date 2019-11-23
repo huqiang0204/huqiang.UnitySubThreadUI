@@ -66,16 +66,18 @@ namespace huqiang.UI
         }
         static void GetChildUVInfo(ModelElement child, ShareText ori, List<UIVertex> vertices, Vector3 position, Quaternion quate, Vector3 scale)
         {
-            float w = child.data.localScale.x *child.data.sizeDelta.x;
-            float h =child.data.localScale.y * child.data.sizeDelta.y;
             var pos = child.data.localPosition;
-            pos = quate * pos + position;
-            Vector3 ls = child.data.localScale;
-            ls.x *= scale.x;
-            ls.y *= scale.y;
+            Vector3 p = quate * pos;
+            Vector3 o = Vector3.zero;
+            o.x = p.x * scale.x;
+            o.y = p.y * scale.y;
+            o.z = p.z * scale.z;
+            o += position;
 
-            ///注意顺序quate要放前面
-            var q = quate * child.data.localRotation;
+            Vector3 s = child.data.localScale;
+            Quaternion q = quate * child.data.localRotation;
+            s.x *= scale.x;
+            s.y *= scale.y;
          
             if (child.activeSelf)
             {
@@ -115,16 +117,16 @@ namespace huqiang.UI
                         Array.Copy(buf, vert, buf.Length);
                         for (int i = 0; i < vert.Length; i++)
                         {
-                            vert[i].position.x *= ls.x;
-                            vert[i].position.y *= ls.y;
-                            vert[i].position = q * vert[i].position + pos;
+                            vert[i].position.x *= s.x;
+                            vert[i].position.y *= s.y;
+                            vert[i].position = q * vert[i].position + o;
                         }
                         vertices.AddRange(vert);
                     }
                 }
                 for (int i = 0; i < child.child.Count; i++)
                 {
-                    GetChildUVInfo(child.child[i], ori, vertices, pos, q, ls);
+                    GetChildUVInfo(child.child[i], ori, vertices, o, q, s);
                 }
             }
         }

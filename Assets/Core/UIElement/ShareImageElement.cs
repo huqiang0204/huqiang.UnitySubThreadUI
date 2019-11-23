@@ -24,34 +24,41 @@ namespace huqiang.UI
                 vertChanged = true;
             }
         }
-        public static void GetUVInfo(ModelElement mod, List<UIVertex> vertices, List<int> tri, Vector3 position, Quaternion quate, Vector3 scale)
+        public static void GetUVInfo(ModelElement child, List<UIVertex> vertices, List<int> tri, Vector3 position, Quaternion quate, Vector3 scale)
         {
-            var pos = mod.data.localPosition;
-            pos = quate * pos + position;
-            Vector3 ls = mod.data.localScale;
-            ls.x *= scale.x;
-            ls.y *= scale.y;
-            var q = mod.data.localRotation * quate;
-            if(mod.activeSelf)
+            var pos = child.data.localPosition;
+            Vector3 p = quate * pos;
+            Vector3 o = Vector3.zero;
+            o.x = p.x * scale.x;
+            o.y = p.y * scale.y;
+            o.z = p.z * scale.z;
+            o += position;
+
+            Vector3 s = child.data.localScale;
+            Quaternion q = quate * child.data.localRotation;
+            s.x *= scale.x;
+            s.y *= scale.y;
+
+            if (child.activeSelf)
             {
-                var sic = mod.GetComponent<ShareImageChildElement>();
+                var sic = child.GetComponent<ShareImageChildElement>();
                 if(sic!=null)
                 {
                     UIVertex[] buff = sic.buff;
-                    float w = mod.data.localScale.x * mod.data.sizeDelta.x;
-                    float h = mod.data.localScale.y * mod.data.sizeDelta.y;
-                    float left = -mod.data.pivot.x * w;
+                    float w = child.data.sizeDelta.x;
+                    float h = child.data.sizeDelta.y;
+                    float left = -child.data.pivot.x * w;
                     float right = left + w * sic.data.fillAmountX;
-                    float down = -mod.data.pivot.y * h;
+                    float down = -child.data.pivot.y * h;
                     float top = down + h;
-                    right *= ls.x;
-                    left *= ls.x;
-                    down *= ls.y;
-                    top *= ls.y;
-                    buff[0].position = q * new Vector3(left, down) + pos;
-                    buff[1].position = q * new Vector3(left, top) + pos;
-                    buff[2].position = q * new Vector3(right, top) + pos;
-                    buff[3].position = q * new Vector3(right, down) + pos;
+                    right *= s.x;
+                    left *= s.x;
+                    down *= s.y;
+                    top *= s.y;
+                    buff[0].position = q * new Vector3(left, down) + o;
+                    buff[1].position = q * new Vector3(left, top) + o;
+                    buff[2].position = q * new Vector3(right, top) + o;
+                    buff[3].position = q * new Vector3(right, down) + o;
                     float tx = sic.data.txtSize.x;
                     float ty = sic.data.txtSize.y;
                     float l = sic.data.rect.x / tx;
@@ -70,18 +77,18 @@ namespace huqiang.UI
                     buff[1].color = sic.data.color;
                     buff[2].color = sic.data.color;
                     buff[3].color = sic.data.color;
-                    int s = vertices.Count;
+                    int c = vertices.Count;
                     vertices.AddRange(buff);
-                    tri.Add(s);
-                    tri.Add(s + 1);
-                    tri.Add(s + 2);
-                    tri.Add(s + 2);
-                    tri.Add(s + 3);
-                    tri.Add(s);
+                    tri.Add(c);
+                    tri.Add(c + 1);
+                    tri.Add(c + 2);
+                    tri.Add(c + 2);
+                    tri.Add(c + 3);
+                    tri.Add(c);
                 }
-                for (int i = 0; i < mod.child.Count; i++)
+                for (int i = 0; i < child.child.Count; i++)
                 {
-                    GetUVInfo(mod.child[i], vertices, tri, pos, q, ls);
+                    GetUVInfo(child.child[i], vertices, tri, o, q, s);
                 }
             }
         }

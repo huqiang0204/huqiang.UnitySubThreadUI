@@ -86,7 +86,11 @@ public class UIPage : UIBase
         if (CurrentPage != null)
             CurrentPage.Update(time);
     }
-
+    public static void MainRefresh(float time)
+    {
+        if (CurrentPage != null)
+            CurrentPage.MainUpdate(time);
+    }
     public UIPage()
     {
         pops = new List<PopWindow>();

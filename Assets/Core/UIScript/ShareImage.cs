@@ -84,7 +84,8 @@ namespace UGUI
         }
         protected override void OnPopulateMesh(VertexHelper vh)
         {
-            VertexCalculation();
+            if (!Application.isPlaying)
+                VertexCalculation();
             base.OnPopulateMesh(vh);
         }
 #endif

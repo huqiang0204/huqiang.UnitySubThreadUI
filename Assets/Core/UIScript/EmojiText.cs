@@ -24,7 +24,7 @@ namespace UGUI
         readonly UIVertex[] m_TempVerts = new UIVertex[4];
         static UIVertex[] CreateEmojiMesh(IList<UIVertex> verts,  List<EmojiInfo> emoji, float fontSize, float unitsPerPixel,Vector2 roundingOffset)
         {
-            int vertCount = verts.Count ;
+            int vertCount = verts.Count;
             if (vertCount <= 0)
                 return null;
             UIVertex[] buf = new UIVertex[vertCount];

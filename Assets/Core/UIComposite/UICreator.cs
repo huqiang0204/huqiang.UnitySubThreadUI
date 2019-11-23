@@ -486,5 +486,19 @@ namespace huqiang.UIComposite
             var et = mod.AddComponent<EmojiElement>();
             return mod;
         }
+        static public ModelElement CreateShareImageChild(string name)
+        {
+            var mod = ModelElement.CreateNew(name);
+            mod.data.sizeDelta = new Vector2(100, 100);
+            var et = mod.AddComponent<ShareImageChildElement>();
+            return mod;
+        }
+        static public ModelElement CreateShareTextChild(string name)
+        {
+            var mod = ModelElement.CreateNew(name);
+            mod.data.sizeDelta = new Vector2(100, 100);
+            var et = mod.AddComponent<ShareTextChildElement>();
+            return mod;
+        }
     }
 }
