@@ -145,6 +145,7 @@ namespace huqiang.UIComposite
                 return;
             if (ItemSize.y == 0)
                 return;
+            Size = Model.data.sizeDelta;
             CalculSize();
             Order(true);
 
@@ -252,10 +253,9 @@ namespace huqiang.UIComposite
             t.target.data.localPosition.y =  Size.y * 0.5f - os - h * 0.5f;
             t.target.data.sizeDelta.y = h;
             t.target.activeSelf = true;
-            for(int i=0;i<dat.Data.Count;i++)
-            {
-                OrderItem(os, dat.Data[i], i, force,t.target);
-            }
+            if (dat.Data != null)
+                for (int i = 0; i < dat.Data.Count; i++)
+                    OrderItem(os, dat.Data[i], i, force, t.target);
         }
         void OrderItem(float os, object dat, int index, bool force,ModelElement parent)
         {
