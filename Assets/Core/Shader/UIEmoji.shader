@@ -87,7 +87,7 @@
 					OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
 
 					OUT.texcoord = IN.texcoord;
-					OUT.color = IN.color * _Color;
+					OUT.color = IN.color;
 					return OUT;
 				}
 
@@ -96,22 +96,21 @@
 				fixed4 frag(v2f IN) : SV_Target
 				{
 					half4 color;
-				if (IN.texcoord.x > 0.5)
+				float a = IN.color.a;
+				if (a == 0)
 				{
-					IN.texcoord.x -= 0.5;
-					IN.texcoord.x *= 2;
 					color = tex2D(_emoji, IN.texcoord);
 					color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
 				}
 				else {
-					IN.texcoord.x *= 2;
 					color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd);
+					color.a *= a;
 					color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
 					color.xyz = IN.color.xyz;
 #ifdef UNITY_UI_ALPHACLIP
 					clip(color.a - 0.001);
 #endif
-			    }
+				}
 					return color;
 				}
 			ENDCG

@@ -1,1743 +1,179 @@
 fileFormatVersion: 2
 guid: 976bc3d6b0309c34ea5ab78e8caa5a31
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 21300000
-    second: icons
-  - first:
-      213: 21300002
-    second: Basic-Elements-Circle
-  - first:
-      213: 21300004
-    second: Basic-Elements-Line
-  - first:
-      213: 21300006
-    second: Basic-Elements-Rectangle-Rounded
-  - first:
-      213: 21300008
-    second: Buttons-Circles-Outline-PNG-White-Circle-Outline
-  - first:
-      213: 21300010
-    second: Buttons-Rounded-Filled-PNG-WhiteButton-Rounded
-  - first:
-      213: 21300012
-    second: Buttons-Rounded-Outline-PNG-WhiteButton-Rounded-Outline
-  - first:
-      213: 21300014
-    second: Buttons-SoftRounded-Filled-PNG-White-Button
-  - first:
-      213: 21300016
-    second: Buttons-SoftRounded-Outline-PNG-White-Button-Outline
-  - first:
-      213: 21300018
-    second: Buttons-Square-Filled-PNG-WhiteButton-Square-filled
-  - first:
-      213: 21300020
-    second: Buttons-Square-Outline-PNG-WhiteButton-Square-Outline
-  - first:
-      213: 21300022
-    second: Checkboxes-Checkboxes_PNG-Checkbox-Black-Skin
-  - first:
-      213: 21300024
-    second: Checkboxes-Checkboxes_PNG-Checkbox-Light-Skin
-  - first:
-      213: 21300026
-    second: Icons-Demo-Small-Avatars-Rounded-Background-Circle
-  - first:
-      213: 21300028
-    second: Icons-Demo-Small-Avatars-Rounded-Boy_1
-  - first:
-      213: 21300030
-    second: Icons-Demo-Small-Avatars-Rounded-Boy_2
-  - first:
-      213: 21300032
-    second: Icons-Demo-Small-Avatars-Rounded-Boy_3
-  - first:
-      213: 21300034
-    second: Icons-Demo-Small-Avatars-Rounded-Boy_4
-  - first:
-      213: 21300036
-    second: Icons-Demo-Small-Avatars-Rounded-Girl_1
-  - first:
-      213: 21300038
-    second: Icons-Demo-Small-Avatars-Rounded-Girl_2
-  - first:
-      213: 21300040
-    second: Icons-Demo-Small-Avatars-Rounded-Girl_3
-  - first:
-      213: 21300042
-    second: Icons-Demo-Small-Avatars-Rounded-Girl_4
-  - first:
-      213: 21300044
-    second: Icons-Demo-Small-Avatars-Rounded-Girl_5
-  - first:
-      213: 21300046
-    second: Icons-Demo-Small-BasicElements-Small-Box-Small
-  - first:
-      213: 21300048
-    second: Icons-Demo-Small-BasicElements-Small-Circle-Outline-Small
-  - first:
-      213: 21300050
-    second: Icons-Demo-Small-BasicElements-Small-Circle-Small
-  - first:
-      213: 21300052
-    second: Icons-Demo-Small-Chat-Popup-Add-User-Icon-Small
-  - first:
-      213: 21300054
-    second: Icons-Demo-Small-Chat-Popup-Chat-Icon-Small
-  - first:
-      213: 21300056
-    second: Icons-Demo-Small-Chat-Popup-Clip-Icon-Small
-  - first:
-      213: 21300058
-    second: Icons-Demo-Small-Chat-Popup-Dot-Small
-  - first:
-      213: 21300060
-    second: Icons-Demo-Small-Chat-Popup-Fear-Smiley_Small
-  - first:
-      213: 21300062
-    second: Icons-Demo-Small-Chat-Popup-Lens-Icon-Small
-  - first:
-      213: 21300064
-    second: Icons-Demo-Small-Chat-Popup-Mail-Icon-Small
-  - first:
-      213: 21300066
-    second: Icons-Demo-Small-Chat-Popup-Menu-Icon-Small
-  - first:
-      213: 21300068
-    second: Icons-Demo-Small-Chat-Popup-Smiley-Icon-Small
-  - first:
-      213: 21300070
-    second: Icons-Demo-Small-Chat-Popup-Trash-Icon-Small
-  - first:
-      213: 21300072
-    second: Icons-Demo-Small-Chat-Popup-User-Delete-Icon-Small
-  - first:
-      213: 21300074
-    second: Icons-Demo-Small-Chat-Popup-Writing-Icon-Small
-  - first:
-      213: 21300076
-    second: Icons-Demo-Small-Close-Icon-Small
-  - first:
-      213: 21300078
-    second: Icons-Demo-Small-CoinsShop-Popup-Chest-Icon-Small
-  - first:
-      213: 21300080
-    second: Icons-Demo-Small-CoinsShop-Popup-Coin-Icon-Small
-  - first:
-      213: 21300082
-    second: Icons-Demo-Small-CoinsShop-Popup-CoinMini-Icon-Small
-  - first:
-      213: 21300084
-    second: Icons-Demo-Small-CoinsShop-Popup-Coins-Sack-Icon-Small
-  - first:
-      213: 21300086
-    second: Icons-Demo-Small-CoinsShop-Popup-Coinsx1-Icon-Small
-  - first:
-      213: 21300088
-    second: Icons-Demo-Small-CoinsShop-Popup-Coinsx1Big-Icon-Small
-  - first:
-      213: 21300090
-    second: Icons-Demo-Small-CoinsShop-Popup-Coinsx3-Icon-Small
-  - first:
-      213: 21300092
-    second: Icons-Demo-Small-CoinsShop-Popup-Gift-Icon-Small
-  - first:
-      213: 21300094
-    second: Icons-Demo-Small-CoinsShop-Popup-Text-Deal-Icon-Small
-  - first:
-      213: 21300096
-    second: Icons-Demo-Small-CoinsShop-Popup-Text-New-Icon-Small
-  - first:
-      213: 21300098
-    second: Icons-Demo-Small-CoinsShop-Popup-Text-Sale-Icon-Small
-  - first:
-      213: 21300100
-    second: Icons-Demo-Small-DemoScene-Abilities-Bomb-Icon-Small
-  - first:
-      213: 21300102
-    second: Icons-Demo-Small-DemoScene-Abilities-Cross-Icon-Small
-  - first:
-      213: 21300104
-    second: Icons-Demo-Small-DemoScene-Abilities-Demon-Icon-Small
-  - first:
-      213: 21300106
-    second: Icons-Demo-Small-DemoScene-Abilities-Gun-Icon-Small
-  - first:
-      213: 21300108
-    second: Icons-Demo-Small-DemoScene-Abilities-Knight-Icon-Small
-  - first:
-      213: 21300110
-    second: Icons-Demo-Small-DemoScene-Abilities-Plus-Icon-Small
-  - first:
-      213: 21300112
-    second: Icons-Demo-Small-DemoScene-Abilities-Potion-Icon-Small
-  - first:
-      213: 21300114
-    second: Icons-Demo-Small-DemoScene-Abilities-Shield-Icon-Small
-  - first:
-      213: 21300116
-    second: Icons-Demo-Small-DemoScene-Abilities-Skull-Icon-Small
-  - first:
-      213: 21300118
-    second: Icons-Demo-Small-DemoScene-Abilities-Sword-Icon-Small
-  - first:
-      213: 21300120
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Arrow-Icon-Small
-  - first:
-      213: 21300122
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Avatar-DarkSkin-Small
-  - first:
-      213: 21300124
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Avatar2-DarkSkin-Big
-  - first:
-      213: 21300126
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Avatar2-DarkSkin-Small
-  - first:
-      213: 21300128
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Chat-Icon-Small
-  - first:
-      213: 21300130
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Chest-Icon-Small
-  - first:
-      213: 21300132
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Coins-Icon-Small
-  - first:
-      213: 21300134
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Cup-Icon-Small
-  - first:
-      213: 21300136
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Diamond-Icon-Small
-  - first:
-      213: 21300138
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Exit-Icon-Small
-  - first:
-      213: 21300140
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Heart-Icon-Small
-  - first:
-      213: 21300142
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Level-Icon-Small
-  - first:
-      213: 21300144
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Mail-Icon-Small
-  - first:
-      213: 21300146
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Mail-Outline-Icon-Small
-  - first:
-      213: 21300148
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Missions-Icon-Small
-  - first:
-      213: 21300150
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Settings-Icon-Small
-  - first:
-      213: 21300152
-    second: Icons-Demo-Small-DemoScene-Icons-Top-Shopping-Cart-Icon-Small
-  - first:
-      213: 21300154
-    second: Icons-Demo-Small-GemsPopup-Chest-Icon-Small
-  - first:
-      213: 21300156
-    second: Icons-Demo-Small-GemsPopup-Diamond-Icon-Small
-  - first:
-      213: 21300158
-    second: Icons-Demo-Small-GemsPopup-Diamond-Outline-Icon-Small
-  - first:
-      213: 21300160
-    second: Icons-Demo-Small-HomeScene-Info-Icon-Small
-  - first:
-      213: 21300162
-    second: Icons-Demo-Small-HomeScene-Multiuser-Icon-Small
-  - first:
-      213: 21300164
-    second: Icons-Demo-Small-HomeScene-Stats-Icon-Small
-  - first:
-      213: 21300166
-    second: Icons-Demo-Small-HomeScene-User-Icon-Small
-  - first:
-      213: 21300168
-    second: Icons-Demo-Small-HomeScene-Video-Icon-Small
-  - first:
-      213: 21300170
-    second: Icons-Demo-Small-InfoPopup-Head-Icon-Small
-  - first:
-      213: 21300172
-    second: Icons-Demo-Small-InfoPopup-Headphones-Icon-Small
-  - first:
-      213: 21300174
-    second: Icons-Demo-Small-InventoryPopup-Ability-Icon-Small
-  - first:
-      213: 21300176
-    second: Icons-Demo-Small-InventoryPopup-Aim-Icon-Small
-  - first:
-      213: 21300178
-    second: Icons-Demo-Small-InventoryPopup-Amulet-Icon-Small
-  - first:
-      213: 21300180
-    second: Icons-Demo-Small-InventoryPopup-Apple-Icon-Small
-  - first:
-      213: 21300182
-    second: Icons-Demo-Small-InventoryPopup-Arm-Muscles-Icon-Small
-  - first:
-      213: 21300184
-    second: Icons-Demo-Small-InventoryPopup-Axe-Icon-Small
-  - first:
-      213: 21300186
-    second: Icons-Demo-Small-InventoryPopup-Body-Icon-Small
-  - first:
-      213: 21300188
-    second: Icons-Demo-Small-InventoryPopup-Bolt-Icon-Small
-  - first:
-      213: 21300190
-    second: Icons-Demo-Small-InventoryPopup-Bomb-Icon-Small
-  - first:
-      213: 21300192
-    second: Icons-Demo-Small-InventoryPopup-Bunny-Icon-Small
-  - first:
-      213: 21300194
-    second: Icons-Demo-Small-InventoryPopup-Canon-Icon-Small
-  - first:
-      213: 21300196
-    second: Icons-Demo-Small-InventoryPopup-Coffee-Icon-Small
-  - first:
-      213: 21300198
-    second: Icons-Demo-Small-InventoryPopup-Compass-Icon-Small
-  - first:
-      213: 21300200
-    second: Icons-Demo-Small-InventoryPopup-CookingPot-Icon-Small
-  - first:
-      213: 21300202
-    second: Icons-Demo-Small-InventoryPopup-Cross-Icon-Small
-  - first:
-      213: 21300204
-    second: Icons-Demo-Small-InventoryPopup-Demon-Icon-Small
-  - first:
-      213: 21300206
-    second: Icons-Demo-Small-InventoryPopup-Fight-Axe-Scythe-Icon-Small
-  - first:
-      213: 21300208
-    second: Icons-Demo-Small-InventoryPopup-Fight-Icon-Small
-  - first:
-      213: 21300210
-    second: Icons-Demo-Small-InventoryPopup-Fight_Axe-Icon-Small
-  - first:
-      213: 21300212
-    second: Icons-Demo-Small-InventoryPopup-Fire-Icon-Small
-  - first:
-      213: 21300214
-    second: Icons-Demo-Small-InventoryPopup-Freeze-Icon-Small
-  - first:
-      213: 21300216
-    second: Icons-Demo-Small-InventoryPopup-Gangster-Icon-Small
-  - first:
-      213: 21300218
-    second: Icons-Demo-Small-InventoryPopup-Gun-Icon-Small
-  - first:
-      213: 21300220
-    second: Icons-Demo-Small-InventoryPopup-Hammer-Icon-Small
-  - first:
-      213: 21300222
-    second: Icons-Demo-Small-InventoryPopup-Hourglass-Icon-Small
-  - first:
-      213: 21300224
-    second: Icons-Demo-Small-InventoryPopup-Key-Icon-Small
-  - first:
-      213: 21300226
-    second: Icons-Demo-Small-InventoryPopup-Knights-Hat-Icon
-  - first:
-      213: 21300228
-    second: Icons-Demo-Small-InventoryPopup-Leaves-Icon-Small
-  - first:
-      213: 21300230
-    second: Icons-Demo-Small-InventoryPopup-Libra-Icon-Small
-  - first:
-      213: 21300232
-    second: Icons-Demo-Small-InventoryPopup-Lifebelt-Icon-Small
-  - first:
-      213: 21300234
-    second: Icons-Demo-Small-InventoryPopup-Magic-Stick-Icon-Small
-  - first:
-      213: 21300236
-    second: Icons-Demo-Small-InventoryPopup-Map-Icon-Small
-  - first:
-      213: 21300238
-    second: Icons-Demo-Small-InventoryPopup-Pinned-Notices-Icon-Small
-  - first:
-      213: 21300240
-    second: Icons-Demo-Small-InventoryPopup-Potion-Half-Small
-  - first:
-      213: 21300242
-    second: Icons-Demo-Small-InventoryPopup-Potion-Leaves-Icon-Small
-  - first:
-      213: 21300244
-    second: Icons-Demo-Small-InventoryPopup-Potion-Poison-Icon-Small
-  - first:
-      213: 21300246
-    second: Icons-Demo-Small-InventoryPopup-Rain-Icon-Small
-  - first:
-      213: 21300248
-    second: Icons-Demo-Small-InventoryPopup-Rest-Icon-Small
-  - first:
-      213: 21300250
-    second: Icons-Demo-Small-InventoryPopup-Rink-Magic-Icon-Small
-  - first:
-      213: 21300252
-    second: Icons-Demo-Small-InventoryPopup-Scythe-Icon-Small
-  - first:
-      213: 21300254
-    second: Icons-Demo-Small-InventoryPopup-Scythe-Icon_2-Small
-  - first:
-      213: 21300256
-    second: Icons-Demo-Small-InventoryPopup-Share-Icon-Small
-  - first:
-      213: 21300258
-    second: Icons-Demo-Small-InventoryPopup-Shield-Icon-Small
-  - first:
-      213: 21300260
-    second: Icons-Demo-Small-InventoryPopup-Skull-Icon-Small
-  - first:
-      213: 21300262
-    second: Icons-Demo-Small-InventoryPopup-Spaceship-Icon
-  - first:
-      213: 21300264
-    second: Icons-Demo-Small-InventoryPopup-Speed-Icon-Small
-  - first:
-      213: 21300266
-    second: Icons-Demo-Small-InventoryPopup-Spell-Icon-Small
-  - first:
-      213: 21300268
-    second: Icons-Demo-Small-InventoryPopup-Strength-Icon-Small
-  - first:
-      213: 21300270
-    second: Icons-Demo-Small-InventoryPopup-Sun-Icon-Small
-  - first:
-      213: 21300272
-    second: Icons-Demo-Small-InventoryPopup-Sword-Icon-Small
-  - first:
-      213: 21300274
-    second: Icons-Demo-Small-InventoryPopup-Target-Icon-Small
-  - first:
-      213: 21300276
-    second: Icons-Demo-Small-InventoryPopup-Timer-Icon-Small
-  - first:
-      213: 21300278
-    second: Icons-Demo-Small-InventoryPopup-Ufo-Icon-Small
-  - first:
-      213: 21300280
-    second: Icons-Demo-Small-InventoryPopup-Velocity-Icon-Small
-  - first:
-      213: 21300282
-    second: Icons-Demo-Small-InventoryPopup-Viking-Head-Icon-Small
-  - first:
-      213: 21300284
-    second: Icons-Demo-Small-InventoryPopup-Water-Icon-Small
-  - first:
-      213: 21300286
-    second: Icons-Demo-Small-InventoryPopup-Weapon-Axe-Icon_2-Small
-  - first:
-      213: 21300288
-    second: Icons-Demo-Small-InventoryPopup-Wing-Icon-Small
-  - first:
-      213: 21300290
-    second: Icons-Demo-Small-InventoryPopup-Witch-Hat-Icon
-  - first:
-      213: 21300292
-    second: Icons-Demo-Small-InventoryPopup-Zombie-Icon-Small
-  - first:
-      213: 21300294
-    second: Icons-Demo-Small-ItemPopup-Clock
-  - first:
-      213: 21300296
-    second: Icons-Demo-Small-ItemPopup-Menu-Icon-Small
-  - first:
-      213: 21300298
-    second: Icons-Demo-Small-ItemPopup-Skull
-  - first:
-      213: 21300300
-    second: Icons-Demo-Small-ItemPopup-Star
-  - first:
-      213: 21300302
-    second: Icons-Demo-Small-LeaderboardPopup-Angel-Icon-Small
-  - first:
-      213: 21300304
-    second: Icons-Demo-Small-LeaderboardPopup-Arrow-Down-Icon-Small
-  - first:
-      213: 21300306
-    second: Icons-Demo-Small-LeaderboardPopup-Arrow-Up-Icon-Small
-  - first:
-      213: 21300308
-    second: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-1-Small
-  - first:
-      213: 21300310
-    second: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-2-Small
-  - first:
-      213: 21300312
-    second: Icons-Demo-Small-LeaderboardPopup-Badge-Icon-3-Small
-  - first:
-      213: 21300314
-    second: Icons-Demo-Small-LeaderboardPopup-Challenge-Icon-Small
-  - first:
-      213: 21300316
-    second: Icons-Demo-Small-LeaderboardPopup-Crown-Icon-Small
-  - first:
-      213: 21300318
-    second: Icons-Demo-Small-LeaderboardPopup-Cup-Circle-Icon-Small
-  - first:
-      213: 21300320
-    second: Icons-Demo-Small-LeaderboardPopup-Cup
-  - first:
-      213: 21300322
-    second: Icons-Demo-Small-LeaderboardPopup-Speak-Icon-Small
-  - first:
-      213: 21300324
-    second: Icons-Demo-Small-LeaderboardPopup-Time-Icon
-  - first:
-      213: 21300326
-    second: Icons-Demo-Small-LeaderboardPopup-User-Outline-Icon-Small
-  - first:
-      213: 21300328
-    second: Icons-Demo-Small-LevelPopup-Crown-Icon-Small
-  - first:
-      213: 21300330
-    second: Icons-Demo-Small-LevelPopup-Lock-Icon-Small
-  - first:
-      213: 21300332
-    second: Icons-Demo-Small-LevelPopup-Missions-Icon-Small
-  - first:
-      213: 21300334
-    second: Icons-Demo-Small-LevelPopup-Multiplayer-Icon-Small
-  - first:
-      213: 21300336
-    second: Icons-Demo-Small-LevelUpPopup-Unlock-Icon-Small
-  - first:
-      213: 21300338
-    second: Icons-Demo-Small-LivesShopPopup-Diamond-Icon-Small
-  - first:
-      213: 21300340
-    second: Icons-Demo-Small-LivesShopPopup-Diamond-Plus-Icon-Small
-  - first:
-      213: 21300342
-    second: Icons-Demo-Small-LoginRegisterPopup-Lock-Icon-Small
-  - first:
-      213: 21300344
-    second: Icons-Demo-Small-LoginRegisterPopup-Mail-Icon-Small
-  - first:
-      213: 21300346
-    second: Icons-Demo-Small-LoginRegisterPopup-User-Icon-Small
-  - first:
-      213: 21300348
-    second: Icons-Demo-Small-LoginRegisterPopup-User-Plus-Icon-Small
-  - first:
-      213: 21300350
-    second: Icons-Demo-Small-LosePopup-Grave-Icon-Small
-  - first:
-      213: 21300352
-    second: Icons-Demo-Small-LosePopup-Level-Icon-Small
-  - first:
-      213: 21300354
-    second: Icons-Demo-Small-LosePopup-Repeat-Icon-Small
-  - first:
-      213: 21300356
-    second: Icons-Demo-Small-LosePopup-Time-Icon-Small
-  - first:
-      213: 21300358
-    second: Icons-Demo-Small-LosePopup-WitchHat-Icon-Small
-  - first:
-      213: 21300360
-    second: Icons-Demo-Small-Messages-Popup-New-Icon-Small
-  - first:
-      213: 21300362
-    second: Icons-Demo-Small-Messages-Popup-New-Icon-Small_2
-  - first:
-      213: 21300364
-    second: Icons-Demo-Small-MissionsPopup-Coin-Icon-Small
-  - first:
-      213: 21300366
-    second: Icons-Demo-Small-MissionsPopup-Diamond-Icon-Small
-  - first:
-      213: 21300368
-    second: Icons-Demo-Small-MissionsPopup-Heart-Outline-icon-Small
-  - first:
-      213: 21300370
-    second: Icons-Demo-Small-ProfilePopup-Dot
-  - first:
-      213: 21300372
-    second: Icons-Demo-Small-ProfilePopup-Gender-Female-Icon-Small
-  - first:
-      213: 21300374
-    second: Icons-Demo-Small-ProfilePopup-Gender-Male-Icon-Small
-  - first:
-      213: 21300376
-    second: Icons-Demo-Small-WinPopup-Magic-Stick-Icon-Small
-  - first:
-      213: 21300378
-    second: Icons-Demo-Small-WinPopup-Next-Icon-Small
-  - first:
-      213: 21300380
-    second: Icons-Demo-Small-WinPopup-Skull-Icon-Small
-  - first:
-      213: 21300382
-    second: Icons-HighResolution-Compass-Icon-PNG-Arrow
-  - first:
-      213: 21300384
-    second: Icons-HighResolution-Compass-Icon-PNG-Background
-  - first:
-      213: 21300386
-    second: Icons-HighResolution-Compass-Icon-PNG-Compass-Icon-Full
-  - first:
-      213: 21300388
-    second: Icons-HighResolution-Compass-Icon-PNG-Text
-  - first:
-      213: 21300390
-    second: Lists-White-Basic-List-Background
-  - first:
-      213: 21300392
-    second: Popups-BorderRound-Background
-  - first:
-      213: 21300394
-    second: Popups-BorderRound-Border
-  - first:
-      213: 21300396
-    second: Popups-BorderSoftRound-Background
-  - first:
-      213: 21300398
-    second: Popups-BorderSoftRound-Border
-  - first:
-      213: 21300400
-    second: Popups-BorderSquare-Background
-  - first:
-      213: 21300402
-    second: Popups-BorderSquare-Border
-  - first:
-      213: 21300404
-    second: Popups-Dark-Square-SquareBackground
-  - first:
-      213: 21300406
-    second: Popups-Dark-Square-SquareTopBar
-  - first:
-      213: 21300408
-    second: Popups-Light-SoftRounded-PNG-Fade-Gradient-Top
-  - first:
-      213: 21300410
-    second: Popups-Light-SoftRounded-PNG-LightBlue-Popup-Top
-  - first:
-      213: 21300412
-    second: Popups-Light-SoftRounded-PNG-White-Popup-Top
-  - first:
-      213: 21300414
-    second: Popups-Light-Square-SquareBackground
-  - first:
-      213: 21300416
-    second: Popups-Light-Square-SquareTopBar
-  - first:
-      213: 21300418
-    second: Popups-Popup-Close-Icon
-  - first:
-      213: 21300420
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Black
-  - first:
-      213: 21300422
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Blue
-  - first:
-      213: 21300424
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Blue_2
-  - first:
-      213: 21300426
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueDark
-  - first:
-      213: 21300428
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueLight
-  - first:
-      213: 21300430
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-BlueMoreDark
-  - first:
-      213: 21300432
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Green
-  - first:
-      213: 21300434
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Orange
-  - first:
-      213: 21300436
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Pink
-  - first:
-      213: 21300438
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-PinkDark
-  - first:
-      213: 21300440
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Purple
-  - first:
-      213: 21300442
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Red
-  - first:
-      213: 21300444
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Turquoise
-  - first:
-      213: 21300446
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-White
-  - first:
-      213: 21300448
-    second: Progress-Bars-Rounded-Corner-Progress-Bar-Corner-Yellow
-  - first:
-      213: 21300450
-    second: Progress-Bars-Squares-Progress-Bar-White
-  - first:
-      213: 21300452
-    second: Radiobuttons-Radiobuttons_PNG-Radiobutton-Dark-Skin
-  - first:
-      213: 21300454
-    second: Radiobuttons-Radiobuttons_PNG-Radiobutton-Light-Skin
-  - first:
-      213: 21300456
-    second: Tooltips-White-Tooltip-Arrow
-  - first:
-      213: 21300458
-    second: Tooltips-White-Tooltip-Background
-  - first:
-      213: 21300460
-    second: Buttons-Rounded-Filled-PNG-Button-R
-  - first:
-      213: 21300462
-    second: Buttons-Rounded-Outline-PNG-Button-RO
-  - first:
-      213: 21300464
-    second: Icons-Demo-Small-BasicElements-Small-Circle-Outline
-  - first:
-      213: 21300466
-    second: Icons-Demo-Small-Chat-Popup-Add-Userl
-  - first:
-      213: 21300468
-    second: Icons-Demo-Small-Chat-Popup-Chat
-  - first:
-      213: 21300470
-    second: Icons-Demo-Small-Chat-Popup-Clip
-  - first:
-      213: 21300472
-    second: Icons-Demo-Small-Chat-Popup-Lens
-  - first:
-      213: 21300474
-    second: Icons-Demo-Small-Chat-Popup-Mail5
-  - first:
-      213: 21300476
-    second: Icons-Demo-Small-Chat-Popup-Menu2
-  - first:
-      213: 21300478
-    second: Icons-Demo-Small-Chat-Popup-Smiley
-  - first:
-      213: 21300480
-    second: Icons-Demo-Small-Chat-Popup-Trash
-  - first:
-      213: 21300482
-    second: Icons-Demo-Small-Chat-Popup-User-Deletel
-  - first:
-      213: 21300484
-    second: Icons-Demo-Small-Chat-Popup-Writing
-  - first:
-      213: 21300486
-    second: Icons-Demo-Small-Close
-  - first:
-      213: 21300488
-    second: Icons-Demo-Small-CoinsShop-Popup-Chest3
-  - first:
-      213: 21300490
-    second: Icons-Demo-Small-CoinsShop-Popup-Coin3
-  - first:
-      213: 21300492
-    second: Icons-Demo-Small-CoinsShop-Popup-Coins-Sack
-  - first:
-      213: 21300494
-    second: Icons-Demo-Small-CoinsShop-Popup-Coinsx1
-  - first:
-      213: 21300496
-    second: Icons-Demo-Small-CoinsShop-Popup-Coinsx1Big
-  - first:
-      213: 21300498
-    second: Icons-Demo-Small-CoinsShop-Popup-Coinsx3
-  - first:
-      213: 21300500
-    second: Icons-Demo-Small-CoinsShop-Popup-Gift
-  - first:
-      213: 21300502
-    second: Icons-Demo-Small-CoinsShop-Popup-Text-Deal
-  - first:
-      213: 21300504
-    second: Icons-Demo-Small-CoinsShop-Popup-Text-New
-  - first:
-      213: 21300506
-    second: Icons-Demo-Small-CoinsShop-Popup-Text-Sale
-  - first:
-      213: 21300508
-    second: Icons-Demo-Small-DemoScene-Abilities-Bomb3
-  - first:
-      213: 21300510
-    second: Icons-Demo-Small-DemoScene-Abilities-Cross2
-  - first:
-      213: 21300512
-    second: Icons-Demo-Small-DemoScene-Abilities-Demonl
-  - first:
-      213: 21300514
-    second: Icons-Demo-Small-DemoScene-Abilities-Gun2
-  - first:
-      213: 21300516
-    second: Icons-Demo-Small-DemoScene-Abilities-Knight2
-  - first:
-      213: 21300518
-    second: Icons-Demo-Small-DemoScene-Abilities-Plus
-  - first:
-      213: 21300520
-    second: Icons-Demo-Small-DemoScene-Abilities-Potion3
-  - first:
-      213: 21300522
-    second: Icons-Demo-Small-DemoScene-Abilities-Shield
-  - first:
-      213: 21300524
-    second: Icons-Demo-Small-DemoScene-Abilities-Skull
-  - first:
-      213: 21300526
-    second: Icons-Demo-Small-DemoScene-Abilities-Sword
-  - first:
-      213: 21300528
-    second: Icons-Demo-Small-DemoScene-Icons-Top-boy1
-  - first:
-      213: 21300530
-    second: Icons-Demo-Small-DemoScene-Icons-Top-buy
-  - first:
-      213: 21300532
-    second: Icons-Demo-Small-DemoScene-Icons-Top-contacts
-  - first:
-      213: 21300534
-    second: Icons-Demo-Small-DemoScene-Icons-Top-data
-  - first:
-      213: 21300536
-    second: Icons-Demo-Small-DemoScene-Icons-Top-diamond
-  - first:
-      213: 21300538
-    second: Icons-Demo-Small-DemoScene-Icons-Top-girl1
-  - first:
-      213: 21300540
-    second: Icons-Demo-Small-DemoScene-Icons-Top-gril2
-  - first:
-      213: 21300542
-    second: Icons-Demo-Small-DemoScene-Icons-Top-heart
-  - first:
-      213: 21300544
-    second: Icons-Demo-Small-DemoScene-Icons-Top-left
-  - first:
-      213: 21300546
-    second: Icons-Demo-Small-DemoScene-Icons-Top-list
-  - first:
-      213: 21300548
-    second: Icons-Demo-Small-DemoScene-Icons-Top-mail
-  - first:
-      213: 21300550
-    second: Icons-Demo-Small-DemoScene-Icons-Top-msg
-  - first:
-      213: 21300552
-    second: Icons-Demo-Small-DemoScene-Icons-Top-msg2
-  - first:
-      213: 21300554
-    second: Icons-Demo-Small-DemoScene-Icons-Top-phone
-  - first:
-      213: 21300556
-    second: Icons-Demo-Small-DemoScene-Icons-Top-power
-  - first:
-      213: 21300558
-    second: Icons-Demo-Small-DemoScene-Icons-Top-setting
-  - first:
-      213: 21300560
-    second: Icons-Demo-Small-DemoScene-Icons-Top-trophy
-  - first:
-      213: 21300562
-    second: Icons-Demo-Small-GemsPopup-Chest2
-  - first:
-      213: 21300564
-    second: Icons-Demo-Small-GemsPopup-Diamond-Outline5
-  - first:
-      213: 21300566
-    second: Icons-Demo-Small-GemsPopup-Diamond5
-  - first:
-      213: 21300568
-    second: Icons-Demo-Small-InfoPopup-Head
-  - first:
-      213: 21300570
-    second: Icons-Demo-Small-InfoPopup-Headphones
-  - first:
-      213: 21300572
-    second: Icons-Demo-Small-InventoryPopup-Ability
-  - first:
-      213: 21300574
-    second: Icons-Demo-Small-InventoryPopup-Aim
-  - first:
-      213: 21300576
-    second: Icons-Demo-Small-InventoryPopup-Amuletl
-  - first:
-      213: 21300578
-    second: Icons-Demo-Small-InventoryPopup-Apple
-  - first:
-      213: 21300580
-    second: Icons-Demo-Small-InventoryPopup-Arm-Muscles
-  - first:
-      213: 21300582
-    second: Icons-Demo-Small-InventoryPopup-Axe
-  - first:
-      213: 21300584
-    second: Icons-Demo-Small-InventoryPopup-Bodyl
-  - first:
-      213: 21300586
-    second: Icons-Demo-Small-InventoryPopup-Bolt
-  - first:
-      213: 21300588
-    second: Icons-Demo-Small-InventoryPopup-Bomb
-  - first:
-      213: 21300590
-    second: Icons-Demo-Small-InventoryPopup-Bunny
-  - first:
-      213: 21300592
-    second: Icons-Demo-Small-InventoryPopup-Canon
-  - first:
-      213: 21300594
-    second: Icons-Demo-Small-InventoryPopup-Coffee
-  - first:
-      213: 21300596
-    second: Icons-Demo-Small-InventoryPopup-Compass
-  - first:
-      213: 21300598
-    second: Icons-Demo-Small-InventoryPopup-Cross
-  - first:
-      213: 21300600
-    second: Icons-Demo-Small-InventoryPopup-Demon
-  - first:
-      213: 21300602
-    second: Icons-Demo-Small-InventoryPopup-Fight-Axe-Scythe
-  - first:
-      213: 21300604
-    second: Icons-Demo-Small-InventoryPopup-Fight
-  - first:
-      213: 21300606
-    second: Icons-Demo-Small-InventoryPopup-Fight_Axe
-  - first:
-      213: 21300608
-    second: Icons-Demo-Small-InventoryPopup-Fire
-  - first:
-      213: 21300610
-    second: Icons-Demo-Small-InventoryPopup-Freeze
-  - first:
-      213: 21300612
-    second: Icons-Demo-Small-InventoryPopup-Gangster
-  - first:
-      213: 21300614
-    second: Icons-Demo-Small-InventoryPopup-Gun
-  - first:
-      213: 21300616
-    second: Icons-Demo-Small-InventoryPopup-Hammer
-  - first:
-      213: 21300618
-    second: Icons-Demo-Small-InventoryPopup-Hourglass
-  - first:
-      213: 21300620
-    second: Icons-Demo-Small-InventoryPopup-Key
-  - first:
-      213: 21300622
-    second: Icons-Demo-Small-InventoryPopup-Knights
-  - first:
-      213: 21300624
-    second: Icons-Demo-Small-InventoryPopup-Leaves
-  - first:
-      213: 21300626
-    second: Icons-Demo-Small-InventoryPopup-Libra
-  - first:
-      213: 21300628
-    second: Icons-Demo-Small-InventoryPopup-Lifebelt
-  - first:
-      213: 21300630
-    second: Icons-Demo-Small-InventoryPopup-Magic-Stick
-  - first:
-      213: 21300632
-    second: Icons-Demo-Small-InventoryPopup-Map
-  - first:
-      213: 21300634
-    second: Icons-Demo-Small-InventoryPopup-Pinned-Notices
-  - first:
-      213: 21300636
-    second: Icons-Demo-Small-InventoryPopup-Potion-Half
-  - first:
-      213: 21300638
-    second: Icons-Demo-Small-InventoryPopup-Potion-Leaves
-  - first:
-      213: 21300640
-    second: Icons-Demo-Small-InventoryPopup-Potion-Poison
-  - first:
-      213: 21300642
-    second: Icons-Demo-Small-InventoryPopup-Rain
-  - first:
-      213: 21300644
-    second: Icons-Demo-Small-InventoryPopup-Rest
-  - first:
-      213: 21300646
-    second: Icons-Demo-Small-InventoryPopup-Rink-Magicl
-  - first:
-      213: 21300648
-    second: Icons-Demo-Small-InventoryPopup-Scythe
-  - first:
-      213: 21300650
-    second: Icons-Demo-Small-InventoryPopup-Scythe2
-  - first:
-      213: 21300652
-    second: Icons-Demo-Small-InventoryPopup-Share
-  - first:
-      213: 21300654
-    second: Icons-Demo-Small-InventoryPopup-Shield
-  - first:
-      213: 21300656
-    second: Icons-Demo-Small-InventoryPopup-Skull
-  - first:
-      213: 21300658
-    second: Icons-Demo-Small-InventoryPopup-Spaceship
-  - first:
-      213: 21300660
-    second: Icons-Demo-Small-InventoryPopup-Speed
-  - first:
-      213: 21300662
-    second: Icons-Demo-Small-InventoryPopup-Spell
-  - first:
-      213: 21300664
-    second: Icons-Demo-Small-InventoryPopup-Strength
-  - first:
-      213: 21300666
-    second: Icons-Demo-Small-InventoryPopup-Sun
-  - first:
-      213: 21300668
-    second: Icons-Demo-Small-InventoryPopup-Sword
-  - first:
-      213: 21300670
-    second: Icons-Demo-Small-InventoryPopup-Target
-  - first:
-      213: 21300672
-    second: Icons-Demo-Small-InventoryPopup-Timer
-  - first:
-      213: 21300674
-    second: Icons-Demo-Small-InventoryPopup-Ufo
-  - first:
-      213: 21300676
-    second: Icons-Demo-Small-InventoryPopup-Velocity
-  - first:
-      213: 21300678
-    second: Icons-Demo-Small-InventoryPopup-Viking
-  - first:
-      213: 21300680
-    second: Icons-Demo-Small-InventoryPopup-Water
-  - first:
-      213: 21300682
-    second: Icons-Demo-Small-InventoryPopup-Weapon-Axe
-  - first:
-      213: 21300684
-    second: Icons-Demo-Small-InventoryPopup-Wing
-  - first:
-      213: 21300686
-    second: Icons-Demo-Small-InventoryPopup-Witch-Hat
-  - first:
-      213: 21300688
-    second: Icons-Demo-Small-InventoryPopup-Zombi
-  - first:
-      213: 21300690
-    second: Icons-Demo-Small-ItemPopup-Menu
-  - first:
-      213: 21300692
-    second: Icons-Demo-Small-LeaderboardPopup-Angel
-  - first:
-      213: 21300694
-    second: Icons-Demo-Small-LeaderboardPopup-Arrow-Down
-  - first:
-      213: 21300696
-    second: Icons-Demo-Small-LeaderboardPopup-Arrow-Up
-  - first:
-      213: 21300698
-    second: Icons-Demo-Small-LeaderboardPopup-Badge1
-  - first:
-      213: 21300700
-    second: Icons-Demo-Small-LeaderboardPopup-Badge2
-  - first:
-      213: 21300702
-    second: Icons-Demo-Small-LeaderboardPopup-Badge3l
-  - first:
-      213: 21300704
-    second: Icons-Demo-Small-LeaderboardPopup-Challenge
-  - first:
-      213: 21300706
-    second: Icons-Demo-Small-LeaderboardPopup-Crown2
-  - first:
-      213: 21300708
-    second: Icons-Demo-Small-LeaderboardPopup-Cup-Circle
-  - first:
-      213: 21300710
-    second: Icons-Demo-Small-LeaderboardPopup-Speak
-  - first:
-      213: 21300712
-    second: Icons-Demo-Small-LeaderboardPopup-Time2
-  - first:
-      213: 21300714
-    second: Icons-Demo-Small-LeaderboardPopup-User-Outline
-  - first:
-      213: 21300716
-    second: Icons-Demo-Small-LevelPopup-Crownl
-  - first:
-      213: 21300718
-    second: Icons-Demo-Small-LevelPopup-Lock3
-  - first:
-      213: 21300720
-    second: Icons-Demo-Small-LevelPopup-Missions
-  - first:
-      213: 21300722
-    second: Icons-Demo-Small-LevelPopup-Multiplayer
-  - first:
-      213: 21300724
-    second: Icons-Demo-Small-LevelUpPopup-Unlock
-  - first:
-      213: 21300726
-    second: Icons-Demo-Small-LivesShopPopup-Diamond-Plus
-  - first:
-      213: 21300728
-    second: Icons-Demo-Small-LivesShopPopup-Diamond3
-  - first:
-      213: 21300730
-    second: Icons-Demo-Small-LoginRegisterPopup-Lock
-  - first:
-      213: 21300732
-    second: Icons-Demo-Small-LoginRegisterPopup-Mail3
-  - first:
-      213: 21300734
-    second: Icons-Demo-Small-LoginRegisterPopup-User-Plus
-  - first:
-      213: 21300736
-    second: Icons-Demo-Small-LoginRegisterPopup-User4
-  - first:
-      213: 21300738
-    second: Icons-Demo-Small-LosePopup-Grave
-  - first:
-      213: 21300740
-    second: Icons-Demo-Small-LosePopup-Level
-  - first:
-      213: 21300742
-    second: Icons-Demo-Small-LosePopup-Repeat
-  - first:
-      213: 21300744
-    second: Icons-Demo-Small-LosePopup-Time
-  - first:
-      213: 21300746
-    second: Icons-Demo-Small-LosePopup-WitchHat2
-  - first:
-      213: 21300748
-    second: Icons-Demo-Small-Messages-Popup-New1
-  - first:
-      213: 21300750
-    second: Icons-Demo-Small-Messages-Popup-New2
-  - first:
-      213: 21300752
-    second: Icons-Demo-Small-MissionsPopup-Coin
-  - first:
-      213: 21300754
-    second: Icons-Demo-Small-MissionsPopup-Diamond2
-  - first:
-      213: 21300756
-    second: Icons-Demo-Small-MissionsPopup-Heart-Outline
-  - first:
-      213: 21300758
-    second: Icons-Demo-Small-ProfilePopup-Gender-Female
-  - first:
-      213: 21300760
-    second: Icons-Demo-Small-ProfilePopup-Gender-Male
-  - first:
-      213: 21300762
-    second: Icons-Demo-Small-WinPopup-Magic-Stick
-  - first:
-      213: 21300764
-    second: Icons-Demo-Small-WinPopup-Next
-  - first:
-      213: 21300766
-    second: Icons-Demo-Small-WinPopup-Skull
-  - first:
-      213: 21300768
-    second: Progress-Bars-Rounded-Corner-Bar-Corner
-  - first:
-      213: 21300770
-    second: Radiobuttons-Radiobuttons_PNG-Radiobutton1
-  - first:
-      213: 21300772
-    second: Radiobuttons-Radiobuttons_PNG-Radiobutton2
-  - first:
-      213: 21300774
-    second: Ability
-  - first:
-      213: 21300776
-    second: Add-Userl
-  - first:
-      213: 21300778
-    second: Aim
-  - first:
-      213: 21300780
-    second: Amuletl
-  - first:
-      213: 21300782
-    second: Angel
-  - first:
-      213: 21300784
-    second: Apple
-  - first:
-      213: 21300786
-    second: Arm-Muscles
-  - first:
-      213: 21300788
-    second: Arrow-Down
-  - first:
-      213: 21300790
-    second: Arrow-Up
-  - first:
-      213: 21300792
-    second: Axe
-  - first:
-      213: 21300794
-    second: Background-Circle
-  - first:
-      213: 21300796
-    second: Background
-  - first:
-      213: 21300798
-    second: Background2
-  - first:
-      213: 21300800
-    second: Background3
-  - first:
-      213: 21300802
-    second: Badge1
-  - first:
-      213: 21300804
-    second: Badge2
-  - first:
-      213: 21300806
-    second: Badge3l
-  - first:
-      213: 21300808
-    second: Bar-Corner
-  - first:
-      213: 21300810
-    second: Bodyl
-  - first:
-      213: 21300812
-    second: Bolt
-  - first:
-      213: 21300814
-    second: Bomb
-  - first:
-      213: 21300816
-    second: Bomb3
-  - first:
-      213: 21300818
-    second: Border
-  - first:
-      213: 21300820
-    second: Border2
-  - first:
-      213: 21300822
-    second: Border3
-  - first:
-      213: 21300824
-    second: Box-Small
-  - first:
-      213: 21300826
-    second: boy1
-  - first:
-      213: 21300828
-    second: Boy_1
-  - first:
-      213: 21300830
-    second: Boy_2
-  - first:
-      213: 21300832
-    second: Boy_3
-  - first:
-      213: 21300834
-    second: Boy_4
-  - first:
-      213: 21300836
-    second: Bunny
-  - first:
-      213: 21300838
-    second: Button-R
-  - first:
-      213: 21300840
-    second: Button-RO
-  - first:
-      213: 21300842
-    second: buy
-  - first:
-      213: 21300844
-    second: Canon
-  - first:
-      213: 21300846
-    second: Challenge
-  - first:
-      213: 21300848
-    second: Chat
-  - first:
-      213: 21300850
-    second: Chest2
-  - first:
-      213: 21300852
-    second: Chest3
-  - first:
-      213: 21300854
-    second: Circle-Outline
-  - first:
-      213: 21300856
-    second: Circle-Small
-  - first:
-      213: 21300858
-    second: Clip
-  - first:
-      213: 21300860
-    second: Clock
-  - first:
-      213: 21300862
-    second: Close
-  - first:
-      213: 21300864
-    second: Coffee
-  - first:
-      213: 21300866
-    second: Coin
-  - first:
-      213: 21300868
-    second: Coin3
-  - first:
-      213: 21300870
-    second: Coins-Sack
-  - first:
-      213: 21300872
-    second: Coinsx1
-  - first:
-      213: 21300874
-    second: Coinsx1Big
-  - first:
-      213: 21300876
-    second: Coinsx3
-  - first:
-      213: 21300878
-    second: Compass
-  - first:
-      213: 21300880
-    second: contacts
-  - first:
-      213: 21300882
-    second: Cross
-  - first:
-      213: 21300884
-    second: Cross2
-  - first:
-      213: 21300886
-    second: Crown2
-  - first:
-      213: 21300888
-    second: Crownl
-  - first:
-      213: 21300890
-    second: Cup-Circle
-  - first:
-      213: 21300892
-    second: Cup
-  - first:
-      213: 21300894
-    second: data
-  - first:
-      213: 21300896
-    second: Demon
-  - first:
-      213: 21300898
-    second: Demonl
-  - first:
-      213: 21300900
-    second: Diamond-Outline5
-  - first:
-      213: 21300902
-    second: Diamond-Plus
-  - first:
-      213: 21300904
-    second: diamond
-  - first:
-      213: 21300906
-    second: Diamond2
-  - first:
-      213: 21300908
-    second: Diamond3
-  - first:
-      213: 21300910
-    second: Diamond5
-  - first:
-      213: 21300912
-    second: Dot-Small
-  - first:
-      213: 21300914
-    second: Dot
-  - first:
-      213: 21300916
-    second: Fade-Gradient-Top
-  - first:
-      213: 21300918
-    second: Fear-Smiley_Small
-  - first:
-      213: 21300920
-    second: Fight-Axe-Scythe
-  - first:
-      213: 21300922
-    second: Fight
-  - first:
-      213: 21300924
-    second: Fight_Axe
-  - first:
-      213: 21300926
-    second: Fire
-  - first:
-      213: 21300928
-    second: Freeze
-  - first:
-      213: 21300930
-    second: Gangster
-  - first:
-      213: 21300932
-    second: Gender-Female
-  - first:
-      213: 21300934
-    second: Gender-Male
-  - first:
-      213: 21300936
-    second: Gift
-  - first:
-      213: 21300938
-    second: girl1
-  - first:
-      213: 21300940
-    second: Girl_1
-  - first:
-      213: 21300942
-    second: Girl_2
-  - first:
-      213: 21300944
-    second: Girl_3
-  - first:
-      213: 21300946
-    second: Girl_4
-  - first:
-      213: 21300948
-    second: Girl_5
-  - first:
-      213: 21300950
-    second: Grave
-  - first:
-      213: 21300952
-    second: gril2
-  - first:
-      213: 21300954
-    second: Gun
-  - first:
-      213: 21300956
-    second: Gun2
-  - first:
-      213: 21300958
-    second: Hammer
-  - first:
-      213: 21300960
-    second: Head
-  - first:
-      213: 21300962
-    second: Headphones
-  - first:
-      213: 21300964
-    second: Heart-Outline
-  - first:
-      213: 21300966
-    second: heart
-  - first:
-      213: 21300968
-    second: Hourglass
-  - first:
-      213: 21300970
-    second: Info-Icon-Small
-  - first:
-      213: 21300972
-    second: Key
-  - first:
-      213: 21300974
-    second: Knight2
-  - first:
-      213: 21300976
-    second: Knights
-  - first:
-      213: 21300978
-    second: Leaves
-  - first:
-      213: 21300980
-    second: left
-  - first:
-      213: 21300982
-    second: Lens
-  - first:
-      213: 21300984
-    second: Level
-  - first:
-      213: 21300986
-    second: Libra
-  - first:
-      213: 21300988
-    second: Lifebelt
-  - first:
-      213: 21300990
-    second: Line
-  - first:
-      213: 21300992
-    second: list
-  - first:
-      213: 21300994
-    second: Lock
-  - first:
-      213: 21300996
-    second: Lock3
-  - first:
-      213: 21300998
-    second: Magic-Stick
-  - first:
-      213: 21301000
-    second: Magic-Stick2
-  - first:
-      213: 21301002
-    second: mail
-  - first:
-      213: 21301004
-    second: Mail3
-  - first:
-      213: 21301006
-    second: Mail5
-  - first:
-      213: 21301008
-    second: Map
-  - first:
-      213: 21301010
-    second: Menu
-  - first:
-      213: 21301012
-    second: Menu2
-  - first:
-      213: 21301014
-    second: Missions
-  - first:
-      213: 21301016
-    second: msg
-  - first:
-      213: 21301018
-    second: msg2
-  - first:
-      213: 21301020
-    second: Multiplayer
-  - first:
-      213: 21301022
-    second: Multiuser-Icon-Small
-  - first:
-      213: 21301024
-    second: New1
-  - first:
-      213: 21301026
-    second: New2
-  - first:
-      213: 21301028
-    second: Next
-  - first:
-      213: 21301030
-    second: phone
-  - first:
-      213: 21301032
-    second: Pinned-Notices
-  - first:
-      213: 21301034
-    second: Plus
-  - first:
-      213: 21301036
-    second: Potion-Half
-  - first:
-      213: 21301038
-    second: Potion-Leaves
-  - first:
-      213: 21301040
-    second: Potion-Poison
-  - first:
-      213: 21301042
-    second: Potion3
-  - first:
-      213: 21301044
-    second: power
-  - first:
-      213: 21301046
-    second: Radiobutton1
-  - first:
-      213: 21301048
-    second: Radiobutton2
-  - first:
-      213: 21301050
-    second: Rain
-  - first:
-      213: 21301052
-    second: Repeat
-  - first:
-      213: 21301054
-    second: Rest
-  - first:
-      213: 21301056
-    second: Rink-Magicl
-  - first:
-      213: 21301058
-    second: Scythe
-  - first:
-      213: 21301060
-    second: Scythe2
-  - first:
-      213: 21301062
-    second: setting
-  - first:
-      213: 21301064
-    second: Share
-  - first:
-      213: 21301066
-    second: Shield
-  - first:
-      213: 21301068
-    second: Skull
-  - first:
-      213: 21301070
-    second: Skull2
-  - first:
-      213: 21301072
-    second: Skull4
-  - first:
-      213: 21301074
-    second: Smiley
-  - first:
-      213: 21301076
-    second: Spaceship
-  - first:
-      213: 21301078
-    second: Speak
-  - first:
-      213: 21301080
-    second: Speed
-  - first:
-      213: 21301082
-    second: Spell
-  - first:
-      213: 21301084
-    second: SquareBackground
-  - first:
-      213: 21301086
-    second: SquareTopBar
-  - first:
-      213: 21301088
-    second: Star
-  - first:
-      213: 21301090
-    second: Stats-Icon-Small
-  - first:
-      213: 21301092
-    second: Strength
-  - first:
-      213: 21301094
-    second: Sun
-  - first:
-      213: 21301096
-    second: Sword
-  - first:
-      213: 21301098
-    second: Target
-  - first:
-      213: 21301100
-    second: Text-Deal
-  - first:
-      213: 21301102
-    second: Text-New
-  - first:
-      213: 21301104
-    second: Text-Sale
-  - first:
-      213: 21301106
-    second: Time
-  - first:
-      213: 21301108
-    second: Time2
-  - first:
-      213: 21301110
-    second: Timer
-  - first:
-      213: 21301112
-    second: Tooltip-Arrow
-  - first:
-      213: 21301114
-    second: Trash
-  - first:
-      213: 21301116
-    second: trophy
-  - first:
-      213: 21301118
-    second: Ufo
-  - first:
-      213: 21301120
-    second: Unlock
-  - first:
-      213: 21301122
-    second: User-Deletel
-  - first:
-      213: 21301124
-    second: User-Icon-Small
-  - first:
-      213: 21301126
-    second: User-Outline
-  - first:
-      213: 21301128
-    second: User-Plus
-  - first:
-      213: 21301130
-    second: User4
-  - first:
-      213: 21301132
-    second: Velocity
-  - first:
-      213: 21301134
-    second: Video-Icon-Small
-  - first:
-      213: 21301136
-    second: Viking
-  - first:
-      213: 21301138
-    second: Water
-  - first:
-      213: 21301140
-    second: Weapon-Axe
-  - first:
-      213: 21301142
-    second: Wing
-  - first:
-      213: 21301144
-    second: Witch-Hat
-  - first:
-      213: 21301146
-    second: WitchHat2
-  - first:
-      213: 21301148
-    second: Writing
-  - first:
-      213: 21301150
-    second: Zombi
-  - first:
-      213: 21301152
-    second: Multiuser
-  - first:
-      213: 21301154
-    second: User
+  fileIDToRecycleName:
+    21300000: Ability
+    21300002: Add-Userl
+    21300004: Aim
+    21300006: Amuletl
+    21300008: Angel
+    21300010: Apple
+    21300012: Arm-Muscles
+    21300014: Arrow-Down
+    21300016: Arrow-Up
+    21300018: Axe
+    21300020: Background-Circle
+    21300022: Background
+    21300024: Background2
+    21300026: Background3
+    21300028: Badge1
+    21300030: Badge2
+    21300032: Badge3l
+    21300034: Bar-Corner
+    21300036: Bodyl
+    21300038: Bolt
+    21300040: Bomb3
+    21300042: Border
+    21300044: Border2
+    21300046: Border3
+    21300048: Box-Small
+    21300050: boy1
+    21300052: Boy_1
+    21300054: Boy_2
+    21300056: Boy_3
+    21300058: Boy_4
+    21300060: Bunny
+    21300062: Button-R
+    21300064: Button-RO
+    21300066: buy
+    21300068: Canon
+    21300070: Challenge
+    21300072: Chat
+    21300074: Chest2
+    21300076: Chest3
+    21300078: Circle-Outline
+    21300080: Circle-Small
+    21300082: Clip
+    21300084: Clock
+    21300086: Close
+    21300088: Coffee
+    21300090: Coin3
+    21300092: Coins-Sack
+    21300094: Coinsx1
+    21300096: Coinsx1Big
+    21300098: Coinsx3
+    21300100: Compass
+    21300102: contacts
+    21300104: Cross
+    21300106: Crown2
+    21300108: Cup-Circle
+    21300110: Cup
+    21300112: data
+    21300114: Demon
+    21300116: Diamond-Outline5
+    21300118: Diamond-Plus
+    21300120: Diamond2
+    21300122: Diamond5
+    21300124: Dot
+    21300126: Fade-Gradient-Top
+    21300128: Fear-Smiley_Small
+    21300130: Fight-Axe-Scythe
+    21300132: Fight
+    21300134: Fire
+    21300136: Freeze
+    21300138: Gangster
+    21300140: Gender-Female
+    21300142: Gender-Male
+    21300144: Gift
+    21300146: girl1
+    21300148: Girl_1
+    21300150: Girl_2
+    21300152: Girl_3
+    21300154: Girl_4
+    21300156: Girl_5
+    21300158: Grave
+    21300160: gril2
+    21300162: Gun2
+    21300164: Hammer
+    21300166: Head
+    21300168: Headphones
+    21300170: Heart-Outline
+    21300172: heart
+    21300174: Hourglass
+    21300176: Info-Icon-Small
+    21300178: Key
+    21300180: Knights
+    21300182: Leaves
+    21300184: left
+    21300186: Lens
+    21300188: Libra
+    21300190: Lifebelt
+    21300192: Line
+    21300194: list
+    21300196: Lock3
+    21300198: Magic-Stick
+    21300200: Magic-Stick2
+    21300202: mail
+    21300204: Mail5
+    21300206: Map
+    21300208: Menu
+    21300210: Menu2
+    21300212: Missions
+    21300214: msg
+    21300216: msg2
+    21300218: Multiuser
+    21300220: New2
+    21300222: Next
+    21300224: phone
+    21300226: Pinned-Notices
+    21300228: Plus
+    21300230: Potion-Half
+    21300232: Potion-Leaves
+    21300234: Potion-Poison
+    21300236: Potion3
+    21300238: power
+    21300240: Radiobutton1
+    21300242: Radiobutton2
+    21300244: Rain
+    21300246: Repeat
+    21300248: Rest
+    21300250: Rink-Magicl
+    21300252: Scythe
+    21300254: Scythe2
+    21300256: setting
+    21300258: Share
+    21300260: Shield
+    21300262: Skull
+    21300264: Skull4
+    21300266: Smiley
+    21300268: Spaceship
+    21300270: Speak
+    21300272: Speed
+    21300274: Spell
+    21300276: SquareBackground
+    21300278: SquareTopBar
+    21300280: Star
+    21300282: Stats-Icon-Small
+    21300284: Strength
+    21300286: Sun
+    21300288: Sword
+    21300290: Target
+    21300292: Text-Deal
+    21300294: Text-New
+    21300296: Text-Sale
+    21300298: Time
+    21300300: Time2
+    21300302: Timer
+    21300304: Tooltip-Arrow
+    21300306: Trash
+    21300308: trophy
+    21300310: Ufo
+    21300312: Unlock
+    21300314: User-Deletel
+    21300316: User-Outline
+    21300318: User-Plus
+    21300320: User
+    21300322: Velocity
+    21300324: Video-Icon-Small
+    21300326: Viking
+    21300328: Water
+    21300330: Weapon-Axe
+    21300332: Wing
+    21300334: Witch-Hat
+    21300336: Writing
+    21300338: Zombi
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -1792,7 +228,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -1803,7 +239,6 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1823,7 +258,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 8b0f50e1bd09499478f3fb5f317071d5
-      internalID: 21300774
       vertices: []
       indices: 
       edges: []
@@ -1844,7 +278,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 0ef808141e6b52e488d908803af84aa2
-      internalID: 21300776
       vertices: []
       indices: 
       edges: []
@@ -1865,7 +298,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 602567e20e59ae1468c82485f187e8a4
-      internalID: 21300778
       vertices: []
       indices: 
       edges: []
@@ -1886,7 +318,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: c8d85bf9f7027fc498812746698bbe16
-      internalID: 21300780
       vertices: []
       indices: 
       edges: []
@@ -1907,7 +338,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 79e6eda77d55b0d429de5c2996826e1d
-      internalID: 21300782
       vertices: []
       indices: 
       edges: []
@@ -1928,7 +358,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e84c8a501c28297488b265a5da3bd13d
-      internalID: 21300784
       vertices: []
       indices: 
       edges: []
@@ -1949,7 +378,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 3bd41cc41772c9745a959fed8b970c6a
-      internalID: 21300786
       vertices: []
       indices: 
       edges: []
@@ -1970,7 +398,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e73e1674e4a78fc4ca73d9f1a6666b27
-      internalID: 21300788
       vertices: []
       indices: 
       edges: []
@@ -1991,7 +418,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 90b0a7bae33602f41915f07bafd21ecb
-      internalID: 21300790
       vertices: []
       indices: 
       edges: []
@@ -2012,7 +438,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: b0ad121e9ae9cd44ea51be2967204f04
-      internalID: 21300792
       vertices: []
       indices: 
       edges: []
@@ -2033,7 +458,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 187bc92628cff7f4bbd0e813f2ba42ba
-      internalID: 21300794
       vertices: []
       indices: 
       edges: []
@@ -2054,7 +478,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 9919209d3b7811642889cba33da180c9
-      internalID: 21300796
       vertices: []
       indices: 
       edges: []
@@ -2075,7 +498,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: b089cf96658069a4b9597152e97cac09
-      internalID: 21300798
       vertices: []
       indices: 
       edges: []
@@ -2096,7 +518,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 11c3566203e9a1b44bb45c60b10cf434
-      internalID: 21300800
       vertices: []
       indices: 
       edges: []
@@ -2117,7 +538,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 249f3a011fc38f843911f4e103bc0160
-      internalID: 21300802
       vertices: []
       indices: 
       edges: []
@@ -2138,7 +558,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 480f2aa86f7194943b324f8a6661a3e0
-      internalID: 21300804
       vertices: []
       indices: 
       edges: []
@@ -2159,7 +578,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2b9dfa8ed1f54414c99e37d11b98140f
-      internalID: 21300806
       vertices: []
       indices: 
       edges: []
@@ -2180,7 +598,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5f34b92fa5b74d545b566b2f17514005
-      internalID: 21300808
       vertices: []
       indices: 
       edges: []
@@ -2201,7 +618,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e8644b9976b30cd4d826223da51e7b6e
-      internalID: 21300810
       vertices: []
       indices: 
       edges: []
@@ -2222,7 +638,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 7c8be2bb6c3a02c4cbfe5832a49b827f
-      internalID: 21300812
       vertices: []
       indices: 
       edges: []
@@ -2243,7 +658,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 7badfcfc7c18db4498df72ab61c93645
-      internalID: 21300816
       vertices: []
       indices: 
       edges: []
@@ -2264,7 +678,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: ce54e4a7dcbde6444a27a5381ad32650
-      internalID: 21300818
       vertices: []
       indices: 
       edges: []
@@ -2285,7 +698,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 09e1f6d6874b06843b3d6d470f38a267
-      internalID: 21300820
       vertices: []
       indices: 
       edges: []
@@ -2306,7 +718,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 3839376254f76e34fb3a63c346fb033c
-      internalID: 21300822
       vertices: []
       indices: 
       edges: []
@@ -2327,7 +738,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 0b78fd74a017624409ee4cddcc131223
-      internalID: 21300824
       vertices: []
       indices: 
       edges: []
@@ -2348,7 +758,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f028e00cc92bed647b5cb24ec14ea37e
-      internalID: 21300826
       vertices: []
       indices: 
       edges: []
@@ -2369,7 +778,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5c7a914ec424a484b85aa3a8754d9e23
-      internalID: 21300828
       vertices: []
       indices: 
       edges: []
@@ -2390,7 +798,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 84ea7ee7b639804469c11889fef7e672
-      internalID: 21300830
       vertices: []
       indices: 
       edges: []
@@ -2411,7 +818,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: eb9dc0e1d1f67da4fa0bd4d52de72b97
-      internalID: 21300832
       vertices: []
       indices: 
       edges: []
@@ -2432,7 +838,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 92a25c804c803774088b83d8f9e5527e
-      internalID: 21300834
       vertices: []
       indices: 
       edges: []
@@ -2453,7 +858,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: be9ae1cdd86c07e4ca35476ccb24d953
-      internalID: 21300836
       vertices: []
       indices: 
       edges: []
@@ -2474,7 +878,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 361a5b4a9413a474db240cf04800f708
-      internalID: 21300838
       vertices: []
       indices: 
       edges: []
@@ -2495,7 +898,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 1099e2279bc02bf458819306269c37fc
-      internalID: 21300840
       vertices: []
       indices: 
       edges: []
@@ -2516,7 +918,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: a06c58dc2d7306d40a5c44fa636fd1d4
-      internalID: 21300842
       vertices: []
       indices: 
       edges: []
@@ -2537,7 +938,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: a7cec00c78ccc884aa809cf1742ba2c8
-      internalID: 21300844
       vertices: []
       indices: 
       edges: []
@@ -2558,7 +958,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: a523af801b33a4c4abfd8ca2a92538a6
-      internalID: 21300846
       vertices: []
       indices: 
       edges: []
@@ -2579,7 +978,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f2f1c6eb126938a4eaac9a545ade8592
-      internalID: 21300848
       vertices: []
       indices: 
       edges: []
@@ -2600,7 +998,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d140a33cd61fc0841a5585d54de995e0
-      internalID: 21300850
       vertices: []
       indices: 
       edges: []
@@ -2621,7 +1018,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 833bf5f66ba2f5d4aab98f139c30d658
-      internalID: 21300852
       vertices: []
       indices: 
       edges: []
@@ -2642,7 +1038,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 853b6ded8b16c06468732b5e0c0db1a9
-      internalID: 21300854
       vertices: []
       indices: 
       edges: []
@@ -2663,7 +1058,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 350d3a63c4cca41459005565d89f34d3
-      internalID: 21300856
       vertices: []
       indices: 
       edges: []
@@ -2684,7 +1078,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 4c97475b46868004a92737d628528aa5
-      internalID: 21300858
       vertices: []
       indices: 
       edges: []
@@ -2705,7 +1098,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: ccd5db7c4b393de4da5b51a966c6eafe
-      internalID: 21300860
       vertices: []
       indices: 
       edges: []
@@ -2726,7 +1118,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 96e2c1c28bbec804d80e41dcf266b51a
-      internalID: 21300862
       vertices: []
       indices: 
       edges: []
@@ -2747,7 +1138,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 1035f2f67d7d9f14f85849d46201c88e
-      internalID: 21300864
       vertices: []
       indices: 
       edges: []
@@ -2768,7 +1158,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2fa2c54d0b4259d439416fc1e5be294e
-      internalID: 21300868
       vertices: []
       indices: 
       edges: []
@@ -2789,7 +1178,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 3eb6a6a341383ac419d8de978d1072b9
-      internalID: 21300870
       vertices: []
       indices: 
       edges: []
@@ -2810,7 +1198,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 475d187662c4b90458cb147fb6e547ce
-      internalID: 21300872
       vertices: []
       indices: 
       edges: []
@@ -2831,7 +1218,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d79962c9405ee5d4cac1f7800c4cfa0f
-      internalID: 21300874
       vertices: []
       indices: 
       edges: []
@@ -2852,7 +1238,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5ad4d54c0f92e904e96370de87120713
-      internalID: 21300876
       vertices: []
       indices: 
       edges: []
@@ -2873,7 +1258,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 4be66958e1e64fd4aacc353667c723f6
-      internalID: 21300878
       vertices: []
       indices: 
       edges: []
@@ -2894,7 +1278,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 9c9416c61814a434bba20619e081e281
-      internalID: 21300880
       vertices: []
       indices: 
       edges: []
@@ -2915,7 +1298,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e99383f735d2a30488b1f56d5907944b
-      internalID: 21300882
       vertices: []
       indices: 
       edges: []
@@ -2936,7 +1318,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 806cf17efec914440a5a2f34abd6ec2a
-      internalID: 21300886
       vertices: []
       indices: 
       edges: []
@@ -2957,7 +1338,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2cd6be640c05ef14498b23eaea53208e
-      internalID: 21300890
       vertices: []
       indices: 
       edges: []
@@ -2978,7 +1358,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 7d42ddadad0ef4645a58d34e8e6c6316
-      internalID: 21300892
       vertices: []
       indices: 
       edges: []
@@ -2999,7 +1378,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f2f117dcb0e04f94d94eee1fb07c5229
-      internalID: 21300894
       vertices: []
       indices: 
       edges: []
@@ -3020,7 +1398,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 402f57937b3b2e141bf55f4549018d90
-      internalID: 21300896
       vertices: []
       indices: 
       edges: []
@@ -3041,7 +1418,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: ff38930d71491234ea6139c802294d6b
-      internalID: 21300900
       vertices: []
       indices: 
       edges: []
@@ -3062,7 +1438,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 26441c617b17132459a2345971f85ed3
-      internalID: 21300902
       vertices: []
       indices: 
       edges: []
@@ -3083,7 +1458,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 026588ee5ae2caa438b0a754187b7461
-      internalID: 21300906
       vertices: []
       indices: 
       edges: []
@@ -3104,7 +1478,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 4402cbd56164ec04eac241bbe0bf3205
-      internalID: 21300910
       vertices: []
       indices: 
       edges: []
@@ -3125,7 +1498,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 28c9e35b154b4064a9445b55b2d76289
-      internalID: 21300914
       vertices: []
       indices: 
       edges: []
@@ -3146,7 +1518,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: a57b7b9fd31bf4c4da5d7cf47c069952
-      internalID: 21300916
       vertices: []
       indices: 
       edges: []
@@ -3167,7 +1538,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5a43a19eea93b144fb4953c5e5bc05d5
-      internalID: 21300918
       vertices: []
       indices: 
       edges: []
@@ -3188,7 +1558,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 4ae2cbf1477e3e94cbb83cab486d6501
-      internalID: 21300920
       vertices: []
       indices: 
       edges: []
@@ -3209,7 +1578,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: dbacad7624fd71f41ba01743d7e8cd5a
-      internalID: 21300922
       vertices: []
       indices: 
       edges: []
@@ -3230,7 +1598,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d26a9552b399eaf49bc170a373ab8586
-      internalID: 21300926
       vertices: []
       indices: 
       edges: []
@@ -3251,7 +1618,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: ffe70c2e8246da34ba8872253d99eb43
-      internalID: 21300928
       vertices: []
       indices: 
       edges: []
@@ -3272,7 +1638,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: bbfcdf1f7bca1aa439960215733cfccb
-      internalID: 21300930
       vertices: []
       indices: 
       edges: []
@@ -3293,7 +1658,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: c7aa9a6b12fbde6439626647111fc1f0
-      internalID: 21300932
       vertices: []
       indices: 
       edges: []
@@ -3314,7 +1678,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 6ba3a4c9e0d5438478b39bc715b7202b
-      internalID: 21300934
       vertices: []
       indices: 
       edges: []
@@ -3335,7 +1698,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f33fd7a7c964e534ea764afae6157671
-      internalID: 21300936
       vertices: []
       indices: 
       edges: []
@@ -3356,7 +1718,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 7820176e1a3f2df44a396da688823551
-      internalID: 21300938
       vertices: []
       indices: 
       edges: []
@@ -3377,7 +1738,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: c7adeac6a4c4c3348b48f327e411f35e
-      internalID: 21300940
       vertices: []
       indices: 
       edges: []
@@ -3398,7 +1758,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 9b8a8926fdaa7e84e8267fbabd221779
-      internalID: 21300942
       vertices: []
       indices: 
       edges: []
@@ -3419,7 +1778,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f058702076b89764ab734df3509449ba
-      internalID: 21300944
       vertices: []
       indices: 
       edges: []
@@ -3440,7 +1798,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 0aa0496e1a9836b4c8f6a163414e4459
-      internalID: 21300946
       vertices: []
       indices: 
       edges: []
@@ -3461,7 +1818,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f6b59d2a76eda35459002f547680c2d8
-      internalID: 21300948
       vertices: []
       indices: 
       edges: []
@@ -3482,7 +1838,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: bce17ff0127fe4a49922cd2529441724
-      internalID: 21300950
       vertices: []
       indices: 
       edges: []
@@ -3503,7 +1858,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 97e8714c864a04b4cbfbf6b12ec38ce9
-      internalID: 21300952
       vertices: []
       indices: 
       edges: []
@@ -3524,7 +1878,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 561e9b4ec3b5e8845bb4736afe45a272
-      internalID: 21300956
       vertices: []
       indices: 
       edges: []
@@ -3545,7 +1898,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: de3a5b56eb5a569448920addf429eeb3
-      internalID: 21300958
       vertices: []
       indices: 
       edges: []
@@ -3566,7 +1918,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2291f41f930cd024e8ff5b5713f4bd5d
-      internalID: 21300960
       vertices: []
       indices: 
       edges: []
@@ -3587,7 +1938,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: bc015d7ca2aaa0840b2025544ab68692
-      internalID: 21300962
       vertices: []
       indices: 
       edges: []
@@ -3608,7 +1958,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: dae935cf670615f49a07bda2a38c0856
-      internalID: 21300964
       vertices: []
       indices: 
       edges: []
@@ -3629,7 +1978,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: af242dcea117dfa43a5d76c681394516
-      internalID: 21300966
       vertices: []
       indices: 
       edges: []
@@ -3650,7 +1998,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: cd690287c48755f4c9fba94a7c90fc5e
-      internalID: 21300968
       vertices: []
       indices: 
       edges: []
@@ -3671,7 +2018,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2dcdd0a7781bfad4ba18a4b446861421
-      internalID: 21300970
       vertices: []
       indices: 
       edges: []
@@ -3692,7 +2038,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 4becabc56e1bd4e4b803ab7ea7ee8b94
-      internalID: 21300972
       vertices: []
       indices: 
       edges: []
@@ -3713,7 +2058,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: ac030bb0c0a978d428119cd2c66bf5da
-      internalID: 21300976
       vertices: []
       indices: 
       edges: []
@@ -3734,7 +2078,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 52fda2c2d97e90946aa4e76a0d7d2153
-      internalID: 21300978
       vertices: []
       indices: 
       edges: []
@@ -3755,7 +2098,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e76031b2ca1609e479771d5742cb424b
-      internalID: 21300980
       vertices: []
       indices: 
       edges: []
@@ -3776,7 +2118,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 72ae90ca8f9f0a8438384cba9c6f01dd
-      internalID: 21300982
       vertices: []
       indices: 
       edges: []
@@ -3797,7 +2138,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 364e4b9b51f7c3a44833605cb04aa78f
-      internalID: 21300986
       vertices: []
       indices: 
       edges: []
@@ -3818,7 +2158,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5f96e1a19749ca3409541c5629c79a12
-      internalID: 21300988
       vertices: []
       indices: 
       edges: []
@@ -3839,7 +2178,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 582dcebe515259f4095f24debffc6257
-      internalID: 21300990
       vertices: []
       indices: 
       edges: []
@@ -3860,7 +2198,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 3fab0421946d6a34987d227cf187b379
-      internalID: 21300992
       vertices: []
       indices: 
       edges: []
@@ -3881,7 +2218,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5c822111b58df414584c0c0e1f42be35
-      internalID: 21300996
       vertices: []
       indices: 
       edges: []
@@ -3902,7 +2238,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d4b472b0ba466d7439c3080306811b68
-      internalID: 21300998
       vertices: []
       indices: 
       edges: []
@@ -3923,7 +2258,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 423210719fcf9de4f9fde748c4a9be50
-      internalID: 21301000
       vertices: []
       indices: 
       edges: []
@@ -3944,7 +2278,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f22d6432114e4df4e80ebaf6d821c2f0
-      internalID: 21301002
       vertices: []
       indices: 
       edges: []
@@ -3965,7 +2298,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 65e1b33ddba47a146812849bf293c445
-      internalID: 21301006
       vertices: []
       indices: 
       edges: []
@@ -3986,7 +2318,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5e6baa856a8f9804898c7e9f96c3f070
-      internalID: 21301008
       vertices: []
       indices: 
       edges: []
@@ -4007,7 +2338,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 18d2bec70a0fe5947ae91a6d0ef35c07
-      internalID: 21301010
       vertices: []
       indices: 
       edges: []
@@ -4028,7 +2358,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d8f0889376f6ad64d81784a65d7f0cc1
-      internalID: 21301012
       vertices: []
       indices: 
       edges: []
@@ -4049,7 +2378,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 114a6401b1997e34ea387c4068935bc2
-      internalID: 21301014
       vertices: []
       indices: 
       edges: []
@@ -4070,7 +2398,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: ca5c8ce72cb91b547b9bfa605a4b43ca
-      internalID: 21301016
       vertices: []
       indices: 
       edges: []
@@ -4091,7 +2418,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 4a287b996b43d2e44b8f251ead7dd463
-      internalID: 21301018
       vertices: []
       indices: 
       edges: []
@@ -4112,7 +2438,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e2a92817240d9b343acad523c4052112
-      internalID: 21301152
       vertices: []
       indices: 
       edges: []
@@ -4133,7 +2458,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2b508363a411e944c89cb0cb521fd066
-      internalID: 21301026
       vertices: []
       indices: 
       edges: []
@@ -4154,7 +2478,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 84fa069cd9408be4d9659b0d46a31516
-      internalID: 21301028
       vertices: []
       indices: 
       edges: []
@@ -4175,7 +2498,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: a04f5924b63820b40ba119ee77052a39
-      internalID: 21301030
       vertices: []
       indices: 
       edges: []
@@ -4196,7 +2518,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 18b000b47fad8ae40910ac57fe4ba2f3
-      internalID: 21301032
       vertices: []
       indices: 
       edges: []
@@ -4217,7 +2538,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d4bd8fd66fc6c7342a61e016c91eb7a6
-      internalID: 21301034
       vertices: []
       indices: 
       edges: []
@@ -4238,7 +2558,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 23ab2f909afa07445a3fb6c6705f3b0f
-      internalID: 21301036
       vertices: []
       indices: 
       edges: []
@@ -4259,7 +2578,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 94b2c390045ebf041b730d9d05944202
-      internalID: 21301038
       vertices: []
       indices: 
       edges: []
@@ -4280,7 +2598,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: c870bf7917d45744484d6d08c64b49e6
-      internalID: 21301040
       vertices: []
       indices: 
       edges: []
@@ -4301,7 +2618,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 648b43182ebf0964099cc4c5711fbdf0
-      internalID: 21301042
       vertices: []
       indices: 
       edges: []
@@ -4322,7 +2638,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2ea2294be403ef24185b1de0eee01abd
-      internalID: 21301044
       vertices: []
       indices: 
       edges: []
@@ -4343,7 +2658,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 1f3345034091c444b93c1a35e224ff90
-      internalID: 21301046
       vertices: []
       indices: 
       edges: []
@@ -4364,7 +2678,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 1ee081bea414c734bae6ebdd508c0d0e
-      internalID: 21301048
       vertices: []
       indices: 
       edges: []
@@ -4385,7 +2698,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 84bfb0bc0ca55604ca351427de66fcb8
-      internalID: 21301050
       vertices: []
       indices: 
       edges: []
@@ -4406,7 +2718,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 80054256552c76d4d95491bb530ec30c
-      internalID: 21301052
       vertices: []
       indices: 
       edges: []
@@ -4427,7 +2738,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 1f541aad416d6d8439b76ca19ff4ac35
-      internalID: 21301054
       vertices: []
       indices: 
       edges: []
@@ -4448,7 +2758,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e5fd182d9e286d24c94806876858d176
-      internalID: 21301056
       vertices: []
       indices: 
       edges: []
@@ -4469,7 +2778,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: f04ae76b710855f4b8bcd74546e6da79
-      internalID: 21301058
       vertices: []
       indices: 
       edges: []
@@ -4490,7 +2798,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 3c274c8288ebd75488f83fe8ded00d05
-      internalID: 21301060
       vertices: []
       indices: 
       edges: []
@@ -4511,7 +2818,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 055967f3c9ad252419c7a7d4689e1cf5
-      internalID: 21301062
       vertices: []
       indices: 
       edges: []
@@ -4532,7 +2838,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2d066040200e0264bb0602a50706efe1
-      internalID: 21301064
       vertices: []
       indices: 
       edges: []
@@ -4553,7 +2858,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 99725d7fef4044f4daca84590566b10d
-      internalID: 21301066
       vertices: []
       indices: 
       edges: []
@@ -4574,7 +2878,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 3699c1d52f3be984597ba9813616118b
-      internalID: 21301068
       vertices: []
       indices: 
       edges: []
@@ -4595,7 +2898,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: cf1f30538fb6a674984638f168705267
-      internalID: 21301072
       vertices: []
       indices: 
       edges: []
@@ -4616,7 +2918,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: bff0166494a10b24390c37d473fb507c
-      internalID: 21301074
       vertices: []
       indices: 
       edges: []
@@ -4637,7 +2938,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5393c1b2aca6bdc45a1cbb5272e2f650
-      internalID: 21301076
       vertices: []
       indices: 
       edges: []
@@ -4658,7 +2958,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: a515c781e327ea44ca1d4f169a27b79f
-      internalID: 21301078
       vertices: []
       indices: 
       edges: []
@@ -4679,7 +2978,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 7593296164bc8de4c9c78e41073cde95
-      internalID: 21301080
       vertices: []
       indices: 
       edges: []
@@ -4700,7 +2998,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: da3c6e05c218f8e479745e78517ce666
-      internalID: 21301082
       vertices: []
       indices: 
       edges: []
@@ -4721,7 +3018,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 98c1f09a799d9f541b4cb9d691ee78d3
-      internalID: 21301084
       vertices: []
       indices: 
       edges: []
@@ -4742,7 +3038,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 5a1aaf446de5b61489f00729113acc3d
-      internalID: 21301086
       vertices: []
       indices: 
       edges: []
@@ -4763,7 +3058,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: be6dd056e5bd46348a9ea83519215937
-      internalID: 21301088
       vertices: []
       indices: 
       edges: []
@@ -4784,7 +3078,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 411b09b9bdc81cb4b8b8175c04b4ddfa
-      internalID: 21301090
       vertices: []
       indices: 
       edges: []
@@ -4805,7 +3098,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d371c4e901c1ede459dfb47a29c03c88
-      internalID: 21301092
       vertices: []
       indices: 
       edges: []
@@ -4826,7 +3118,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: a3c21b9922d574541b16a7388ed62e85
-      internalID: 21301094
       vertices: []
       indices: 
       edges: []
@@ -4847,7 +3138,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 537aaee7fd7aace43918f204cab2cc04
-      internalID: 21301096
       vertices: []
       indices: 
       edges: []
@@ -4868,7 +3158,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 389eb9f8b01cae848b9b3dde7846492a
-      internalID: 21301098
       vertices: []
       indices: 
       edges: []
@@ -4889,7 +3178,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d05398619acaaf243b9fcf6d16b6480b
-      internalID: 21301100
       vertices: []
       indices: 
       edges: []
@@ -4910,7 +3198,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: bec50b707d1579e4089f6d4d81844264
-      internalID: 21301102
       vertices: []
       indices: 
       edges: []
@@ -4931,7 +3218,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: c79c4bfdb4f78a34990a217ef7105d41
-      internalID: 21301104
       vertices: []
       indices: 
       edges: []
@@ -4952,7 +3238,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 46a8c4003550f254ea30c8f8d4f712f8
-      internalID: 21301106
       vertices: []
       indices: 
       edges: []
@@ -4973,7 +3258,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 415e2ea9f56930f4a9015f7e7c25cb9b
-      internalID: 21301108
       vertices: []
       indices: 
       edges: []
@@ -4994,7 +3278,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 05ab36205408aa749828aa863fd8fc20
-      internalID: 21301110
       vertices: []
       indices: 
       edges: []
@@ -5015,7 +3298,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 2afc4e444c9b96b44bd0da3d5bf0cba3
-      internalID: 21301112
       vertices: []
       indices: 
       edges: []
@@ -5036,7 +3318,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 6db4db1f4e022db488aa85c87688daf7
-      internalID: 21301114
       vertices: []
       indices: 
       edges: []
@@ -5057,7 +3338,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: fb975f60d49fcf04f88ce28ca2afae19
-      internalID: 21301116
       vertices: []
       indices: 
       edges: []
@@ -5078,7 +3358,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: c3e0be81d968ac64cacc6ec46c9b185b
-      internalID: 21301118
       vertices: []
       indices: 
       edges: []
@@ -5099,7 +3378,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: e17bb35353ef6db4bad543b4ec956285
-      internalID: 21301120
       vertices: []
       indices: 
       edges: []
@@ -5120,7 +3398,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 13566e01f982e8243a44236dfd487b6b
-      internalID: 21301122
       vertices: []
       indices: 
       edges: []
@@ -5141,7 +3418,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 8a040ef3538e6c647a1d839ec2d9a84c
-      internalID: 21301126
       vertices: []
       indices: 
       edges: []
@@ -5162,7 +3438,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 8fa8e40f8f715fb46934a11512e1344c
-      internalID: 21301128
       vertices: []
       indices: 
       edges: []
@@ -5183,7 +3458,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: d4bb13e6dd11b034fb391e0c184e0cfe
-      internalID: 21301154
       vertices: []
       indices: 
       edges: []
@@ -5204,7 +3478,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 13976424ee148144b92c6fc4a2505b48
-      internalID: 21301132
       vertices: []
       indices: 
       edges: []
@@ -5225,7 +3498,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: dffd08d1b7b354440b4396091e5ae49e
-      internalID: 21301134
       vertices: []
       indices: 
       edges: []
@@ -5246,7 +3518,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 61b24f5b4698185479f5fbadb27ad68c
-      internalID: 21301136
       vertices: []
       indices: 
       edges: []
@@ -5267,7 +3538,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 46b11922059a9ea4a9045d321b9e84b5
-      internalID: 21301138
       vertices: []
       indices: 
       edges: []
@@ -5288,7 +3558,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 0d5f1c7d24328a14884ec425321484ea
-      internalID: 21301140
       vertices: []
       indices: 
       edges: []
@@ -5309,7 +3578,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: b6ff5372d52c3e34fa8fcd7566ec7e40
-      internalID: 21301142
       vertices: []
       indices: 
       edges: []
@@ -5330,7 +3598,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: af0a1818ac3af5446b8ad8e98e880b6f
-      internalID: 21301144
       vertices: []
       indices: 
       edges: []
@@ -5351,7 +3618,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 415a2f701aee8a84f957c2f2e90cf86f
-      internalID: 21301148
       vertices: []
       indices: 
       edges: []
@@ -5372,7 +3638,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 1d60bd1f85b8b804f99f6994f55614bd
-      internalID: 21301150
       vertices: []
       indices: 
       edges: []
@@ -5381,12 +3646,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: d32cd6e76ed23384ca060f9011a5b4ee
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

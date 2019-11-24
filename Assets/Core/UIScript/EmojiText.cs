@@ -34,7 +34,6 @@ namespace UGUI
                 buf[i].position *= unitsPerPixel;
                 buf[i].position.x += roundingOffset.x;
                 buf[i].position.y += roundingOffset.y;
-                buf[i].uv0.x *= 0.5f;
             }
             int c = 0;
             if (emoji != null)
@@ -45,21 +44,20 @@ namespace UGUI
                 i *= 4;
                 if (i >= vertCount)
                     break;
+                var col = buf[i].color;
+                col.a = 0;
+                buf[i].color = col;
                 buf[i].uv0 = emoji[j].uv[0];
-                buf[i].uv0.x *= 0.5f;
-                buf[i].uv0.x += 0.5f;
                 i++;
+                buf[i].color = col;
                 buf[i].uv0 = emoji[j].uv[1];
-                buf[i].uv0.x *= 0.5f;
-                buf[i].uv0.x += 0.5f;
+                buf[i].color = col;
                 i++;
+                buf[i].color = col;
                 buf[i].uv0 = emoji[j].uv[2];
-                buf[i].uv0.x *= 0.5f;
-                buf[i].uv0.x += 0.5f;
                 i++;
+                buf[i].color = col;
                 buf[i].uv0 = emoji[j].uv[3];
-                buf[i].uv0.x *= 0.5f;
-                buf[i].uv0.x += 0.5f;
             }
             return buf;
         }
