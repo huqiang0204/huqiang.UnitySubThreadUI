@@ -96,6 +96,16 @@ namespace huqiang.Data
                     return bundles[i];
             return null;
         }
+        public static void AddBundle( AssetBundle asset)
+        {
+            bundles.Add(asset);
+        }
+        public static void AddBundle(string name)
+        {
+            var dic = Application.streamingAssetsPath;
+            dic += "/" + name;
+            bundles.Add(AssetBundle.LoadFromFile(dic));
+        }
         public static Sprite[] FindSprites(string bundle, string tname, string[] names = null)
         {
             var bun = FindBundle(bundle);
