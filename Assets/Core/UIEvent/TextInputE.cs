@@ -411,9 +411,9 @@ namespace huqiang.UIEvent
             if (warp)
                 e += 2;
             if (s >= vertex.Count)
-                s = vertex.Count - 1;
+                s = vertex.Count - 2;
             if (e >= vertex.Count)
-                e = vertex.Count - 1;
+                e = vertex.Count - 2;
             return new Vector2(vertex[s].position.x, vertex[e].position.x);
         }
         static int CommonArea(int s1, int e1, ref int s2, ref int e2)
